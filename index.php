@@ -84,7 +84,7 @@
           <h1><?=$banner_text1?></h1>
           <h2><?=$banner_text2?></h2>
           <div class="d-flex justify-content-center justify-content-lg-start">
-            <a href="javascript:void(0)" class="btn-get-started scrollto">Get Quote</a>
+            <a href="javascript:void(0)" class="btn-get-started scrollto" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Get a Quote</a>
             <!-- <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a> -->
           </div>
         </div>
@@ -300,7 +300,11 @@
             <p><?=$need_service2?> </p>
           </div>
           <div class="col-lg-3 cta-btn-container text-center">
-            <a class="cta-btn align-middle" href="javascript: void(0)">Get a Quote</a>
+            <!-- Button trigger modal -->
+            <!-- <button type="button" class="cta-btn align-middle" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Get a Quote
+            </button> -->
+            <a class="cta-btn align-middle" href="javascript: void(0)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Get a Quote</a>
           </div>
         </div>
 
@@ -685,6 +689,50 @@
 
   <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="staticBackdropLabel"><?=$title?></h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5><?=$contact_us_text?></h5>
+          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="name">Your Name</label>
+                <input type="text" name="name" class="form-control" id="name" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="name">Your Email</label>
+                <input type="email" class="form-control" name="email" id="email" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name">Subject</label>
+              <input type="text" class="form-control" name="subject" id="subject" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Message</label>
+              <textarea class="form-control" name="message" rows="10" required></textarea>
+            </div>
+            <div class="my-3" style="display: none">
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your message has been sent. Thank you!</div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/aos/aos.js"></script>
