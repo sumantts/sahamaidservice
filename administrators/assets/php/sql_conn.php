@@ -29,6 +29,10 @@
 	$title = 'Saha Maid Service and Enterprise';
 	$logo_text = 'Saha';
 
+    $p_name = 'Saha Maid Service and Enterprise';
+	$logo = 'logo.png';
+	$ico = 'favicon.ico';
+
 	$banner_text1 = 'Saha Maid Service and Enterprise';
 	$banner_text2 = 'Manpower Service Provider, Home Help Service Agency in P.s: Bauria; Open 24 X 7';
 
@@ -66,13 +70,71 @@
 	$location = 'NCC park, West Burikhali; opposite of Electric office, P.O: Santosh pur Burikhali, Bauria, Howrah: 711310';
 	$contact_email = '24x7@sahamaidservice.com';
 	$contact_ph_number = '+91 7003662260';
+	
+	//Posrfolio
+	$portfolio_text = 'We are happy to serve you. We have been working in this fields from a long before. Here are a few portfolios we served to people.';
 
-    $p_name = 'Saha Maid Service and Enterprise';
-	$logo = 'logo.png';
-	$ico = 'favicon.ico';
-	
+	$portfolio_categories = ["cleaning", "coocking", "sister"];
 
+	$portfolios = array();
+	$portfolio = new stdClass();
+	$portfolio->category = '0';
+	$portfolio->image = 'clean2.jpeg';
+	$portfolio->name = 'Cleaning';
+	$portfolio->description = 'Cleaning description';
+	array_push($portfolios, $portfolio);
+	$portfolio = new stdClass();
+	$portfolio->category = '0';
+	$portfolio->image = 'clean3.jpeg';
+	$portfolio->name = 'Cleaning';
+	$portfolio->description = 'Cleaning description';
+	array_push($portfolios, $portfolio);
+	$portfolio = new stdClass();
+	$portfolio->category = '0';
+	$portfolio->image = 'clean4.jpeg';
+	$portfolio->name = 'Cleaning';
+	$portfolio->description = 'Cleaning description';
+	array_push($portfolios, $portfolio);
 	
+	$portfolio = new stdClass();
+	$portfolio->category = '1';
+	$portfolio->image = 'coock1.jpeg';
+	$portfolio->name = 'Coocking';
+	$portfolio->description = 'Coocking description';
+	array_push($portfolios, $portfolio);	
+	$portfolio = new stdClass();
+	$portfolio->category = '1';
+	$portfolio->image = 'coock2.jpeg';
+	$portfolio->name = 'Coocking';
+	$portfolio->description = 'Coocking description';
+	array_push($portfolios, $portfolio);	
+	$portfolio = new stdClass();
+	$portfolio->category = '1';
+	$portfolio->image = 'coock3.jpeg';
+	$portfolio->name = 'Coocking';
+	$portfolio->description = 'Coocking description';
+	array_push($portfolios, $portfolio);
 	
+	$portfolio = new stdClass();
+	$portfolio->category = '2';
+	$portfolio->image = 'sister2.jpeg';
+	$portfolio->name = 'Sister';
+	$portfolio->description = 'Sister description';
+	array_push($portfolios, $portfolio);	
+	$portfolio = new stdClass();
+	$portfolio->category = '2';
+	$portfolio->image = 'sister3.jpeg';
+	$portfolio->name = 'Sister';
+	$portfolio->description = 'Sister description';
+	array_push($portfolios, $portfolio);	
+	$portfolio = new stdClass();
+	$portfolio->category = '2';
+	$portfolio->image = 'sister4.jpeg';
+	$portfolio->name = 'Sister';
+	$portfolio->description = 'Sister description';
+	array_push($portfolios, $portfolio);
+	
+	//Customer Review
+	$review_text = 'We gain some blessings from our beloved customers. They have written ther satisfactions within a few lines. These Lines are assets for us.';
 		 
 ?>
