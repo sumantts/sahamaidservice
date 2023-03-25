@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title><?php echo $title; ?> | <?php echo $p_name; ?></title>
+	<title><?php echo $title; ?></title>
 	<!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 11]>
@@ -82,8 +82,8 @@
 						</button>
 
 						<hr>
-						<!-- <p class="mb-2 text-muted">Forgot password? <a href="auth-reset-password.html" class="f-w-400">Reset</a></p>
-						<p class="mb-0 text-muted">Don’t have an account? <a href="?p=signup" class="f-w-400">Signup</a></p> -->
+						<!-- <p class="mb-2 text-muted">Forgot password? <a href="auth-reset-password.html" class="f-w-400">Reset</a></p> -->
+						<p class="mb-0 text-muted">Go to website? <a href="http://localhost/gitHub/sahamaidservice/" class="f-w-400">Click Here</a></p>
 					</div>
 					
 					
