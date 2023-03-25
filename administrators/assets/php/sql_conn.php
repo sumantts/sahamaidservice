@@ -136,5 +136,43 @@
 	
 	//Customer Review
 	$review_text = 'We gain some blessings from our beloved customers. They have written ther satisfactions within a few lines. These Lines are assets for us.';
+
+	$reviews = array();
+	$review = new stdClass();
+	$review->customer_name = 'Rahul Kumar Jha';
+	$review->from_area = 'Kolkata';
+	$review->review_desc = 'So polite behaviour and provide responsible maid as per my requirement with more option. Great service.';
+	array_push($reviews, $review);
+
+	$review = new stdClass();
+	$review->customer_name = 'Ankit Sahani';
+	$review->from_area = 'Kolkata';
+	$review->review_desc = 'Happy from the services good and reliable maid provided by the owner';
+	array_push($reviews, $review);
+
+	$review = new stdClass();
+	$review->customer_name = 'Aman Choudhary';
+	$review->from_area = 'Kolkata';
+	$review->review_desc = 'Getting good services, reliable and responsible and service on time';
+	array_push($reviews, $review);
+
+	//Services
+	$services_text = 'We are providing below services.';
+
+	$services = array();
+	$service = new stdClass();
+	$service->name = 'All Types of Maid';
+	$service->description = 'Basic House Cleaning, Deep/Spring Cleaning, Green Cleaning Services, Ceiling and Wall Cleaning, Curtain Cleaning, Carpet and Upholstery Maid Services, Blind and Chimney Cleaning, Pressure Washing';
+	array_push($services, $service);
+
+	$service = new stdClass();
+	$service->name = 'House keepingin office & Commercial Place';
+	$service->description = 'Housekeeping refers to day-to-day cleanliness, tidiness and good order in all parts of the office. Good housekeeping provides a clean and pleasant working environment. It also helps prevent accidents in the workplace and aids the efficient operation of the office.';
+	array_push($services, $service);
+
+	$service = new stdClass();
+	$service->name = 'All types of man power supply';
+	$service->description = 'We have all types of employess (Skilled, Unskilled & Semiskilled). We supply man power for Driver Services, Contract Labour Supplier Services, Plumbing Contractors, Industrial Manpower Services, Staffing Service, and Labour Consultants.';
+	array_push($services, $service);
 		 
 ?>

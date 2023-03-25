@@ -254,51 +254,41 @@
     <!-- End Skills Section -->
 
     <!-- ======= Services Section ======= -->
+    <?php if(sizeof($services) > 0){?>
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
           <h2>Services</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <p><?=$services_text?></p>
         </div>
 
         <div class="row">
-          <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+          <?php 
+          for($l = 0; $l < sizeof($services); $l++){
+            $c_name = '';
+            if($l == 1){
+              $c_name = 'mt-4 mt-md-0';
+            }else if($l > 1){
+              $c_name = 'mt-4 mt-xl-0';
+            }else{
+              $c_name = '';
+            }
+          ?>
+          <div class="col-xl-4 col-md-6 d-flex align-items-stretch <?=$c_name?>" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box">
               <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4><a href="">Lorem Ipsum</a></h4>
-              <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+              <h4><a href=""><?=$services[$l]->name?></a></h4>
+              <p><?=$services[$l]->description?></p>
             </div>
           </div>
-
-          <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-file"></i></div>
-              <h4><a href="">Sed ut perspici</a></h4>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-            </div>
-          </div>
-
-          <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="300">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4><a href="">Magni Dolores</a></h4>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-            </div>
-          </div>
-
-          <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="400">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-layer"></i></div>
-              <h4><a href="">Nemo Enim</a></h4>
-              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
-            </div>
-          </div>
-
+          <?php } ?>
         </div>
 
       </div>
-    </section><!-- End Services Section -->
+    </section>
+    <?php } ?>
+    <!-- End Services Section -->
 
     <!-- ======= Cta Section ======= -->
     <section id="cta" class="cta">
@@ -353,6 +343,7 @@
     </section><!-- End Portfolio Section -->
 
     <!-- ======= Team Section ======= -->
+    <?php if(sizeof($reviews) > 0){?>
     <section id="team" class="team section-bg">
       <div class="container" data-aos="fade-up">
 
@@ -362,42 +353,20 @@
         </div>
 
         <div class="row">
-
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
-            <div class="member d-flex align-items-start">
-              <!-- <div class="pic"><img src="assets/img/team/team-1.jpg" class="img-fluid" alt=""></div> -->
+          
+          <?php for($k = 0; $k < sizeof($reviews); $k++){?>
+           <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="200">
+            <div class="member d-flex align-items-start">              
               <div class="member-info">
-                <h4>Customer name</h4>
-                <span>From: The Area Name</span>
-                <p>SAHA Maid service is awasome.</p>
-                <!-- <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div> -->
+                <h4><?=$reviews[$k]->customer_name?></h4>
+                <span>From: <?=$reviews[$k]->from_area?></span>
+                <p><?=$reviews[$k]->review_desc?></p>
               </div>
             </div>
           </div>
+          <?php } ?>
 
-          <!-- <div class="col-lg-6 mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="200">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Product Manager</span>
-                <p>Aut maiores voluptates amet et quis praesentium qui senda para</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
+          <!-- <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
             <div class="member d-flex align-items-start">
               <div class="pic"><img src="assets/img/team/team-3.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
@@ -429,12 +398,13 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>  -->
 
         </div>
 
       </div>
     </section>
+    <?php } ?>
     <!-- End Team Section -->
 
     <!-- ======= Pricing Section ======= -->
