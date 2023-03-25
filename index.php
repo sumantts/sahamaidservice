@@ -67,7 +67,7 @@
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-          <li><a class="getstarted scrollto" href="http://localhost/gitHub/sahamaidservice/administrators/">Administrator</a></li>
+          <li><a class="getstarted scrollto" href="https://sahamaidservice.com/administrators">Administrator</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
