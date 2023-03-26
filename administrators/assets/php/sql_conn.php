@@ -1,13 +1,13 @@
 <?php
-	// $host = 'localhost';
-	// $username = 'root';
-	// $password = '';
-	// $dbname = 'sahamaidservice';
-	
 	$host = 'localhost';
-	$username = 'sahamaidservice_sahamaidservice';
-	$password = 'sahamaidservice123';
-	$dbname = 'sahamaidservice_sahamaidservice';
+	$username = 'root';
+	$password = '';
+	$dbname = 'sahamaidservice';
+	
+	// $host = 'localhost';
+	// $username = 'sahamaidservice_sahamaidservice';
+	// $password = 'sahamaidservice123';
+	// $dbname = 'sahamaidservice_sahamaidservice';
 	
 	$mysqli = new mysqli($host, $username, $password, $dbname);
 
