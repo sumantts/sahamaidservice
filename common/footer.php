@@ -30,24 +30,29 @@
       <div class="col-lg-3 col-md-6 footer-links">
         <h4>Useful Links</h4>
         <ul>
-          <li><i class="bx bx-chevron-right"></i> <a href="#hero">Home</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#about">About us</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#services">Services</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#portfolio">Portfolio</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#team">Customer Review</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="?p=home">Home</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="?p=about">About</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="?p=services">Services</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="?p=portfolio">Portfolio</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="?p=customer-review">Customer Review</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="?p=write-review">Write a Review</a></li>
         </ul>
       </div>
 
+      <?php if(sizeof($services) > 0){?>
       <div class="col-lg-3 col-md-6 footer-links">
         <h4>Our Services</h4>
         <ul>
-          <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-          <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+          <?php 
+            for($l = 0; $l < sizeof($services); $l++){
+          ?>
+          <li><i class="bx bx-chevron-right"></i> <a href="javascript: void(0)"><?=$services[$l]->name?></a></li>
+          <?php } ?>
+          <!-- <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>-->
         </ul>
       </div>
+    <?php } ?>
 
       <div class="col-lg-3 col-md-6 footer-links">
         <h4>Our Social Networks</h4>
