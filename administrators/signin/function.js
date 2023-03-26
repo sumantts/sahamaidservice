@@ -6,33 +6,25 @@ $('#Signin').click(function(){
 
     setTimeout(function(){
         //$('.toast-5s').toast('show')
+        $username = $('#Email').val();
+        $password = $('#Password').val();
 
         $.ajax({
             method: "POST",
             url: "signin/function.php",
-            data: { fn: "doLogin", username: '1', password: '1' }
+            data: { fn: "doLogin", username: $username, password: $password }
         })
         .done(function( res ) {
             console.log(res);
             $res1 = JSON.parse(res);
-            if($res1.status == true){
-                if(parseInt($res1.UsrId) > 0){
-                $('#signin_spinner').hide();
-                $('#signin_spinner_text').hide();
-                $('#signin_text').show();
-                window.location.href = '?p=dashboard';
+            $('#signin_spinner').hide();
+            $('#signin_spinner_text').hide();
+            $('#signin_text').show();
 
-                //var url_string1 = localStorage.getItem("last_stay");
-                //if(url_string1 != null){
-                    //window.location.href = url_string1;
-                //}else{						
-                    // window.location.href = '?p=dashboard';
-                //}
-                }else{
-                    //alert($res1.message);
-                    //$('#error_text').html('Wrong username or password');
-                }
+            if($res1.status == true){
+                window.location.href = '?p=dashboard';
             }else{
+                $('.toast-5s').toast('show');
                 //alert($res1.message);
                 //$('#error_text').html('Wrong username or password');
             }

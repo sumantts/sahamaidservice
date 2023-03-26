@@ -331,7 +331,7 @@
 
         <?php for($k = 0; $k < sizeof($portfolios); $k++){?>
           <div class="col-lg-4 col-md-6 portfolio-item filter-<?=$portfolio_categories[$portfolios[$k]->category]?>">
-            <div class="portfolio-img"><img src="assets/img/portfolio/<?=$portfolio_categories[$portfolios[$k]->category]?>/<?=$portfolios[$k]->image?>" class="img-fluid" alt=""></div>
+            <div class="portfolio-img"><img src="assets/img/portfolio/<?=$portfolio_categories[$portfolios[$k]->category]?>/<?=$portfolios[$k]->image?>" class="img-fluid" alt="" style="width: 100%;"></div>
             <div class="portfolio-info">
               <h4><?=$portfolios[$k]->name?></h4>
               <p><?=$portfolios[$k]->description?></p>
@@ -700,35 +700,39 @@
         </div>
         <div class="modal-body">
           <h5><?=$contact_us_text?></h5>
-          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+          <form action="" method="post" role="form" class="php-email-form">
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="name">Your Name</label>
-                <input type="text" name="name" class="form-control" id="name" required>
+                <label for="name">Your Name*</label>
+                <input type="text" name="name" class="form-control" id="your_name">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="name">Phone Number*</label>
+                <input type="tel" class="form-control" name="phone_number" id="phone_number">
               </div>
               <div class="form-group col-md-6">
                 <label for="name">Your Email</label>
-                <input type="email" class="form-control" name="email" id="email" required>
+                <input type="email" class="form-control" name="email" id="email_id">
               </div>
             </div>
             <div class="form-group">
-              <label for="name">Subject</label>
-              <input type="text" class="form-control" name="subject" id="subject" required>
+              <label for="name">Address*</label>
+              <textarea class="form-control" name="address" id="address" rows="3"></textarea>
             </div>
             <div class="form-group">
-              <label for="name">Message</label>
-              <textarea class="form-control" name="message" rows="10" required></textarea>
+              <label for="name">Message*</label>
+              <textarea class="form-control" name="message" id="message" rows="5"></textarea>
             </div>
-            <div class="my-3" style="display: none">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
+            <div class="my-3">
+              <div class="loading" style="display: none">Loading</div>
+              <div class="error-message" id="quote_error_msg" style="display: none; color: #f00;font-weight: bold;">Please enter the required fields</div>
+              <div class="sent-message" style="display: none">Your message has been sent. Thank you!</div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Send Message</button>
+          <button type="button" class="btn btn-primary" id="sendMessage">Send Message</button>
         </div>
       </div>
     </div>
@@ -745,6 +749,8 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="assets/js/function.js"></script>
 
 </body>
 

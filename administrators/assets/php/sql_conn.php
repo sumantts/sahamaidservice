@@ -1,14 +1,30 @@
 <?php
+	// $host = 'localhost';
+	// $username = 'root';
+	// $password = '';
+	// $dbname = 'sahamaidservice';
+	
 	$host = 'localhost';
-	$username = 'root';
-	$password = '';
-	$dbname = 'sahamaidservice';
+	$username = 'sahamaidservice_sahamaidservice';
+	$password = 'sahamaidservice123';
+	$dbname = 'sahamaidservice_sahamaidservice';
 	
-	/*$host = 'localhost';
-	$username = 'srlmmjvw_mpower';
-	$password = '&E2h8h%{jymk';
-	$dbname = 'srlmmjvw_dbmpowersms';*/
-	
+	$mysqli = new mysqli($host, $username, $password, $dbname);
+
+	// Check connection
+	if ($mysqli -> connect_errno) {
+		echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+		exit();
+	}else{
+		//echo "Connected Successfully";
+	}
+
+	$con = mysqli_connect($host, $username, $password, $dbname);
+	if (mysqli_connect_errno())
+	{
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		exit();
+	}
 	session_start();
 	
 	/*echo "connected...";
@@ -65,7 +81,7 @@
 	$need_service2 = 'Please feel free to send your request we will contact with you within 12 Hours. Just fill up the Quotation form and send it to us.';
 
 	//Contact Us
-	$contact_us_text = 'Feel free to contact us. We are ready to serve you. We will be available on your door step on a single message. ';
+	$contact_us_text = 'Feel free to contact us. We will be available on your doorstep with a single message. We are ready to serve you.';
 
 	$location = 'NCC park, West Burikhali; opposite of Electric office, P.O: Santosh pur Burikhali, Bauria, Howrah: 711310';
 	$contact_email = '24x7@sahamaidservice.com';

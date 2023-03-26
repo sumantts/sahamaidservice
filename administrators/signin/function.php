@@ -1,5 +1,5 @@
 <?php
-	//include('sql_conn.php');
+	include('../assets/php/sql_conn.php');
 	$fn = '';
 	if(isset($_POST["fn"])){
 	$fn = $_POST["fn"];
@@ -8,13 +8,26 @@
 	//Login function
 	if($fn == 'doLogin'){
 		$return_result = array();
-		$param1 = $_POST["username"];
-		$param2 = $_POST["password"];
+		$username = $_POST["username"];
+		$password = $_POST["password"];
 		$status = true;
 		
 		//$v = "'".$param1."','".$param2."'";		
 		
 		try {
+			$sql = "SELECT * FROM login WHERE username = '".$username."' && password = '".$password."'";
+			$result = $mysqli->query($sql);
+
+			if ($result->num_rows > 0) {
+				$row = $result->fetch_array();
+				$login_id = $row['login_id'];			
+				$username = $row['username'];
+				$_SESSION["username"] = $username;						
+				$_SESSION["login_id"] = $login_id;
+			} else {
+				$status = false;
+			}
+			$mysqli->close();
             /****
 			$pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
 			//$sql = "CALL usp_validateuser('bghosh','bagnan@123')";
@@ -57,10 +70,11 @@
 			$return_result['Ret_DbSesId'] = $Ret_DbSesId;
 			$return_result['App_SesId'] = $App_SesId;
 			****/
-            $return_result["UsrId"] = 1;
+           // $return_result["UsrId"] = 1;
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());
 		}
+
 		$return_result['status'] = $status;
 		sleep(2);
 		echo json_encode($return_result);
