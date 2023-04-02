@@ -3,9 +3,13 @@
   include 'common/header.php';
 ?>
 <!-- End Header -->
+
+<section id="hero" class="d-flex align-items-center"> 
+</section>
+
     <main id="main">
         <!-- ======= About Us Section ======= -->
-        <section id="about" class="about" style="padding-top: 20%;">
+        <section id="about" class="about">
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">

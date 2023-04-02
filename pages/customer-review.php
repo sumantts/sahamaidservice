@@ -4,11 +4,14 @@
 ?>
 <!-- End Header -->
 
+<section id="hero" class="d-flex align-items-center"> 
+</section>
+
   <main id="main">
 
     <!-- ======= Team Section ======= -->
     <?php if(sizeof($reviews) > 0){?>
-    <section id="team" class="team section-bg" style="padding-top: 20%;">
+    <section id="team" class="team section-bg">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">

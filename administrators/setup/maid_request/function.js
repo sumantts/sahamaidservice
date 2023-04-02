@@ -80,23 +80,46 @@ $('#submitForm').click(function(){
 })
 
 
-$(document).ready(function () {
+function populateDataTable(){
+    $('#example').dataTable().fnClearTable();
+    $('#example').dataTable().fnDestroy();
+
     $('#example').DataTable({ 
         responsive: true,
         serverMethod: 'GET',
-        ajax: 'setup/organisation/arrays.txt',
-        //ajax: {'url': 'arrays.php?id=1' },
+        ajax: {'url': 'setup/maid_request/function.php?fn=getQuoteRequest' },
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            {
+                extend:    'copyHtml5',
+                text:      '<i class="fa fa-files-o"></i>',
+                titleAttr: 'Copy'
+            },
+            {
+                extend:    'excelHtml5',
+                text:      '<i class="fa fa-file-excel-o"></i>',
+                titleAttr: 'Excel'
+            },
+            {
+                extend:    'csvHtml5',
+                text:      '<i class="fa fa-file-text-o"></i>',
+                titleAttr: 'CSV'
+            },
+            {
+                extend:    'pdfHtml5',
+                text:      '<i class="fa fa-file-pdf-o"></i>',
+                titleAttr: 'PDF'
+            },
+            {
+                extend: 'print',
+                text: '<i class="fa fa-print"></i>',
+                titleAttr: 'Print'
+            },
         ]
-        //Below PDF will open only new tab
-        // buttons: [
-        //     {
-        //         extend: 'pdfHtml5',
-        //         download: 'open'
-        //     }
-        // ]
-    
+
     });
+}//end fun
+
+$(document).ready(function () {
+    populateDataTable()
 });

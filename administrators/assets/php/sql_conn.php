@@ -52,6 +52,25 @@
 	$banner_text1 = 'Saha Maid Service and Enterprise';
 	$banner_text2 = 'Manpower Service Provider, Home Help Service Agency in P.s: Bauria; Open 24 X 7';
 
+	//Slider
+	$sliders = array();
+	$slider = new stdClass();
+	$slider->image = 'banner1.jpg';
+	$slider->name = $banner_text1;
+	$slider->description = $banner_text2;
+	array_push($sliders, $slider);
+	$slider = new stdClass();
+	$slider->image = 'banner2.jpg';
+	$slider->name = $banner_text1;
+	$slider->description = $banner_text2;
+	array_push($sliders, $slider);
+	$slider = new stdClass();
+	$slider->image = 'banner3.jpg';
+	$slider->name = $banner_text1;
+	$slider->description = $banner_text2;
+	array_push($sliders, $slider);
+
+
 	//About Us
 	$about_us = 'We are providing reliable made and verify all documents properly with local agent . And also our replacement police is too easy and quickly.';
 
@@ -190,5 +209,33 @@
 	$service->name = 'All types of man power supply';
 	$service->description = 'We have all types of employess (Skilled, Unskilled & Semiskilled). We supply man power for Driver Services, Contract Labour Supplier Services, Plumbing Contractors, Industrial Manpower Services, Staffing Service, and Labour Consultants.';
 	array_push($services, $service);
+
+	//Business Partner
+	$partner_text = 'We are two business partners are working together since 20 years';
+
+	$partners = array();
+
+	$partner = new stdClass();
+	$partner->name = 'Kundan Kumar Saha';
+	$partner->designation = 'DIRECTOR';
+	$partner->desc = 'Phone: 7003662260 E: KundanSaha58@gmail.com';
+	$partner->image = 'kundan.jpg';
+	$partner->twitter = '';
+	$partner->facebook = '';
+	$partner->instagram = '';
+	$partner->linkedin = '';
+	array_push($partners, $partner);
+
+	$partner = new stdClass();
+	$partner->name = 'Anupam Ghora';
+	$partner->designation = 'DIRECTOR';
+	$partner->desc = 'Phone: 8906161591 E: AnupamGhora045@gmail.com';
+	$partner->image = 'anupam.jpg';
+	$partner->twitter = '';
+	$partner->facebook = '';
+	$partner->instagram = '';
+	$partner->linkedin = '';
+	array_push($partners, $partner);
+
 		 
 ?>

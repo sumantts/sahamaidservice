@@ -4,10 +4,13 @@
 ?>
 <!-- End Header -->
 
+<section id="hero" class="d-flex align-items-center"> 
+</section>
+
   <main id="main">
 
     <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact" style="padding-top: 20%;">
+    <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">

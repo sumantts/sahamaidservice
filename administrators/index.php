@@ -30,9 +30,9 @@
 		break;
 
 		//SETUP		
-		case 'organisation':
-			$title = "Organisation";
-			include('setup/organisation/organisation.php');		
+		case 'maid_request':
+			$title = "Maid Request";
+			include('setup/maid_request/maid_request.php');		
 		break;
 		
 		case 'deposit':

@@ -3,11 +3,14 @@
   include 'common/header.php';
 ?>  
   <!-- End Header -->
+
+<section id="hero" class="d-flex align-items-center"> 
+</section>
   <main id="main">
 
     <!-- ======= Services Section ======= -->
     <?php if(sizeof($services) > 0){?>
-    <section id="services" class="services section-bg" style="padding-top: 20%;">
+    <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">

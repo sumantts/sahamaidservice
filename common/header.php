@@ -32,7 +32,7 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top" <?php if($p != 'home'){?>style="background: rgba(40, 58, 90, 0.9)"<?php } ?>>
+  <header id="header" class="fixed-top header-scrolled" <?php if($p != 'home'){?>style="background: rgba(40, 58, 90, 0.9)"<?php } ?>>
     <div class="container d-flex align-items-center">
 
       <h1 class="logo me-auto"><a href="?p=home"><?=$logo_text?></a></h1>

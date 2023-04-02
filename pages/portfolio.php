@@ -4,10 +4,13 @@
 ?>
 <!-- End Header -->
 
+<section id="hero" class="d-flex align-items-center"> 
+</section>
+
   <main id="main">
 
     <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio" style="padding-top: 20%;">
+    <section id="portfolio" class="portfolio">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">

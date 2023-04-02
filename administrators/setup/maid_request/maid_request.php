@@ -1,8 +1,14 @@
 <?php include('common/head.php'); ?>
-<script type="text/javascript">
-    
+<script type="text/javascript">   
 
 </script>
+<style>
+    table td {
+        word-break: break-word;
+        vertical-align: top;
+        white-space: normal !important;
+    }
+</style>
 
 <body class="">
 	<!-- [ Pre-loader ] start -->
@@ -45,7 +51,7 @@
         <!-- [ Main Content ] start -->
         <div class="row">
             <!-- [ sample-page ] start -->
-            <div class="col-sm-12">
+            <!-- <div class="col-sm-12">
                 <div class="card">
 
                     <div class="card-header">
@@ -95,8 +101,7 @@
                                 </div>
                                 
                             </div>
-                            
-                            <!-- <button class="btn  btn-primary" type="button" id="submitForm">Submit form</button> -->
+                                                        
                             <button class="btn  btn-primary" type="button" id="submitForm">
                                 <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                 <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
@@ -106,7 +111,7 @@
 
                     </div>
                           
-                    <!-- Toast Message -->
+                    Toast Message
                     <div style="position:absolute; top:40px; right: 40px">
                         <div class="toast hide toast-right" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
                             <div class="toast-header">
@@ -122,10 +127,10 @@
                             </div>
                         </div>
                     </div>                             
-                    <!-- Toast Message -->
+                    Toast Message
 
                 </div>
-            </div>
+            </div> -->
 
             <!-- [ sample-table ] start -->
             <div class="col-sm-12">
@@ -160,13 +165,17 @@
                                 <thead>
                                     <tr>
                                         <th>Sl.No.</th>
-                                        <th>Name</th>
+                                        <th>Name & Phone</th>
+                                        <th>Email & Address</th>
+                                        <th>Message</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Sl.No.</th>
-                                        <th>Name</th>
+                                        <th>Name & Phone</th>
+                                        <th>Email & Address</th>
+                                        <th>Message</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -213,4 +222,4 @@
 <!-- [ Main Content ] end -->
 	<?php include('common/footer.php'); ?>
     
-    <script src="setup/organisation/function.js"></script>
+    <script src="setup/maid_request/function.js"></script>

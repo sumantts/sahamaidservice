@@ -2,7 +2,7 @@
 		<div class="navbar-wrapper">
 			<div class="navbar-content scroll-div" id="nav_bar">
 				
-				<div class="">
+				<!-- <div class="">
 					<div class="main-menu-header">
 						<img class="img-radius" src="assets/images/user/avatar-4.jpg" alt="User-Profile-Image">
 						<div class="user-details">
@@ -17,7 +17,7 @@
 							<li class="list-group-item"><a href="#!"><i class="feather icon-log-out m-r-5"></i>Logout</a></li>
 						</ul>
 					</div>
-				</div>
+				</div> -->
 				
 				<ul class="nav pcoded-inner-navbar " >
 					<li class="nav-item <?php if($p == 'dashboard'){ ?> active <?php } ?>">
@@ -27,8 +27,8 @@
 					<li class="nav-item pcoded-menu-caption" id="setup">
 						<label>SETUP</label>
 					</li>
-					<li class="nav-item <?php if($p == 'organisation'){ ?> active <?php } ?>">
-					    <a href="?p=organisation&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Maid Request List</span></a>
+					<li class="nav-item <?php if($p == 'maid_request'){ ?> active <?php } ?>">
+					    <a href="?p=maid_request&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Maid Request List</span></a>
 					</li>
 
 					<!-- <li class="nav-item pcoded-hasmenu <?php if($p == 'deposit' || $p == 'loan'){ ?> active pcoded-trigger <?php } ?>">
