@@ -104,7 +104,7 @@
             <label for="name">Phone Number*</label>
             <input type="tel" class="form-control" name="phone_number" id="phone_number">
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-12">
             <label for="name">Your Email</label>
             <input type="email" class="form-control" name="email" id="email_id">
           </div>
@@ -118,7 +118,7 @@
           <textarea class="form-control" name="message" id="message" rows="5"></textarea>
         </div>
         <div class="my-3">
-          <div class="loading" style="display: none">Loading</div>
+          <div class="loading" style="display: none">Sending Message...</div>
           <div class="error-message" id="quote_error_msg" style="display: none; color: #f00;font-weight: bold;">Please enter the required fields</div>
           <div class="sent-message" style="display: none">Your message has been sent. Thank you!</div>
         </div>

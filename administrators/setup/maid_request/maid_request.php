@@ -138,7 +138,7 @@
 
                     <div class="card-header">
                         <h5> <?=$title?> Table</h5>
-                        <div class="card-header-right">
+                        <!-- <div class="card-header-right">
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="feather icon-more-horizontal"></i>
@@ -151,7 +151,7 @@
                                     <li><a href="#!" data-toggle="modal" data-target="#exampleModalLong"><i class="feather icon-file-plus"></i> add new</a> </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="card-body">
                         <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">

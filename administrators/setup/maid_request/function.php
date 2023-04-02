@@ -27,13 +27,13 @@
 	if($fn == 'getQuoteRequest'){
 		$return_array = array();
 		$status = true;
+		$mainData = array();
 
-		$sql = "SELECT * FROM quote_request ORDER BY quote_id DESC";
+		$sql = "SELECT * FROM quote_request";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
 			$status = true;
-			$mainData = array();
 
 			while($row = $result->fetch_array()){
 				$quote_id = $row['quote_id'];			

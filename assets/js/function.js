@@ -3,7 +3,8 @@
 $('#sendMessage').click(function(){
     console.log('function connected...');
     $('#quote_error_msg').html('');
-    $('#quote_error_msg').hide();    
+    $('#quote_error_msg').hide();  
+    $('.sent-message').hide();  
 
     $name = $('#your_name').val();
     $phone_number = $('#phone_number').val();
@@ -32,6 +33,7 @@ $('#sendMessage').click(function(){
         $('#quote_error_msg').html($msg);
         $('#quote_error_msg').show();
     }else{
+        $('.loading').show();
         console.log('call ajax function');
         $quote_details = {
             name: $name,
@@ -53,7 +55,14 @@ $('#sendMessage').click(function(){
             $res1 = JSON.parse(res);
 
             if($res1.status == true){
+                $('.loading').hide();
                 console.log('after save do Success steps');
+                $('#your_name').val('');
+                $('#phone_number').val('');
+                $('#email_id').val('');
+                $('#address').val('');
+                $('#message').val('');
+                $('.sent-message').show();
             }else{
                 console.log('after save do Failed steps');
             }
