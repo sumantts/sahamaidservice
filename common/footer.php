@@ -19,7 +19,7 @@
   <div class="container">
     <div class="row">
 
-      <div class="col-lg-3 col-md-6 footer-contact">
+      <div class="col-lg-2 col-md-6 footer-contact">
         <h3><?=$logo_text?></h3>
         <p><?=$location?><br>
           <strong>Phone:</strong> <?=$contact_ph_number?><br>
@@ -27,7 +27,7 @@
         </p>
       </div>
 
-      <div class="col-lg-3 col-md-6 footer-links">
+      <div class="col-lg-2 col-md-6 footer-links">
         <h4>Useful Links</h4>
         <ul>
           <li><i class="bx bx-chevron-right"></i> <a href="?p=home">Home</a></li>
@@ -39,6 +39,21 @@
         </ul>
       </div>
 
+    <div class="col-lg-2 col-md-6 footer-links">
+      <h4>Our Service Area</h4>
+      <ul>
+        <li><i class="bx bx-chevron-right"></i> <a href="javascript:void(0)">Kolkata</a></li>
+        <li><i class="bx bx-chevron-right"></i> <a href="javascript:void(0)">Howrah</a></li>
+        <li><i class="bx bx-chevron-right"></i> <a href="javascript:void(0)">Delhi</a></li>
+        <li><i class="bx bx-chevron-right"></i> <a href="javascript:void(0)">Mumbai</a></li>
+        <li><i class="bx bx-chevron-right"></i> <a href="javascript:void(0)">Bangalore</a></li>
+        <li><i class="bx bx-chevron-right"></i> <a href="javascript:void(0)">Chennai</a></li>
+        <li><i class="bx bx-chevron-right"></i> <a href="javascript:void(0)">Hyderabad</a></li>
+        <li><i class="bx bx-chevron-right"></i> <a href="javascript:void(0)">Rajasthan</a></li>
+        <li><i class="bx bx-chevron-right"></i> <a href="javascript:void(0)">Lakhnau</a></li>
+      </ul>
+    </div>
+
       <?php if(sizeof($services) > 0){?>
       <div class="col-lg-3 col-md-6 footer-links">
         <h4>Our Services</h4>
@@ -46,7 +61,7 @@
           <?php 
             for($l = 0; $l < sizeof($services); $l++){
           ?>
-          <li><i class="bx bx-chevron-right"></i> <a href="javascript: void(0)"><?=$services[$l]->name?></a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="?p=services"><?=$services[$l]->name?></a></li>
           <?php } ?>
           <!-- <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
           <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>-->

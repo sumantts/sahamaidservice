@@ -109,7 +109,8 @@
 	//Posrfolio
 	$portfolio_text = 'We are happy to serve you. We have been working in this fields from a long before. Here are a few portfolios we served to people.';
 
-	$portfolio_categories = ["cleaning", "coocking", "sister"];
+	//$portfolio_categories = ["cleaning", "coocking", "sister"];
+	$portfolio_categories = ["Maid", "HouseKeeping", "ManPower"];
 
 	$portfolios = array();
 	$portfolio = new stdClass();
