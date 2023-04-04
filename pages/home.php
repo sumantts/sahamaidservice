@@ -144,7 +144,8 @@
                 <div class="member-info">
                   <h4><?=$partners[$k]->name?></h4>
                   <span><?=$partners[$k]->designation?></span>
-                  <p><?=$partners[$k]->desc?></p>
+                  <p><a href="tel:<?=$partners[$k]->desc_ph?>"><i class="bi bi-phone"></i> <?=$partners[$k]->desc_ph?></p></a>
+                  <p><a href="mailto:<?=$partners[$k]->desc_eml?>"><i class="bi bi-envelope"></i> <?=$partners[$k]->desc_eml?></p></a>
                   <div class="social">
                     <?php if($partners[$k]->twitter != ''){?>
                     <a href="https://twitter.com/<?=$partners[$k]->twitter?>" target="_blank"><i class="ri-twitter-fill"></i></a>

@@ -220,7 +220,8 @@
 	$partner = new stdClass();
 	$partner->name = 'Kundan Kumar Saha';
 	$partner->designation = 'DIRECTOR';
-	$partner->desc = 'Phone: 7003662260 E: KundanSaha58@gmail.com';
+	$partner->desc_ph = '7003662260';
+	$partner->desc_eml = 'KundanSaha58@gmail.com';
 	$partner->image = 'kundan.jpg';
 	$partner->twitter = '';
 	$partner->facebook = '';
@@ -231,7 +232,8 @@
 	$partner = new stdClass();
 	$partner->name = 'Anupam Ghora';
 	$partner->designation = 'DIRECTOR';
-	$partner->desc = 'Phone: 8906161591 E: AnupamGhora045@gmail.com';
+	$partner->desc_ph = '8906161591';
+	$partner->desc_eml = 'AnupamGhora045@gmail.com';
 	$partner->image = 'anupam.jpg';
 	$partner->twitter = '';
 	$partner->facebook = '';
