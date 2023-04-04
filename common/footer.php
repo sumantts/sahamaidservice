@@ -73,11 +73,21 @@
         <h4>Our Social Networks</h4>
         <p>You can find us below social media</p>
         <div class="social-links mt-3">
-          <a href="javascript: void(0)" class="twitter"><i class="bx bxl-twitter"></i></a>
-          <a href="javascript: void(0)" class="facebook"><i class="bx bxl-facebook"></i></a>
-          <a href="javascript: void(0)" class="instagram"><i class="bx bxl-instagram"></i></a>
-          <a href="javascript: void(0)" class="google-plus"><i class="bx bxl-skype"></i></a>
-          <a href="javascript: void(0)" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        <?php if($socials["twitter"] != ''){?>
+          <a href="<?=$socials["twitter"]?>" target="_blank" class="twitter"><i class="bx bxl-twitter"></i></a>
+          <?php } ?>
+          <?php if($socials["facebook"] != ''){?>
+          <a href="<?=$socials["facebook"]?>" target="_blank" class="facebook"><i class="bx bxl-facebook"></i></a>
+          <?php } ?>
+          <?php if($socials["instagram"] != ''){?>
+          <a href="<?=$socials["instagram"]?>" target="_blank" class="instagram"><i class="bx bxl-instagram"></i></a>
+          <?php } ?>
+          <?php if($socials["google_plus"] != ''){?>
+          <a href="<?=$socials["google_plus"]?>" target="_blank" class="google-plus"><i class="bx bxl-skype"></i></a>
+          <?php } ?>
+          <?php if($socials["linkedin"] != ''){?>
+          <a href="<?=$socials["linkedin"]?>" target="_blank" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+          <?php } ?>
         </div>
       </div>
 

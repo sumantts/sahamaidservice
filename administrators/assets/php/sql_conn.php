@@ -1,14 +1,15 @@
 <?php
-	// $host = 'localhost';
-	// $username = 'root';
-	// $password = '';
-	// $dbname = 'sahamaidservice';
-	
-	$host = 'localhost';
-	$username = 'sahamaidservice_sahamaidservice';
-	$password = 'sahamaidservice123';
-	$dbname = 'sahamaidservice_sahamaidservice';
-	
+	if($_SERVER['HTTP_HOST'] == 'localhost'){
+		$host = 'localhost';
+		$username = 'root';
+		$password = '';
+		$dbname = 'sahamaidservice';
+	}else{	
+		$host = 'localhost';
+		$username = 'sahamaidservice_sahamaidservice';
+		$password = 'sahamaidservice123';
+		$dbname = 'sahamaidservice_sahamaidservice';
+	}
 	$mysqli = new mysqli($host, $username, $password, $dbname);
 
 	// Check connection
@@ -237,6 +238,15 @@
 	$partner->instagram = '';
 	$partner->linkedin = '';
 	array_push($partners, $partner);
+
+	//Social Media
+	$socials = [
+		"twitter"=>'',
+		"facebook"=>'https://www.facebook.com/profile.php?id=100063862040370',
+		"instagram"=>'',
+		"google_plus"=>'',
+		"linkedin"=>'',
+	];
 
 		 
 ?>
