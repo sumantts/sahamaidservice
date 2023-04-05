@@ -26,8 +26,10 @@
               $c_name = 'mt-4 mt-md-0';
             }else if($l > 1){
               $c_name = 'mt-4 mt-xl-0';
+            }else if($l > 2){
+              $c_name = 'mt-4 mt-xl-4';
             }else{
-              $c_name = '';
+              //$c_name = '';
             }
           ?>
           <div class="col-xl-4 col-md-6 d-flex align-items-stretch <?=$c_name?>" data-aos="zoom-in" data-aos-delay="100">

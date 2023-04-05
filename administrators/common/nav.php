@@ -30,6 +30,9 @@
 					<li class="nav-item <?php if($p == 'maid_request'){ ?> active <?php } ?>">
 					    <a href="?p=maid_request&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Maid Request List</span></a>
 					</li>
+					<li class="nav-item <?php if($p == 'services'){ ?> active <?php } ?>">
+					    <a href="?p=services&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Services</span></a>
+					</li>
 
 					<!-- <li class="nav-item pcoded-hasmenu <?php if($p == 'deposit' || $p == 'loan'){ ?> active pcoded-trigger <?php } ?>">
 					    <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Product</span></a>

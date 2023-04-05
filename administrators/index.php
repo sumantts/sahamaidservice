@@ -35,9 +35,9 @@
 			include('setup/maid_request/maid_request.php');		
 		break;
 		
-		case 'deposit':
-			$title = "Deposit";
-			include('setup/product/deposit/deposit.php');		
+		case 'services':
+			$title = "Services";
+			include('setup/services/services.php');		
 		break;
 						
 		default:

@@ -193,24 +193,42 @@
 	$review->review_desc = 'Getting good services, reliable and responsible and service on time';
 	array_push($reviews, $review);
 
-	//Services
+	//Services	
 	$services_text = 'We are providing below services.';
-
 	$services = array();
+	$sql = "SELECT * FROM service_manager";
+	$result = $mysqli->query($sql);
+
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_array()){
+			$service_id = $row['service_id'];			
+			$name = $row['name'];		
+			$description = $row['description'];
+
+			$service = new stdClass();			
+			$service->name = $name;
+			$service->description = $description;
+
+			array_push($services, $service);
+		}
+	} 
+	//$mysqli->close();
+
+	/*$services = array();
 	$service = new stdClass();
 	$service->name = 'All Types of Maid';
 	$service->description = 'Basic House Cleaning, Deep/Spring Cleaning, Green Cleaning Services, Ceiling and Wall Cleaning, Curtain Cleaning, Carpet and Upholstery Maid Services, Blind and Chimney Cleaning, Pressure Washing';
 	array_push($services, $service);
 
 	$service = new stdClass();
-	$service->name = 'House keepingin office & Commercial Place';
+	$service->name = 'House keeping in office & Commercial Place';
 	$service->description = 'Housekeeping refers to day-to-day cleanliness, tidiness and good order in all parts of the office. Good housekeeping provides a clean and pleasant working environment. It also helps prevent accidents in the workplace and aids the efficient operation of the office.';
 	array_push($services, $service);
 
 	$service = new stdClass();
 	$service->name = 'All types of man power supply';
 	$service->description = 'We have all types of employess (Skilled, Unskilled & Semiskilled). We supply man power for Driver Services, Contract Labour Supplier Services, Plumbing Contractors, Industrial Manpower Services, Staffing Service, and Labour Consultants.';
-	array_push($services, $service);
+	array_push($services, $service);*/
 
 	//Business Partner
 	$partner_text = 'We are two business partners are working together since 20 years';
