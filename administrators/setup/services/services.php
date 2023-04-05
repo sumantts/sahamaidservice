@@ -50,88 +50,6 @@
         <!-- [ breadcrumb ] end -->
         <!-- [ Main Content ] start -->
         <div class="row">
-            <!-- [ sample-page ] start -->
-            <!-- <div class="col-sm-12">
-                <div class="card">
-
-                    <div class="card-header">
-                        <h5> <?=$title?> </h5>
-                        <div class="card-header-right">
-                            <div class="btn-group card-option">
-                                <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="feather icon-more-horizontal"></i>
-                                </button>
-                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                    <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
-                                    <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
-                                    <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-                                    <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
-                                    <li><a href="#!" data-toggle="modal" data-target="#exampleModalLong"><i class="feather icon-file-plus"></i> add new</a> </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
-							<strong>Success!</strong> Your Data saved successfully.
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-
-                        <form class="needs-validation" novalidate>
-                            <div class="form-row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="firstName">First name</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="First name" value="" required>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>                                    
-                                    <div class="invalid-feedback">
-                                        Please provide First name.
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="lastName">Last name</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="Last name" value="" required>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>                                   
-                                    <div class="invalid-feedback">
-                                        Please provide Last name.
-                                    </div>
-                                </div>
-                                
-                            </div>
-                                                        
-                            <button class="btn  btn-primary" type="button" id="submitForm">
-                                <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                <span class="btn-text" id="submitForm_text">Submit form</span>
-                            </button>
-                        </form>
-
-                    </div>
-                          
-                    Toast Message
-                    <div style="position:absolute; top:40px; right: 40px">
-                        <div class="toast hide toast-right" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
-                            <div class="toast-header">
-                                <img src="assets/images/<?=$ico?>" alt="" class="img-fluid m-r-5" style="width:20px;">
-                                <strong class="mr-auto"><?=$p_name?></strong>
-                                <small class="text-muted">11 mins ago</small>
-                                <button type="button" class="m-l-5 mb-1 mt-1 close" data-dismiss="toast" aria-label="Close">
-                                    <span>&times;</span>
-                                </button>
-                            </div>
-                            <div class="toast-body">
-                            Success! Form data saved successfully.
-                            </div>
-                        </div>
-                    </div>                             
-                    Toast Message
-
-                </div>
-            </div> -->
-
             <!-- [ sample-table ] start -->
             <div class="col-sm-12">
                 <div class="card">
@@ -227,6 +145,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
+                            <input type="hidden" id="service_id" value="0">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                             <button class="btn  btn-primary" type="button" id="submitForm">

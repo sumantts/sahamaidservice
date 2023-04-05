@@ -22,9 +22,7 @@ function validateForm(){
         $status = true;
         $('#serviceDescription').removeClass('is-invalid');
         $('#serviceDescription').addClass('is-valid');
-    }
-
-    console.log('serviceName: '+$serviceName);
+    }    
 
     $('#submitForm_spinner').hide();
     $('#submitForm_spinner_text').hide();
@@ -41,6 +39,7 @@ function clearForm(){
     $('#serviceDescription').val('');
     $('#serviceDescription').removeClass('is-valid');
     $('#serviceDescription').removeClass('is-invalid');
+    $('#service_id').val('0');
 
 }//end 
 
@@ -57,13 +56,14 @@ $('#submitForm').click(function(){
         $formVallidStatus = validateForm();
 
         if($formVallidStatus == true){
+            $service_id = $('#service_id').val();
             $.ajax({
                 method: "POST",
                 url: "setup/services/function.php",
-                data: { fn: "saveServices", serviceName: $serviceName, serviceDescription: $serviceDescription }
+                data: { fn: "saveServices", service_id: $service_id, serviceName: $serviceName, serviceDescription: $serviceDescription }
             })
             .done(function( res ) {
-                console.log(res);
+                //console.log(res);
                 $res1 = JSON.parse(res);
                 if($res1.status == true){
                     $('#orgFormAlert1').css("display", "block");
@@ -81,9 +81,27 @@ $('#submitForm').click(function(){
     }, 500)    
 })
 
+function editService($service_id){
+    $('#exampleModalLong').modal('show');
+    $.ajax({
+        method: "POST",
+        url: "setup/services/function.php",
+        data: { fn: "getServiceData", service_id: $service_id }
+    })
+    .done(function( res ) {
+        //console.log(res);
+        $res1 = JSON.parse(res);
+        if($res1.status == true){
+            $('#serviceName').val($res1.name);
+            $('#serviceDescription').val($res1.description);
+            $('#service_id').val($service_id);
+        }
+    });//end ajax
+
+}
+
 //Delete function	
 function deleteService($service_id){
-    console.log('Delete Service Id: '+$service_id);
     if (confirm('Are you sure to delete the Service?')) {
         $.ajax({
             method: "POST",
@@ -91,7 +109,7 @@ function deleteService($service_id){
             data: { fn: "deleteService", service_id: $service_id }
         })
         .done(function( res ) {
-            console.log(res);
+            //console.log(res);
             $res1 = JSON.parse(res);
             if($res1.status == true){
                 $('#orgFormAlert').show();
