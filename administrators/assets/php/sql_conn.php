@@ -47,8 +47,8 @@
 	$logo_text = 'Saha';
 
     $p_name = 'Saha Maid Service and Enterprise';
-	$logo = 'logo.png';
-	$ico = 'favicon.ico';
+	$logo = 'saha_maid_service_logo.jpg';//'logo.png';
+	$ico = 'favicon.jpg';//'favicon.ico';
 
 	$banner_text1 = 'Saha Maid Service and Enterprise';
 	$banner_text2 = 'Manpower Service Provider, Home Help Service Agency in P.s: Bauria; Open 24 X 7';
