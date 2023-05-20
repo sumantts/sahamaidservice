@@ -10,7 +10,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.jpg" rel="icon">
+  <link href="assets/img/confirm-logo.jpg" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -37,7 +37,7 @@
 
       <!-- <h1 class="logo me-auto"><a href="?p=home"><?=$logo_text?></a></h1> -->
       <!-- Uncomment below if you prefer to use an image logo -->
-      <a href="index.php" class="logo me-auto"><img src="assets/img/saha_maid_service_logo.jpg" alt="" class="img-fluid"></a>
+      <a href="index.php" class="logo me-auto"><img src="assets/img/confirm-logo.jpg" alt="" class="img-fluid" style="margin-top:-10px;"></a>
 
       <nav id="navbar" class="navbar">
         <ul>
