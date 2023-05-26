@@ -46,6 +46,41 @@
     <![endif]-->
     <!-- Warning Section Ends -->
 
+    
+
+    <!-- Modal start -->
+    <div id="updateProfileModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateProfileModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateProfileModalTitle">Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="profile_name" class="col-form-label">Profile Name</label>
+                            <input type="text" class="form-control" id="profile_name" value="<?=$_SESSION["profile_name"]?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-form-label">Username</label>
+                            <input type="text" class="form-control" id="username" value="<?=$_SESSION["username"]?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-form-label">Password</label>
+                            <input type="text" class="form-control" id="password" value="<?=$_SESSION["password"]?>">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn  btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="updateProfile" class="btn  btn-primary">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal end -->
+
     <!-- Required Js -->
     <script src="assets/js/vendor-all.min.js"></script>
     <script src="assets/js/plugins/bootstrap.min.js"></script>
@@ -74,6 +109,49 @@
             ajaxStop: function() { $body.removeClass("loading"); }    
         });
         // common for all function.js page 
+
+        $('#updateProfile').click(function(){
+            
+            $profile_name = $('#profile_name').val();
+            $username = $('#username').val();
+            $password = $('#password').val();
+
+            if($profile_name == ''){
+                alert('Please enter profile name');
+                $('#profile_name').focus();
+            }else if($username == ''){
+                alert('Please enter user name');
+                $('#username').focus();
+            }else if($password == ''){
+                alert('Please enter password');
+                $('#password').focus();
+            }else{
+                $.ajax({
+                    method: "POST",
+                    url: "signin/function.php",
+                    data: { fn: "updateProfile", profile_name: $profile_name, username: $username, password: $password }
+                })
+                .done(function( res ) {
+                    console.log(res);
+                    $res1 = JSON.parse(res);
+                    // $('#signin_spinner').hide();
+                    // $('#signin_spinner_text').hide();
+                    // $('#signin_text').show();
+
+                    if($res1.status == true){
+                        $('#updateProfileModal').modal('hide');
+                        alert('Profile Updated. You will be log out automatically')
+                        window.location.href = '?p=signin';
+                    }else{
+                        $('#updateProfileModal').modal('hide');
+                        //alert($res1.message);
+                        //$('#error_text').html('Wrong username or password');
+                    }
+                });//end ajax
+            }
+
+        });//end function
+        
     </script>
     
     <!-- Place at bottom of page Loading -->
