@@ -175,7 +175,23 @@
 	$review_text = 'We gain some blessings from our beloved customers. They have written ther satisfactions within a few lines. These Lines are assets for us.';
 
 	$reviews = array();
-	$review = new stdClass();
+	$sql1 = "SELECT * FROM cstomer_review";
+	$result1 = $mysqli->query($sql1);
+
+	if ($result1->num_rows > 0) {
+		while($row1 = $result1->fetch_array()){
+			$review_detail1 = $row1['review_detail'];
+			$review_detail = json_decode($review_detail1);
+
+			$review = new stdClass();		
+			$review->customer_name = $review_detail->name;
+			$review->from_area = $review_detail->address;
+			$review->review_desc = $review_detail->message;
+			array_push($reviews, $review);
+		}
+	} 
+
+	/*$review = new stdClass();
 	$review->customer_name = 'Rahul Kumar Jha';
 	$review->from_area = 'Kolkata';
 	$review->review_desc = 'So polite behaviour and provide responsible maid as per my requirement with more option. Great service.';
@@ -191,7 +207,7 @@
 	$review->customer_name = 'Aman Choudhary';
 	$review->from_area = 'Kolkata';
 	$review->review_desc = 'Getting good services, reliable and responsible and service on time';
-	array_push($reviews, $review);
+	array_push($reviews, $review);*/
 
 	//Services	
 	$services_text = 'We are providing below services.';

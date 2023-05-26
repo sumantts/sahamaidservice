@@ -25,7 +25,7 @@
            <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="200">
             <div class="member d-flex align-items-start">              
               <div class="member-info">
-                <h4><?=$reviews[$k]->customer_name?></h4>
+                <h4><?=ucfirst($reviews[$k]->customer_name)?></h4>
                 <span>From: <?=$reviews[$k]->from_area?></span>
                 <p><?=$reviews[$k]->review_desc?></p>
               </div>
