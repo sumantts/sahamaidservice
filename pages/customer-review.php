@@ -31,7 +31,9 @@
               </div>
             </div>
           </div>
-          <?php } ?>
+          <?php }else{?>
+            <h4>Sorry! No Reviews Available</h4>
+        <?php  } ?>
 
           <!-- <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
             <div class="member d-flex align-items-start">
