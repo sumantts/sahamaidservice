@@ -33,7 +33,7 @@
 		$review_details = json_encode($_POST["review_details"]);
 		$status = true;	
         
-        echo $sql = "INSERT INTO cstomer_review (review_detail) VALUES ('" .$review_details. "')";
+        $sql = "INSERT INTO cstomer_review (review_detail) VALUES ('" .$review_details. "')";
         $result = $mysqli->query($sql);
         $quotation_id = $mysqli->insert_id;
 
