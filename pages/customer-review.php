@@ -72,7 +72,22 @@
       </div>
     </section>
     <?php }else{?>
+      
+    <section id="team" class="team section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Customer Review</h2>
+          <p><?=$review_text?></p>
+        </div>
+
+        <div class="row">
+
             <h4>Sorry! No Reviews Available</h4>
+          </div>
+
+      </div>
+    </section>
         <?php  } ?>
     <!-- End Team Section -->
 
