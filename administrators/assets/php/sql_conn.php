@@ -50,8 +50,8 @@
 	$logo = 'confirm-logo.jpg';//'logo.png';
 	$ico = 'confirm-logo.jpg';//'favicon.ico';
 
-	$banner_text1 = 'Saha Maid Service and Enterprise';
-	$banner_text2 = 'Manpower Service Provider, Home Help Service Agency in P.s: Bauria; Open 24 X 7';
+	$banner_text1 = '';//'Saha Maid Service and Enterprise';
+	$banner_text2 = '';//'Manpower Service Provider, Home Help Service Agency in P.s: Bauria; Open 24 X 7';
 
 	//Slider
 	$sliders = array();
