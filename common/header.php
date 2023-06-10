@@ -10,8 +10,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/confirm-logo.jpg" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/<?=$logo?>" rel="icon">
+  <link href="assets/img/<?=$logo?>" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -37,7 +37,7 @@
 
       <!-- <h1 class="logo me-auto"><a href="?p=home"><?=$logo_text?></a></h1> -->
       <!-- Uncomment below if you prefer to use an image logo -->
-      <a href="index.php" class="logo me-auto"><img src="assets/img/confirm-logo.jpg" alt="" class="img-fluid" style="margin-top:-10px;"></a>
+      <a href="index.php" class="logo me-auto"><img src="assets/img/<?=$logo?>" alt="" class="img-fluid" style="margin-top:-10px;"></a>
 
       <nav id="navbar" class="navbar">
         <ul>
