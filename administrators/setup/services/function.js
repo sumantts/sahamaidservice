@@ -57,10 +57,12 @@ $('#submitForm').click(function(){
 
         if($formVallidStatus == true){
             $service_id = $('#service_id').val();
+            $servicesPhoto = localStorage.getItem('image');
+
             $.ajax({
                 method: "POST",
                 url: "setup/services/function.php",
-                data: { fn: "saveServices", service_id: $service_id, serviceName: $serviceName, serviceDescription: $serviceDescription }
+                data: { fn: "saveServices", service_id: $service_id, serviceName: $serviceName, serviceDescription: $serviceDescription, servicesPhoto: $servicesPhoto }
             })
             .done(function( res ) {
                 //console.log(res);
@@ -70,6 +72,7 @@ $('#submitForm').click(function(){
                     $('.toast-right').toast('show');
                     //$('#liveToast').toast('show');
                     clearForm();
+                    localStorage.setItem('image', '');
                     $('#exampleModalLong').modal('hide');
                     populateDataTable();
                 }else{
@@ -93,7 +96,10 @@ function editService($service_id){
         $res1 = JSON.parse(res);
         if($res1.status == true){
             $('#serviceName').val($res1.name);
-            $('#serviceDescription').val($res1.description);
+            $('#serviceDescription').val($res1.description);            
+            let img = document.getElementById('image');
+            img.src = $res1.services_photo;
+            localStorage.setItem("image", $res1.services_photo);
             $('#service_id').val($service_id);
         }
     });//end ajax
@@ -118,6 +124,27 @@ function deleteService($service_id){
         });//end ajax
     }		
 }//end delete
+
+//Image upload
+function savePhoto(){
+    const imgPath = document.querySelector('input[type=file]').files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function () {
+        // convert image file to base64 string and save to localStorage
+        localStorage.setItem("image", reader.result);
+    }, false);
+
+    if (imgPath) {
+        reader.readAsDataURL(imgPath);
+    }
+
+    //To display image again
+    setTimeout(function(){
+    let img = document.getElementById('image');
+    img.src = localStorage.getItem('image');
+    }, 250);
+}
 
 
 function populateDataTable(){

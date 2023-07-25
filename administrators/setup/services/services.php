@@ -89,6 +89,7 @@
                                         <th>Sl.No.</th>
                                         <th>Name</th>
                                         <th>Description</th>
+                                        <th>Photo</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -97,6 +98,7 @@
                                         <th>Sl.No.</th>
                                         <th>Name</th>
                                         <th>Description</th>
+                                        <th>Photo</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -139,6 +141,13 @@
                                         <div class="invalid-feedback">
                                             Please provide Service Description.
                                         </div>
+                                    </div> 
+                                    
+                                    <div class="col-md-12 mb-3">
+                                        <input type="file" accept="image/*" class="custom-file-input" id="servicesPhoto" aria-describedby="servicesPhoto"  onchange="savePhoto()">
+                                        <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                                        <small id="servicesPhotoError" class="form-text text-danger"> </small>
+                                        <img src="" id="image" width="100">
                                     </div> 
 
                                 </div>

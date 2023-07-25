@@ -16,13 +16,14 @@
 		$service_id = $_POST["service_id"];	
 		$serviceName = $_POST["serviceName"];
 		$serviceDescription = $_POST["serviceDescription"];	
+		$servicesPhoto = $_POST["servicesPhoto"];	
 		
 		try {
 			if($service_id > 0){
-				$status = true;$sql = "UPDATE service_manager SET name = '" .$serviceName. "', description = '" .$serviceDescription. "' WHERE service_id = '" .$service_id. "' ";
+				$status = true;$sql = "UPDATE service_manager SET name = '" .$serviceName. "', description = '" .$serviceDescription. "', services_photo = '" .$servicesPhoto. "' WHERE service_id = '" .$service_id. "' ";
 				$result = $mysqli->query($sql);
 			}else{
-				$sql = "INSERT INTO service_manager (name, description) VALUES ('" .$serviceName. "', '" .$serviceDescription. "')";
+				$sql = "INSERT INTO service_manager (name, description, services_photo) VALUES ('" .$serviceName. "', '" .$serviceDescription. "', '" .$servicesPhoto. "')";
 				$result = $mysqli->query($sql);
 				$insert_id = $mysqli->insert_id;
 				if($insert_id > 0){
@@ -54,12 +55,18 @@
 			while($row = $result->fetch_array()){
 				$service_id = $row['service_id'];			
 				$name = $row['name'];		
-				$description = $row['description'];
+				$description = $row['description'];	
+				if($row['services_photo'] != ''){
+					$services_photo = $row['services_photo'];
+				}else{
+					$services_photo = '';
+				}
 				
 				$data[0] = $slno;
 				$data[1] = $name;
 				$data[2] = $description;
-				$data[3] = "<i class='fa fa-edit' aria-hidden='true' onclick='editService(".$service_id.")'></i> <i class='fa fa-trash' aria-hidden='true' onclick='deleteService(".$service_id.")'></i>";
+				$data[3] = "<img src='".$services_photo."' id='saved_image' width='100'>";// $services_photo;
+				$data[4] = "<i class='fa fa-edit' aria-hidden='true' onclick='editService(".$service_id.")'></i> <i class='fa fa-trash' aria-hidden='true' onclick='deleteService(".$service_id.")'></i>";
 
 				array_push($mainData, $data);
 				$slno++;
@@ -88,7 +95,12 @@
 			$row = $result->fetch_array();
 			$service_id = $row['service_id'];			
 			$name = $row['name'];		
-			$description = $row['description'];	
+			$description = $row['description'];		
+			if($row['services_photo'] != ''){
+				$services_photo = $row['services_photo'];	
+			}else{
+				$services_photo = '';
+			}
 		} else {
 			$status = false;
 		}
@@ -96,6 +108,7 @@
 
 		$return_array['name'] = $name;
 		$return_array['description'] = $description;
+		$return_array['services_photo'] = $services_photo;
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
 	}//function end
