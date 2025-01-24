@@ -220,7 +220,7 @@
 			$service_id = $row['service_id'];			
 			$name = $row['name'];		
 			$description = $row['description'];	
-			$services_photo = $row['services_photo'];
+			$services_photo = '';//$row['services_photo'];
 
 			$service = new stdClass();			
 			$service->service_id = $service_id;			
