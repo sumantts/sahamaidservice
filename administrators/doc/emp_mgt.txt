@@ -1,0 +1,73 @@
+DOC: https://docs.google.com/spreadsheets/u/2/d/15-J921BT8Lo3WDeWyHFek4HXhrLQWKLsS0TswZ8QODI/edit?usp=drivesdk
+
+Emp Mgt --> Office Staff
+1. Employee type: Admin(owner), Manager, Employee, Client, Worker
+
+2. Admin and Manager can add new Employee
+
+3. Login thaka obosthai Administratir link e click korle direct dashboard e jabe.
+
+4. dministrators/ to dministrator/
+
+5. Emp Details: Name, email, ph, DOB, Address, Pin code, Adhar Card, PAN card , Voter card ID, Bank Details. Each document should be uploaded.
+Educational Qualificatin, 
+
+6. Manager or Admin will put the attendance, Employee will see their attendance only.
+In time Out time will be entered manually by Manager/Admin
+1st march Present 11:00 to 19:00
+2nd march Absent
+
+7. My Profile section, Employee can not update it. (without doc)
+
+8. Employee can see their attendance with in time & out time
+
+9. Manager/Admin/Employee can apply leave. it will be approved by Manager/Admin.
+Leave application table
+
+** 2. Clients Management  **
+1. pin code must - Field details in whatsapp
+
+** 1. Service Manpower Management ** Worker management 
+
+1. Add worker details by manager admin
+
+inserted by updated by.
+
+Details screen in whatsapp
+
+
+superadmin@sahaservices.in
+manager@sahaservices.in
+employee@sahaservices.in
+client@sahaservices.in
+worker@sahaservices.in
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

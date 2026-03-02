@@ -39,6 +39,11 @@
 			$title = "Services";
 			include('setup/services/services.php');		
 		break;
+		
+		case 'users':
+			$title = "Users";
+			include('users/users.php');		
+		break;
 						
 		default:
 		include('signin/signin.php');

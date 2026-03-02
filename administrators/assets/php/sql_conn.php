@@ -6,9 +6,9 @@
 		$dbname = 'sahamaidservice';
 	}else{	
 		$host = 'localhost';
-		$username = 'sahamaidservice_sahamaidservice';
-		$password = 'sahamaidservice123';
-		$dbname = 'sahamaidservice_sahamaidservice';
+		$username = 'sahaserv_sahamaidservice';
+		$password = 'sahamaidservice123!@#';
+		$dbname = 'sahaserv_sahamaidservice';
 	}
 	$mysqli = new mysqli($host, $username, $password, $dbname);
 
