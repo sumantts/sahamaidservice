@@ -212,17 +212,85 @@ $sess_user_type = $_SESSION["user_type"];
                             <h5 class="modal-title" id="exampleModalLongTitle">Modal Title</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                    <input type="text" class="form-control" id="recipient-name">
+                        <div class="modal-body">                            
+                            <form id="myForm" name="myForm" action="#" method="POST"> 
+                                <div class="row mb-2">
+                                    <div class="col-md-3">
+                                        <label for="full_name" class="form-label text-danger">Full Name*</label>
+                                        <input type="text" class="form-control" name="full_name" id="full_name" value="">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="email_id" class="form-label text-danger">Email*</label>
+                                        <input type="text" class="form-control" name="email_id" id="email_id" value="">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="phone_number" class="form-label text-danger">Phone Number*</label>
+                                        <input type="text" class="form-control" name="phone_number" id="phone_number" value="">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="date_of_birth" class="form-label text-danger">Date of Birth*</label>
+                                        <input type="date" class="form-control" name="date_of_birth" id="date_of_birth" value="">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Message:</label>
-                                    <textarea class="form-control" id="message-text"></textarea>
+                                
+                                <!-- <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <label for="address" class="form-label text-danger">Address*</label>
+                                        <textarea class="form-control" id="address" name="address"></textarea>
+                                    </div> 
                                 </div>
-                            </form>
+
+                                <div class="row mb-2">
+                                    <div class="col-md-2">
+                                        <label for="pincode" class="form-label text-danger">Pincode*</label>
+                                        <input type="text" class="form-control" name="pincode" id="pincode" value="">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="adhar_card" class="form-label text-danger">Adhar Card*</label>
+                                        <input type="text" class="form-control" name="adhar_card" id="adhar_card" value="">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="adhar_card_img" class="form-label">Adhar Card Image</label>
+                                        <input type="file" class="form-control" name="adhar_card_img" id="adhar_card_img" value="">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="pan_card" class="form-label">PAN Card</label>
+                                        <input type="text" class="form-control" name="pan_card" id="pan_card" value="">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="pan_card_img" class="form-label">PAN Card Image</label>
+                                        <input type="file" class="form-control" name="pan_card_img" id="pan_card_img" value="">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-md-3">
+                                        <label for="voter_id_card" class="form-label text-danger">Voter ID Card*</label>
+                                        <input type="text" class="form-control" name="voter_id_card" id="voter_id_card" value="">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="voter_id_card_img" class="form-label">Voter ID Card Image</label>
+                                        <input type="file" class="form-control" name="voter_id_card_img" id="voter_id_card_img" value="">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label for="bank_details" class="form-label">Bank Details</label>
+                                        <textarea class="form-control" name="bank_details" id="bank_details"><textarea>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="bank_details_img" class="form-label">Bank Details Image</label>
+                                        <input type="file" class="form-control" name="bank_details_img" id="bank_details_img" value="">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-md-3">
+                                        <input type="hidden" name="user_id" id="user_id" value="0">
+                                        <button type="submit" class="btn btn-primary" id="submitForm">Save</button>                            
+                                        <button type="button" class="btn btn-dark" id="cancelForm">Clear</button>
+                                    </div>
+                                </div>-->
+
+                            </form> 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn  btn-secondary" data-dismiss="modal">Close</button>
