@@ -1,4 +1,11 @@
-<?php include('common/head.php'); ?>
+<?php 
+if(!$_SESSION["user_id"]){
+    header("location:?p=signin");
+}
+include('common/head.php'); 
+$sess_user_type = $_SESSION["user_type"];
+
+?>
 <script type="text/javascript">   
 
 </script>
@@ -75,16 +82,17 @@
 
                         <!-- Nav -->
                         <div class="nav-tabs">
-                            <button class="tab-btn btn btn-primary active" data-tab="admin">Admin</button>
-                            <button class="tab-btn btn btn-secondary" data-tab="manager">Manager</button>
-                            <button class="tab-btn btn btn-success" data-tab="employee">Employee</button>
+                            <input type="hidden" name="sess_user_type" id="sess_user_type" value="<?=$sess_user_type?>">
+                            <button class="tab-btn btn btn-primary <?php if($sess_user_type == '1'){?> active <?php } if($sess_user_type > 1){?>d-none<?php } ?>" data-tab="admin">Admin</button>
+                            <button class="tab-btn btn btn-secondary <?php if($sess_user_type == '2'){?> active <?php } if($sess_user_type > 2){?>d-none<?php } ?>" data-tab="manager">Manager</button>
+                            <button class="tab-btn btn btn-success <?php if($sess_user_type == '3'){?> active <?php } if($sess_user_type > 3){?>d-none<?php } ?>" data-tab="employee">Employee</button>
                             <button class="tab-btn btn btn-warning" data-tab="client">Client</button>
                             <button class="tab-btn btn btn-info" data-tab="worker">Worker</button>
                         </div>
 
                         <!-- Tab Content -->
                         <div class="tab-content">
-                            <div class="tab-pane active" id="admin">
+                            <div class="tab-pane  <?php if($sess_user_type == '1'){?> active <?php } ?>" id="admin">
                                 <h4>Admin List</h4>
                                 <div class="table-responsive">
                                     <table id="admin_list" class="table table-striped" style="width:100%">
@@ -105,7 +113,7 @@
                                 </div> 
                             </div>
 
-                            <div class="tab-pane" id="manager">
+                            <div class="tab-pane <?php if($sess_user_type == '2'){?> active <?php } ?>" id="manager">
                                 <h4>Manager List</h4> 
                                 <div class="table-responsive">
                                     <table id="manager_list" class="table table-striped" style="width:100%">
@@ -126,7 +134,7 @@
                                 </div> 
                             </div>
 
-                            <div class="tab-pane" id="employee">
+                            <div class="tab-pane <?php if($sess_user_type == '3'){?> active <?php } ?>" id="employee">
                                 <h4>Employee List</h4>
                                 <div class="table-responsive">
                                     <table id="employee_list" class="table table-striped" style="width:100%">
@@ -147,7 +155,7 @@
                                 </div>  
                             </div>
 
-                            <div class="tab-pane" id="client">
+                            <div class="tab-pane <?php if($sess_user_type == '4'){?> active <?php } ?>" id="client">
                                 <h4>Client List</h4> 
                                 <div class="table-responsive">
                                     <table id="client_list" class="table table-striped" style="width:100%">

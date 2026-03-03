@@ -99,11 +99,21 @@ function populateDataTable(){
 
 $(document).ready(function () {
     $current_tab = 'admin';
-    setTimeout(function(){
-            //$current_tab = 'admin';
-            $table_id = $current_tab+'_list';
-            console.log('table_id: '+$table_id);
-            populateDataTable();
+    $sess_user_type = $('#sess_user_type').val();
+    if($sess_user_type == '1'){
+        $current_tab = 'admin';
+    }else if($sess_user_type == '2'){
+        $current_tab = 'manager';
+    }else if($sess_user_type == '3'){
+        $current_tab = 'employee';
+    }else if($sess_user_type == '4'){
+        $current_tab = 'client';
+    }else{}
+    
+    setTimeout(function(){ 
+        $table_id = $current_tab+'_list';
+        console.log('table_id: '+$table_id);
+        populateDataTable();
     },300);
 });
 
