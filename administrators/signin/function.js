@@ -4,34 +4,28 @@ $('#Signin').click(function(){
     $('#signin_text').hide();
     
 
-    setTimeout(function(){
-        //$('.toast-5s').toast('show')
-        $username = $('#Email').val();
-        $password = $('#Password').val();
+     
+    $username = $('#Email').val();
+    $password = $('#Password').val();
 
-        $.ajax({
-            method: "POST",
-            url: "signin/function.php",
-            data: { fn: "doLogin", username: $username, password: $password }
-        })
-        .done(function( res ) {
-            console.log(res);
-            $res1 = JSON.parse(res);
-            $('#signin_spinner').hide();
-            $('#signin_spinner_text').hide();
-            $('#signin_text').show();
+    $.ajax({
+        method: "POST",
+        url: "signin/function.php",
+        data: { fn: "doLogin", username: $username, password: $password }
+    })
+    .done(function( res ) {
+        console.log(res);
+        $res1 = JSON.parse(res);
+        $('#signin_spinner').hide();
+        $('#signin_spinner_text').hide();
+        $('#signin_text').show();
 
-            if($res1.status == true){
-                window.location.href = '?p=dashboard';
-            }else{
-                $('.toast-5s').toast('show');
-                //alert($res1.message);
-                //$('#error_text').html('Wrong username or password');
-            }
-        });//end ajax
-
-        //window.location = '?p=dashboard';
-    }, 2500)
+        if($res1.status == true){
+            window.location.href = '?p=dashboard';
+        }else{
+            $('.toast-5s').toast('show'); 
+        }
+    });//end ajax 
     
 })
 

@@ -87,13 +87,18 @@
                             <div class="tab-pane active" id="admin">
                                 <h4>Admin List</h4>
                                 <div class="table-responsive">
-                                    <table id="example" class="table table-striped" style="width:100%">
+                                    <table id="admin_list" class="table table-striped" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>Sl.No.</th>
-                                                <th>Name & Phone</th>
-                                                <th>Email & Address</th>
-                                                <th>Message</th>
+                                                <th>Admin name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Adhar Card</th>
+                                                <th>PAN Card</th>
+                                                <th>Voter Card</th>
+                                                <th>Pincode</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead> 
                                     </table>
@@ -102,18 +107,86 @@
 
                             <div class="tab-pane" id="manager">
                                 <h4>Manager List</h4> 
+                                <div class="table-responsive">
+                                    <table id="manager_list" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Sl.No.</th>
+                                                <th>Admin name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Adhar Card</th>
+                                                <th>PAN Card</th>
+                                                <th>Voter Card</th>
+                                                <th>Pincode</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead> 
+                                    </table>
+                                </div> 
                             </div>
 
                             <div class="tab-pane" id="employee">
-                                <h4>Employee List</h4> 
+                                <h4>Employee List</h4>
+                                <div class="table-responsive">
+                                    <table id="employee_list" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Sl.No.</th>
+                                                <th>Admin name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Adhar Card</th>
+                                                <th>PAN Card</th>
+                                                <th>Voter Card</th>
+                                                <th>Pincode</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead> 
+                                    </table>
+                                </div>  
                             </div>
 
                             <div class="tab-pane" id="client">
                                 <h4>Client List</h4> 
+                                <div class="table-responsive">
+                                    <table id="client_list" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Sl.No.</th>
+                                                <th>Admin name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Adhar Card</th>
+                                                <th>PAN Card</th>
+                                                <th>Voter Card</th>
+                                                <th>Pincode</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead> 
+                                    </table>
+                                </div> 
                             </div>
 
                             <div class="tab-pane" id="worker">
                                 <h4>Worker List</h4> 
+                                <div class="table-responsive">
+                                    <table id="worker_list" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Sl.No.</th>
+                                                <th>Admin name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Adhar Card</th>
+                                                <th>PAN Card</th>
+                                                <th>Voter Card</th>
+                                                <th>Pincode</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead> 
+                                    </table>
+                                </div> 
                             </div>
                         </div>
                     
@@ -122,40 +195,6 @@
                 <!-- End Card -->
             </div> 
             <!-- End col 12 -->
-
-            <!-- [ sample-table ] start -->
-            <div class="col-sm-12">
-                <div class="card">
-
-                    <div class="card-header">
-                        <h5> <?=$title?> Table</h5>
-                        <!-- <div class="card-header-right">
-                            <div class="btn-group card-option">
-                                <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="feather icon-more-horizontal"></i>
-                                </button>
-                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                    <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
-                                    <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
-                                    <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-                                    <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
-                                    <li><a href="#!" data-toggle="modal" data-target="#exampleModalLong"><i class="feather icon-file-plus"></i> add new</a> </li>
-                                </ul>
-                            </div>
-                        </div> -->
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
-							<strong>Success!</strong> Your Data saved successfully.
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-
-                        
-                                              
-
-                    </div>
-                </div>
-            </div>
 
             <!-- Modal start -->
             <div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -199,7 +238,7 @@
 
 <script>
     // Select all tab buttons
-    const buttons = document.querySelectorAll('.tab-btn');
+    /*const buttons = document.querySelectorAll('.tab-btn');
     const panes = document.querySelectorAll('.tab-pane');
 
     buttons.forEach(button => {
@@ -222,8 +261,10 @@
             let activeTab = document.querySelector('.tab-pane.active');
             if (activeTab) {
                 console.log(activeTab.id);
+                $current_tab = activeTab.id;                
+                populateDataTable();
             }
 
         });
-    });
+    });*/
 </script>

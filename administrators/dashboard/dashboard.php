@@ -1,5 +1,5 @@
 <?php 
-if(!$_SESSION["login_id"]){
+if(!$_SESSION["user_id"]){
     header("location:?p=signin");
 }
 include('common/head.php'); ?>

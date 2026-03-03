@@ -15,19 +15,18 @@
 		//$v = "'".$param1."','".$param2."'";		
 		
 		try {
-			$sql = "SELECT * FROM login WHERE username = '".$username."' && password = '".$password."'";
+			$sql = "SELECT * FROM user_details WHERE username = '".$username."' && password = '".$password."'";
 			$result = $mysqli->query($sql);
 
 			if ($result->num_rows > 0) {
 				$row = $result->fetch_array();
-				$login_id = $row['login_id'];			
-				$username = $row['username'];			
-				$password = $row['password'];			
-				$profile_name = $row['profile_name'];
-				$_SESSION["username"] = $username;
-				$_SESSION["password"] = $password;			
-				$_SESSION["profile_name"] = $profile_name;			
-				$_SESSION["login_id"] = $login_id;
+				$user_id = $row['user_id'];			
+				$user_type = $row['user_type'];			
+				$full_name = $row['full_name']; 
+
+				$_SESSION["user_type"] = $user_type;
+				$_SESSION["full_name"] = $full_name; 		
+				$_SESSION["user_id"] = $user_id;
 			} else {
 				$status = false;
 			}
@@ -37,7 +36,7 @@
 		}
 
 		$return_result['status'] = $status;
-		sleep(2);
+		//sleep(2);
 		echo json_encode($return_result);
 	}//end function doLogin
 	

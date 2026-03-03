@@ -81,13 +81,15 @@ $('#submitForm').click(function(){
 
 
 function populateDataTable(){
-    $('#example').dataTable().fnClearTable();
-    $('#example').dataTable().fnDestroy();
+    $table_id = $current_tab+'_list';
 
-    $('#example').DataTable({ 
+    $('#'+$table_id).dataTable().fnClearTable();
+    $('#'+$table_id).dataTable().fnDestroy();
+
+    $('#'+$table_id).DataTable({ 
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'users/function.php?fn=getQuoteRequest' },
+        ajax: {'url': 'users/function.php?fn=getuserDetails&current_tab='+$current_tab },
         dom: 'Bfrtip',
         buttons: [],
         order: [[0, 'desc']],
@@ -96,7 +98,46 @@ function populateDataTable(){
 }//end fun
 
 $(document).ready(function () {
-    populateDataTable();
-    
+    $current_tab = 'admin';
+    setTimeout(function(){
+            //$current_tab = 'admin';
+            $table_id = $current_tab+'_list';
+            console.log('table_id: '+$table_id);
+            populateDataTable();
+    },300);
 });
+
+
+// Select all tab buttons
+const buttons = document.querySelectorAll('.tab-btn');
+const panes = document.querySelectorAll('.tab-pane');
+
+buttons.forEach(button => {
+    button.addEventListener('click', function () {
+
+        // Remove active class from all buttons
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        // Hide all tab panes
+        panes.forEach(pane => pane.classList.remove('active'));
+
+        // Add active class to clicked button
+        this.classList.add('active');
+
+        // Show corresponding tab pane
+        const tabId = this.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+
+        // Active Tab Name
+        let activeTab = document.querySelector('.tab-pane.active');
+        if (activeTab) {
+            console.log(activeTab.id);
+            $current_tab = activeTab.id;                
+            populateDataTable();
+        }
+
+    });
+});
+
+
 
