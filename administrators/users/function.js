@@ -1,4 +1,50 @@
+ 
 
+$('#myForm').on('submit', function(){
+    console.log('Validated..'); 
+    /***
+    $serial_no = $('#serial_no').val(); 
+    $parent_c_id = $('#parent_c_id').val();  
+    $category_name = $('#category_name').val();  
+
+    
+    $nature = $('#nature').val();  
+    $part_of_plbs = $('#part_of_plbs').val();  
+    $opening_balance = $('#opening_balance').val();  
+
+    $('#message_text').html('');
+    $('#message_text').removeClass('d-block');
+    $('#message_text').addClass('d-none');
+
+    $.ajax({
+        type: "POST",
+        url: "category/function.php",
+        dataType: "json",
+        data: { fn: "saveFormData", serial_no: $serial_no, category_name: $category_name, parent_c_id: $parent_c_id, nature: $nature, part_of_plbs: $part_of_plbs, opening_balance: $opening_balance }
+    })
+    .done(function( res ) {
+        //$res1 = JSON.parse(res);
+        if(res.status == true){    
+            $('#serial_no').val('');
+            $('#myForm').trigger('reset');
+            $('#theme-settings-offcanvas').offcanvas('hide'); 
+            populateDataTable();
+            configureParentCategoryDd();
+        } 
+        //alert(res.error_message);
+        $('#message_text').html(res.error_message);
+        $('#message_text').removeClass('d-none');
+        $('#message_text').addClass('d-block');
+    });//end ajax 
+    *****/
+    return false;
+}) //end fun
+
+$('#cancelForm').on('click', function(){
+    $('#myForm').trigger('reset');
+})
+
+/******
 function validateForm(){
     $firstName = $('#firstName').val().replace(/^\s+|\s+$/gm,'');
     $lastName = $('#lastName').val().replace(/^\s+|\s+$/gm,'');
@@ -78,7 +124,53 @@ $('#submitForm').click(function(){
 
     }, 500)    
 })
+*****/
 
+$('#addNewBtn').on('click', function(){
+    console.log('opening with modal: ' + $current_tab);
+    $modal_title = $current_tab + ' Details';
+    $('#exampleModalLongTitle').html($modal_title);
+    $("#partTwoBoard").hide();
+    $("#partThreeBoard").hide();
+    $("#partFourBoard").hide();
+    $("#partFiveBoard").hide();
+    $("#partSixBoard").hide();
+    $("#partSevenBoard").hide();
+    $("#partEightBoard").hide();
+    $("#partNineBoard").hide();
+});
+
+$("#partTwoSwitch").click(function(){
+    $("#partTwoBoard").toggle('slow');
+});
+
+$("#partThreeSwitch").click(function(){
+    $("#partThreeBoard").toggle('slow');
+});
+
+$("#partFourSwitch").click(function(){
+    $("#partFourBoard").toggle('slow');
+});
+
+$("#partFiveSwitch").click(function(){
+    $("#partFiveBoard").toggle('slow');
+});
+
+$("#partSixSwitch").click(function(){
+    $("#partSixBoard").toggle('slow');
+});
+
+$("#partSevenSwitch").click(function(){
+    $("#partSevenBoard").toggle('slow');
+});
+
+$("#partEightSwitch").click(function(){
+    $("#partEightBoard").toggle('slow');
+});
+
+$("#partNineSwitch").click(function(){
+    $("#partNineBoard").toggle('slow');
+});
 
 function populateDataTable(){
     $table_id = $current_tab+'_list';
