@@ -222,6 +222,63 @@ function populateDataTable(){
     });
 }//end fun
 
+
+// Gender 
+function configureGenderDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureGenderDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#gender').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].g_id+"'>"+$rows[$i].gender_name+"</option>";                    
+                }//end for                
+                $('#gender').html($html);
+            }else{
+                $('#gender').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#gender').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+// Marital Status 
+function configureMaritalStatusDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureMaritalStatusDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#marital_status').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].m_id+"'>"+$rows[$i].m_status_name+"</option>";                    
+                }//end for                
+                $('#marital_status').html($html);
+            }else{
+                $('#marital_status').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#marital_status').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
 $(document).ready(function () {
     $current_tab = 'admin';
     $sess_user_type = $('#sess_user_type').val();
@@ -239,6 +296,12 @@ $(document).ready(function () {
         $table_id = $current_tab+'_list';
         console.log('table_id: '+$table_id);
         populateDataTable();
+
+        // Dropdown List
+        configureGenderDd();
+        configureMaritalStatusDd();
+
+
     },300);
 });
 

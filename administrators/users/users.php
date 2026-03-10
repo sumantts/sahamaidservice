@@ -232,9 +232,6 @@ $sess_user_type = $_SESSION["user_type"];
                                         <label for="gender" class="form-label text-danger">Gender*</label>
                                         <select class="form-control" name="gender" id="gender">
                                             <option value="">Select</option>
-                                            <option value="1">Male</option>
-                                            <option value="2">Female</option>
-                                            <option value="3">Other</option>
                                         </select>
                                     </div>
                                 </div>
@@ -252,10 +249,6 @@ $sess_user_type = $_SESSION["user_type"];
                                         <label for="marital_status" class="form-label text-danger">Marital Status*</label>
                                         <select class="form-control" name="marital_status" id="marital_status">
                                             <option value="">Select</option>
-                                            <option value="1">Single</option>
-                                            <option value="2">Married</option>
-                                            <option value="3">Widow</option>
-                                            <option value="4">Divorced</option>
                                         </select>
                                     </div>
                                 </div>
