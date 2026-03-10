@@ -491,11 +491,15 @@ $sess_user_type = $_SESSION["user_type"];
                                         <input type="file" class="form-control-file" name="bank_details_img" id="bank_details_img" value="">
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="email_id" class="form-label text-danger">Email*</label>
+                                        <label for="email_id" class="form-label">Email</label>
                                         <input type="text" class="form-control" name="email_id" id="email_id" value="">
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="password" class="form-label text-danger">Password*</label>
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" class="form-control" name="username" id="username" value="">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="password" class="form-label">Password</label>
                                         <input type="text" class="form-control" name="password" id="password" value="">
                                     </div>
                                 </div>  
@@ -513,6 +517,7 @@ $sess_user_type = $_SESSION["user_type"];
 
                             </div>
                             <div class="modal-footer">
+                                <input type="hidden" name="serial_number" id="serial_number" value="0">
                                 <button type="submit" class="btn btn-primary" id="submitForm">Save</button>                            
                                 <button type="button" class="btn btn-dark" id="cancelForm">Clear</button>
                             </div>
@@ -530,7 +535,7 @@ $sess_user_type = $_SESSION["user_type"];
 <!-- [ Main Content ] end -->
 	<?php include('common/footer_1.php'); ?>
     
-    <script src="users/function.js"></script>
+    <script src="users/function.js?d=<?=date('YmdHis')?>"></script>
     
 
 <script>

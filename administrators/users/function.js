@@ -1,4 +1,36 @@
- 
+
+$(document).on("blur", ".form-control", function(){
+    var fieldId = $(this).attr("id");
+    var fieldValue = $(this).val();
+
+    console.log("Field ID: " + fieldId);
+    console.log("Field Value: " + fieldValue);
+
+    $serial_number = $('#serial_number').val();
+
+    if(fieldValue != ''){
+        $.ajax({
+            type: "POST",
+            url: "users/function.php",
+            dataType: "json",
+            data: { fn: "saveFormData", field_id: fieldId, field_val: fieldValue, current_tab: $current_tab, serial_number: $serial_number }
+        })
+        .done(function( res ) {
+            //$res1 = JSON.parse(res);
+            JSON.stringify(res);
+
+            if(res.status == true){    
+                $serial_number = res.serial_number;
+                $('#serial_number').val($serial_number); 
+                //populateDataTable(); 
+            }else{
+                console.log('Error: ' + res.serial_number)
+            }        
+        });//end ajax 
+    }//end if
+    
+
+});
 
 $('#myForm').on('submit', function(){
     console.log('Validated..'); 
@@ -42,6 +74,7 @@ $('#myForm').on('submit', function(){
 
 $('#cancelForm').on('click', function(){
     $('#myForm').trigger('reset');
+    populateDataTable(); 
 })
 
 /******
