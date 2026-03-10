@@ -268,5 +268,309 @@
 		$return_array['status'] = $status;
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
+	}//function end 
+	
+	// Country
+	if($fn == 'configureCountrysDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM countries ORDER BY name ASC";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['id'];
+				$data_obj->name = $row['name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+	
+	// State
+	if($fn == 'configureStatesDd'){ 
+		$country_id = $_POST["country_id"];
+
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM states WHERE country_id = '" .$country_id. "' ORDER BY name ASC";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['id'];
+				$data_obj->name = $row['name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+	
+	// City
+	if($fn == 'configureCityDd'){ 
+		$state_id = $_POST["state_id"];
+
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM cities WHERE state_id = '" .$state_id. "' ORDER BY city ASC";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['id'];
+				$data_obj->name = $row['city'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+
+	
+	// Work type
+	if($fn == 'configureWorkTypeDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM work_type ORDER BY type_name ASC";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['wt_id'];
+				$data_obj->name = $row['type_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+
+	
+	// Skills
+	if($fn == 'configureSkillsDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM skills_master ORDER BY skill_name ASC";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['sk_id'];
+				$data_obj->name = $row['skill_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+
+	
+	// Language
+	if($fn == 'configureLanguagesKnownDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM language_master ORDER BY language_name ASC";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['l_id'];
+				$data_obj->name = $row['language_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+	
+	// Stay Type
+	if($fn == 'configureStayTypeDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM stay_type";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['st_id'];
+				$data_obj->name = $row['st_type_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+	
+	// Weekly Off Required
+	if($fn == 'configureWeeklyOffDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM weekly_off";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['wf_id'];
+				$data_obj->name = $row['wf_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+	
+	// Weekly Off Required
+	if($fn == 'configureMajorIllnessDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM illness_master";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['il_id'];
+				$data_obj->name = $row['illness_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+	
+	// Weekly Off Required
+	if($fn == 'configurePoliceVerificationDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM police_verification";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['pv_id'];
+				$data_obj->name = $row['pv_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+	
+	// Any Criminal Case History?
+	if($fn == 'configureCriminalHistoryDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM crime_history";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['ch_id'];
+				$data_obj->name = $row['ch_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
 	}//function end
 ?>

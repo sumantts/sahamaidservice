@@ -279,6 +279,331 @@ function configureMaritalStatusDd(){
     });//end ajax
 }//end 
 
+// Country
+function configureCountrysDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureCountrysDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#country_id').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#country_id').html($html);
+            }else{
+                $('#country_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#country_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+$('#country_id').on('change', function(){
+    configureStatesDd();    
+});
+
+// State
+function configureStatesDd(){
+    $country_id = $('#country_id').val();
+    if(parseInt($country_id) > 0){
+        $.ajax({
+            method: "POST",
+            url: "users/function.php",
+            data: { fn: "configureStatesDd", country_id: $country_id }
+        })
+        .done(function( res ) {
+            $res1 = JSON.parse(res); 
+            if($res1.status == true){
+                $rows = $res1.data;
+
+                if($rows.length > 0){
+                    $('#state_id').html('');
+                    $html = "<option value='0'>Select</option>";
+                    for($i = 0; $i < $rows.length; $i++){
+                        $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                    }//end for                
+                    $('#state_id').html($html);
+                }else{
+                    $('#state_id').html('');
+                    $html = "<option value='0'>Select</option>";
+                    $('#state_id').html($html);
+                }//end if
+            }        
+        });//end ajax
+    }//end if
+}//end 
+
+$('#state_id').on('change', function(){
+    configureCityDd();    
+});
+
+// State
+function configureCityDd(){
+    $state_id = $('#state_id').val();
+    if(parseInt($state_id) > 0){
+        $.ajax({
+            method: "POST",
+            url: "users/function.php",
+            data: { fn: "configureCityDd", state_id: $state_id }
+        })
+        .done(function( res ) {
+            $res1 = JSON.parse(res); 
+            if($res1.status == true){
+                $rows = $res1.data;
+
+                if($rows.length > 0){
+                    $('#city_id').html('');
+                    $html = "<option value='0'>Select</option>";
+                    for($i = 0; $i < $rows.length; $i++){
+                        $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                    }//end for                
+                    $('#city_id').html($html);
+                }else{
+                    $('#city_id').html('');
+                    $html = "<option value='0'>Select</option>";
+                    $('#city_id').html($html);
+                }//end if
+            }        
+        });//end ajax
+    }//end if
+}//end 
+
+
+// Work Type
+function configureWorkTypeDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureWorkTypeDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#wt_id').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#wt_id').html($html);
+            }else{
+                $('#wt_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#wt_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+
+// Skills
+function configureSkillsDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureSkillsDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#skill_id').html('');
+                $html = "";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#skill_id').html($html);
+            }else{
+                $('#skill_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#skill_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+
+// Language
+function configureLanguagesKnownDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureLanguagesKnownDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#lang_id').html('');
+                $html = "";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#lang_id').html($html);
+            }else{
+                $('#lang_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#lang_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+// Work Type
+function configureStayTypeDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureStayTypeDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#st_id').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#st_id').html($html);
+            }else{
+                $('#st_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#st_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+// Weekly Off Required
+function configureWeeklyOffDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureWeeklyOffDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#wof_id').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#wof_id').html($html);
+            }else{
+                $('#wof_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#wof_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+// Any Major Illness?
+function configureMajorIllnessDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureMajorIllnessDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#ill_id').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#ill_id').html($html);
+            }else{
+                $('#ill_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#ill_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+// Police Verification Done?
+function configurePoliceVerificationDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configurePoliceVerificationDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#pol_vrfy_id').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#pol_vrfy_id').html($html);
+            }else{
+                $('#pol_vrfy_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#pol_vrfy_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+// Any Criminal Case History?
+function configureCriminalHistoryDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureCriminalHistoryDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#crim_id').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#crim_id').html($html);
+            }else{
+                $('#crim_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#crim_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
 $(document).ready(function () {
     $current_tab = 'admin';
     $sess_user_type = $('#sess_user_type').val();
@@ -300,7 +625,15 @@ $(document).ready(function () {
         // Dropdown List
         configureGenderDd();
         configureMaritalStatusDd();
-
+        configureCountrysDd();
+        configureWorkTypeDd();
+        configureSkillsDd();
+        configureLanguagesKnownDd();
+        configureStayTypeDd();
+        configureWeeklyOffDd();
+        configureMajorIllnessDd();
+        configurePoliceVerificationDd();
+        configureCriminalHistoryDd();
 
     },300);
 });

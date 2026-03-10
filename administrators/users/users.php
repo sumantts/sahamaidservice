@@ -231,7 +231,7 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3">
                                         <label for="gender" class="form-label text-danger">Gender*</label>
                                         <select class="form-control" name="gender" id="gender">
-                                            <option value="">Select</option>
+                                            <option value="0">Select</option>
                                         </select>
                                     </div>
                                 </div>
@@ -248,7 +248,7 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3">
                                         <label for="marital_status" class="form-label text-danger">Marital Status*</label>
                                         <select class="form-control" name="marital_status" id="marital_status">
-                                            <option value="">Select</option>
+                                            <option value="0">Select</option>
                                         </select>
                                     </div>
                                 </div>
@@ -268,15 +268,24 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div>
                                     
                                     <div class="col-md-3">
-                                        <label for="city" class="form-label text-danger">City*</label>
-                                        <input type="text" class="form-control" name="city" id="city" value="">
+                                        <label for="country_id" class="form-label text-danger">Country*</label>
+                                        <select class="form-control" name="country_id" id="country_id">
+                                            <option value="0">Select</option> 
+                                        </select>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="state_id" class="form-label text-danger">State*</label>
                                         <select class="form-control" name="state_id" id="state_id">
-                                            <option value="">Select</option> 
+                                            <option value="0">Select</option> 
                                         </select>
                                     </div>
+                                    <div class="col-md-3">
+                                        <label for="city_id" class="form-label text-danger">City*</label>
+                                        <select class="form-control" name="city_id" id="city_id">
+                                            <option value="0">Select</option> 
+                                        </select>
+                                    </div>
+
                                     <div class="col-md-3">
                                         <label for="pincode" class="form-label text-danger">Pincode*</label>
                                         <input type="text" class="form-control" name="pincode" id="pincode" value="">
@@ -328,14 +337,7 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3">
                                         <label for="wt_id" class="form-label">Work Type Applying For</label>
                                         <select class="form-control" name="wt_id" id="wt_id">
-                                            <option value="">Select</option>
-                                            <option value="1">Maid</option>
-                                            <option value="2">Cook</option>
-                                            <option value="3">Babysitter</option>
-                                            <option value="4">Patient Care</option>
-                                            <option value="5">Elder Care</option>
-                                            <option value="6">Japa Maid</option>
-                                            <option value="7">Housekeeping</option> 
+                                            <option value="0">Select</option> 
                                         </select>
                                     </div>
                                     <div class="col-md-3">
@@ -353,28 +355,12 @@ $sess_user_type = $_SESSION["user_type"];
                                     
                                     <div class="col-md-3">
                                         <label for="skill_id" class="form-label">Skills</label>
-                                        <select class="form-control" name="skill_id" id="skill_id">
-                                            <option value="">Select</option>
-                                            <option value="1">Cooking</option>
-                                            <option value="2">Cleaning</option>
-                                            <option value="3">Baby Care</option>
-                                            <option value="4">Patient Care</option>
-                                            <option value="5">Elder Care</option>
-                                            <option value="6">Old Age Care</option>
-                                            <option value="7">All Work</option> 
+                                        <select class="form-control" name="skill_id" id="skill_id" multiple>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="lang_id" class="form-label">Languages Known</label>
-                                        <select class="form-control" name="lang_id" id="lang_id">
-                                            <option value="">Select</option>
-                                            <option value="1">Cooking</option>
-                                            <option value="2">Cleaning</option>
-                                            <option value="3">Baby Care</option>
-                                            <option value="4">Patient Care</option>
-                                            <option value="5">Elder Care</option>
-                                            <option value="6">Old Age Care</option>
-                                            <option value="7">All Work</option> 
+                                        <select class="form-control" name="lang_id" id="lang_id" multiple>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
@@ -384,10 +370,7 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3">
                                         <label for="st_id" class="form-label">Stay Type</label>
                                         <select class="form-control" name="st_id" id="st_id">
-                                            <option value="">Select</option>
-                                            <option value="1">Live-in</option>
-                                            <option value="2">Part-time</option> 
-                                            <option value="3">Full-time</option> 
+                                            <option value="0">Select</option>
                                         </select>
                                     </div>
                                 </div>
@@ -408,9 +391,7 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3">
                                         <label for="wof_id" class="form-label">Weekly Off Required?</label>
                                         <select class="form-control" name="wof_id" id="wof_id">
-                                            <option value="">Select</option>
-                                            <option value="1">Yes</option>
-                                            <option value="2">No</option>  
+                                            <option value="0">Select</option>
                                         </select>
                                     </div>
                                 </div>
@@ -423,25 +404,19 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3">
                                         <label for="ill_id" class="form-label">Any Major Illness?</label>
                                         <select class="form-control" name="ill_id" id="ill_id">
-                                            <option value="">Select</option>
-                                            <option value="1">Yes</option>
-                                            <option value="2">No</option>  
+                                            <option value="0">Select</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="pol_vrfy_id" class="form-label">Police Verification Done?</label>
                                         <select class="form-control" name="pol_vrfy_id" id="pol_vrfy_id">
-                                            <option value="">Select</option>
-                                            <option value="1">Yes</option>
-                                            <option value="2">No</option>  
+                                            <option value="0">Select</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="crim_id" class="form-label">Any Criminal Case History?</label>
                                         <select class="form-control" name="crim_id" id="crim_id">
-                                            <option value="">Select</option>
-                                            <option value="1">Yes</option>
-                                            <option value="2">No</option>  
+                                            <option value="0">Select</option>
                                         </select>
                                     </div>
                                 </div>
