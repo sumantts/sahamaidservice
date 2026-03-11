@@ -246,8 +246,8 @@ $sess_user_type = $_SESSION["user_type"];
                                         <input type="text" class="form-control" name="alt_phone_number" id="alt_phone_number" value="">
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="marital_status" class="form-label text-danger">Marital Status*</label>
-                                        <select class="form-control" name="marital_status" id="marital_status">
+                                        <label for="m_id" class="form-label text-danger">Marital Status*</label>
+                                        <select class="form-control" name="m_id" id="m_id">
                                             <option value="0">Select</option>
                                         </select>
                                     </div>
@@ -354,13 +354,13 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div>
                                     
                                     <div class="col-md-3">
-                                        <label for="skill_id" class="form-label">Skills</label>
-                                        <select class="form-control" name="skill_id" id="skill_id" multiple>
+                                        <label for="sk_id" class="form-label">Skills</label>
+                                        <select class="form-control" name="sk_id" id="sk_id" multiple>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="lang_id" class="form-label">Languages Known</label>
-                                        <select class="form-control" name="lang_id" id="lang_id" multiple>
+                                        <label for="l_id" class="form-label">Languages Known</label>
+                                        <select class="form-control" name="l_id" id="l_id" multiple>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
@@ -389,8 +389,8 @@ $sess_user_type = $_SESSION["user_type"];
                                         <input type="date" class="form-control" name="available_from" id="available_from" value="">
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="wof_id" class="form-label">Weekly Off Required?</label>
-                                        <select class="form-control" name="wof_id" id="wof_id">
+                                        <label for="wf_id" class="form-label">Weekly Off Required?</label>
+                                        <select class="form-control" name="wf_id" id="wf_id">
                                             <option value="0">Select</option>
                                         </select>
                                     </div>
@@ -402,20 +402,20 @@ $sess_user_type = $_SESSION["user_type"];
                                 <h5>🔹 SECTION 6: Health & Safety</h5>
                                 <div class="row mb-2" id="partSixBoard">
                                     <div class="col-md-3">
-                                        <label for="ill_id" class="form-label">Any Major Illness?</label>
-                                        <select class="form-control" name="ill_id" id="ill_id">
+                                        <label for="il_id" class="form-label">Any Major Illness?</label>
+                                        <select class="form-control" name="il_id" id="il_id">
                                             <option value="0">Select</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="pol_vrfy_id" class="form-label">Police Verification Done?</label>
-                                        <select class="form-control" name="pol_vrfy_id" id="pol_vrfy_id">
+                                        <label for="pv_id" class="form-label">Police Verification Done?</label>
+                                        <select class="form-control" name="pv_id" id="pv_id">
                                             <option value="0">Select</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="crim_id" class="form-label">Any Criminal Case History?</label>
-                                        <select class="form-control" name="crim_id" id="crim_id">
+                                        <label for="ch_id" class="form-label">Any Criminal Case History?</label>
+                                        <select class="form-control" name="ch_id" id="ch_id">
                                             <option value="0">Select</option>
                                         </select>
                                     </div>
@@ -478,8 +478,8 @@ $sess_user_type = $_SESSION["user_type"];
                                 <h5>🔹 SECTION 9: Declaration</h5>
                                 <div class="row mb-2" id="partNineBoard">
                                     <div class="col-md-12">
-                                        <input type="checkbox" id="subscribe" name="newsletter" value="subscribed">
-                                        <label for="subscribe">I confirm that all information given is correct. If any information is false, Saha Enterprise can cancel my registration.</label>
+                                        <input type="checkbox" id="declaration" name="declaration" value="" >
+                                        <label for="declaration">I confirm that all information given is correct. If any information is false, Saha Enterprise can cancel my registration.</label>
                                     </div> 
                                 </div>
 

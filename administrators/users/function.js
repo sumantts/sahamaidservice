@@ -27,141 +27,22 @@ $(document).on("blur", ".form-control", function(){
                 console.log('Error: ' + res.serial_number)
             }        
         });//end ajax 
-    }//end if
-    
-
+    }//end if  
 });
 
-$('#myForm').on('submit', function(){
-    console.log('Validated..'); 
-    /***
-    $serial_no = $('#serial_no').val(); 
-    $parent_c_id = $('#parent_c_id').val();  
-    $category_name = $('#category_name').val();  
-
-    
-    $nature = $('#nature').val();  
-    $part_of_plbs = $('#part_of_plbs').val();  
-    $opening_balance = $('#opening_balance').val();  
-
-    $('#message_text').html('');
-    $('#message_text').removeClass('d-block');
-    $('#message_text').addClass('d-none');
-
-    $.ajax({
-        type: "POST",
-        url: "category/function.php",
-        dataType: "json",
-        data: { fn: "saveFormData", serial_no: $serial_no, category_name: $category_name, parent_c_id: $parent_c_id, nature: $nature, part_of_plbs: $part_of_plbs, opening_balance: $opening_balance }
-    })
-    .done(function( res ) {
-        //$res1 = JSON.parse(res);
-        if(res.status == true){    
-            $('#serial_no').val('');
-            $('#myForm').trigger('reset');
-            $('#theme-settings-offcanvas').offcanvas('hide'); 
-            populateDataTable();
-            configureParentCategoryDd();
-        } 
-        //alert(res.error_message);
-        $('#message_text').html(res.error_message);
-        $('#message_text').removeClass('d-none');
-        $('#message_text').addClass('d-block');
-    });//end ajax 
-    *****/
-    return false;
-}) //end fun
 
 $('#cancelForm').on('click', function(){
+    $('#serial_number').val('0');
     $('#myForm').trigger('reset');
     populateDataTable(); 
 })
 
-/******
-function validateForm(){
-    $firstName = $('#firstName').val().replace(/^\s+|\s+$/gm,'');
-    $lastName = $('#lastName').val().replace(/^\s+|\s+$/gm,'');
-    $status = true;
-
-    if($firstName == ''){
-        $status = false;
-        $('#firstName').removeClass('is-valid');
-        $('#firstName').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#firstName').removeClass('is-invalid');
-        $('#firstName').addClass('is-valid');
-    }
-
-    if($lastName == ''){
-        $status = false;
-        $('#lastName').removeClass('is-valid');
-        $('#lastName').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#lastName').removeClass('is-invalid');
-        $('#lastName').addClass('is-valid');
-    }
-
-    console.log('firstName: '+$firstName);
-
-    $('#submitForm_spinner').hide();
-    $('#submitForm_spinner_text').hide();
-    $('#submitForm_text').show();
-
-    return $status;
-}//en validate form
-
-function clearForm(){
-    $('#firstName').val('');
-    $('#firstName').removeClass('is-valid');
-    $('#firstName').removeClass('is-invalid');
-
-    $('#lastName').val('');
-    $('#lastName').removeClass('is-valid');
-    $('#lastName').removeClass('is-invalid');
-
-}//end 
-
-$(".form-control").blur(function(){
-    $('#orgFormAlert').css("display", "none");
-    $formVallidStatus = validateForm();
-});
-
-$('#submitForm').click(function(){
-    $('#submitForm_spinner').show();
-    $('#submitForm_spinner_text').show();
-    $('#submitForm_text').hide();
-    setTimeout(function(){
-        $formVallidStatus = validateForm();
-
-        if($formVallidStatus == true){
-            $.ajax({
-                method: "POST",
-                url: "users/function.php",
-                data: { fn: "saveOrganisation", firstName: $firstName }
-            })
-            .done(function( res ) {
-                console.log(res);
-                $res1 = JSON.parse(res);
-                if($res1.status == true){
-                    $('#orgFormAlert').css("display", "block");
-                    $('.toast-right').toast('show');
-                    //$('#liveToast').toast('show');
-                    clearForm();
-                }else{
-                    
-                }
-            });//end ajax
-        }
-
-    }, 500)    
-})
-*****/
 
 $('#addNewBtn').on('click', function(){
     console.log('opening with modal: ' + $current_tab);
     $modal_title = $current_tab + ' Details';
+    
+    $('#serial_number').val('0');
     $('#exampleModalLongTitle').html($modal_title);
     $("#partTwoBoard").hide();
     $("#partThreeBoard").hide();
@@ -264,16 +145,16 @@ function configureMaritalStatusDd(){
             $rows = $res1.data;
 
             if($rows.length > 0){
-                $('#marital_status').html('');
+                $('#m_id').html('');
                 $html = "<option value='0'>Select</option>";
                 for($i = 0; $i < $rows.length; $i++){
                     $html += "<option value='"+$rows[$i].m_id+"'>"+$rows[$i].m_status_name+"</option>";                    
                 }//end for                
-                $('#marital_status').html($html);
+                $('#m_id').html($html);
             }else{
-                $('#marital_status').html('');
+                $('#m_id').html('');
                 $html = "<option value='0'>Select</option>";
-                $('#marital_status').html($html);
+                $('#m_id').html($html);
             }//end if
         }        
     });//end ajax
@@ -420,16 +301,16 @@ function configureSkillsDd(){
             $rows = $res1.data;
 
             if($rows.length > 0){
-                $('#skill_id').html('');
+                $('#sk_id').html('');
                 $html = "";
                 for($i = 0; $i < $rows.length; $i++){
                     $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
                 }//end for                
-                $('#skill_id').html($html);
+                $('#sk_id').html($html);
             }else{
-                $('#skill_id').html('');
+                $('#sk_id').html('');
                 $html = "<option value='0'>Select</option>";
-                $('#skill_id').html($html);
+                $('#sk_id').html($html);
             }//end if
         }        
     });//end ajax
@@ -449,16 +330,16 @@ function configureLanguagesKnownDd(){
             $rows = $res1.data;
 
             if($rows.length > 0){
-                $('#lang_id').html('');
+                $('#l_id').html('');
                 $html = "";
                 for($i = 0; $i < $rows.length; $i++){
                     $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
                 }//end for                
-                $('#lang_id').html($html);
+                $('#l_id').html($html);
             }else{
-                $('#lang_id').html('');
+                $('#l_id').html('');
                 $html = "<option value='0'>Select</option>";
-                $('#lang_id').html($html);
+                $('#l_id').html($html);
             }//end if
         }        
     });//end ajax
@@ -505,16 +386,16 @@ function configureWeeklyOffDd(){
             $rows = $res1.data;
 
             if($rows.length > 0){
-                $('#wof_id').html('');
+                $('#wf_id').html('');
                 $html = "<option value='0'>Select</option>";
                 for($i = 0; $i < $rows.length; $i++){
                     $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
                 }//end for                
-                $('#wof_id').html($html);
+                $('#wf_id').html($html);
             }else{
-                $('#wof_id').html('');
+                $('#wf_id').html('');
                 $html = "<option value='0'>Select</option>";
-                $('#wof_id').html($html);
+                $('#wf_id').html($html);
             }//end if
         }        
     });//end ajax
@@ -533,16 +414,16 @@ function configureMajorIllnessDd(){
             $rows = $res1.data;
 
             if($rows.length > 0){
-                $('#ill_id').html('');
+                $('#il_id').html('');
                 $html = "<option value='0'>Select</option>";
                 for($i = 0; $i < $rows.length; $i++){
                     $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
                 }//end for                
-                $('#ill_id').html($html);
+                $('#il_id').html($html);
             }else{
-                $('#ill_id').html('');
+                $('#il_id').html('');
                 $html = "<option value='0'>Select</option>";
-                $('#ill_id').html($html);
+                $('#il_id').html($html);
             }//end if
         }        
     });//end ajax
@@ -561,16 +442,16 @@ function configurePoliceVerificationDd(){
             $rows = $res1.data;
 
             if($rows.length > 0){
-                $('#pol_vrfy_id').html('');
+                $('#pv_id').html('');
                 $html = "<option value='0'>Select</option>";
                 for($i = 0; $i < $rows.length; $i++){
                     $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
                 }//end for                
-                $('#pol_vrfy_id').html($html);
+                $('#pv_id').html($html);
             }else{
-                $('#pol_vrfy_id').html('');
+                $('#pv_id').html('');
                 $html = "<option value='0'>Select</option>";
-                $('#pol_vrfy_id').html($html);
+                $('#pv_id').html($html);
             }//end if
         }        
     });//end ajax
@@ -589,16 +470,16 @@ function configureCriminalHistoryDd(){
             $rows = $res1.data;
 
             if($rows.length > 0){
-                $('#crim_id').html('');
+                $('#ch_id').html('');
                 $html = "<option value='0'>Select</option>";
                 for($i = 0; $i < $rows.length; $i++){
                     $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
                 }//end for                
-                $('#crim_id').html($html);
+                $('#ch_id').html($html);
             }else{
-                $('#crim_id').html('');
+                $('#ch_id').html('');
                 $html = "<option value='0'>Select</option>";
-                $('#crim_id').html($html);
+                $('#ch_id').html($html);
             }//end if
         }        
     });//end ajax
@@ -671,4 +552,158 @@ buttons.forEach(button => {
 });
 
 
+// Delete Data
+function deleteTabledata(sl){
+    console.log('sl: ' + sl);
+    if(confirm('Are you sure to delete the record?')){
+        $.ajax({
+            method: "POST",
+            url: "users/function.php",
+            data: { fn: "deleteTabledata", serial_no: sl }
+        })
+        .done(function( res ) {
+            $res1 = JSON.parse(res); 
+            if($res1.status == true){                 
+                populateDataTable();
+                //alert('Data Deleted successfully');
+            }        
+        });//end ajax
+    }//end fonfirm if
+}//end if 
 
+// Get data for Edit
+function editTabledata(sl){
+    console.log('sl: ' + sl);    
+    $modal_title = $current_tab + ' Details';
+    $('#exampleModalLongTitle').html($modal_title);
+    $("#partTwoBoard").hide();
+    $("#partThreeBoard").hide();
+    $("#partFourBoard").hide();
+    $("#partFiveBoard").hide();
+    $("#partSixBoard").hide();
+    $("#partSevenBoard").hide();
+    $("#partEightBoard").hide();
+    $("#partNineBoard").hide();
+
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "editTabledata", serial_no: sl }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){ 
+            setTimeout(function(){
+            },3000);
+            
+            $('#serial_number').val($res1.user_id);
+            
+			$('#username').val($res1.username); 
+			$('#password').val($res1.password); 
+			$('#user_type').val($res1.user_type); 
+			$('#added_by').val($res1.added_by); 
+			$('#full_name').val($res1.full_name); 
+			$('#fat_hus_name').val($res1.fat_hus_name); 
+			$('#email_id').val($res1.email_id); 
+			$('#phone_number').val($res1.phone_number); 
+			$('#alt_phone_number').val($res1.alt_phone_number); 
+			$('#m_id').val($res1.m_id); 
+			$('#date_of_birth').val($res1.date_of_birth); 
+			$('#gender').val($res1.gender); 
+			$('#address').val($res1.address); 
+			$('#curr_address').val($res1.curr_address);  
+			$('#country_id').val($res1.country_id).trigger('change'); 
+
+            $state_id = $res1.state_id;
+            $city_id = $res1.city_id;
+            setTimeout(function(){ 
+                console.log(' state id: ' + $state_id);
+                $('#state_id').val($state_id).trigger('change');
+            },2000);
+            setTimeout(function(){
+                $('#city_id').val($city_id).trigger('change');  
+            },3000);
+
+			$('#pincode').val($res1.pincode); 
+			$('#adhar_card').val($res1.adhar_card); 
+			$('#adhar_card_img').val($res1.adhar_card_img); 
+			$('#pan_card').val($res1.pan_card); 
+			$('#pan_card_img').val($res1.pan_card_img); 
+			$('#voter_id_card').val($res1.voter_id_card); 
+			$('#voter_id_card_img').val($res1.voter_id_card_img); 
+			$('#user_photo').val($res1.user_photo); 
+			$('#wt_id').val($res1.wt_id); 
+			$('#work_exp').val($res1.work_exp); 
+			$('#earlier_work_city').val($res1.earlier_work_city); 
+			$('#last_emplr_name').val($res1.last_emplr_name); 
+			$('#sk_id').val($res1.sk_id); 
+			$('#l_id').val($res1.l_id); 
+			$('#work_loc').val($res1.work_loc); 
+			$('#st_id').val($res1.st_id); 
+			$('#exp_salary').val($res1.exp_salary); 
+			$('#available_from').val($res1.available_from); 
+			$('#wf_id').val($res1.wf_id); 
+			$('#il_id').val($res1.il_id); 
+			$('#pv_id').val($res1.pv_id); 
+			$('#ch_id').val($res1.ch_id); 
+			$('#emg_cont_person').val($res1.emg_cont_person); 
+			$('#relation').val($res1.relation); 
+			$('#emg_cont_number').val($res1.emg_cont_number); 
+			$('#bank_details').val($res1.bank_details); 
+			$('#bank_details_img').val($res1.bank_details_img); 
+			$('#highest_edu').val($res1.highest_edu); 
+
+			if(parseInt($res1.declaration) == 1)  {
+                $("#declaration").prop("checked", true);
+            }else{
+                $("#declaration").prop("checked", false);
+            }
+
+			$('#inserted_by').val($res1.inserted_by); 
+			$('#updated_by').val($res1.updated_by); 
+			$('#insert_date').val($res1.insert_date); 
+			$('#update_date').val($res1.update_date);
+
+            /*$('#parent_c_id').val($res1.parent_c_id).trigger('change');
+            $('#category_name').val($res1.category_name); 
+            $('#nature').val($res1.nature).trigger('change');
+            $('#part_of_plbs').val($res1.part_of_plbs).trigger('change');
+            $('#opening_balance').val($res1.opening_balance); */
+        }        
+    });//end ajax
+}//end if 
+
+$("#declaration").change(function(){
+    $check_box_val = '';
+    if($(this).is(":checked")){
+        $check_box_val = '1';
+    }else{
+        $check_box_val = '0';
+    }
+    console.log('check_box_val: ' + $check_box_val);
+    
+
+    $serial_number = $('#serial_number').val();
+
+    //if(fieldValue != ''){
+        $.ajax({
+            type: "POST",
+            url: "users/function.php",
+            dataType: "json",
+            data: { fn: "saveFormData", field_id: 'declaration', field_val: $check_box_val, current_tab: $current_tab, serial_number: $serial_number }
+        })
+        .done(function( res ) {
+            //$res1 = JSON.parse(res);
+            JSON.stringify(res);
+
+            if(res.status == true){    
+                $serial_number = res.serial_number;
+                $('#serial_number').val($serial_number); 
+                //populateDataTable(); 
+            }else{
+                console.log('Error: ' + res.serial_number)
+            }        
+        });//end ajax 
+    //}//end if
+
+});

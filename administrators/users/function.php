@@ -24,7 +24,16 @@
 		$field_id = $_POST['field_id']; 
 		$field_val = $_POST['field_val'];  
 		$current_tab = $_POST['current_tab'];  
-		$serial_number = $_POST['serial_number']; 
+		$serial_number = $_POST['serial_number'];
+		
+		
+				
+		if($field_id == 'date_of_birth'){
+			$field_val = date('Y-m-d', strtotime($_POST['field_val']));
+		}
+		if($field_id == 'sk_id' || $field_id == 'l_id'){
+			$field_val = json_encode($_POST['field_val']);
+		}
 
 		$user_type = 0;
 		if($current_tab == 'admin'){
@@ -39,46 +48,55 @@
 			$user_type = 5;
 		}else{}
 
+		
+		/*if($field_id == 'email_id'){
+			$error_message = 'Email ID already exists';
+		}else if($field_id == 'phone_number'){
+			$error_message = 'Phone number already exists';
+		}else if($field_id == 'adhar_card'){
+			$error_message = 'Aadhar number already exists';
+		}else if($field_id == 'pan_card'){
+			$error_message = 'PAN number already exists';
+		}else if($field_id == 'voter_id_card'){
+			$error_message = 'Voter ID already exists';
+		}
+		
+		if($field_id == 'email_id'){
+			$error_message = 'Email ID already exists';
+		}else if($field_id == 'phone_number'){
+			$error_message = 'Phone number already exists';
+		}else if($field_id == 'adhar_card'){
+			$error_message = 'Aadhar number already exists';
+		}else if($field_id == 'pan_card'){
+			$error_message = 'PAN number already exists';
+		}else if($field_id == 'voter_id_card'){
+			$error_message = 'Voter ID already exists';
+		}*/
+		
 		if($serial_number > 0){			
-			$sql = "SELECT * FROM user_details WHERE $field_id = '".$field_val."' AND user_id != '" .$serial_number. "' ";
-			$result = $con->query($sql);
-
-			if ($result->num_rows > 0) {
-				$status = false;
-				if($field_id == 'email_id'){
-					$error_message = 'Email ID already exists';
-				}else if($field_id == 'phone_number'){
-					$error_message = 'Phone number already exists';
-				}else if($field_id == 'adhar_card'){
-					$error_message = 'Aadhar number already exists';
-				}else if($field_id == 'pan_card'){
-					$error_message = 'PAN number already exists';
-				}else if($field_id == 'voter_id_card'){
-					$error_message = 'Voter ID already exists';
-				}
-			} else {
-				$sql1 = "UPDATE user_details SET $field_id = '" .$field_val. "', updated_by = '" .$sess_user_id. "' WHERE user_id = '".$serial_number."'";
-				$result1 = $con->query($sql1);
-				$error_message = 'Data updated successfully';
-			}
-		}else{
-			if($field_id == 'email_id' || $field_id == 'phone_number' || $field_id == 'adhar_card' || $field_id == 'pan_card' || $field_id == 'voter_id_card'){
-				$sql = "SELECT * FROM user_details WHERE $field_id = '".$field_val."'";
+			if($field_id == 'email_id' || $field_id == 'phone_number' || $field_id == 'adhar_card' || $field_id == 'pan_card' || $field_id == 'voter_id_card'){	
+				$sql = "SELECT * FROM user_details WHERE $field_id = '".$field_val."' AND user_id != '" .$serial_number. "' ";
 				$result = $con->query($sql);
 
 				if ($result->num_rows > 0) {
 					$status = false;
-					if($field_id == 'email_id'){
-						$error_message = 'Email ID already exists';
-					}else if($field_id == 'phone_number'){
-						$error_message = 'Phone number already exists';
-					}else if($field_id == 'adhar_card'){
-						$error_message = 'Aadhar number already exists';
-					}else if($field_id == 'pan_card'){
-						$error_message = 'PAN number already exists';
-					}else if($field_id == 'voter_id_card'){
-						$error_message = 'Voter ID already exists';
-					}
+				} else {
+					$sql1 = "UPDATE user_details SET $field_id = '" .$field_val. "', updated_by = '" .$sess_user_id. "' WHERE user_id = '".$serial_number."'";
+					$result1 = $con->query($sql1);
+					$error_message = 'Data updated successfully';
+				}
+			}else{				
+				$sql1 = "UPDATE user_details SET $field_id = '" .$field_val. "', updated_by = '" .$sess_user_id. "' WHERE user_id = '".$serial_number."'";
+				$result1 = $con->query($sql1);
+				$error_message = 'Data updated successfully';	
+			}
+		}else{
+			if($field_id == 'email_id' || $field_id == 'phone_number' || $field_id == 'adhar_card' || $field_id == 'pan_card' || $field_id == 'voter_id_card'){
+				$sql = "SELECT * FROM user_details WHERE $field_id = '".$field_val."' AND user_id != '" .$serial_number. "' ";
+				$result = $con->query($sql);
+
+				if ($result->num_rows > 0) {
+					$status = false;
 				} else {
 					$status = true;
 					$sql2 = "INSERT INTO user_details ($field_id, user_type, added_by, inserted_by) VALUES ('" .$field_val. "', '" .$user_type. "', '" .$sess_user_id. "', '" .$sess_user_id. "')";
@@ -112,6 +130,7 @@
 		$return_array = array();
 		$status = true;
 		$mainData = array();
+		$action_button = '';
 
 		$where_condition = 'WHERE user_id > 0';
 
@@ -176,7 +195,10 @@
 				$insert_date = $row['insert_date'];
 				$update_date = $row['insert_date'];
 				
-				$action_button = "<i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$user_id.")'></i>";
+				//$action_button = "<i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$user_id.")'></i>";
+				$action_button = '';
+				$action_button .= '<a href="#!" data-toggle="modal" data-target="#exampleModalLong" class="action-icon" onClick="editTabledata('.$user_id.')"> <i class="fa fa-edit"></i></a>';
+				$action_button .= '<a href="javascript: void(0);" class="action-icon" onClick="deleteTabledata('.$user_id.')"> <i class="fa fa-trash"></i></a>';
 
 				$data[0] = $sl;
 				$data[1] = $full_name;
@@ -213,7 +235,89 @@
     	echo json_encode($return_array);
 	}//function end
 
+	
+			
+	//Get Table Data
+	if($fn == 'editTabledata'){
+		$return_array = array();
+		$status = true; 
+		$serial_no = $_POST['serial_no'];		
+		
+		$sql = "SELECT * FROM user_details WHERE user_id = '" .$serial_no. "' ";
+		$result = $con->query($sql);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array();
+			$return_array['user_id'] = $row['user_id'];
+			$return_array['username'] = $row['username']; 
+			$return_array['password'] = $row['password']; 
+			$return_array['user_type'] = $row['user_type']; 
+			$return_array['added_by'] = $row['added_by']; 
+			$return_array['full_name'] = $row['full_name']; 
+			$return_array['fat_hus_name'] = $row['fat_hus_name']; 
+			$return_array['email_id'] = $row['email_id']; 
+			$return_array['phone_number'] = $row['phone_number']; 
+			$return_array['alt_phone_number'] = $row['alt_phone_number']; 
+			$return_array['m_id'] = $row['m_id']; 
+			$return_array['date_of_birth'] = $row['date_of_birth']; 
+			$return_array['gender'] = $row['gender']; 
+			$return_array['address'] = $row['address']; 
+			$return_array['curr_address'] = $row['curr_address']; 
+			$return_array['city_id'] = $row['city_id']; 
+			$return_array['state_id'] = $row['state_id']; 
+			$return_array['country_id'] = $row['country_id']; 
+			$return_array['pincode'] = $row['pincode']; 
+			$return_array['adhar_card'] = $row['adhar_card']; 
+			$return_array['adhar_card_img'] = $row['adhar_card_img']; 
+			$return_array['pan_card'] = $row['pan_card']; 
+			$return_array['pan_card_img'] = $row['pan_card_img']; 
+			$return_array['voter_id_card'] = $row['voter_id_card']; 
+			$return_array['voter_id_card_img'] = $row['voter_id_card_img']; 
+			$return_array['user_photo'] = $row['user_photo']; 
+			$return_array['wt_id'] = $row['wt_id']; 
+			$return_array['work_exp'] = $row['work_exp']; 
+			$return_array['earlier_work_city'] = $row['earlier_work_city']; 
+			$return_array['last_emplr_name'] = $row['last_emplr_name']; 
+			$return_array['sk_id'] = json_decode($row['sk_id']); 
+			$return_array['l_id'] = json_decode($row['l_id']); 
+			$return_array['work_loc'] = $row['work_loc']; 
+			$return_array['st_id'] = $row['st_id']; 
+			$return_array['exp_salary'] = $row['exp_salary']; 
+			$return_array['available_from'] = $row['available_from']; 
+			$return_array['wf_id'] = $row['wf_id']; 
+			$return_array['il_id'] = $row['il_id']; 
+			$return_array['pv_id'] = $row['pv_id']; 
+			$return_array['ch_id'] = $row['ch_id']; 
+			$return_array['emg_cont_person'] = $row['emg_cont_person']; 
+			$return_array['relation'] = $row['relation']; 
+			$return_array['emg_cont_number'] = $row['emg_cont_number']; 
+			$return_array['bank_details'] = $row['bank_details']; 
+			$return_array['bank_details_img'] = $row['bank_details_img']; 
+			$return_array['highest_edu'] = $row['highest_edu']; 
+			$return_array['declaration'] = $row['declaration']; 
+			$return_array['inserted_by'] = $row['inserted_by']; 
+			$return_array['updated_by'] = $row['updated_by']; 
+			$return_array['insert_date'] = $row['insert_date']; 
+			$return_array['update_date'] = $row['update_date'];			
+		}else{
+			$status = true; 
+		}
 
+		$return_array['status'] = $status;		
+    	echo json_encode($return_array);
+	}//function end
+			
+	//Delete Table Data
+	if($fn == 'deleteTabledata'){
+		$return_array = array();
+		$status = true; 
+		$serial_no = $_POST['serial_no']; 
+		
+		$sql = "DELETE FROM user_details WHERE user_id = '" .$serial_no. "' ";
+		$result = $con->query($sql); 
+
+		$return_array['status'] = $status; 
+    	echo json_encode($return_array);
+	}//function end
 	
 
 	// Gender
