@@ -39,6 +39,13 @@ $('#cancelForm').on('click', function(){
 
 
 $('#addNewBtn').on('click', function(){
+    $("#myForm")[0].reset(); 
+    $("#preview_adhar_card_img").html('');
+    $("#preview_pan_card_img").html('');
+    $("#preview_voter_id_card_img").html('');
+    $("#preview_user_photo").html('');
+    $("#preview_bank_details_img").html('');
+    
     console.log('opening with modal: ' + $current_tab);
     $modal_title = $current_tab + ' Details';
     
