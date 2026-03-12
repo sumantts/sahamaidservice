@@ -33,7 +33,7 @@ $(document).on("blur", ".form-control", function(){
 
 $('#cancelForm').on('click', function(){
     $('#serial_number').val('0');
-    $('#myForm').trigger('reset');
+    $("#myForm")[0].reset(); 
     populateDataTable(); 
 })
 
@@ -705,5 +705,32 @@ $("#declaration").change(function(){
             }        
         });//end ajax 
     //}//end if
+
+});
+
+// Aadhar Card photo upload
+$(document).ready(function(){
+
+    $("#imageUpload").change(function(){
+
+        var file_data = $('#imageUpload').prop('files')[0];
+
+        var form_data = new FormData();
+        form_data.append('image', file_data);
+
+        $.ajax({
+            url: "users/upload.php",
+            type: "POST",
+            data: form_data,
+            contentType: false,
+            processData: false,
+            success:function(response)
+            {
+                $("#result").html(response);
+                $("#preview").html('<img src="users/uploads/'+response+'" width="200">');
+            }
+        });
+
+    });
 
 });

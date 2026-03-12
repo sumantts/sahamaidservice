@@ -303,7 +303,10 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div>
                                     <div class="col-md-3">
                                         <label for="adhar_card_img" class="form-label">Upload Aadhaar Card Photo</label>
-                                        <input type="file" class="form-control-file" name="adhar_card_img" id="adhar_card_img" value="">
+                                        <input type="file" class="form-control-file" name="image" id="imageUpload" value="">
+                                        <br><br>
+                                        <div id="preview"></div>
+                                        <div id="result"></div>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="pan_card" class="form-label">PAN Card</label>
