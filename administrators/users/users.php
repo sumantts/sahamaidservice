@@ -303,10 +303,10 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div>
                                     <div class="col-md-3">
                                         <label for="adhar_card_img" class="form-label">Upload Aadhaar Card Photo</label>
-                                        <input type="file" class="form-control-file" name="image" id="imageUpload" value="">
-                                        <br><br>
-                                        <div id="preview"></div>
-                                        <div id="result"></div>
+                                        <input type="file" class="form-control-file" name="adhar_card_img" id="adhar_card_img" value="" oninput="uploadPhoto('adhar_card_img')">
+                                        <br>
+                                        <div id="preview_adhar_card_img"></div>
+                                        <!-- <div id="result_adhar_card_img"></div> -->
                                     </div>
                                     <div class="col-md-3">
                                         <label for="pan_card" class="form-label">PAN Card</label>
@@ -314,7 +314,9 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div>
                                     <div class="col-md-3">
                                         <label for="pan_card_img" class="form-label">Upload PAN Card Photo</label>
-                                        <input type="file" class="form-control-file" name="pan_card_img" id="pan_card_img" value="">
+                                        <input type="file" class="form-control-file" name="pan_card_img" id="pan_card_img" value="" oninput="uploadPhoto('pan_card_img')">
+                                        <br>
+                                        <div id="preview_pan_card_img"></div>
                                     </div>
                                 
                                     
@@ -324,11 +326,15 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div>
                                     <div class="col-md-3">
                                         <label for="voter_id_card_img" class="form-label">Voter ID Card Image</label>
-                                        <input type="file" class="form-control-file" name="voter_id_card_img" id="voter_id_card_img" value="">
+                                        <input type="file" class="form-control-file" name="voter_id_card_img" id="voter_id_card_img" value="" oninput="uploadPhoto('voter_id_card_img')">
+                                        <br>
+                                        <div id="preview_voter_id_card_img"></div>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="user_photo" class="form-label">Live Photo (Clear Face Photo)</label>
-                                        <input type="file" class="form-control-file" name="user_photo" id="user_photo" value="">
+                                        <input type="file" class="form-control-file" name="user_photo" id="user_photo" value="" oninput="uploadPhoto('user_photo')">
+                                        <br>
+                                        <div id="preview_user_photo"></div>
                                     </div>
                                 </div>
                                 <a href="javascript: void(0);" id="partFourSwitch" class="float-right">Section 4</a>
@@ -459,7 +465,9 @@ $sess_user_type = $_SESSION["user_type"];
                                     
                                     <div class="col-md-3">
                                         <label for="bank_details_img" class="form-label">Bank Details Image</label>
-                                        <input type="file" class="form-control-file" name="bank_details_img" id="bank_details_img" value="">
+                                        <input type="file" class="form-control-file" name="bank_details_img" id="bank_details_img" value="" oninput="uploadPhoto('bank_details_img')">
+                                        <br>
+                                        <div id="preview_bank_details_img"></div>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="email_id" class="form-label">Email</label>

@@ -626,12 +626,28 @@ function editTabledata(sl){
 
 			$('#pincode').val($res1.pincode); 
 			$('#adhar_card').val($res1.adhar_card); 
-			$('#adhar_card_img').val($res1.adhar_card_img); 
+			//$('#adhar_card_img').val($res1.adhar_card_img); 
+            if($res1.adhar_card_img != ''){
+                $("#preview_adhar_card_img").html('<img src="users/uploads/'+$res1.adhar_card_img+'" width="150">');
+            }
+
 			$('#pan_card').val($res1.pan_card); 
-			$('#pan_card_img').val($res1.pan_card_img); 
+			//$('#pan_card_img').val($res1.pan_card_img);  
+            if($res1.pan_card_img != ''){
+                $("#preview_pan_card_img").html('<img src="users/uploads/'+$res1.pan_card_img+'" width="150">');
+            }
+
 			$('#voter_id_card').val($res1.voter_id_card); 
-			$('#voter_id_card_img').val($res1.voter_id_card_img); 
-			$('#user_photo').val($res1.user_photo); 
+			//$('#voter_id_card_img').val($res1.voter_id_card_img);  
+            if($res1.voter_id_card_img != ''){
+                $("#preview_voter_id_card_img").html('<img src="users/uploads/'+$res1.voter_id_card_img+'" width="150">');
+            }
+
+			//$('#user_photo').val($res1.user_photo);  
+            if($res1.user_photo != ''){
+                $("#preview_user_photo").html('<img src="users/uploads/'+$res1.user_photo+'" width="150">');
+            }
+
 			$('#wt_id').val($res1.wt_id); 
 			$('#work_exp').val($res1.work_exp); 
 			$('#earlier_work_city').val($res1.earlier_work_city); 
@@ -650,7 +666,10 @@ function editTabledata(sl){
 			$('#relation').val($res1.relation); 
 			$('#emg_cont_number').val($res1.emg_cont_number); 
 			$('#bank_details').val($res1.bank_details); 
-			$('#bank_details_img').val($res1.bank_details_img); 
+			//$('#bank_details_img').val($res1.bank_details_img);  
+            if($res1.bank_details_img != ''){
+                $("#preview_bank_details_img").html('<img src="users/uploads/'+$res1.bank_details_img+'" width="150">');
+            }
 			$('#highest_edu').val($res1.highest_edu); 
 
 			if(parseInt($res1.declaration) == 1)  {
@@ -662,13 +681,7 @@ function editTabledata(sl){
 			$('#inserted_by').val($res1.inserted_by); 
 			$('#updated_by').val($res1.updated_by); 
 			$('#insert_date').val($res1.insert_date); 
-			$('#update_date').val($res1.update_date);
-
-            /*$('#parent_c_id').val($res1.parent_c_id).trigger('change');
-            $('#category_name').val($res1.category_name); 
-            $('#nature').val($res1.nature).trigger('change');
-            $('#part_of_plbs').val($res1.part_of_plbs).trigger('change');
-            $('#opening_balance').val($res1.opening_balance); */
+			$('#update_date').val($res1.update_date); 
         }        
     });//end ajax
 }//end if 
@@ -709,7 +722,37 @@ $("#declaration").change(function(){
 });
 
 // Aadhar Card photo upload
-$(document).ready(function(){
+function uploadPhoto(img_id){
+    $("#"+img_id).change(function(){
+        $serial_number = $('#serial_number').val();
+        if(parseInt($serial_number) > 0){
+            var file_data = $('#'+img_id).prop('files')[0];
+            var form_data = new FormData();
+            form_data.append('image', file_data);
+            form_data.append('field_name', img_id);
+            form_data.append('serial_number', $serial_number);
+
+            $.ajax({
+                url: "users/upload.php",
+                type: "POST",
+                data: form_data,
+                contentType: false,
+                processData: false,
+                success:function(response)
+                {
+                    //$("#result_"+img_id).html(response);
+                    $("#preview_"+img_id).html('<img src="users/uploads/'+response+'" width="150">');
+                }
+            });
+        }else{
+            alert('Please complete \'Basic Details\' first');
+        }
+
+    });
+
+}//end if
+
+/*$(document).ready(function(){
 
     $("#imageUpload").change(function(){
 
@@ -726,11 +769,11 @@ $(document).ready(function(){
             processData: false,
             success:function(response)
             {
-                $("#result").html(response);
-                $("#preview").html('<img src="users/uploads/'+response+'" width="200">');
+                //$("#result").html(response);
+                $("#preview").html('<img src="users/uploads/'+response+'" width="150">');
             }
         });
 
     });
 
-});
+});*/
