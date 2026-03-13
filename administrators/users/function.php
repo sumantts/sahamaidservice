@@ -193,7 +193,14 @@
 				$inserted_by = $row['inserted_by'];
 				$updated_by = $row['updated_by'];
 				$insert_date = $row['insert_date'];
-				$update_date = $row['insert_date'];
+				$user_photo = $row['user_photo'];
+
+				$user_img = '';
+				if($user_photo == ''){
+					$user_img = '<img src="users/uploads/no_images.png" width="75">';
+				}else{
+					$user_img = '<img src="users/uploads/'.$user_photo.'" width="75">';
+				} 
 				
 				//$action_button = "<i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$user_id.")'></i>";
 				$action_button = '';
@@ -208,7 +215,8 @@
 				$data[5] = $pan_card;
 				$data[6] = $voter_id_card;
 				$data[7] = $pincode;
-				$data[8] = $action_button;
+				$data[8] = $user_img;
+				$data[9] = $action_button;
 
 				array_push($mainData, $data);
 				$sl++;
