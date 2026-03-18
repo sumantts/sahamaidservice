@@ -40,9 +40,11 @@ $('#cancelForm').on('click', function(){
 
 $('#addNewBtn').on('click', function(){
     $("#myForm")[0].reset(); 
-    $("#preview_adhar_card_img").html('');
+    $("#preview_adhar_card_img").html(''); 
+    $("#preview_adhar_card_back_img").html('');
     $("#preview_pan_card_img").html('');
     $("#preview_voter_id_card_img").html('');
+    $("#preview_voter_id_card_back_img").html('');
     $("#preview_user_photo").html('');
     $("#preview_bank_details_img").html('');
     
@@ -633,26 +635,31 @@ function editTabledata(sl){
 
 			$('#pincode').val($res1.pincode); 
 			$('#adhar_card').val($res1.adhar_card); 
-			//$('#adhar_card_img').val($res1.adhar_card_img); 
             if($res1.adhar_card_img != ''){
-                $("#preview_adhar_card_img").html('<img src="users/uploads/'+$res1.adhar_card_img+'" width="150">');
+                $("#preview_adhar_card_img").html('<img src="users/uploads/'+$res1.adhar_card_img+'" width="200" height="150">');
+            }
+            if($res1.adhar_card_back_img != ''){
+                $("#preview_adhar_card_back_img").html('<img src="users/uploads/'+$res1.adhar_card_back_img+'"  width="200" height="150">');
             }
 
 			$('#pan_card').val($res1.pan_card); 
 			//$('#pan_card_img').val($res1.pan_card_img);  
             if($res1.pan_card_img != ''){
-                $("#preview_pan_card_img").html('<img src="users/uploads/'+$res1.pan_card_img+'" width="150">');
+                $("#preview_pan_card_img").html('<img src="users/uploads/'+$res1.pan_card_img+'"  width="200" height="150">');
             }
 
-			$('#voter_id_card').val($res1.voter_id_card); 
-			//$('#voter_id_card_img').val($res1.voter_id_card_img);  
+			$('#voter_id_card').val($res1.voter_id_card);  
             if($res1.voter_id_card_img != ''){
-                $("#preview_voter_id_card_img").html('<img src="users/uploads/'+$res1.voter_id_card_img+'" width="150">');
+                $("#preview_voter_id_card_img").html('<img src="users/uploads/'+$res1.voter_id_card_img+'"  width="200" height="150">');
+            }
+            
+            if($res1.voter_id_card_back_img != ''){
+                $("#preview_voter_id_card_back_img").html('<img src="users/uploads/'+$res1.voter_id_card_back_img+'"  width="200" height="150">');
             }
 
 			//$('#user_photo').val($res1.user_photo);  
             if($res1.user_photo != ''){
-                $("#preview_user_photo").html('<img src="users/uploads/'+$res1.user_photo+'" width="150">');
+                $("#preview_user_photo").html('<img src="users/uploads/'+$res1.user_photo+'"  width="200" height="150">');
             }
 
 			$('#wt_id').val($res1.wt_id); 
@@ -675,7 +682,7 @@ function editTabledata(sl){
 			$('#bank_details').val($res1.bank_details); 
 			//$('#bank_details_img').val($res1.bank_details_img);  
             if($res1.bank_details_img != ''){
-                $("#preview_bank_details_img").html('<img src="users/uploads/'+$res1.bank_details_img+'" width="150">');
+                $("#preview_bank_details_img").html('<img src="users/uploads/'+$res1.bank_details_img+'"  width="200" height="150">');
             }
 			$('#highest_edu').val($res1.highest_edu); 
 
@@ -748,7 +755,7 @@ function uploadPhoto(img_id){
                 success:function(response)
                 {
                     //$("#result_"+img_id).html(response);
-                    $("#preview_"+img_id).html('<img src="users/uploads/'+response+'" width="150">');
+                    $("#preview_"+img_id).html('<img src="users/uploads/'+response+'"  width="200" height="150">');
                 }
             });
         }else{
@@ -777,7 +784,7 @@ function uploadPhoto(img_id){
             success:function(response)
             {
                 //$("#result").html(response);
-                $("#preview").html('<img src="users/uploads/'+response+'" width="150">');
+                $("#preview").html('<img src="users/uploads/'+response+'"  width="200" height="150">');
             }
         });
 

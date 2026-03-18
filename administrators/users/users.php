@@ -302,22 +302,27 @@ $sess_user_type = $_SESSION["user_type"];
 
                                 <h5>🔹 SECTION 3: Identity Details</h5>
                                 <div class="row mb-2" id="partThreeBoard"> 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label for="adhar_card" class="form-label text-danger">Aadhaar Number*</label>
                                         <input type="text" class="form-control" name="adhar_card" id="adhar_card" value="">
                                     </div>
-                                    <div class="col-md-3">
-                                        <label for="adhar_card_img" class="form-label">Upload Aadhaar Card Photo</label>
+                                    <div class="col-md-4">
+                                        <label for="adhar_card_img" class="form-label">Aadhaar Card Photo</label>
                                         <input type="file" class="form-control-file" name="adhar_card_img" id="adhar_card_img" value="" oninput="uploadPhoto('adhar_card_img')">
                                         <br>
                                         <div id="preview_adhar_card_img"></div>
-                                        <!-- <div id="result_adhar_card_img"></div> -->
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
+                                        <label for="adhar_card_back_img" class="form-label">Aadhaar Card (Back Side)</label>
+                                        <input type="file" class="form-control-file" name="adhar_card_back_img" id="adhar_card_back_img" value="" oninput="uploadPhoto('adhar_card_back_img')">
+                                        <br>
+                                        <div id="preview_adhar_card_back_img"></div>
+                                    </div>
+                                    <div class="col-md-4">
                                         <label for="pan_card" class="form-label">PAN Card</label>
                                         <input type="text" class="form-control" name="pan_card" id="pan_card" value="">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label for="pan_card_img" class="form-label">Upload PAN Card Photo</label>
                                         <input type="file" class="form-control-file" name="pan_card_img" id="pan_card_img" value="" oninput="uploadPhoto('pan_card_img')">
                                         <br>
@@ -325,17 +330,23 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div>
                                 
                                     
-                                    <div class="col-md-3">
-                                        <label for="voter_id_card" class="form-label text-danger">Voter ID Card*</label>
+                                    <div class="col-md-4">
+                                        <label for="voter_id_card" class="form-label">Voter ID Number</label>
                                         <input type="text" class="form-control" name="voter_id_card" id="voter_id_card" value="">
                                     </div>
-                                    <div class="col-md-3">
-                                        <label for="voter_id_card_img" class="form-label">Voter ID Card Image</label>
+                                    <div class="col-md-4">
+                                        <label for="voter_id_card_img" class="form-label">Voter ID Card</label>
                                         <input type="file" class="form-control-file" name="voter_id_card_img" id="voter_id_card_img" value="" oninput="uploadPhoto('voter_id_card_img')">
                                         <br>
                                         <div id="preview_voter_id_card_img"></div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
+                                        <label for="voter_id_card_back_img" class="form-label">Voter ID Card (Back Side)</label>
+                                        <input type="file" class="form-control-file" name="voter_id_card_back_img" id="voter_id_card_back_img" value="" oninput="uploadPhoto('voter_id_card_back_img')">
+                                        <br>
+                                        <div id="preview_voter_id_card_back_img"></div>
+                                    </div>
+                                    <div class="col-md-4">
                                         <label for="user_photo" class="form-label">Live Photo (Clear Face Photo)</label>
                                         <input type="file" class="form-control-file" name="user_photo" id="user_photo" value="" oninput="uploadPhoto('user_photo')">
                                         <br>
@@ -368,17 +379,17 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div>
                                     
                                     <div class="col-md-3">
-                                        <label for="sk_id" class="form-label">Skills</label>
+                                        <label for="sk_id" class="form-label">Skills (Ctrl+Click)</label>
                                         <select class="form-control" name="sk_id" id="sk_id" multiple>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="l_id" class="form-label">Languages Known</label>
+                                        <label for="l_id" class="form-label">Languages Known (Ctrl+Click)</label>
                                         <select class="form-control" name="l_id" id="l_id" multiple>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="work_loc" class="form-label">Preferred Work Location*</label>
+                                        <label for="work_loc" class="form-label">Preferred Work Location</label>
                                         <input type="text" class="form-control" name="work_loc" id="work_loc" value="">
                                     </div>
                                     <div class="col-md-3">

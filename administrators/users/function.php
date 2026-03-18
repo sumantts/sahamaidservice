@@ -183,10 +183,12 @@
 				$pincode = $row['pincode'];
 				$adhar_card = $row['adhar_card'];
 				$adhar_card_img = $row['adhar_card_img'];
+				$adhar_card_back_img = $row['adhar_card_back_img'];
 				$pan_card = $row['pan_card'];
 				$pan_card_img = $row['pan_card_img'];
 				$voter_id_card = $row['voter_id_card'];
 				$voter_id_card_img = $row['voter_id_card_img'];
+				$voter_id_card_back_img = $row['voter_id_card_back_img'];
 				$bank_details = $row['bank_details'];
 				$bank_details_img = $row['bank_details_img'];
 				$highest_edu = $row['highest_edu'];
@@ -276,10 +278,12 @@
 			$return_array['pincode'] = $row['pincode']; 
 			$return_array['adhar_card'] = $row['adhar_card']; 
 			$return_array['adhar_card_img'] = $row['adhar_card_img']; 
+			$return_array['adhar_card_back_img'] = $row['adhar_card_back_img']; 
 			$return_array['pan_card'] = $row['pan_card']; 
 			$return_array['pan_card_img'] = $row['pan_card_img']; 
 			$return_array['voter_id_card'] = $row['voter_id_card']; 
 			$return_array['voter_id_card_img'] = $row['voter_id_card_img']; 
+			$return_array['voter_id_card_back_img'] = $row['voter_id_card_back_img'];
 			$return_array['user_photo'] = $row['user_photo']; 
 			$return_array['wt_id'] = $row['wt_id']; 
 			$return_array['work_exp'] = $row['work_exp']; 
