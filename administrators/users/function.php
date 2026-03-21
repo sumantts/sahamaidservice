@@ -230,9 +230,15 @@
 				$data[5] = $pan_card;
 				$data[6] = $voter_id_card;
 				$data[7] = $pincode;
-				$data[8] = $lead_conf;
-				$data[9] = $user_img;
-				$data[10] = $action_button;
+				if($current_tab == 'client' || $current_tab == 'worker'){
+					$data[8] = $lead_conf;
+					$data[9] = $user_img;
+					$data[10] = $action_button;
+				}else{
+					$data[8] = $user_img;
+					$data[9] = $action_button;
+				}
+
 
 				array_push($mainData, $data);
 				$sl++;

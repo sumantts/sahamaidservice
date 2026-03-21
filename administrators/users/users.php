@@ -105,8 +105,7 @@ $sess_user_type = $_SESSION["user_type"];
                                                 <th>Adhar Card</th>
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
-                                                <th>Pincode</th>
-                                                <th>Lead/Confirm</th>
+                                                <th>Pincode</th> 
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>
                                             </tr>
@@ -128,8 +127,7 @@ $sess_user_type = $_SESSION["user_type"];
                                                 <th>Adhar Card</th>
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
-                                                <th>Pincode</th>
-                                                <th>Lead/Confirm</th>
+                                                <th>Pincode</th> 
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>
                                             </tr>
@@ -151,8 +149,7 @@ $sess_user_type = $_SESSION["user_type"];
                                                 <th>Adhar Card</th>
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
-                                                <th>Pincode</th>
-                                                <th>Lead/Confirm</th>
+                                                <th>Pincode</th> 
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>
                                             </tr>
