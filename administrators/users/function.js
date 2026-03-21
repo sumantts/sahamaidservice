@@ -494,6 +494,34 @@ function configureCriminalHistoryDd(){
     });//end ajax
 }//end 
 
+// Lead or Confirm 
+function configureLeadConfirmDD(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureLeadConfirmDD" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#lc_id').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#lc_id').html($html);
+            }else{
+                $('#lc_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#lc_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
 $(document).ready(function () {
     $current_tab = 'admin';
     $sess_user_type = $('#sess_user_type').val();
@@ -524,6 +552,7 @@ $(document).ready(function () {
         configureMajorIllnessDd();
         configurePoliceVerificationDd();
         configureCriminalHistoryDd();
+        configureLeadConfirmDD();
 
     },300);
 });
@@ -696,6 +725,7 @@ function editTabledata(sl){
 			$('#updated_by').val($res1.updated_by); 
 			$('#insert_date').val($res1.insert_date); 
 			$('#update_date').val($res1.update_date); 
+			$('#lc_id').val($res1.lc_id).trigger('change'); 
         }        
     });//end ajax
 }//end if 

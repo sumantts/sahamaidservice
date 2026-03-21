@@ -154,9 +154,9 @@
 
 		if($sess_user_type == '1'){
 		}else if($sess_user_type == '2'){
-			$where_condition .= ' AND inserted_by = '.$sess_user_id;			
+			//$where_condition .= ' AND inserted_by = '.$sess_user_id;			
 		}else if($sess_user_type == '3'){
-			$where_condition .= ' AND inserted_by = '.$sess_user_id;			
+			//$where_condition .= ' AND inserted_by = '.$sess_user_id;			
 		}else if($sess_user_type == '4'){			
 		}else if($sess_user_type == '5'){			
 		}else{}
@@ -196,6 +196,7 @@
 				$updated_by = $row['updated_by'];
 				$insert_date = $row['insert_date'];
 				$user_photo = $row['user_photo'];
+				$lc_id = $row['lc_id'];
 
 				$user_img = '';
 				if($user_photo == ''){
@@ -208,6 +209,18 @@
 				$action_button = '';
 				$action_button .= '<a href="#!" data-toggle="modal" data-target="#exampleModalLong" class="action-icon" onClick="editTabledata('.$user_id.')"> <i class="fa fa-edit"></i></a>';
 				$action_button .= '<a href="javascript: void(0);" class="action-icon" onClick="deleteTabledata('.$user_id.')"> <i class="fa fa-trash"></i></a>';
+				$lead_conf = '-';
+				if($current_tab == 'client' || $current_tab == 'worker'){	
+					if($lc_id > 0){
+						$sql_21 = "SELECT * FROM lead_confirm_master WHERE lc_id = '" .$lc_id. "' ";
+						$result_21 = $con->query($sql_21);
+						if ($result_21->num_rows > 0) {
+							$row_21 = $result_21->fetch_array();
+							$lead_conf = $row_21['name'];
+						}
+					}
+				} 
+
 
 				$data[0] = $sl;
 				$data[1] = $full_name;
@@ -217,8 +230,9 @@
 				$data[5] = $pan_card;
 				$data[6] = $voter_id_card;
 				$data[7] = $pincode;
-				$data[8] = $user_img;
-				$data[9] = $action_button;
+				$data[8] = $lead_conf;
+				$data[9] = $user_img;
+				$data[10] = $action_button;
 
 				array_push($mainData, $data);
 				$sl++;
@@ -228,18 +242,7 @@
 			$status = false;
 		}
 		$mysqli->close();
-
-		/*$mainData = array();
-		for($i = 0; $i < 1000; $i++){
-			$data[0] = $i;
-			$data[1] = 'Employee Name '.$i;
-			$data[2] = 'User Name '.$i;
-			$data[3] = 'Password '.$i;
-			$data[4] = 'Group '.$i;
-			$data[5] = 'Validity '.$i;
-
-			array_push($mainData, $data);
-		}*/
+		
 		$return_array['data'] = $mainData;
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
@@ -309,7 +312,8 @@
 			$return_array['inserted_by'] = $row['inserted_by']; 
 			$return_array['updated_by'] = $row['updated_by']; 
 			$return_array['insert_date'] = $row['insert_date']; 
-			$return_array['update_date'] = $row['update_date'];			
+			$return_array['update_date'] = $row['update_date'];	 
+			$return_array['lc_id'] = $row['lc_id'];			
 		}else{
 			$status = true; 
 		}
@@ -690,6 +694,32 @@
     	echo json_encode($return_array);
 	}//function end
 
+	// Lead or Confirm 
+	if($fn == 'configureLeadConfirmDD'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM lead_confirm_master";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['lc_id'];
+				$data_obj->name = $row['name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
 
 	
 ?>

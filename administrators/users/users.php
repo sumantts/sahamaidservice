@@ -106,6 +106,7 @@ $sess_user_type = $_SESSION["user_type"];
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
                                                 <th>Pincode</th>
+                                                <th>Lead/Confirm</th>
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>
                                             </tr>
@@ -128,6 +129,7 @@ $sess_user_type = $_SESSION["user_type"];
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
                                                 <th>Pincode</th>
+                                                <th>Lead/Confirm</th>
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>
                                             </tr>
@@ -150,6 +152,7 @@ $sess_user_type = $_SESSION["user_type"];
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
                                                 <th>Pincode</th>
+                                                <th>Lead/Confirm</th>
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>
                                             </tr>
@@ -172,6 +175,7 @@ $sess_user_type = $_SESSION["user_type"];
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
                                                 <th>Pincode</th>
+                                                <th>Lead/Confirm</th>
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>
                                             </tr>
@@ -194,6 +198,7 @@ $sess_user_type = $_SESSION["user_type"];
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
                                                 <th>Pincode</th>
+                                                <th>Lead/Confirm</th>
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>
                                             </tr>
@@ -496,6 +501,12 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3">
                                         <label for="password" class="form-label">Password</label>
                                         <input type="text" class="form-control" name="password" id="password" value="">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="lc_id" class="form-label">Lead / Confirm</label>
+                                        <select class="form-control" name="lc_id" id="lc_id">
+                                            <option value="0">Select</option>
+                                        </select>
                                     </div>
                                 </div>  
                                 <a href="javascript: void(0);" id="partNineSwitch" class="float-right">Section 9</a>
