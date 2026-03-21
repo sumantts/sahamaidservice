@@ -584,6 +584,14 @@ buttons.forEach(button => {
             console.log(activeTab.id);
             $current_tab = activeTab.id;                
             populateDataTable();
+
+            if($current_tab == 'client' || $current_tab == 'worker'){
+                $('#col_lc_id').removeClass('d-none');
+                $('#col_lc_id').addClass('d-block');
+            }else{
+                $('#col_lc_id').removeClass('d-block');
+                $('#col_lc_id').addClass('d-none');
+            }
         }
 
     });

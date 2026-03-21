@@ -499,7 +499,7 @@ $sess_user_type = $_SESSION["user_type"];
                                         <label for="password" class="form-label">Password</label>
                                         <input type="text" class="form-control" name="password" id="password" value="">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3 d-none" id="col_lc_id">
                                         <label for="lc_id" class="form-label">Lead / Confirm</label>
                                         <select class="form-control" name="lc_id" id="lc_id">
                                             <option value="0">Select</option>
