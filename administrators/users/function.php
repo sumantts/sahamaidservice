@@ -209,7 +209,7 @@
 				$action_button = '';
 				$action_button .= '<a href="#!" data-toggle="modal" data-target="#exampleModalLong" class="action-icon" onClick="editTabledata('.$user_id.')"> <i class="fa fa-edit"></i></a>';
 				$action_button .= '<a href="javascript: void(0);" class="action-icon" onClick="deleteTabledata('.$user_id.')"> <i class="fa fa-trash"></i></a>';
-				$lead_conf = '-';
+				$lead_conf = '';
 				if($current_tab == 'client' || $current_tab == 'worker'){	
 					if($lc_id > 0){
 						$sql_21 = "SELECT * FROM lead_confirm_master WHERE lc_id = '" .$lc_id. "' ";

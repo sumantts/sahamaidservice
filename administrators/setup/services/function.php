@@ -55,7 +55,8 @@
 			while($row = $result->fetch_array()){
 				$service_id = $row['service_id'];			
 				$name = $row['name'];		
-				$description = $row['description'];	
+				$description = $row['description'];
+				$services_photo = '';
 				if($row['services_photo'] != ''){
 					$services_photo = $row['services_photo'];
 				}else{
