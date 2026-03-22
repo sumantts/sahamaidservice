@@ -34,6 +34,10 @@
     $('#submitForm_spinner_text').show();
     $('#submitForm_text').hide();
 
+
+    // Hide CSV Download button
+    $('#csvDownloadDiv').removeClass('d-block');
+    $('#csvDownloadDiv').addClass('d-none');
     
     $user_type = $('#user_type').val();  
     $user_id = $('#user_id').val();   
@@ -93,12 +97,21 @@
                     $attendance_ui += '</div>';
                 }//end for
                 $('#attendance_ui').html($attendance_ui);
+
+                // Active CSV Download button
+                $('#csvDownloadDiv').removeClass('d-none');
+                $('#csvDownloadDiv').addClass('d-block');
+
             }//end if attendance
 
         }
     });//end ajax 
 })
 
+$('#csvDownload').on('click', function(){
+    $atten_id = $('#atten_id').val();
+    window.open("./attendance/attendance_csv.php?atten_id="+$atten_id, "_blank");
+})
 
 // Update Attendance
 function updateAttendance(slno){

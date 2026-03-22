@@ -55,7 +55,7 @@ if($sess_user_type == 4){
                 <div class="card">
 
                     <div class="card-header">
-                        <h5> <?=$title?> Table</h5>
+                        <h5> <?=$title?> Register</h5>
                         <div class="card-header-right">
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -100,14 +100,18 @@ if($sess_user_type == 4){
                                     </select>
                                 </div>  
 
-                                <div class="col-md-3 mb-2">
+                                <div class="col-md-2 mb-2">
                                     <label for="month_date" class="form-label text-danger">Select Month*</label>
                                     <input class="form-control" type="month" id="month_date" name="month_date" required>
                                 </div>
 
-                                <div class="col-md-3 mt-4">
+                                <div class="col-md-1 mt-4">
                                     <input type="hidden" name="atten_id" id="atten_id" value="0">
                                     <button type="button" class="btn btn-primary" id="submitForm">Show</button> 
+                                </div> 
+
+                                <div class="col-md-2 mt-4 d-none" id="csvDownloadDiv">
+                                    <button type="button" class="btn btn-primary" id="csvDownload">CSV Download</button> 
                                 </div> 
                             </div>
                         </form>
