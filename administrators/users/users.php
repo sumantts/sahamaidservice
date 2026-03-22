@@ -5,6 +5,9 @@ if(!$_SESSION["user_id"]){
 include('common/head.php'); 
 $sess_user_type = $_SESSION["user_type"];
 
+if($sess_user_type > 3){
+    header("location:?p=signin");
+}
 ?>
 <script type="text/javascript">   
 
@@ -86,8 +89,10 @@ $sess_user_type = $_SESSION["user_type"];
                             <button class="tab-btn btn btn-primary <?php if($sess_user_type == '1'){?> active <?php } if($sess_user_type > 1){?>d-none<?php } ?>" data-tab="admin">Admin</button>
                             <button class="tab-btn btn btn-secondary <?php if($sess_user_type == '2'){?> active <?php } if($sess_user_type > 2){?>d-none<?php } ?>" data-tab="manager">Manager</button>
                             <button class="tab-btn btn btn-success <?php if($sess_user_type == '3'){?> active <?php } if($sess_user_type > 3){?>d-none<?php } ?>" data-tab="employee">Employee</button>
+                            <?php if($sess_user_type == '1' || $sess_user_type == '2' || $sess_user_type == '3'){?>
                             <button class="tab-btn btn btn-warning" data-tab="client">Client</button>
                             <button class="tab-btn btn btn-info" data-tab="worker">Worker</button>
+                            <?php } ?>
                         </div>
 
                         <!-- Tab Content -->

@@ -1,3 +1,7 @@
+<?php  
+$sess_user_type = $_SESSION["user_type"];
+
+?>
 <nav class="pcoded-navbar ">
 		<div class="navbar-wrapper">
 			<div class="navbar-content scroll-div" id="nav_bar">
@@ -33,12 +37,16 @@
 					<li class="nav-item <?php if($p == 'services'){ ?> active <?php } ?>">
 					    <a href="?p=services&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Services</span></a>
 					</li>
+					<?php if($sess_user_type == '1' || $sess_user_type == '2' || $sess_user_type == '3'){?>
 					<li class="nav-item <?php if($p == 'users'){ ?> active <?php } ?>">
 					    <a href="?p=users&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Users</span></a>
 					</li>
+					<?php } ?>
+					<?php if($sess_user_type == '1' || $sess_user_type == '2' || $sess_user_type == '3'){?>
 					<li class="nav-item <?php if($p == 'attendance'){ ?> active <?php } ?>">
 					    <a href="?p=attendance&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Attendance</span></a>
 					</li>
+					<?php } ?>
 
 					<!-- <li class="nav-item pcoded-hasmenu <?php if($p == 'deposit' || $p == 'loan'){ ?> active pcoded-trigger <?php } ?>">
 					    <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Product</span></a>

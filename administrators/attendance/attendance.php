@@ -1,4 +1,15 @@
-<?php include('common/head.php'); ?>
+<?php 
+if(!$_SESSION["user_id"]){
+    header("location:?p=signin");
+}
+include('common/head.php'); 
+$sess_user_type = $_SESSION["user_type"];
+if($sess_user_type == 4){
+    header("location:?p=signin");
+}
+
+?>
+
 <body class="">
 	<!-- [ Pre-loader ] start -->
 	<div class="loader-bg">
