@@ -44,6 +44,11 @@
 			$title = "Users";
 			include('users/users.php');		
 		break;
+		
+		case 'attendance':
+			$title = "Attendance";
+			include('attendance/attendance.php');		
+		break;
 						
 		default:
 		include('signin/signin.php');
