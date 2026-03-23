@@ -15,6 +15,35 @@
         margin: auto;
         border: 1px solid #000;
         padding: 15px;
+
+        /* Watermark */
+        background-image: url('../assets/images/logo.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 300px; /* adjust size */
+        background-opacity: 0.1;
+    }
+
+    /* Better way for opacity (important) */
+    .container::before {
+        content: "";
+        position: absolute;
+        width: 800px;
+        height: 100%;
+        background: url('../assets/images/logo.png') no-repeat center;
+        background-size: 300px;
+        opacity: 0.08; /* watermark lightness */
+        z-index: 0;
+    }
+
+    /* Keep content above watermark */
+    .container * {
+        position: relative;
+        z-index: 1;
+    }
+    .container {
+        position: relative;
+        overflow: hidden;
     }
 
     h2, h3 {
@@ -30,13 +59,27 @@
     .top-header {
         display: grid;
         grid-template-columns: 1fr 3fr 1fr;
-        align-items: start;
+        align-items: center;
     }
 
+    /* Logo styling */
+    .logo-box {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .logo-box img {
+        width: 120px;   /* adjust size */
+        height: auto;
+    }
+
+    /* Center content */
     .company-info {
         text-align: center;
     }
 
+    /* Photo box */
     .photo-box {
         justify-self: end;
         width: 100px;
@@ -90,9 +133,13 @@
 <div class="container">
 
     <div class="top-header">
-    
-        <div></div> <!-- empty left space -->
 
+        <!-- LEFT: LOGO -->
+        <div class="logo-box">
+            <img src="../assets/images/logo.png" alt="Logo">
+        </div>
+
+        <!-- CENTER: COMPANY INFO -->
         <div class="company-info">
             <h2>SAHA MAID SERVICE AND ENTERPRISE</h2>
             <div class="header">
@@ -106,6 +153,7 @@
             <h3>Personal Information Full Details of Candidate</h3>
         </div>
 
+        <!-- RIGHT: PHOTO -->
         <div class="photo-box">PHOTO</div>
 
     </div>
