@@ -617,6 +617,13 @@ function deleteTabledata(sl){
     }//end fonfirm if
 }//end if 
 
+// Print Data
+function printTabledata(sl){
+    console.log('sl: ' + sl);
+    
+    window.open("./users/print_users.php?user_id="+sl, "_blank");
+}//end if 
+
 // Get data for Edit
 function editTabledata(sl){
     console.log('sl: ' + sl);    

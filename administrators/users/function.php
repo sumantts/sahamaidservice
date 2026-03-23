@@ -208,6 +208,7 @@
 				//$action_button = "<i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$user_id.")'></i>";
 				$action_button = '';
 				$action_button .= '<a href="#!" data-toggle="modal" data-target="#exampleModalLong" class="action-icon" onClick="editTabledata('.$user_id.')"> <i class="fa fa-edit"></i></a>';
+				$action_button .= '<a href="javascript: void(0);" class="action-icon" onClick="printTabledata('.$user_id.')"> <i class="fa fa-print"></i></a>';
 				$action_button .= '<a href="javascript: void(0);" class="action-icon" onClick="deleteTabledata('.$user_id.')"> <i class="fa fa-trash"></i></a>';
 				$lead_conf = '';
 				if($current_tab == 'client' || $current_tab == 'worker'){	
