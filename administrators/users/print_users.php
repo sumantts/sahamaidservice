@@ -21,7 +21,7 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: 300px; /* adjust size */
-        background-opacity: 0.1;
+        background-opacity: 0.06;
     }
 
     /* Better way for opacity (important) */
@@ -31,8 +31,8 @@
         width: 800px;
         height: 100%;
         background: url('../assets/images/logo.png') no-repeat center;
-        background-size: 300px;
-        opacity: 0.08; /* watermark lightness */
+        background-size: 60%;
+        opacity: 0.06; /* watermark lightness */
         z-index: 0;
     }
 
