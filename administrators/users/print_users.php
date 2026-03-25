@@ -1,8 +1,11 @@
+<?php 
+	include('../assets/php/sql_conn.php');	
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Saha Maid Service Form</title>
+<title><?=$title?></title>
 
 <style>
     body {

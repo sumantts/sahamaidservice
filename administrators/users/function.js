@@ -590,9 +590,119 @@ buttons.forEach(button => {
                 $('#col_lc_id').addClass('d-block');
             }else{
                 $('#col_lc_id').removeClass('d-block');
-                $('#col_lc_id').addClass('d-none');
-            }
-        }
+                $('#col_lc_id').addClass('d-none');                
+            }            
+
+            // For worker
+            if($current_tab == 'worker'){
+                //Section 5 Fields 
+                $('#sec_5_1').removeClass('d-none');
+                $('#sec_5_1').addClass('d-block');
+                
+                $('#sec_5_2').removeClass('d-none');
+                $('#sec_5_2').addClass('d-block');
+
+                //Section 6 Fields                 
+                $('#partSixSwitch').removeClass('d-none');
+                $('#partSixSwitch').addClass('d-block');                
+                $('#partSixTitl').removeClass('d-none');
+                $('#partSixTitl').addClass('d-block');     
+
+                $('#partSixBoard1').removeClass('d-none');
+                $('#partSixBoard1').addClass('d-block');  
+                $('#partSixBoard2').removeClass('d-none');
+                $('#partSixBoard2').addClass('d-block');  
+                $('#partSixBoard3').removeClass('d-none');
+                $('#partSixBoard3').addClass('d-block'); 
+                
+
+                //Section 7 Fields                 
+                $('#partSevenSwitch').removeClass('d-none');
+                $('#partSevenSwitch').addClass('d-block');                
+                $('#partSevenTitl').removeClass('d-none');
+                $('#partSevenTitl').addClass('d-block');     
+
+                $('#partSevenBoard1').removeClass('d-none');
+                $('#partSevenBoard1').addClass('d-block');  
+                $('#partSevenBoard2').removeClass('d-none');
+                $('#partSevenBoard2').addClass('d-block');  
+                $('#partSevenBoard3').removeClass('d-none');
+                $('#partSevenBoard3').addClass('d-block'); 
+                
+
+                //Section 8 Fields                 
+                $('#partEightSwitch').removeClass('d-none');
+                $('#partEightSwitch').addClass('d-block');                
+                $('#partEightTitl').removeClass('d-none');
+                $('#partEightTitl').addClass('d-block');     
+
+                $('#partEightBoard1').removeClass('d-none');
+                $('#partEightBoard1').addClass('d-block');  
+                $('#partEightBoard2').removeClass('d-none');
+                $('#partEightBoard2').addClass('d-block');  
+                $('#partEightBoard3').removeClass('d-none');
+                $('#partEightBoard3').addClass('d-block');  
+                $('#partEightBoard4').removeClass('d-none');
+                $('#partEightBoard4').addClass('d-block');  
+                $('#partEightBoard5').removeClass('d-none');
+                $('#partEightBoard5').addClass('d-block');  
+                $('#partEightBoard6').removeClass('d-none');
+                $('#partEightBoard6').addClass('d-block');
+                  
+            }else{
+                //Section 5 Fields 
+                $('#sec_5_1').removeClass('d-block');
+                $('#sec_5_1').addClass('d-none');
+                
+                $('#sec_5_2').removeClass('d-block');
+                $('#sec_5_2').addClass('d-none');
+
+                //Section 6 Fields                 
+                $('#partSixSwitch').removeClass('d-block');
+                $('#partSixSwitch').addClass('d-none');                
+                $('#partSixTitl').removeClass('d-block');
+                $('#partSixTitl').addClass('d-none');                
+                $('#partSixBoard1').removeClass('d-block');
+                $('#partSixBoard1').addClass('d-none');                
+                $('#partSixBoard2').removeClass('d-block');
+                $('#partSixBoard2').addClass('d-none');                
+                $('#partSixBoard3').removeClass('d-block');
+                $('#partSixBoard3').addClass('d-none');
+
+                //Section 7 Fields                 
+                $('#partSevenSwitch').removeClass('d-block');
+                $('#partSevenSwitch').addClass('d-none');                
+                $('#partSevenTitl').removeClass('d-block');
+                $('#partSevenTitl').addClass('d-none');                
+                $('#partSevenBoard1').removeClass('d-block');
+                $('#partSevenBoard1').addClass('d-none');                
+                $('#partSevenBoard2').removeClass('d-block');
+                $('#partSevenBoard2').addClass('d-none');                
+                $('#partSevenBoard3').removeClass('d-block');
+                $('#partSevenBoard3').addClass('d-none');
+
+                //Section 8 Fields                 
+                $('#partEightSwitch').removeClass('d-block');
+                $('#partEightSwitch').addClass('d-none');                
+                $('#partEightTitl').removeClass('d-block');
+                $('#partEightTitl').addClass('d-none');                
+                $('#partEightBoard1').removeClass('d-block');
+                $('#partEightBoard1').addClass('d-none');                
+                $('#partEightBoard2').removeClass('d-block');
+                $('#partEightBoard2').addClass('d-none');                
+                $('#partEightBoard3').removeClass('d-block');
+                $('#partEightBoard3').addClass('d-none');               
+                $('#partEightBoard4').removeClass('d-block');
+                $('#partEightBoard4').addClass('d-none');               
+                $('#partEightBoard5').removeClass('d-block');
+                $('#partEightBoard5').addClass('d-none');               
+                $('#partEightBoard6').removeClass('d-block');
+                $('#partEightBoard6').addClass('d-none');
+
+
+            }   
+
+        }//end active tab
 
     });
 });
@@ -618,10 +728,11 @@ function deleteTabledata(sl){
 }//end if 
 
 // Print Data
-function printTabledata(sl){
-    console.log('sl: ' + sl);
-    
+function printTabledataF(sl){
     window.open("./users/print_users.php?user_id="+sl, "_blank");
+}//end if 
+function printTabledataB(sl){
+    window.open("./users/print_undertaking.php?user_id="+sl, "_blank");
 }//end if 
 
 // Get data for Edit
@@ -811,28 +922,5 @@ function uploadPhoto(img_id){
 
 }//end if
 
-/*$(document).ready(function(){
 
-    $("#imageUpload").change(function(){
-
-        var file_data = $('#imageUpload').prop('files')[0];
-
-        var form_data = new FormData();
-        form_data.append('image', file_data);
-
-        $.ajax({
-            url: "users/upload.php",
-            type: "POST",
-            data: form_data,
-            contentType: false,
-            processData: false,
-            success:function(response)
-            {
-                //$("#result").html(response);
-                $("#preview").html('<img src="users/uploads/'+response+'"  width="200" height="150">');
-            }
-        });
-
-    });
-
-});*/
+    
