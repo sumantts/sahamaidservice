@@ -702,6 +702,79 @@ buttons.forEach(button => {
 
             }   
 
+            console.log('current_tab: ' + $current_tab);
+            if($current_tab == 'client'){
+                $('#partOneBoard1').removeClass('d-block');
+                $('#partOneBoard1').addClass('d-none');                
+                $('#partOneBoard2').removeClass('d-block');
+                $('#partOneBoard2').addClass('d-none');
+                $('#partOneBoard3').removeClass('d-block');
+                $('#partOneBoard3').addClass('d-none');
+                $('#partOneBoard4').removeClass('d-block');
+                $('#partOneBoard4').addClass('d-none');
+                $('#partOneBoard5').removeClass('d-block');
+                $('#partOneBoard5').addClass('d-none');
+                
+                $('#partThreeTitle').removeClass('d-block');
+                $('#partThreeTitle').addClass('d-none');
+                $('#partThreeSwitch').removeClass('d-block');
+                $('#partThreeSwitch').addClass('d-none');
+                
+                $('#partThreeBoard1').removeClass('d-block');
+                $('#partThreeBoard1').addClass('d-none');                
+                $('#partThreeBoard2').removeClass('d-block');
+                $('#partThreeBoard2').addClass('d-none');
+                $('#partThreeBoard3').removeClass('d-block');
+                $('#partThreeBoard3').addClass('d-none');
+                $('#partThreeBoard4').removeClass('d-block');
+                $('#partThreeBoard4').addClass('d-none');
+                $('#partThreeBoard5').removeClass('d-block');
+                $('#partThreeBoard5').addClass('d-none');
+                $('#partThreeBoard6').removeClass('d-block');
+                $('#partThreeBoard6').addClass('d-none');
+                $('#partThreeBoard7').removeClass('d-block');
+                $('#partThreeBoard7').addClass('d-none');
+                $('#partThreeBoard8').removeClass('d-block');
+                $('#partThreeBoard8').addClass('d-none');
+                $('#partThreeBoard9').removeClass('d-block');
+                $('#partThreeBoard9').addClass('d-none');
+            }else{
+                $('#partOneBoard1').removeClass('d-none');
+                $('#partOneBoard1').addClass('d-block');                
+                $('#partOneBoard2').removeClass('d-none');
+                $('#partOneBoard2').addClass('d-block');
+                $('#partOneBoard3').removeClass('d-none');
+                $('#partOneBoard3').addClass('d-block');
+                $('#partOneBoard4').removeClass('d-none');
+                $('#partOneBoard4').addClass('d-block');
+                $('#partOneBoard5').removeClass('d-none');
+                $('#partOneBoard5').addClass('d-block');
+
+                $('#partThreeTitle').removeClass('d-none');
+                $('#partThreeTitle').addClass('d-block');
+                $('#partThreeSwitch').removeClass('d-none');
+                $('#partThreeSwitch').addClass('d-block');
+
+                $('#partThreeBoard1').removeClass('d-none');
+                $('#partThreeBoard1').addClass('d-block');                
+                $('#partThreeBoard2').removeClass('d-none');
+                $('#partThreeBoard2').addClass('d-block');
+                $('#partThreeBoard3').removeClass('d-none');
+                $('#partThreeBoard3').addClass('d-block');
+                $('#partThreeBoard4').removeClass('d-none');
+                $('#partThreeBoard4').addClass('d-block');
+                $('#partThreeBoard5').removeClass('d-none');
+                $('#partThreeBoard5').addClass('d-block');
+                $('#partThreeBoard6').removeClass('d-none');
+                $('#partThreeBoard6').addClass('d-block');
+                $('#partThreeBoard7').removeClass('d-none');
+                $('#partThreeBoard7').addClass('d-block');
+                $('#partThreeBoard8').removeClass('d-none');
+                $('#partThreeBoard8').addClass('d-block');
+                $('#partThreeBoard9').removeClass('d-none');
+                $('#partThreeBoard9').addClass('d-block');
+            }
+
         }//end active tab
 
     });
