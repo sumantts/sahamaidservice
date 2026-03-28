@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2026 at 04:13 AM
+-- Generation Time: Mar 28, 2026 at 05:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -33,6 +33,14 @@ CREATE TABLE `attendance_register` (
   `month_date` varchar(7) NOT NULL,
   `atten_data` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `attendance_register`
+--
+
+INSERT INTO `attendance_register` (`atten_id`, `user_id`, `month_date`, `atten_data`) VALUES
+(1, 3, '2026-03', '[{\"slno\":1,\"atten_date\":\"01-03-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"Come on time\"},{\"slno\":2,\"atten_date\":\"02-03-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"10 minutes late\"},{\"slno\":3,\"atten_date\":\"03-03-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":4,\"atten_date\":\"04-03-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":5,\"atten_date\":\"05-03-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"30 minutes late\"},{\"slno\":6,\"atten_date\":\"06-03-2026\",\"pre_abs_lev\":\"2\",\"atten_note\":\"Went for party\"},{\"slno\":7,\"atten_date\":\"07-03-2026\",\"pre_abs_lev\":\"3\",\"atten_note\":\"Ostomongola bar\"},{\"slno\":8,\"atten_date\":\"08-03-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":9,\"atten_date\":\"09-03-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":10,\"atten_date\":\"10-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":11,\"atten_date\":\"11-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":12,\"atten_date\":\"12-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":13,\"atten_date\":\"13-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":14,\"atten_date\":\"14-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":15,\"atten_date\":\"15-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":16,\"atten_date\":\"16-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":17,\"atten_date\":\"17-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":18,\"atten_date\":\"18-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":19,\"atten_date\":\"19-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":20,\"atten_date\":\"20-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":21,\"atten_date\":\"21-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":22,\"atten_date\":\"22-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":23,\"atten_date\":\"23-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":24,\"atten_date\":\"24-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":25,\"atten_date\":\"25-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":26,\"atten_date\":\"26-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":27,\"atten_date\":\"27-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":28,\"atten_date\":\"28-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":29,\"atten_date\":\"29-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":30,\"atten_date\":\"30-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":31,\"atten_date\":\"31-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"}]'),
+(2, 2, '2026-03', '[{\"slno\":1,\"atten_date\":\"01-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":2,\"atten_date\":\"02-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":3,\"atten_date\":\"03-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":4,\"atten_date\":\"04-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":5,\"atten_date\":\"05-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":6,\"atten_date\":\"06-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":7,\"atten_date\":\"07-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":8,\"atten_date\":\"08-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":9,\"atten_date\":\"09-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":10,\"atten_date\":\"10-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":11,\"atten_date\":\"11-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":12,\"atten_date\":\"12-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":13,\"atten_date\":\"13-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":14,\"atten_date\":\"14-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":15,\"atten_date\":\"15-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":16,\"atten_date\":\"16-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":17,\"atten_date\":\"17-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":18,\"atten_date\":\"18-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":19,\"atten_date\":\"19-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":20,\"atten_date\":\"20-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":21,\"atten_date\":\"21-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":22,\"atten_date\":\"22-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":23,\"atten_date\":\"23-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":24,\"atten_date\":\"24-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":25,\"atten_date\":\"25-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":26,\"atten_date\":\"26-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":27,\"atten_date\":\"27-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":28,\"atten_date\":\"28-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":29,\"atten_date\":\"29-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":30,\"atten_date\":\"30-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":31,\"atten_date\":\"31-03-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"}]');
 
 -- --------------------------------------------------------
 
@@ -1087,6 +1095,29 @@ INSERT INTO `marital_status_master` (`m_id`, `m_status_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `nurses_master`
+--
+
+CREATE TABLE `nurses_master` (
+  `nr_id` int(11) NOT NULL,
+  `nr_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `nurses_master`
+--
+
+INSERT INTO `nurses_master` (`nr_id`, `nr_name`) VALUES
+(1, 'GNM'),
+(2, 'GDA'),
+(3, 'ANM'),
+(4, 'BSC'),
+(5, 'Para Medic'),
+(6, 'Dialysis Technician');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `police_verification`
 --
 
@@ -1166,13 +1197,13 @@ CREATE TABLE `skills_master` (
 --
 
 INSERT INTO `skills_master` (`sk_id`, `skill_name`) VALUES
-(1, 'Cooking'),
-(2, 'Cleaning'),
-(3, 'Baby Care'),
+(1, 'Housemaid'),
+(2, 'Cook'),
+(3, 'Nanny'),
 (4, 'Patient Care'),
-(5, 'Elder Care'),
-(6, 'Old Age Care'),
-(7, 'All Work');
+(5, 'Japa'),
+(6, 'Pet Care'),
+(7, 'Elder Care');
 
 -- --------------------------------------------------------
 
@@ -1282,7 +1313,7 @@ CREATE TABLE `user_details` (
   `voter_id_card_img` varchar(255) NOT NULL,
   `voter_id_card_back_img` varchar(255) NOT NULL,
   `user_photo` varchar(255) NOT NULL,
-  `wt_id` int(11) NOT NULL DEFAULT 0 COMMENT 'PK of work_type',
+  `wt_id` text NOT NULL COMMENT 'PK of work_type',
   `work_exp` int(2) NOT NULL DEFAULT 0,
   `earlier_work_city` varchar(10) NOT NULL,
   `last_emplr_name` varchar(255) NOT NULL,
@@ -1304,6 +1335,11 @@ CREATE TABLE `user_details` (
   `highest_edu` varchar(255) NOT NULL,
   `declaration` tinyint(1) NOT NULL DEFAULT 0,
   `lc_id` tinyint(1) NOT NULL DEFAULT 0,
+  `wh_id` int(11) NOT NULL COMMENT 'PK of working_hour_master',
+  `religion` varchar(255) NOT NULL,
+  `nationality` varchar(255) NOT NULL,
+  `family_bg_info` text NOT NULL,
+  `nr_id` text NOT NULL COMMENT 'PK of nurses_master',
   `inserted_by` int(11) NOT NULL DEFAULT 0,
   `updated_by` int(11) NOT NULL DEFAULT 0,
   `insert_date` datetime NOT NULL DEFAULT current_timestamp(),
@@ -1314,16 +1350,16 @@ CREATE TABLE `user_details` (
 -- Dumping data for table `user_details`
 --
 
-INSERT INTO `user_details` (`user_id`, `username`, `password`, `user_type`, `added_by`, `full_name`, `fat_hus_name`, `email_id`, `phone_number`, `alt_phone_number`, `m_id`, `date_of_birth`, `gender`, `address`, `curr_address`, `city_id`, `state_id`, `country_id`, `pincode`, `adhar_card`, `adhar_card_img`, `adhar_card_back_img`, `pan_card`, `pan_card_img`, `voter_id_card`, `voter_id_card_img`, `voter_id_card_back_img`, `user_photo`, `wt_id`, `work_exp`, `earlier_work_city`, `last_emplr_name`, `sk_id`, `l_id`, `work_loc`, `st_id`, `exp_salary`, `available_from`, `wf_id`, `il_id`, `pv_id`, `ch_id`, `emg_cont_person`, `relation`, `emg_cont_number`, `bank_details`, `bank_details_img`, `highest_edu`, `declaration`, `lc_id`, `inserted_by`, `updated_by`, `insert_date`, `update_date`) VALUES
-(1, 'superadmin@sahaservices.in', '12345678', 1, 0, 'Super Admin', '', 'superadmin@sahaservices.in', '9733935161', '9733935162', 1, '1987-10-01', 1, 'Village: Bhuarag; PO: Agunshi', '', 0, 0, 0, '711303', '999955553333', '', '', 'BCCPJ9833J', '', 'HRC212', '', '', '', 0, 0, '', '', '0', '0', '', 0, 0.00, '2026-03-03 00:00:00', 0, 0, 0, 0, '', '', '', 'A/c: 32953529067', '', 'Graduate', 0, 0, 0, 1, '2026-03-02 22:36:01', '2026-03-11 08:48:23'),
-(2, 'manager@sahaservices.in', '12345678', 2, 1, 'Manager Admin', '', 'manager@sahaservices.in', '9733935162', '', 1, '1988-03-01', 1, 'Village: Natibpur', '', 0, 0, 0, '711304', '951847632145', '', '', 'BHHYI8966L', '', 'HRC2123', '', '', '', 0, 0, '', '', '0', '0', '', 0, 0.00, '2026-03-03 00:00:00', 0, 0, 0, 0, '', '', '', 'A/c: 6985321020', '', 'Higher Secondary', 0, 0, 1, 0, '2026-03-02 22:40:30', '2026-03-03 19:46:41'),
-(3, 'employee@sahaservices.in', '12345678', 3, 1, 'Employee', '', 'employee@sahaservices.in', '9733935163', '', 1, '1997-03-01', 1, 'Village: Chakashi', '', 0, 0, 0, '711305', '951847632146', '', '', 'BCCPJ9833P', '', 'HRC2126', '', '', '', 0, 0, '', '', '0', '0', '', 0, 0.00, '2026-03-03 00:00:00', 0, 0, 0, 0, '', '', '', 'A/c: 568923124578', '', 'Higher secondary', 0, 0, 1, 0, '2026-03-02 22:48:40', '2026-03-03 19:46:44'),
-(4, 'client@sahaservices.in', '12345678', 4, 1, 'Client No1', '', 'client@sahaservices.in', '9733935164', '', 1, '1990-03-15', 1, 'Village: Gongaram pur', '', 0, 0, 0, '711306', '951845632146', '', '', 'BCCKJ9833J', '', 'HRC2124', '', '', '', 0, 0, '', '', '0', '0', '', 0, 0.00, '2026-03-03 00:00:00', 0, 0, 0, 0, '', '', '', 'A/c No: 7456321025', '', 'Madhyamick', 0, 1, 1, 1, '2026-03-02 22:59:06', '2026-03-21 16:47:37'),
-(5, 'worker@sahaservices.in', '12345678', 5, 1, 'Worker No1', '', 'worker@sahaservices.in', '9733935165', '', 1, '1990-04-15', 1, 'Village: Gongaram pur', '', 0, 0, 0, '711307', '951845632148', '', '', 'ACCKJ9833J', '', 'HRU2124', '', '', '', 0, 0, '', '', '0', '0', '', 0, 0.00, '2026-03-03 00:00:00', 0, 0, 0, 0, '', '', '', 'A/c No: 7455321025', '', 'B.Tech', 0, 2, 1, 1, '2026-03-02 23:00:33', '2026-03-21 17:34:25'),
-(12, '', '', 1, 1, 'Cammet Biswash', 'Cammeter baba', '', '9874563201', '5896589658', 2, '1990-06-06', 1, 'bauria paschim para', 'bauria paschim para', 0, 0, 0, '711303', '987654120254', '', '', 'BCCPJ9822J', '', 'HRC12345', '', '', '', 0, 0, '', '', '0', '0', '', 0, 0.00, '2026-03-05 00:00:00', 0, 0, 0, 0, '', '', '', '', '', '', 0, 0, 1, 1, '2026-03-05 22:53:47', '2026-03-05 22:57:54'),
-(13, '', '', 1, 1, 'new admin', 'FatherBaba', '', '', '9874563201', 0, '2026-02-05', 1, 'kolkata', 'kolkata', 0, 0, 0, '598878', '852369874125', '', '', 'PAN256985', '', 'ASDR12345', '', '', '', 1, 1, '2', '3', '3', '1', 'kolkatakulgachi', 1, 0.00, '2026-03-05 00:00:00', 0, 2, 1, 1, 'suman jana', 'rail', '0973393516', 'Boroda bank', '', '', 0, 0, 1, 1, '2026-03-05 23:07:56', '2026-03-05 23:18:13'),
-(26, '123suman@gmail.co.in', '12345678', 1, 1, 'new admin1', 'FatherBaba2', '123suman@gmail.co.in', '9855654123', '9856325412', 3, '2026-03-10', 2, 'permanent address', 'current address', 592, 24, 105, '711303', '852369874199', '1773331157.png', '1773849918.png', 'PAN2569899', '1773333169.png', 'ASDR123499', '1773333181.png', '1773849730.png', '1773333185.jpg', 2, 99, 'Hyadrabad', 'Bablu', '[\"3\",\"2\",\"1\",\"5\",\"6\",\"4\"]', '[\"1\",\"2\",\"3\"]', 'Bauria Chaksahi', 3, 12000.00, '2026-03-01 00:00:00', 1, 2, 2, 2, 'Modon Mitra', 'Friend', '0082820082', 'Boroda bank ltd. okok', '1773333205.png', 'HS Graduate', 1, 0, 1, 1, '2026-03-10 23:11:44', '2026-03-18 21:42:32'),
-(27, '', '', 1, 1, '', '', '', '', '', 1, '2026-03-10', 1, '', '', 0, 0, 0, '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', '', '', '', 0, 0.00, '2026-03-10 00:00:00', 0, 0, 0, 0, '', '', '', '', '', '', 0, 0, 1, 0, '2026-03-10 23:16:41', '2026-03-10 23:16:41');
+INSERT INTO `user_details` (`user_id`, `username`, `password`, `user_type`, `added_by`, `full_name`, `fat_hus_name`, `email_id`, `phone_number`, `alt_phone_number`, `m_id`, `date_of_birth`, `gender`, `address`, `curr_address`, `city_id`, `state_id`, `country_id`, `pincode`, `adhar_card`, `adhar_card_img`, `adhar_card_back_img`, `pan_card`, `pan_card_img`, `voter_id_card`, `voter_id_card_img`, `voter_id_card_back_img`, `user_photo`, `wt_id`, `work_exp`, `earlier_work_city`, `last_emplr_name`, `sk_id`, `l_id`, `work_loc`, `st_id`, `exp_salary`, `available_from`, `wf_id`, `il_id`, `pv_id`, `ch_id`, `emg_cont_person`, `relation`, `emg_cont_number`, `bank_details`, `bank_details_img`, `highest_edu`, `declaration`, `lc_id`, `wh_id`, `religion`, `nationality`, `family_bg_info`, `nr_id`, `inserted_by`, `updated_by`, `insert_date`, `update_date`) VALUES
+(1, 'superadmin@sahaservices.in', '12345678', 1, 0, 'Super Admin', '', 'superadmin@sahaservices.in', '9733935161', '9733935162', 1, '1987-10-01', 1, 'Village: Bhuarag; PO: Agunshi', '', 0, 0, 0, '711303', '999955553333', '', '', 'BCCPJ9833J', '', 'HRC212', '', '', '', '', 0, '', '', '0', '0', '', 0, 0.00, '2026-03-03 00:00:00', 0, 0, 0, 0, '', '', '', 'A/c: 32953529067', '', 'Graduate', 0, 0, 0, '', '', '', '', 0, 1, '2026-03-02 22:36:01', '2026-03-28 09:13:30'),
+(2, 'manager@sahaservices.in', '12345678', 2, 1, 'Manager Admin', '', 'manager@sahaservices.in', '9733935162', '', 1, '1988-03-01', 1, 'Village: Natibpur', '', 0, 0, 0, '711304', '951847632145', '', '', 'BHHYI8966L', '', 'HRC2123', '', '', '', '', 0, '', '', '0', '0', '', 0, 0.00, '2026-03-03 00:00:00', 0, 0, 0, 0, '', '', '', 'A/c: 6985321020', '', 'Higher Secondary', 0, 0, 0, '', '', '', '', 1, 0, '2026-03-02 22:40:30', '2026-03-28 09:13:30'),
+(3, 'employee@sahaservices.in', '12345678', 3, 1, 'Employee', '', 'employee@sahaservices.in', '9733935163', '', 1, '1997-03-01', 1, 'Village: Chakashi', '', 0, 0, 0, '711305', '951847632146', '', '', 'BCCPJ9833P', '', 'HRC2126', '', '', '', '', 0, '', '', '0', '0', '', 0, 0.00, '2026-03-03 00:00:00', 0, 0, 0, 0, '', '', '', 'A/c: 568923124578', '', 'Higher secondary', 0, 0, 0, '', '', '', '', 1, 0, '2026-03-02 22:48:40', '2026-03-28 09:13:30'),
+(4, 'client@sahaservices.in', '12345678', 4, 1, 'Client No1', '', 'client@sahaservices.in', '9733935164', '', 1, '1990-03-15', 1, 'Village: Gongaram pur', '', 0, 0, 0, '711306', '951845632146', '', '', 'BCCKJ9833J', '', 'HRC2124', '', '', '', '', 0, '', '', '0', '0', '', 0, 0.00, '2026-03-03 00:00:00', 0, 0, 0, 0, '', '', '', 'A/c No: 7456321025', '', 'Madhyamick', 0, 1, 0, '', '', '', '', 1, 1, '2026-03-02 22:59:06', '2026-03-28 09:13:30'),
+(5, 'worker@sahaservices.in', '12345678', 5, 1, 'Worker No1', 'PersonalHusband', 'worker@sahaservices.in', '9733935165', '', 1, '1990-04-15', 2, 'Village: Gongaram pur', '', 0, 0, 0, '711307', '951845632148', '1774712715.jpg', '1774712718.jpg', 'ACCKJ9833J', '1774712722.jpg', 'HRU2124', '1774712726.jpg', '1774712730.jpg', '1774712736.jpg', '[\"2\",\"1\",\"3\",\"6\"]', 2, '', '', '[\"1\",\"3\",\"6\"]', '[\"1\",\"2\",\"3\"]', 'Bauria', 3, 0.00, '2026-03-03 00:00:00', 0, 2, 2, 2, '', '', '', 'A/c No: 7455321025', '', 'B.Tech', 0, 2, 5, 'Hindu', 'Indian', 'Maa Baba ', '[\"6\",\"5\"]', 1, 1, '2026-03-02 23:00:33', '2026-03-28 21:25:01'),
+(12, '', '', 1, 1, 'Cammet Biswash', 'Baba', '', '9874563201', '5896589658', 2, '1990-06-06', 1, 'bauria paschim para', 'bauria paschim para', 0, 0, 0, '711303', '987654120254', '', '', 'BCCPJ9822J', '', 'HRC12345', '', '', '', '', 0, '', '', '0', '0', '', 0, 0.00, '2026-03-05 00:00:00', 0, 0, 0, 0, '', '', '', '', '', '', 0, 0, 0, '', '', '', '', 1, 1, '2026-03-05 22:53:47', '2026-03-28 09:13:30'),
+(13, '', '', 1, 1, 'new admin', 'FatherBaba', '', '', '9874563201', 0, '2026-02-05', 1, 'kolkata', 'kolkata', 0, 0, 0, '598878', '852369874125', '', '', 'PAN256985', '', 'ASDR12345', '', '', '', '', 1, '2', '3', '3', '1', 'kolkatakulgachi', 1, 0.00, '2026-03-05 00:00:00', 0, 2, 1, 1, 'suman jana', 'rail', '0973393516', 'Boroda bank', '', '', 0, 0, 0, '', '', '', '', 1, 1, '2026-03-05 23:07:56', '2026-03-28 09:13:30'),
+(26, '123suman@gmail.co.in', '12345678', 1, 1, 'new admin1', 'FatherBaba2', '123suman@gmail.co.in', '9855654123', '9856325412', 3, '2026-03-10', 2, 'permanent address', 'current address', 592, 24, 105, '711303', '852369874199', '1773331157.png', '1773849918.png', 'PAN2569899', '1773333169.png', 'ASDR123499', '1773333181.png', '1773849730.png', '1773333185.jpg', '', 99, 'Hyadrabad', 'Bablu', '[\"3\",\"2\",\"1\",\"5\",\"6\",\"4\"]', '[\"1\",\"2\",\"3\"]', 'Bauria Chaksahi', 3, 12000.00, '2026-03-01 00:00:00', 1, 2, 2, 2, 'Modon Mitra', 'Friend', '0082820082', 'Boroda bank ltd. okok', '1773333205.png', 'HS Graduate', 1, 0, 0, '', '', '', '', 1, 1, '2026-03-10 23:11:44', '2026-03-28 09:13:30'),
+(27, '', '', 1, 1, '', '', '', '', '', 1, '2026-03-10', 1, '', '', 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', 0, 0.00, '2026-03-10 00:00:00', 0, 0, 0, 0, '', '', '', '', '', '', 0, 0, 0, '', '', '', '', 1, 0, '2026-03-10 23:16:41', '2026-03-28 09:13:30');
 
 -- --------------------------------------------------------
 
@@ -1369,12 +1405,35 @@ INSERT INTO `weekly_off` (`wf_id`, `wf_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `working_hour_master`
+--
+
+CREATE TABLE `working_hour_master` (
+  `wh_id` int(11) NOT NULL,
+  `wh_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `working_hour_master`
+--
+
+INSERT INTO `working_hour_master` (`wh_id`, `wh_name`) VALUES
+(1, '6 HRS'),
+(2, '8 HRS'),
+(3, '10 HRS'),
+(4, '12 HRS'),
+(5, '24 HRS'),
+(6, 'Out of Kolkata');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `work_type`
 --
 
 CREATE TABLE `work_type` (
   `wt_id` int(11) NOT NULL,
-  `type_name` varchar(20) NOT NULL
+  `type_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1382,13 +1441,13 @@ CREATE TABLE `work_type` (
 --
 
 INSERT INTO `work_type` (`wt_id`, `type_name`) VALUES
-(1, 'Maid'),
+(1, 'Housemaid'),
 (2, 'Cook'),
-(3, 'Babysitter'),
-(4, 'Patient Care'),
-(5, 'Elder Care'),
-(6, 'Japa Maid'),
-(7, 'Housekeeping');
+(3, 'Nanny'),
+(4, 'Patient care'),
+(5, 'Japa'),
+(6, 'Pet care'),
+(7, 'Elder care');
 
 --
 -- Indexes for dumped tables
@@ -1462,6 +1521,12 @@ ALTER TABLE `marital_status_master`
   ADD PRIMARY KEY (`m_id`);
 
 --
+-- Indexes for table `nurses_master`
+--
+ALTER TABLE `nurses_master`
+  ADD PRIMARY KEY (`nr_id`);
+
+--
 -- Indexes for table `police_verification`
 --
 ALTER TABLE `police_verification`
@@ -1516,6 +1581,12 @@ ALTER TABLE `weekly_off`
   ADD PRIMARY KEY (`wf_id`);
 
 --
+-- Indexes for table `working_hour_master`
+--
+ALTER TABLE `working_hour_master`
+  ADD PRIMARY KEY (`wh_id`);
+
+--
 -- Indexes for table `work_type`
 --
 ALTER TABLE `work_type`
@@ -1529,7 +1600,7 @@ ALTER TABLE `work_type`
 -- AUTO_INCREMENT for table `attendance_register`
 --
 ALTER TABLE `attendance_register`
-  MODIFY `atten_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `atten_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cities`
@@ -1592,6 +1663,12 @@ ALTER TABLE `marital_status_master`
   MODIFY `m_id` tinyint(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `nurses_master`
+--
+ALTER TABLE `nurses_master`
+  MODIFY `nr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `police_verification`
 --
 ALTER TABLE `police_verification`
@@ -1644,6 +1721,12 @@ ALTER TABLE `user_type_master`
 --
 ALTER TABLE `weekly_off`
   MODIFY `wf_id` tinyint(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `working_hour_master`
+--
+ALTER TABLE `working_hour_master`
+  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `work_type`

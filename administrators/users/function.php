@@ -31,7 +31,7 @@
 		if($field_id == 'date_of_birth'){
 			$field_val = date('Y-m-d', strtotime($_POST['field_val']));
 		}
-		if($field_id == 'sk_id' || $field_id == 'l_id'){
+		if($field_id == 'sk_id' || $field_id == 'l_id' || $field_id == 'wt_id' || $field_id == 'nr_id'){
 			$field_val = json_encode($_POST['field_val']);
 		}
 
@@ -209,8 +209,13 @@
 				$action_button = '';
 				$action_button .= '<a href="#!" data-toggle="modal" data-target="#exampleModalLong" class="action-icon" onClick="editTabledata('.$user_id.')"> <i class="fa fa-edit"></i></a>';
 				$action_button .= '<a href="javascript: void(0);" class="action-icon" onClick="deleteTabledata('.$user_id.')"> <i class="fa fa-trash"></i></a>';
-				$action_button .= '|<a href="javascript: void(0);" class="action-icon" onClick="printTabledataF('.$user_id.')"><i class="fa fa-print"></i></a>';
-				$action_button .= '<a href="javascript: void(0);" class="action-icon" onClick="printTabledataB('.$user_id.')"> <i class="fa fa-print"></i></a>';
+
+				# For Worker
+				if($current_tab == 'worker'){
+					$action_button .= '|<a href="javascript: void(0);" class="action-icon" onClick="printTabledataF('.$user_id.')"><i class="fa fa-print"></i></a>';
+					$action_button .= '<a href="javascript: void(0);" class="action-icon" onClick="printTabledataB('.$user_id.')"> <i class="fa fa-print"></i></a>';
+				}
+
 				$lead_conf = '';
 				if($current_tab == 'client' || $current_tab == 'worker'){	
 					if($lc_id > 0){
@@ -296,12 +301,13 @@
 			$return_array['voter_id_card_img'] = $row['voter_id_card_img']; 
 			$return_array['voter_id_card_back_img'] = $row['voter_id_card_back_img'];
 			$return_array['user_photo'] = $row['user_photo']; 
-			$return_array['wt_id'] = $row['wt_id']; 
+			$return_array['wt_id'] = json_decode($row['wt_id']); 
 			$return_array['work_exp'] = $row['work_exp']; 
 			$return_array['earlier_work_city'] = $row['earlier_work_city']; 
 			$return_array['last_emplr_name'] = $row['last_emplr_name']; 
 			$return_array['sk_id'] = json_decode($row['sk_id']); 
 			$return_array['l_id'] = json_decode($row['l_id']); 
+			$return_array['nr_id'] = json_decode($row['nr_id']); 
 			$return_array['work_loc'] = $row['work_loc']; 
 			$return_array['st_id'] = $row['st_id']; 
 			$return_array['exp_salary'] = $row['exp_salary']; 
@@ -322,6 +328,11 @@
 			$return_array['insert_date'] = $row['insert_date']; 
 			$return_array['update_date'] = $row['update_date'];	 
 			$return_array['lc_id'] = $row['lc_id'];			
+			 
+			$return_array['wh_id'] = $row['wh_id'];			 
+			$return_array['religion'] = $row['religion'];			 
+			$return_array['nationality'] = $row['nationality'];			 
+			$return_array['family_bg_info'] = $row['family_bg_info'];			
 		}else{
 			$status = true; 
 		}
@@ -359,6 +370,33 @@
 				$data_obj = new stdClass();
 				$data_obj->g_id = $row['g_id'];
 				$data_obj->gender_name = $row['gender_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+
+	// Working Hours
+	if($fn == 'configureWorkingHoursDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM working_hour_master ORDER BY wh_name ASC";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->wh_id = $row['wh_id'];
+				$data_obj->wh_name = $row['wh_name'];
 				
 				array_push($mainData, $data_obj);
 			}
@@ -555,6 +593,34 @@
 				$data_obj = new stdClass();
 				$data_obj->id = $row['l_id'];
 				$data_obj->name = $row['language_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+
+	
+	// Nurses
+	if($fn == 'configureNursesDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM nurses_master ORDER BY nr_name ASC";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['nr_id'];
+				$data_obj->name = $row['nr_name'];
 				
 				array_push($mainData, $data_obj);
 			}

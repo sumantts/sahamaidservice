@@ -46,7 +46,7 @@ worker@sahaservices.in
  SECTION 6: Health & Safety
 
 
-
+work_type - table ta delete kore new import korte hobe
 
 
 

@@ -141,6 +141,35 @@ function configureGenderDd(){
     });//end ajax
 }//end 
 
+
+// Working Hours 
+function configureWorkingHoursDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureWorkingHoursDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#wh_id').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].wh_id+"'>"+$rows[$i].wh_name+"</option>";                    
+                }//end for                
+                $('#wh_id').html($html);
+            }else{
+                $('#wh_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#wh_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
 // Marital Status 
 function configureMaritalStatusDd(){
     $.ajax({
@@ -354,6 +383,34 @@ function configureLanguagesKnownDd(){
     });//end ajax
 }//end 
 
+// Nurses
+function configureNursesDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureNursesDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#nr_id').html('');
+                $html = "";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#nr_id').html($html);
+            }else{
+                $('#nr_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#nr_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
 // Work Type
 function configureStayTypeDd(){
     $.ajax({
@@ -542,11 +599,13 @@ $(document).ready(function () {
 
         // Dropdown List
         configureGenderDd();
+        configureWorkingHoursDd();
         configureMaritalStatusDd();
         configureCountrysDd();
         configureWorkTypeDd();
         configureSkillsDd();
         configureLanguagesKnownDd();
+        configureNursesDd();
         configureStayTypeDd();
         configureWeeklyOffDd();
         configureMajorIllnessDd();
@@ -896,6 +955,7 @@ function editTabledata(sl){
 			$('#last_emplr_name').val($res1.last_emplr_name); 
 			$('#sk_id').val($res1.sk_id); 
 			$('#l_id').val($res1.l_id); 
+			$('#nr_id').val($res1.nr_id); 
 			$('#work_loc').val($res1.work_loc); 
 			$('#st_id').val($res1.st_id); 
 			$('#exp_salary').val($res1.exp_salary); 
@@ -925,6 +985,11 @@ function editTabledata(sl){
 			$('#insert_date').val($res1.insert_date); 
 			$('#update_date').val($res1.update_date); 
 			$('#lc_id').val($res1.lc_id).trigger('change'); 
+            
+			$('#wh_id').val($res1.wh_id).trigger('change'); 
+			$('#religion').val($res1.religion); 
+			$('#nationality').val($res1.nationality); 
+			$('#family_bg_info').val($res1.family_bg_info); 
         }        
     });//end ajax
 }//end if 
