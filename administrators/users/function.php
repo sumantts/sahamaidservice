@@ -49,17 +49,7 @@
 		}else{}
 
 		
-		/*if($field_id == 'email_id'){
-			$error_message = 'Email ID already exists';
-		}else if($field_id == 'phone_number'){
-			$error_message = 'Phone number already exists';
-		}else if($field_id == 'adhar_card'){
-			$error_message = 'Aadhar number already exists';
-		}else if($field_id == 'pan_card'){
-			$error_message = 'PAN number already exists';
-		}else if($field_id == 'voter_id_card'){
-			$error_message = 'Voter ID already exists';
-		}
+		/*
 		
 		if($field_id == 'email_id'){
 			$error_message = 'Email ID already exists';
@@ -114,7 +104,20 @@
 		}
 		$con->close();	
 
-
+		if($status == false){
+			if($field_id == 'email_id'){
+				$error_message = 'Email ID already exists';
+			}else if($field_id == 'phone_number'){
+				$error_message = 'Phone number already exists';
+			}else if($field_id == 'adhar_card'){
+				$error_message = 'Aadhar number already exists';
+			}else if($field_id == 'pan_card'){
+				$error_message = 'PAN number already exists';
+			}else if($field_id == 'voter_id_card'){
+				$error_message = 'Voter ID already exists';
+			}
+		}
+		
 		$return_array['status'] = $status;  
 		$return_array['error_message'] = $error_message; 
 		$return_array['serial_number'] = $serial_number; 
@@ -376,7 +379,7 @@
 					$message = "File deleted successfully.";
 					$status = true; 
 					$field_val = '';
-					
+
 					$sql1 = "UPDATE user_details SET $imgFieldName = '" .$field_val. "' WHERE user_id = '".$userId."'";
 					$result1 = $con->query($sql1);
 				} else {

@@ -21,7 +21,7 @@ $(document).on("blur", ".form-control", function(){
                 $('#serial_number').val($serial_number); 
                 //populateDataTable(); 
             }else{
-                console.log('Error: ' + res.serial_number)
+                alert('Error: ' + res.error_message);
             }        
         });//end ajax 
     }//end if  
@@ -1031,12 +1031,13 @@ $("#declaration").change(function(){
             data: { fn: "saveFormData", field_id: 'declaration', field_val: $check_box_val, current_tab: $current_tab, serial_number: $serial_number }
         })
         .done(function( res ) {
+            //console.log(JSON.stringify(res))
             if(res.status == true){    
                 $serial_number = res.serial_number;
                 $('#serial_number').val($serial_number); 
                 //populateDataTable(); 
             }else{
-                console.log('Error: ' + res.serial_number)
+                alert('Error: ' + res.error_message);
             }        
         });//end ajax 
     //}//end if
