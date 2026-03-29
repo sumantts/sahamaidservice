@@ -353,6 +353,47 @@
 		$return_array['status'] = $status; 
     	echo json_encode($return_array);
 	}//function end
+
+	
+			
+	//Delete attached photo
+	if($fn == 'deleteAttachedImage'){
+		$return_array = array();
+		$status = true; 
+		$message = '';
+		$imgFieldName = $_POST['imgFieldName']; 
+		$userId = $_POST['userId'];
+
+		$sql = "SELECT $imgFieldName FROM user_details WHERE user_id = '" .$userId. "' ";
+		$result = $mysqli->query($sql);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array();
+			$image_name = $row[$imgFieldName];	
+
+			$file = "uploads/$image_name";
+			if (file_exists($file)) {
+				if (unlink($file)) {
+					$message = "File deleted successfully.";
+					$status = true; 
+					$field_val = '';
+					
+					$sql1 = "UPDATE user_details SET $imgFieldName = '" .$field_val. "' WHERE user_id = '".$userId."'";
+					$result1 = $con->query($sql1);
+				} else {
+					$message = "Error deleting file.";
+					$status = false; 
+				}
+			} else {
+				$message = "File does not exist.";
+				$status = false; 
+			}
+
+		}//end if
+
+		$return_array['status'] = $status; 
+		$return_array['message'] = $message; 
+    	echo json_encode($return_array);
+	}//function end
 	
 
 	// Gender

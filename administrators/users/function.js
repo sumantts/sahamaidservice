@@ -16,9 +16,6 @@ $(document).on("blur", ".form-control", function(){
             data: { fn: "saveFormData", field_id: fieldId, field_val: fieldValue, current_tab: $current_tab, serial_number: $serial_number }
         })
         .done(function( res ) {
-            //$res1 = JSON.parse(res);
-            JSON.stringify(res);
-
             if(res.status == true){    
                 $serial_number = res.serial_number;
                 $('#serial_number').val($serial_number); 
@@ -923,30 +920,30 @@ function editTabledata(sl){
 			$('#pincode').val($res1.pincode); 
 			$('#adhar_card').val($res1.adhar_card); 
             if($res1.adhar_card_img != ''){
-                $("#preview_adhar_card_img").html('<img src="users/uploads/'+$res1.adhar_card_img+'" width="200" height="150">');
+                $("#preview_adhar_card_img").html('<img src="users/uploads/'+$res1.adhar_card_img+'" width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'adhar_card_img\','+sl+')"><i class="fa fa-trash"></i></a>');
             }
             if($res1.adhar_card_back_img != ''){
-                $("#preview_adhar_card_back_img").html('<img src="users/uploads/'+$res1.adhar_card_back_img+'"  width="200" height="150">');
+                $("#preview_adhar_card_back_img").html('<img src="users/uploads/'+$res1.adhar_card_back_img+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'adhar_card_back_img\','+sl+')"><i class="fa fa-trash"></i></a>');
             }
 
 			$('#pan_card').val($res1.pan_card); 
 			//$('#pan_card_img').val($res1.pan_card_img);  
             if($res1.pan_card_img != ''){
-                $("#preview_pan_card_img").html('<img src="users/uploads/'+$res1.pan_card_img+'"  width="200" height="150">');
+                $("#preview_pan_card_img").html('<img src="users/uploads/'+$res1.pan_card_img+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'pan_card_img\','+sl+')"><i class="fa fa-trash"></i></a>');
             }
 
 			$('#voter_id_card').val($res1.voter_id_card);  
             if($res1.voter_id_card_img != ''){
-                $("#preview_voter_id_card_img").html('<img src="users/uploads/'+$res1.voter_id_card_img+'"  width="200" height="150">');
+                $("#preview_voter_id_card_img").html('<img src="users/uploads/'+$res1.voter_id_card_img+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'voter_id_card_img\','+sl+')"><i class="fa fa-trash"></i></a>');
             }
             
             if($res1.voter_id_card_back_img != ''){
-                $("#preview_voter_id_card_back_img").html('<img src="users/uploads/'+$res1.voter_id_card_back_img+'"  width="200" height="150">');
+                $("#preview_voter_id_card_back_img").html('<img src="users/uploads/'+$res1.voter_id_card_back_img+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'voter_id_card_back_img\','+sl+')"><i class="fa fa-trash"></i></a>');
             }
 
 			//$('#user_photo').val($res1.user_photo);  
             if($res1.user_photo != ''){
-                $("#preview_user_photo").html('<img src="users/uploads/'+$res1.user_photo+'"  width="200" height="150">');
+                $("#preview_user_photo").html('<img src="users/uploads/'+$res1.user_photo+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'user_photo\','+sl+')"><i class="fa fa-trash"></i></a>');
             }
 
 			$('#wt_id').val($res1.wt_id); 
@@ -994,6 +991,26 @@ function editTabledata(sl){
     });//end ajax
 }//end if 
 
+function deleteAttachedImage(img_field_name, sl){
+    if(confirm('Are you sure to delete the Image?')){
+        console.log('img_field_name: ' + img_field_name + ' sl: '+ sl)
+
+        $.ajax({
+            type: "POST",
+            url: "users/function.php",
+            dataType: "json",
+            data: { fn: "deleteAttachedImage", imgFieldName: img_field_name, userId: sl }
+        })
+        .done(function( res ) {
+            if(res.status == true){
+                $("#preview_"+img_field_name).html('');
+            }else{
+                alert('Error: ' + res.message)
+            }        
+        });//end ajax 
+    }
+}//end fun
+
 $("#declaration").change(function(){
     $check_box_val = '';
     if($(this).is(":checked")){
@@ -1014,9 +1031,6 @@ $("#declaration").change(function(){
             data: { fn: "saveFormData", field_id: 'declaration', field_val: $check_box_val, current_tab: $current_tab, serial_number: $serial_number }
         })
         .done(function( res ) {
-            //$res1 = JSON.parse(res);
-            JSON.stringify(res);
-
             if(res.status == true){    
                 $serial_number = res.serial_number;
                 $('#serial_number').val($serial_number); 

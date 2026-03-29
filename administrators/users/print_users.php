@@ -160,6 +160,7 @@
     $wh_name = '';
     $adhar_card = '';
     $doc_attached = '';
+    $user_photo = 'no_images.png';
 
     if($user_id != ''){
         $sql = "SELECT user_details.user_id, user_details.username, user_details.password, user_details.user_type, user_details.added_by, user_details.full_name, user_details.fat_hus_name, user_details.email_id, user_details.phone_number, user_details.alt_phone_number, user_details.m_id, user_details.date_of_birth, user_details.gender, user_details.address, user_details.curr_address, user_details.city_id, user_details.state_id, user_details.country_id, user_details.pincode, user_details.adhar_card, user_details.adhar_card_img, user_details.adhar_card_back_img, user_details.pan_card, user_details.pan_card_img, user_details.voter_id_card, user_details.voter_id_card_img, user_details.voter_id_card_back_img, user_details.user_photo, user_details.wt_id, user_details.work_exp, user_details.earlier_work_city, user_details.last_emplr_name, user_details.sk_id, user_details.nr_id, user_details.l_id, user_details.work_loc, user_details.st_id, user_details.exp_salary, user_details.available_from, user_details.wf_id, user_details.il_id, user_details.pv_id, user_details.ch_id, user_details.emg_cont_person, user_details.relation, user_details.emg_cont_number, user_details.bank_details, user_details.bank_details_img, user_details.highest_edu, user_details.declaration, user_details.lc_id, user_details.wh_id, user_details.religion, user_details.nationality, user_details.family_bg_info, user_details.inserted_by, user_details.updated_by, user_details.insert_date, user_details.update_date, 
@@ -196,7 +197,10 @@
             }             
             if($row['nr_id'] != ''){
                 $nr_id = json_decode($row['nr_id']);
-            }        
+            }                    
+            if($row['user_photo'] != ''){
+                $user_photo = $row['user_photo'];
+            } 
             $work_exp = $row['work_exp'];         
             $highest_edu = $row['highest_edu'];        
             $family_bg_info = $row['family_bg_info'];        
@@ -320,7 +324,7 @@
         </div>
 
         <!-- RIGHT: PHOTO -->
-        <div class="photo-box">PHOTO</div>
+        <div class="photo-box"><img src="uploads/<?=$user_photo?>" width="100%" height="100%"></div>
 
     </div>
 
@@ -425,6 +429,8 @@
     </table>
 
 </div>
-
+<script>
+    window.print();
+</script>
 </body>
 </html>
