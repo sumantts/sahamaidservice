@@ -110,6 +110,8 @@ if($sess_user_type > 3){
                                                 <th>Adhar Card</th>
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
+                                                <th>State</th> 
+                                                <th>City</th> 
                                                 <th>Pincode</th> 
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>
@@ -132,6 +134,8 @@ if($sess_user_type > 3){
                                                 <th>Adhar Card</th>
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
+                                                <th>State</th> 
+                                                <th>City</th> 
                                                 <th>Pincode</th> 
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>
@@ -154,6 +158,8 @@ if($sess_user_type > 3){
                                                 <th>Adhar Card</th>
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
+                                                <th>State</th> 
+                                                <th>City</th> 
                                                 <th>Pincode</th> 
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>
@@ -176,6 +182,8 @@ if($sess_user_type > 3){
                                                 <th>Adhar Card</th>
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
+                                                <th>State</th> 
+                                                <th>City</th> 
                                                 <th>Pincode</th>
                                                 <th>Lead/Confirm</th>
                                                 <th>Profile Photo</th>
@@ -199,6 +207,8 @@ if($sess_user_type > 3){
                                                 <th>Adhar Card</th>
                                                 <th>PAN Card</th>
                                                 <th>Voter Card</th>
+                                                <th>State</th> 
+                                                <th>City</th> 
                                                 <th>Pincode</th>
                                                 <th>Lead/Confirm</th>
                                                 <th>Profile Photo</th>
