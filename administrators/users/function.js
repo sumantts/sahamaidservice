@@ -857,11 +857,16 @@ function deleteTabledata(sl){
 }//end if 
 
 // Print Data
+// Worker
 function printTabledataF(sl){
     window.open("./users/print_users.php?user_id="+sl, "_blank");
 }//end if 
 function printTabledataB(sl){
     window.open("./users/print_undertaking.php?user_id="+sl, "_blank");
+}//end if 
+// Client
+function printTabledataC(sl){
+    window.open("./users/print_client.php?user_id="+sl, "_blank");
 }//end if 
 
 // Get data for Edit

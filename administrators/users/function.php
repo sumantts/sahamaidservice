@@ -219,6 +219,11 @@
 					$action_button .= '<a href="javascript: void(0);" class="action-icon" onClick="printTabledataB('.$user_id.')"> <i class="fa fa-print"></i></a>';
 				}
 
+				# For Client
+				if($current_tab == 'client'){
+					$action_button .= '<br><a href="javascript: void(0);" class="action-icon" onClick="printTabledataC('.$user_id.')"><i class="fa fa-print"></i></a>';
+				}
+
 				$lead_conf = '';
 				if($current_tab == 'client' || $current_tab == 'worker'){	
 					if($lc_id > 0){
