@@ -97,6 +97,7 @@
 
         # Worktype
         $work_types_text = ''; 
+        echo $wt_id;
         if($wt_id != ''){
             // Convert array to comma-separated string
             $ids = implode(',', $wt_id);

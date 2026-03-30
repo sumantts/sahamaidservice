@@ -215,7 +215,7 @@
 
 				# For Worker
 				if($current_tab == 'worker'){
-					$action_button .= '|<a href="javascript: void(0);" class="action-icon" onClick="printTabledataF('.$user_id.')"><i class="fa fa-print"></i></a>';
+					$action_button .= '<br><a href="javascript: void(0);" class="action-icon" onClick="printTabledataF('.$user_id.')"><i class="fa fa-print"></i></a>';
 					$action_button .= '<a href="javascript: void(0);" class="action-icon" onClick="printTabledataB('.$user_id.')"> <i class="fa fa-print"></i></a>';
 				}
 
