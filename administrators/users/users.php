@@ -360,70 +360,70 @@ if($sess_user_type > 3){
                                         <div id="preview_user_photo"></div>
                                     </div>
                                 </div>
-                                <a href="javascript: void(0);" id="partFourSwitch" class="float-right">Section 4</a>
+                                <a href="javascript: void(0);" id="partFourSwitch" class="float-right d-none">Section 4</a>
                                 <br>
                                 <hr> 
 
-                                <h5>🔹 SECTION 4: Work Details</h5>
+                                <h5 class="d-none" id="partFourTitl">🔹 SECTION 4: Work Details</h5>
                                 <div class="row mb-2" id="partFourBoard">
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_1">
                                         <label for="wt_id" class="form-label">Work Type Applying For</label>
                                         <select class="form-control" name="wt_id" id="wt_id" multiple>
                                         </select>
                                     </div>
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_2">
                                         <label for="work_exp" class="form-label">Work Experience (in years)</label>
                                         <input type="text" class="form-control" name="work_exp" id="work_exp" value="">
                                     </div>
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_3">
                                         <label for="earlier_work_city" class="form-label">Earlier Work City</label>
                                         <input type="text" class="form-control" name="earlier_work_city" id="earlier_work_city" value="">
                                     </div>
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_4">
                                         <label for="last_emplr_name" class="form-label">Last Employer Name (if any)</label>
                                         <input type="text" class="form-control" name="last_emplr_name" id="last_emplr_name" value="">
                                     </div>
                                     
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_5">
                                         <label for="sk_id" class="form-label">Skills (Ctrl+Click)</label>
                                         <select class="form-control" name="sk_id" id="sk_id" multiple>
                                         </select>
                                     </div>
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_6">
                                         <label for="l_id" class="form-label">Languages Known (Ctrl+Click)</label>
                                         <select class="form-control" name="l_id" id="l_id" multiple>
                                         </select>
                                     </div>
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_7">
                                         <label for="nr_id" class="form-label">Nurses (Ctrl+Click)</label>
                                         <select class="form-control" name="nr_id" id="nr_id" multiple>
                                         </select>
                                     </div>
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_8">
                                         <label for="work_loc" class="form-label">Preferred Work Location</label>
                                         <input type="text" class="form-control" name="work_loc" id="work_loc" value="">
                                     </div>
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_9">
                                         <label for="st_id" class="form-label">Stay Type</label>
                                         <select class="form-control" name="st_id" id="st_id">
                                             <option value="0">Select</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_10">
                                         <label for="wh_id" class="form-label">Working Hours in a Day</label>
                                         <select class="form-control" name="wh_id" id="wh_id">
                                             <option value="0">Select</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_11">
                                         <label for="religion" class="form-label">Religion</label>
                                         <input type="text" class="form-control" name="religion" id="religion" value="">
                                     </div>
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_12">
                                         <label for="nationality" class="form-label">Nationality</label>
                                         <input type="text" class="form-control" name="nationality" id="nationality" value="">
                                     </div>
-                                    <div class="col-md-12 mb-2">
+                                    <div class="col-md-12 mb-2 d-none" id="sec_4_13">
                                         <label for="family_bg_info" class="form-label">Family Background with Information</label>
                                         <textarea class="form-control" name="family_bg_info" id="family_bg_info"></textarea>
                                     </div>

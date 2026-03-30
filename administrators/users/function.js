@@ -651,6 +651,40 @@ buttons.forEach(button => {
 
             // For worker
             if($current_tab == 'worker'){
+                // Section 4                   
+                $('#partFourSwitch').removeClass('d-none');
+                $('#partFourSwitch').addClass('d-block');                
+                $('#partFourTitl').removeClass('d-none');
+                $('#partFourTitl').addClass('d-block'); 
+
+                $('#sec_4_1').removeClass('d-none');
+                $('#sec_4_1').addClass('d-block');  
+                $('#sec_4_2').removeClass('d-none');
+                $('#sec_4_2').addClass('d-block');  
+                $('#sec_4_3').removeClass('d-none');
+                $('#sec_4_3').addClass('d-block');  
+                $('#sec_4_4').removeClass('d-none');
+                $('#sec_4_4').addClass('d-block');  
+                $('#sec_4_5').removeClass('d-none');
+                $('#sec_4_5').addClass('d-block');  
+                $('#sec_4_6').removeClass('d-none');
+                $('#sec_4_6').addClass('d-block'); 
+                $('#sec_4_7').removeClass('d-none');
+                $('#sec_4_7').addClass('d-block');  
+                $('#sec_4_8').removeClass('d-none');
+                $('#sec_4_8').addClass('d-block');  
+                $('#sec_4_9').removeClass('d-none');
+                $('#sec_4_9').addClass('d-block');  
+                $('#sec_4_10').removeClass('d-none');
+                $('#sec_4_10').addClass('d-block');  
+                $('#sec_4_11').removeClass('d-none');
+                $('#sec_4_11').addClass('d-block');  
+                $('#sec_4_12').removeClass('d-none');
+                $('#sec_4_12').addClass('d-block');  
+                $('#sec_4_13').removeClass('d-none');
+                $('#sec_4_13').addClass('d-block');
+                
+
                 //Section 5 Fields 
                 $('#sec_5_1').removeClass('d-none');
                 $('#sec_5_1').addClass('d-block');
@@ -706,6 +740,40 @@ buttons.forEach(button => {
                 $('#partEightBoard6').addClass('d-block');
                   
             }else{
+                // Section 4                    
+                $('#partFourSwitch').removeClass('d-block');
+                $('#partFourSwitch').addClass('d-none');                
+                $('#partFourTitl').removeClass('d-block');
+                $('#partFourTitl').addClass('d-none'); 
+
+                $('#sec_4_1').removeClass('d-block');
+                $('#sec_4_1').addClass('d-none');                
+                $('#sec_4_2').removeClass('d-block');
+                $('#sec_4_2').addClass('d-none');                
+                $('#sec_4_3').removeClass('d-block');
+                $('#sec_4_3').addClass('d-none');                
+                $('#sec_4_4').removeClass('d-block');
+                $('#sec_4_4').addClass('d-none');                
+                $('#sec_4_5').removeClass('d-block');
+                $('#sec_4_5').addClass('d-none');               
+                $('#sec_4_6').removeClass('d-block');
+                $('#sec_4_6').addClass('d-none');               
+                $('#sec_4_7').removeClass('d-block');
+                $('#sec_4_7').addClass('d-none');               
+                $('#sec_4_8').removeClass('d-block');
+                $('#sec_4_8').addClass('d-none');             
+                $('#sec_4_9').removeClass('d-block');
+                $('#sec_4_9').addClass('d-none');                
+                $('#sec_4_10').removeClass('d-block');
+                $('#sec_4_10').addClass('d-none');                
+                $('#sec_4_11').removeClass('d-block');
+                $('#sec_4_11').addClass('d-none');               
+                $('#sec_4_12').removeClass('d-block');
+                $('#sec_4_12').addClass('d-none');               
+                $('#sec_4_13').removeClass('d-block');
+                $('#sec_4_13').addClass('d-none');
+                
+
                 //Section 5 Fields 
                 $('#sec_5_1').removeClass('d-block');
                 $('#sec_5_1').addClass('d-none');
