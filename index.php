@@ -8,33 +8,32 @@
 
 	switch($p){
 		case 'home':
-    $title = "Home";
+    	$title = "Home";
 		include('pages/home.php');
 		break;
-
 		case 'about':
-    $title = "Signup";
+    	$title = "Signup";
 		include('pages/about.php');
 		break;
-
 		case 'services':
-    $title = "Services";
+    	$title = "Services";
 		include('pages/services.php');
 		break;
-
 		case 'portfolio':
-    $title = "Portfolio";
+    	$title = "Portfolio";
 		include('pages/portfolio.php');
 		break;
-
 		case 'customer-review':
-    $title = "Customer Review";
+    	$title = "Customer Review";
 		include('pages/customer-review.php');
 		break;
-
 		case 'write-review':
-    $title = "Write Review";
+    	$title = "Write Review";
 		include('pages/write_review.php');
+		break;
+		case 'book-now':
+    	$title = "Book Now";
+		include('pages/book_now.php');
 		break;
 						
 		default:

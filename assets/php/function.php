@@ -22,8 +22,7 @@
         }
         $mysqli->close();
 
-		$return_result['status'] = $status;
-		sleep(2);
+		$return_result['status'] = $status; 
 		echo json_encode($return_result);
 	}//end function saveQuote
 	
@@ -44,9 +43,35 @@
         }
         $mysqli->close();
 
-		$return_result['status'] = $status;
-		sleep(2);
+		$return_result['status'] = $status; 
 		echo json_encode($return_result);
 	}//end function saveReview
 
+	// Skills
+	if($fn == 'configureSkillsDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM skills_master ORDER BY skill_name ASC";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['sk_id'];
+				$data_obj->name = $row['skill_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+	
     ?>

@@ -121,6 +121,29 @@ function populateDataTable(){
     });
 }//end fun
 
+
+$(document).on("change", "[id^='seen_cb_']", function(){
+    let id = this.id.split("_").pop();
+    let status = $(this).is(":checked") ? 1 : 0;
+
+    console.log('id: ' + id + ' status: ' +  status);
+    $.ajax({
+        method: "GET",
+        url: "setup/maid_request/function.php",
+        data: { fn: "update_seen_status", quote_id: id, read_unread: status }
+    })
+    .done(function( res ) {
+        console.log(res);
+        $res1 = JSON.parse(res);
+        if($res1.status == true){
+            
+        }
+    });//end ajax
+}); 
+
 $(document).ready(function () {
-    populateDataTable()
+    populateDataTable();
+
+    
+    
 });

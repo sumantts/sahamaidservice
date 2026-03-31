@@ -164,6 +164,24 @@
 		}else if($sess_user_type == '5'){			
 		}else{}
 
+		function getSkillList($mysqli, $ids){
+			$skills_text = '';		
+			$query = "SELECT * FROM skills_master WHERE sk_id IN ($ids)";
+			$result = $mysqli->query($query);
+			if ($result->num_rows > 0) {
+				while($row = $result->fetch_array()){
+					$skill_name = $row['skill_name'];
+					$skills_text .= $skill_name.', ';
+				}
+			}
+			
+			if($skills_text != ''){
+				$skills_text = substr($skills_text, 0, -2);
+			}
+
+			return $skills_text;
+		}//end if
+
 		$sql = "SELECT user_details.user_id, user_details.username, user_details.password, user_details.user_type, user_details.added_by, user_details.full_name, user_details.fat_hus_name, user_details.email_id, user_details.phone_number, user_details.alt_phone_number, user_details.m_id, user_details.date_of_birth, user_details.gender, user_details.address, user_details.curr_address, user_details.city_id, user_details.state_id, user_details.country_id, user_details.pincode, user_details.adhar_card, user_details.adhar_card_img, user_details.adhar_card_back_img, user_details.pan_card, user_details.pan_card_img, user_details.voter_id_card, user_details.voter_id_card_img, user_details.voter_id_card_back_img, user_details.user_photo, user_details.wt_id, user_details.work_exp, user_details.earlier_work_city, user_details.last_emplr_name, user_details.sk_id, user_details.nr_id, user_details.l_id, user_details.work_loc, user_details.st_id, user_details.exp_salary, user_details.available_from, user_details.wf_id, user_details.il_id, user_details.pv_id, user_details.ch_id, user_details.emg_cont_person, user_details.relation, user_details.emg_cont_number, user_details.bank_details, user_details.bank_details_img, user_details.highest_edu, user_details.declaration, user_details.lc_id, user_details.wh_id, user_details.religion, user_details.nationality, user_details.family_bg_info, user_details.inserted_by, user_details.updated_by, user_details.insert_date, user_details.update_date, 
         gender_master.gender_name,
         marital_status_master.m_status_name,
@@ -178,7 +196,6 @@
         LEFT OUTER JOIN cities ON user_details.city_id = cities.id
 		$where_condition 
 		ORDER BY user_details.full_name ASC";
-
 		//echo $sql;
 
 		$result = $mysqli->query($sql);
@@ -215,8 +232,11 @@
 				$user_photo = $row['user_photo'];
 				$lc_id = $row['lc_id'];
 				$state_name = $row['state_name'];
-				$city_name = $row['city_name'];
-
+				$city_name = $row['city_name'];   
+				$sk_id = array();      
+				if($row['sk_id'] != ''){
+					$sk_id = json_decode($row['sk_id']);
+				}
 				$user_img = '';
 				if($user_photo == ''){
 					$user_img = '<img src="users/uploads/no_images.png" width="75">';
@@ -244,7 +264,7 @@
 				if($current_tab == 'client' || $current_tab == 'worker'){	
 					if($lc_id > 0){
 						$sql_21 = "SELECT * FROM lead_confirm_master WHERE lc_id = '" .$lc_id. "' ";
-						$result_21 = $con->query($sql_21);
+						$result_21 = $mysqli->query($sql_21);
 						if ($result_21->num_rows > 0) {
 							$row_21 = $result_21->fetch_array();
 							$lead_conf = $row_21['name'];
@@ -252,6 +272,14 @@
 					}
 				} 
 
+				# Skills 
+				$skills_text = '';
+				if($current_tab == 'worker'){
+					if(sizeof($sk_id) > 0){
+						$ids = implode(',', $sk_id);
+						$skills_text = getSkillList($mysqli, $ids);
+					} 
+				}
 
 				$data[0] = $sl;
 				$data[1] = $full_name;
@@ -263,11 +291,20 @@
 				$data[7] = $state_name;
 				$data[8] = $city_name;
 				$data[9] = $pincode;
-				if($current_tab == 'client' || $current_tab == 'worker'){
+				if($current_tab == 'client'){
 					$data[10] = $lead_conf;
 					$data[11] = $user_img;
-					$data[12] = $action_button;
-				}else{
+					$data[12] = $action_button;				
+				}
+
+				if($current_tab == 'worker'){
+					$data[10] = $skills_text;
+					$data[11] = $lead_conf;
+					$data[12] = $user_img;
+					$data[13] = $action_button;
+				}
+				
+				if($current_tab != 'client' && $current_tab != 'worker'){
 					$data[10] = $user_img;
 					$data[11] = $action_button;
 				}

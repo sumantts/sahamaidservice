@@ -210,6 +210,7 @@ if($sess_user_type > 3){
                                                 <th>State</th> 
                                                 <th>City</th> 
                                                 <th>Pincode</th>
+                                                <th style="width: 30px;">Skills</th>
                                                 <th>Lead/Confirm</th>
                                                 <th>Profile Photo</th>
                                                 <th>Action</th>

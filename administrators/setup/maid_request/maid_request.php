@@ -166,16 +166,24 @@
                                     <tr>
                                         <th>Sl.No.</th>
                                         <th>Name & Phone</th>
-                                        <th>Email & Address</th>
+                                        <th>Address <br>& Email ID</th>
+                                        <th>Required Skill</th>
+                                        <th>Hours</th>
                                         <th>Message</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Sl.No.</th>
                                         <th>Name & Phone</th>
-                                        <th>Email & Address</th>
+                                        <th>Address <br>& Email ID</th>
+                                        <th>Required Skill</th>
+                                        <th>Hours</th>
                                         <th>Message</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>

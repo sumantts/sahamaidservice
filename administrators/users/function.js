@@ -105,7 +105,6 @@ function populateDataTable(){
         dom: 'Bfrtip',
         buttons: [],
         order: [[0, 'desc']],
-
     });
 }//end fun
 
