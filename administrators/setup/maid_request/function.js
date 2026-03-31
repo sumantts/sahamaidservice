@@ -127,18 +127,28 @@ $(document).on("change", "[id^='seen_cb_']", function(){
     let status = $(this).is(":checked") ? 1 : 0;
 
     console.log('id: ' + id + ' status: ' +  status);
-    $.ajax({
-        method: "GET",
-        url: "setup/maid_request/function.php",
-        data: { fn: "update_seen_status", quote_id: id, read_unread: status }
-    })
-    .done(function( res ) {
-        console.log(res);
-        $res1 = JSON.parse(res);
-        if($res1.status == true){
-            
-        }
-    });//end ajax
+
+    $status_text = ''
+    if(status == '1'){
+        $status_text = 'Seen';
+    }else{
+        $status_text = 'Unseen';
+    }
+
+    if(confirm('Are you sure to change the Booking status to '+$status_text+'?')){
+        $.ajax({
+            method: "GET",
+            url: "setup/maid_request/function.php",
+            data: { fn: "update_seen_status", quote_id: id, read_unread: status }
+        })
+        .done(function( res ) {
+            console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                
+            }
+        });//end ajax
+    }
 }); 
 
 $(document).ready(function () {
