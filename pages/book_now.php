@@ -157,7 +157,7 @@
               </div>
               
               <div class="form-group">
-                <label for="name" class="text-danger">No. of Hours* (Please select the no. of hours for which you require the worker.)</label> 
+                <label for="name">No. of Hours (Please select the no. of hours for which you require the worker.)</label> 
                 <div class="skills-wrapper" id="hours_wrapper">
                   <!-- <label class="custom-radio">
                       <input type="radio" name="required_hourse[]" value="1 Hour">

@@ -47,10 +47,6 @@ $('#sendMessage').click(function(){
         $msg = 'Please choose your required skills';
         $('#quote_error_msg').html($msg);
         $('#quote_error_msg').show();
-    }else if($required_hourse.length == 0){
-        $msg = 'Please choose your required hours';
-        $('#quote_error_msg').html($msg);
-        $('#quote_error_msg').show();
     }else{
         $('.loading').show();
         console.log('call ajax function');
