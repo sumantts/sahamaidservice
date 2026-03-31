@@ -152,21 +152,6 @@
                   <!-- <label class="custom-checkbox">
                       <input type="checkbox" name="skills[]" value="PHP">
                       <span>Cooking</span>
-                  </label>
-
-                  <label class="custom-checkbox">
-                      <input type="checkbox" name="skills[]" value="JavaScript">
-                      <span>Pet care</span>
-                  </label>
-
-                  <label class="custom-checkbox">
-                      <input type="checkbox" name="skills[]" value="jQuery">
-                      <span>Elder care</span>
-                  </label>
-
-                  <label class="custom-checkbox">
-                      <input type="checkbox" name="skills[]" value="MySQL">
-                      <span>Mopping</span>
                   </label> -->
                 </div>                
               </div>
@@ -174,25 +159,10 @@
               <div class="form-group">
                 <label for="name" class="text-danger">No. of Hours* (Please select the no. of hours for which you require the worker.)</label> 
                 <div class="skills-wrapper" id="hours_wrapper">
-                  <label class="custom-radio">
+                  <!-- <label class="custom-radio">
                       <input type="radio" name="required_hourse[]" value="1 Hour">
                       <span>1 Hour</span>
-                  </label>
-
-                  <label class="custom-radio">
-                      <input type="radio" name="required_hourse[]" value="2 Hours">
-                      <span>2 Hours</span>
-                  </label>
-
-                  <label class="custom-radio">
-                      <input type="radio" name="required_hourse[]" value="3 Hours">
-                      <span>3 Hours</span>
-                  </label>
-
-                  <label class="custom-radio">
-                      <input type="radio" name="required_hourse[]" value="4 Hours">
-                      <span>4 Hours</span>
-                  </label>
+                  </label>  -->
                 </div>                
               </div>
 

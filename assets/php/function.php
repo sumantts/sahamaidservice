@@ -73,5 +73,34 @@
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
 	}//function end
+
 	
+
+	// Hours
+	if($fn == 'configureHoursRequiredDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM working_hour_master";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['wh_id'];
+				$data_obj->name = $row['wh_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+
     ?>

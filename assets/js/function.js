@@ -195,8 +195,38 @@ function configureSkillsDd(){
     });//end ajax
 }//end 
 
+// Hours
+function configureHoursRequiredDd(){
+    $.ajax({
+        method: "POST",
+        url: "assets/php/function.php",
+        data: { fn: "configureHoursRequiredDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#hours_wrapper').html('');
+                $html = "";
+                for($i = 0; $i < $rows.length; $i++){                    
+                    $html +='<label class="custom-radio">';
+                      $html +='<input type="radio" name="required_hourse[]" value="'+$rows[$i].name+'">';
+                      $html +='<span>'+$rows[$i].name+'</span>';
+                    $html +='</label>';
+                }//end for                
+                $('#hours_wrapper').html($html);
+            }else{
+                $('#hours_wrapper').html('');
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
 $(document).ready(function () {
     setTimeout(function(){ 
         configureSkillsDd();
+        configureHoursRequiredDd();
     },300);
 });
