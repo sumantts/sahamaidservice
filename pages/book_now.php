@@ -167,7 +167,7 @@
               </div>
 
               <div class="form-group">
-                <label for="name" class="text-danger">Message*</label>
+                <label for="name">Message</label>
                 <textarea class="form-control" name="message" id="message" rows="10" ></textarea>
               </div>
               <div class="my-3">

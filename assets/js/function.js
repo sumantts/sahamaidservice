@@ -51,11 +51,6 @@ $('#sendMessage').click(function(){
         $msg = 'Please choose your required hours';
         $('#quote_error_msg').html($msg);
         $('#quote_error_msg').show();
-    }else if($message == ''){
-        $('#message').focus();
-        $msg = 'Please write a message';
-        $('#quote_error_msg').html($msg);
-        $('#quote_error_msg').show();
     }else{
         $('.loading').show();
         console.log('call ajax function');
