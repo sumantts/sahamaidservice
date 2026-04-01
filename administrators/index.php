@@ -49,6 +49,11 @@
 			$title = "Attendance";
 			include('attendance/attendance.php');		
 		break;
+		
+		case 'leave':
+			$title = "Leave Request";
+			include('leave/leave.php');		
+		break;
 						
 		default:
 		include('signin/signin.php');

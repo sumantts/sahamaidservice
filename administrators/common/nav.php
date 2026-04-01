@@ -47,6 +47,9 @@ $sess_user_type = $_SESSION["user_type"];
 					    <a href="?p=attendance&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Attendance</span></a>
 					</li>
 					<?php } ?>
+					<li class="nav-item <?php if($p == 'leave'){ ?> active <?php } ?>">
+					    <a href="?p=leave&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Leave Request</span></a>
+					</li>
 
 					<!-- <li class="nav-item pcoded-hasmenu <?php if($p == 'deposit' || $p == 'loan'){ ?> active pcoded-trigger <?php } ?>">
 					    <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Product</span></a>
