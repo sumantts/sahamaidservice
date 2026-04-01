@@ -64,8 +64,7 @@ $('#submitForm').click(function(){
 })
 
 function editTableData($l_id){
-    $('#myForm')[0].reset();
-    $("#post_video_link").hide();
+    $('#myForm')[0].reset(); 
 
     $.ajax({
         method: "POST",
@@ -75,10 +74,15 @@ function editTableData($l_id){
     .done(function( res ) {
         //console.log(res);
         $res1 = JSON.parse(res);
-        if($res1.status == true){ 
-            /*$('#almari_name').val($res1.almari_name); 
-            $('#almari_status').val($res1.almari_status).trigger('change');   
-            $('#l_id').val($res1.l_id);*/
+        if($res1.status == true){   
+            $('#l_id').val($res1.l_id);   
+            $('#full_name').val($res1.full_name);   
+            $('#user_type_text').val($res1.user_type_text);   
+            $('#from_date').val($res1.from_date);   
+            $('#to_date').val($res1.to_date);   
+            $('#leave_subject').val($res1.leave_subject);
+            $('#leave_message').val($res1.leave_message); 
+            $('#lsm_id').val($res1.lsm_id).trigger('change'); 
 
             $('#exampleModalLong').modal('show');
         }

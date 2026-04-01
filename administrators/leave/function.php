@@ -80,7 +80,7 @@
 				$data[3] = date('d-F-Y', strtotime($to_date));
 				$data[4] = $leave_subject;
 				$data[5] = $l_stat_name;
-				$data[6] = "<a href='javascript: void(0)' data-l_id='.$l_id.'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$l_id.")'></i></a> <a href='javascript: void(0)' data-l_id='.$l_id.'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$l_id.")'></i></a>";
+				$data[6] = "<a href='javascript: void(0)' data-l_id='.$l_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$l_id.")'></i></a> <a href='javascript: void(0)' data-l_id='.$l_id.'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$l_id.")'></i></a>";
 
 				array_push($mainData, $data);
 				$slno++;
@@ -127,8 +127,9 @@
 			$return_array['l_stat_name'] = $row['l_stat_name'];	
 			$return_array['approved_by'] = $row['approved_by'];
 			$return_array['approve_date_time'] = $row['approve_date_time'];	
-			$return_array['full_name'] = $row['full_name'];	
-			$return_array['user_type_text'] = $row['user_type_text'];
+			$return_array['lsm_id'] = $row['lsm_id'];	
+			$return_array['user_type_text'] = $row['user_type_text'];	
+			$return_array['full_name'] = $row['full_name'];
 
 		} else {
 			$status = false;
