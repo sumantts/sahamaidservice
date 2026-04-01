@@ -7,7 +7,7 @@ $('#almari_name').on('blur', function(){
 })
 
 function validateForm(){
-    $almari_id = $('#almari_id').val();
+    $l_id = $('#l_id').val();
     $almari_name = $('#almari_name').val().replace(/^\s+|\s+$/gm,'');
     $almari_status = $('#almari_status').val();
     $status = true;
@@ -36,12 +36,12 @@ $('#submitForm').click(function(){
         $formVallidStatus = validateForm();
 
         if($formVallidStatus == true){
-            $almari_id = $('#almari_id').val();
+            $l_id = $('#l_id').val();
 
             $.ajax({
                 method: "POST",
                 url: "leave/function.php",
-                data: { fn: "saveFormData", almari_id: $almari_id, almari_name: $almari_name, almari_status: $almari_status }
+                data: { fn: "saveFormData", l_id: $l_id, almari_name: $almari_name, almari_status: $almari_status }
             })
             .done(function( res ) {
                 //console.log(res);
@@ -63,22 +63,22 @@ $('#submitForm').click(function(){
     }, 500)    
 })
 
-function editTableData($almari_id){
+function editTableData($l_id){
     $('#myForm')[0].reset();
     $("#post_video_link").hide();
 
     $.ajax({
         method: "POST",
         url: "leave/function.php",
-        data: { fn: "getFormEditData", almari_id: $almari_id }
+        data: { fn: "getFormEditData", l_id: $l_id }
     })
     .done(function( res ) {
         //console.log(res);
         $res1 = JSON.parse(res);
         if($res1.status == true){ 
-            $('#almari_name').val($res1.almari_name); 
+            /*$('#almari_name').val($res1.almari_name); 
             $('#almari_status').val($res1.almari_status).trigger('change');   
-            $('#almari_id').val($res1.almari_id);
+            $('#l_id').val($res1.l_id);*/
 
             $('#exampleModalLong').modal('show');
         }
@@ -87,12 +87,12 @@ function editTableData($almari_id){
 }
 
 //Delete function	
-function deleteTableData($almari_id){
+function deleteTableData($l_id){
     if (confirm('Are you sure to delete the data?')) {
         $.ajax({
             method: "POST",
             url: "leave/function.php",
-            data: { fn: "deleteTableData", almari_id: $almari_id }
+            data: { fn: "deleteTableData", l_id: $l_id }
         })
         .done(function( res ) {
             //console.log(res);
@@ -164,7 +164,6 @@ function populateDataTable(){
                 titleAttr: 'Print'
             },
         ],
-        order: [[1, 'asc']],
 
     });
 }//end fun
@@ -182,24 +181,24 @@ function configureCategoryDropDown(){
             $rows = $res1.data;
 
             if($rows.length > 0){
-                $('#almari_id').html('');
-                $option_almari_id = "<option value='0'>Select</option>";
+                $('#l_id').html('');
+                $option_l_id = "<option value='0'>Select</option>";
 
                 for($i = 0; $i < $rows.length; $i++){
-                    $option_almari_id += "<option value='"+$rows[$i].almari_id+"'>"+$rows[$i].almari_name+"</option>";                    
+                    $option_l_id += "<option value='"+$rows[$i].l_id+"'>"+$rows[$i].almari_name+"</option>";                    
                 }//end for
                 
-                $('#almari_id').html($option_almari_id);
+                $('#l_id').html($option_l_id);
             }//end if
         }        
     });//end ajax
 }//end
 
-function configureAuthorDropDown(){
+function configureLeaveStatDD(){
     $.ajax({
         method: "POST",
         url: "leave/function.php",
-        data: { fn: "getAllAuthorsyName" }
+        data: { fn: "configureLeaveStatDD" }
     })
     .done(function( res ) {
         $res1 = JSON.parse(res);
@@ -208,14 +207,14 @@ function configureAuthorDropDown(){
             $rows = $res1.data;
 
             if($rows.length > 0){
-                $('#almari_name').html('');
-                $option_almari_name = "<option value='0'>Select</option>";
+                $('#lsm_id').html('');
+                $html = "";
 
                 for($i = 0; $i < $rows.length; $i++){
-                    $option_almari_name += "<option value='"+$rows[$i].almari_name+"'>"+$rows[$i].author_name+"</option>";                    
+                    $html += "<option value='"+$rows[$i].lsm_id+"'>"+$rows[$i].l_stat_name+"</option>";                    
                 }//end for
                 
-                $('#almari_name').html($option_almari_name);
+                $('#lsm_id').html($html);
             }//end if
         }        
     });//end ajax
@@ -223,6 +222,6 @@ function configureAuthorDropDown(){
 
 $(document).ready(function () {
     populateDataTable();
+    configureLeaveStatDD();
     //configureCategoryDropDown();
-    //configureAuthorDropDown();
 });

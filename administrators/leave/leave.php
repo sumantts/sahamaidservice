@@ -102,7 +102,7 @@ $sess_user_type = $_SESSION["user_type"];
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle"><?=$title?></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#exampleModalLong').modal('hide')"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
                             <form class="needs-validation" novalidate id="myForm" name="myForm">
@@ -119,10 +119,8 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div> 
 
                                     <div class="col-md-4 mb-3">
-                                        <label for="almari_status">Active</label>
-                                        <select class="form-control" name="almari_status" id="almari_status">
-                                            <option value="0">Inactive</option>
-                                            <option value="1">Active</option>
+                                        <label for="lsm_id">Leave Status</label>
+                                        <select class="form-control" name="lsm_id" id="lsm_id">
                                         </select>
                                         <input type="hidden" name="almari_id" id="almari_id" value="0">
                                     </div> 
@@ -130,7 +128,7 @@ $sess_user_type = $_SESSION["user_type"];
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#exampleModalLong').modal('hide')">Close</button>
                             <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                             <button class="btn  btn-primary" type="button" id="submitForm">
                                 <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
