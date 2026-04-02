@@ -123,11 +123,11 @@
 		$sess_user_type = $_SESSION["user_type"];
 
 		if($sess_user_type == 1){
-			$sql = "SELECT * FROM user_type_master ";
+			$sql = "SELECT * FROM user_type_master WHERE user_type != '4'";
 		}
 		
 		if($sess_user_type >= 2){
-			$sql = "SELECT * FROM user_type_master WHERE user_type >= '" .$sess_user_type. "' ";
+			$sql = "SELECT * FROM user_type_master WHERE user_type >= '" .$sess_user_type. "' AND user_type != '4' ";
 		}
 		$result = $con->query($sql);
 

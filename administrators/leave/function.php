@@ -13,34 +13,36 @@
 		$return_result = array();
 		$status = true;
 
-		$l_id = $_POST["l_id"];		
-		$almari_name = $con->real_escape_string($_POST["almari_name"]);			
-		$almari_status = $con->real_escape_string($_POST["almari_status"]);
+		$l_id = $_POST["l_id"];	 
+		$user_type = $_POST['user_type'];
+		$user_id = $_POST['user_id']; 
+		$from_date = $_POST['from_date'];
+		$to_date = $_POST['to_date'];
+		$leave_subject = $_POST['leave_subject'];
+		$leave_message = $_POST['leave_message'];
+		$lsm_id = $_POST['lsm_id']; 
+
+		if($user_type == '' || $user_id == ''){
+			$user_type = $_SESSION["user_type"];
+			$user_id = $_SESSION["user_id"];
+		}
 		
 		try {
 			if($l_id > 0){
 				$status = true;
-				$sql = "UPDATE leave_request SET almari_name = '" .$almari_name. "', almari_status = '" .$almari_status. "' WHERE l_id = '" .$l_id. "' ";
+				$sql = "UPDATE leave_request SET user_type = '" .$user_type. "', user_id = '" .$user_id. "', from_date = '" .$from_date. "', to_date = '" .$to_date. "', leave_subject = '" .$leave_subject. "', leave_message = '" .$leave_message. "', lsm_id = '" .$lsm_id. "' WHERE l_id = '" .$l_id. "' ";
 				$result = $con->query($sql);
-			}else{
-
-				$sql = "SELECT * FROM leave_request WHERE almari_name = '" .$almari_name. "' ";
+			}else{				
+				$status = true;
+				$sql = "INSERT INTO leave_request (user_type, user_id, from_date, to_date, leave_subject, leave_message) VALUES ('".$user_type."', '".$user_id."', '".$from_date."', '".$to_date."', '".$leave_subject."', '".$leave_message."')";
 				$result = $con->query($sql);
-		
-				if ($result->num_rows > 0) {
-					$status = false;
-				}else{
-					$status = true;
-					$sql = "INSERT INTO leave_request (almari_name, almari_status) VALUES ('".$almari_name."', '".$almari_status."')";
-					$result = $con->query($sql);
-				}
 			}
 				
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());
 		}
 		$return_result['status'] = $status;
-		sleep(2);
+		
 		echo json_encode($return_result);
 	}//Save function end	
 
@@ -50,6 +52,14 @@
 		$status = true;
 		$mainData = array();
 		$author_bio1 = '';
+		$sess_user_type = $_SESSION["user_type"];
+		$sess_user_id = $_SESSION["user_id"];
+
+		$where_condition = "WHERE leave_request.l_id > '0' ";
+		if($sess_user_type > 3){
+			$where_condition = " AND leave_request.user_id = '" .$sess_user_id. "' ";
+		}
+
 		$sql = "SELECT leave_request.l_id, leave_request.user_type, leave_request.user_id, leave_request.from_date, leave_request.to_date, leave_request.leave_subject, leave_request.leave_message, leave_request.lsm_id, leave_request.approved_by, leave_request.approve_date_time,
 		user_type_master.name AS user_type_text,
 		user_details.full_name,
@@ -58,7 +68,9 @@
 		LEFT OUTER JOIN user_type_master ON leave_request.user_type = user_type_master.user_type
 		LEFT OUTER JOIN user_details ON leave_request.user_id = user_details.user_id
 		LEFT OUTER JOIN leave_stat_master ON leave_request.lsm_id = leave_stat_master.lsm_id
+		$where_condition
 		ORDER BY leave_request.l_id DESC";
+
 		$result = $con->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -80,8 +92,7 @@
 				$data[3] = date('d-F-Y', strtotime($to_date));
 				$data[4] = $leave_subject;
 				$data[5] = $l_stat_name;
-				$data[6] = "<a href='javascript: void(0)' data-l_id='.$l_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$l_id.")'></i></a> <a href='javascript: void(0)' data-l_id='.$l_id.'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$l_id.")'></i></a>";
-
+				$data[6] = "<a href='javascript: void(0)' data-l_id='.$l_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$l_id.")'></i></a>"; 
 				array_push($mainData, $data);
 				$slno++;
 			}

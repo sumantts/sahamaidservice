@@ -141,7 +141,7 @@ function updateAttendance(slno){
 }//end if
 
 
-//Category 
+// User type 
 function configureUserTypeDd(){
     $.ajax({
         method: "POST",
@@ -174,7 +174,7 @@ $('#user_type').on('change', function(){
 });
 
 
-// State
+// User
 function configureUsersDd(){
     $user_type = $('#user_type').val();
     if(parseInt($user_type) > 0){

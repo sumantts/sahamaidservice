@@ -131,6 +131,63 @@
             margin: 0;
         }
     }
+
+
+    /* A4 page setup */
+.doc-page {
+    width: 794px;              /* exact A4 width */
+    height: 1123px;            /* exact A4 height */
+    margin: auto;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* vertical center */
+    align-items: center;       /* horizontal center */
+    
+    text-align: center;
+}
+
+/* Page break for print */
+.page-break {
+    page-break-before: always;
+}
+
+/* Full A4 document page */
+.doc-page {
+    width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+/* Title */
+ 
+/* Image container */ 
+
+/* Image fit */ 
+
+
+    /* Title */
+    .doc-page h2 {
+        margin-bottom: 20px;
+    }
+
+    /* Image container */
+    .doc-box {
+        width: 90%;
+        height: 85%;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Image */
+    .doc-box img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border: 1px solid #000;
+    }
 </style>
 </head>
 
@@ -263,6 +320,71 @@
             <td style="height:50px;"></td>
         </tr>
     </table>
+
+    <?php if($adhar_card_img != ''){?>
+    <!-- PAGE BREAK -->
+    <div class="page-break"></div>
+
+    <!-- AADHAR CARD PAGE -->
+    <div class="doc-page">
+        <h2>Document: Aadhaar Card</h2>
+        <div class="doc-box">
+            <img src="uploads/<?=$adhar_card_img?>" alt="Aadhaar Card Front">
+        </div>
+    </div>
+    <?php } ?>
+
+    <?php if($adhar_card_back_img != ''){?>
+    <!-- PAGE BREAK -->
+    <div class="page-break"></div>
+
+    <!-- AADHAR CARD PAGE -->
+    <div class="doc-page">
+        <h2>Document: Aadhaar Card (Back Side)</h2>
+        <div class="doc-box">
+            <img src="uploads/<?=$adhar_card_back_img?>" alt="Aadhaar Card Back">
+        </div>
+    </div>
+    <?php } ?>
+
+    <?php if($voter_id_card_img != ''){?>
+    <!-- PAGE BREAK -->
+    <div class="page-break"></div>
+
+    <!-- VOTER ID PAGE -->
+    <div class="doc-page">
+        <h2>Document: Voter ID Card</h2>
+        <div class="doc-box">
+            <img src="uploads/<?=$voter_id_card_img?>" alt="Voter ID Front">
+        </div>
+    </div>
+    <?php } ?>
+
+    <?php if($voter_id_card_back_img != ''){?>
+    <!-- PAGE BREAK -->
+    <div class="page-break"></div>
+
+    <!-- VOTER ID PAGE -->
+    <div class="doc-page">
+        <h2>Document: Voter ID Card (Back Side)</h2>
+        <div class="doc-box">
+            <img src="uploads/<?=$voter_id_card_back_img?>" alt="Voter ID Back">
+        </div>
+    </div>
+    <?php } ?>
+
+    <?php if($pan_card_img != ''){?>
+    <!-- PAGE BREAK -->
+    <div class="page-break"></div>
+
+    <!-- PAN ID PAGE -->
+    <div class="doc-page">
+        <h2>Document: PAN ID Card</h2>
+        <div class="doc-box">
+            <img src="uploads/<?=$pan_card_img?>" alt="Voter ID">
+        </div>
+    </div>
+    <?php } ?>
 
 </div>
 <script>

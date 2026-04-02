@@ -1,66 +1,53 @@
 $('#onMyModal').on('click', function(){
+    $('#myForm')[0].reset(); 
+    $('#l_id').val('0'); 
     $('#exampleModalLong').modal('show');
 })
 
-$('#almari_name').on('blur', function(){
-    $almari_name = $('#almari_name').val();
-})
 
-function validateForm(){
+$('#submitForm').click(function(){ 
     $l_id = $('#l_id').val();
-    $almari_name = $('#almari_name').val().replace(/^\s+|\s+$/gm,'');
-    $almari_status = $('#almari_status').val();
-    $status = true;
+    $user_type = $('#user_type').val();
+    $user_id = $('#user_id').val(); 
+    $from_date = $('#from_date').val();
+    $to_date = $('#to_date').val();
+    $leave_subject = $('#leave_subject').val();
+    $leave_message = $('#leave_message').val();
+    $lsm_id = $('#lsm_id').val(); 
 
-    if($almari_name == ''){
-        $status = false;
-        $('#almari_name').removeClass('is-valid');
-        $('#almari_name').addClass('is-invalid');
+    if($from_date == ''){
+        alert('Please Choose From Date');
+    }else if($to_date == ''){
+        alert('Please Choose To Date');
+    }else if($leave_subject == ''){
+        alert('Please enter Subject');
+    }else if($leave_message == ''){
+        alert('Please enter Message');
     }else{
-        $('#almari_name').removeClass('is-invalid');
-        $('#almari_name').addClass('is-valid');
+        $('#submitForm_spinner').show();
+        $('#submitForm_spinner_text').show();
+        $('#submitForm_text').hide();
+
+        $.ajax({
+            method: "POST",
+            url: "leave/function.php",
+            data: { fn: "saveFormData", l_id: $l_id, user_type: $user_type, user_id: $user_id, from_date: $from_date, to_date: $to_date, leave_subject: $leave_subject, leave_message: $leave_message, lsm_id: $lsm_id }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                $('#orgFormAlert1').show();
+                $('#myForm')[0].reset();
+                $('#exampleModalLong').modal('hide');
+                populateDataTable();
+            }
+                            
+            $('#submitForm_spinner').hide();
+            $('#submitForm_spinner_text').hide();
+            $('#submitForm_text').show();
+        });//end ajax
     }  
-
-    $('#submitForm_spinner').hide();
-    $('#submitForm_spinner_text').hide();
-    $('#submitForm_text').show();
-
-    return $status;
-}//en validate form
-
-$('#submitForm').click(function(){
-    $('#submitForm_spinner').show();
-    $('#submitForm_spinner_text').show();
-    $('#submitForm_text').hide();
-    setTimeout(function(){
-        $formVallidStatus = validateForm();
-
-        if($formVallidStatus == true){
-            $l_id = $('#l_id').val();
-
-            $.ajax({
-                method: "POST",
-                url: "leave/function.php",
-                data: { fn: "saveFormData", l_id: $l_id, almari_name: $almari_name, almari_status: $almari_status }
-            })
-            .done(function( res ) {
-                //console.log(res);
-                $res1 = JSON.parse(res);
-                if($res1.status == true){
-                    $('#orgFormAlert1').show();
-                    $('#myForm')[0].reset();
-                    $('#exampleModalLong').modal('hide');
-                    populateDataTable();
-                }else{
-                    alert('This name ia already exist')
-                }                
-                $('#submitForm_spinner').hide();
-                $('#submitForm_spinner_text').hide();
-                $('#submitForm_text').show();
-            });//end ajax
-        }
-
-    }, 500)    
 })
 
 function editTableData($l_id){
@@ -76,13 +63,21 @@ function editTableData($l_id){
         $res1 = JSON.parse(res);
         if($res1.status == true){   
             $('#l_id').val($res1.l_id);   
-            $('#full_name').val($res1.full_name);   
-            $('#user_type_text').val($res1.user_type_text);   
+            //$('#full_name').val($res1.full_name);   
+            //$('#user_type_text').val($res1.user_type_text);   
             $('#from_date').val($res1.from_date);   
             $('#to_date').val($res1.to_date);   
             $('#leave_subject').val($res1.leave_subject);
             $('#leave_message').val($res1.leave_message); 
             $('#lsm_id').val($res1.lsm_id).trigger('change'); 
+
+            $user_type = $res1.user_type;
+            $user_id = $res1.user_id;
+             
+            $('#user_type').val($user_type).trigger('change'); 
+            setTimeout(function(){
+                $('#user_id').val($user_id).trigger('change'); 
+            },300);
 
             $('#exampleModalLong').modal('show');
         }
@@ -109,27 +104,6 @@ function deleteTableData($l_id){
     }		
 }//end delete
 
-//Image upload
-function savePhoto(){
-    const imgPath = document.querySelector('input[type=file]').files[0];
-    const reader = new FileReader();
-
-    reader.addEventListener("load", function () {
-        // convert image file to base64 string and save to localStorage
-        localStorage.setItem("post_image", reader.result);
-        $('#post_image_data').val(reader.result);
-    }, false);
-
-    if (imgPath) {
-        reader.readAsDataURL(imgPath);
-    }
-
-    //To display image again
-    setTimeout(function(){
-    let img = document.getElementById('image');
-    img.src = localStorage.getItem('post_image');
-    }, 250);
-}
 
 
 function populateDataTable(){
@@ -224,8 +198,76 @@ function configureLeaveStatDD(){
     });//end ajax
 }//end
 
+
+
+
+// user type 
+function configureUserTypeDd(){
+    $.ajax({
+        method: "POST",
+        url: "attendance/function.php",
+        data: { fn: "configureUserTypeDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#user_type').html('');
+                $html = "<option value=''>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                }//end for                
+                $('#user_type').html($html);
+            }else{
+                $('#user_type').html('');
+                $html = "<option value=''>Select</option>";
+                $('#user_type').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+$('#user_type').on('change', function(){
+    configureUsersDd();    
+});
+
+
+// User 
+function configureUsersDd(){
+    $user_type = $('#user_type').val();
+    if(parseInt($user_type) > 0){
+        $.ajax({
+            method: "POST",
+            url: "attendance/function.php",
+            data: { fn: "configureUsersDd", user_type: $user_type }
+        })
+        .done(function( res ) {
+            $res1 = JSON.parse(res); 
+            if($res1.status == true){
+                $rows = $res1.data;
+
+                if($rows.length > 0){
+                    $('#user_id').html('');
+                    $html = "<option value=''>Select</option>";
+                    for($i = 0; $i < $rows.length; $i++){
+                        $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                    }//end for                
+                    $('#user_id').html($html);
+                }else{
+                    $('#user_id').html('');
+                    $html = "<option value=''>Select</option>";
+                    $('#user_id').html($html);
+                }//end if
+            }        
+        });//end ajax
+    }//end if
+}//end 
+
 $(document).ready(function () {
     populateDataTable();
     configureLeaveStatDD();
+    configureUserTypeDd();
     //configureCategoryDropDown();
 });
