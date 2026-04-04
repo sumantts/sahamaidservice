@@ -168,6 +168,7 @@
 				$data_obj = new stdClass();
 				$data_obj->id = $row['user_id'];
 				$data_obj->name = $row['full_name'];
+				$data_obj->exp_salary = $row['exp_salary'];
 				
 				array_push($mainData, $data_obj);
 			}

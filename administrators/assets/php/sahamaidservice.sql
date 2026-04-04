@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2026 at 04:33 AM
+-- Generation Time: Apr 04, 2026 at 09:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,6 +20,35 @@ SET time_zone = "+00:00";
 --
 -- Database: `sahamaidservice`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assign_maid`
+--
+
+CREATE TABLE `assign_maid` (
+  `assign_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL COMMENT 'PK of user_details',
+  `rcvabl_amount` decimal(10,2) NOT NULL,
+  `worker_id` int(11) NOT NULL COMMENT 'PK of user_details',
+  `exp_salary` decimal(10,2) NOT NULL,
+  `from_date` date NOT NULL,
+  `to_date` date NOT NULL,
+  `from_time` varchar(255) NOT NULL,
+  `to_time` varchar(255) NOT NULL,
+  `payment_history` text NOT NULL,
+  `assign_by` int(11) NOT NULL COMMENT 'PK of user_details',
+  `asssign_time` datetime NOT NULL DEFAULT current_timestamp(),
+  `bill_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=pending 1=Paid 2=Due'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `assign_maid`
+--
+
+INSERT INTO `assign_maid` (`assign_id`, `client_id`, `rcvabl_amount`, `worker_id`, `exp_salary`, `from_date`, `to_date`, `from_time`, `to_time`, `payment_history`, `assign_by`, `asssign_time`, `bill_status`) VALUES
+(1, 101, 20000.00, 30, 12000.00, '2026-04-04', '2026-04-30', '10:00', '13:00', '', 1, '2026-04-04 11:14:52', 0);
 
 -- --------------------------------------------------------
 
@@ -1070,7 +1099,7 @@ CREATE TABLE `leave_request` (
   `to_date` date NOT NULL,
   `leave_subject` varchar(255) NOT NULL,
   `leave_message` text NOT NULL,
-  `approve_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=Pending 1=Approved 2=Decline',
+  `lsm_id` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'from leave_stat_master',
   `approved_by` int(11) NOT NULL DEFAULT 0,
   `approve_date_time` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -1079,9 +1108,30 @@ CREATE TABLE `leave_request` (
 -- Dumping data for table `leave_request`
 --
 
-INSERT INTO `leave_request` (`l_id`, `user_type`, `user_id`, `from_date`, `to_date`, `leave_subject`, `leave_message`, `approve_status`, `approved_by`, `approve_date_time`) VALUES
-(1, 5, 28, '2026-04-14', '2026-04-16', 'Poila Boisakher jonno chuti', 'Chitro sonkantri ebong poila boisakh upolokhhe amar 3 din chutir proyojon', 0, 0, '2026-04-01 08:01:51'),
-(2, 5, 29, '2026-04-28', '2026-04-29', 'Personal Purpose', 'I have some peronal work, need two days leave.', 0, 0, '2026-04-01 08:03:15');
+INSERT INTO `leave_request` (`l_id`, `user_type`, `user_id`, `from_date`, `to_date`, `leave_subject`, `leave_message`, `lsm_id`, `approved_by`, `approve_date_time`) VALUES
+(1, 5, 28, '2026-04-14', '2026-04-16', 'Poila Boisakher jonno chuti', 'Chitro sonkantri ebong poila boisakh upolokhhe amar 3 din chutir proyojon', 1, 0, '2026-04-01 08:01:51'),
+(2, 3, 3, '2026-04-15', '2026-04-16', 'need  a leave', 'need  a leave', 1, 0, '2026-04-01 08:03:15'),
+(3, 3, 3, '2026-04-15', '2026-04-16', 'need a leave', 'request for a leave', 3, 0, '2026-04-01 22:25:50');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `leave_stat_master`
+--
+
+CREATE TABLE `leave_stat_master` (
+  `lsm_id` tinyint(1) NOT NULL,
+  `l_stat_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `leave_stat_master`
+--
+
+INSERT INTO `leave_stat_master` (`lsm_id`, `l_stat_name`) VALUES
+(1, 'Pending'),
+(2, 'Approved'),
+(3, 'Decline');
 
 -- --------------------------------------------------------
 
@@ -1650,6 +1700,12 @@ INSERT INTO `work_type` (`wt_id`, `type_name`) VALUES
 --
 
 --
+-- Indexes for table `assign_maid`
+--
+ALTER TABLE `assign_maid`
+  ADD PRIMARY KEY (`assign_id`);
+
+--
 -- Indexes for table `attendance_register`
 --
 ALTER TABLE `attendance_register`
@@ -1709,6 +1765,12 @@ ALTER TABLE `lead_confirm_master`
 --
 ALTER TABLE `leave_request`
   ADD PRIMARY KEY (`l_id`);
+
+--
+-- Indexes for table `leave_stat_master`
+--
+ALTER TABLE `leave_stat_master`
+  ADD PRIMARY KEY (`lsm_id`);
 
 --
 -- Indexes for table `login`
@@ -1799,6 +1861,12 @@ ALTER TABLE `work_type`
 --
 
 --
+-- AUTO_INCREMENT for table `assign_maid`
+--
+ALTER TABLE `assign_maid`
+  MODIFY `assign_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `attendance_register`
 --
 ALTER TABLE `attendance_register`
@@ -1856,7 +1924,13 @@ ALTER TABLE `lead_confirm_master`
 -- AUTO_INCREMENT for table `leave_request`
 --
 ALTER TABLE `leave_request`
-  MODIFY `l_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `l_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `leave_stat_master`
+--
+ALTER TABLE `leave_stat_master`
+  MODIFY `lsm_id` tinyint(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `login`

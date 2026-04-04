@@ -1,0 +1,241 @@
+<?php
+	include('../assets/php/sql_conn.php');
+	$fn = '';
+    
+	if(isset($_GET["fn"])){
+	    $fn = $_GET["fn"];
+	}else if(isset($_POST["fn"])){
+	    $fn = $_POST["fn"];
+	}
+
+	//Save function start
+	if($fn == 'saveFormData'){
+		$return_result = array();
+		$status = true;
+		 
+		$assign_id = $_POST['assign_id'];
+		$client_id = $_POST['client_id'];
+		$rcvabl_amount = $_POST['rcvabl_amount']; 
+		$worker_id = $_POST['worker_id'];
+		$exp_salary = $_POST['exp_salary'];
+
+		$from_date = $_POST['from_date'];
+		$to_date = $_POST['to_date'];
+		$from_time = $_POST['from_time']; 
+		$to_time = $_POST['to_time']; 
+
+		$sess_user_id = $_SESSION["user_id"];
+
+		try {
+			if($assign_id > 0){
+				/*$status = true;
+				$sql = "UPDATE assign_maid SET user_type = '" .$user_type. "', user_id = '" .$user_id. "', from_date = '" .$from_date. "', to_date = '" .$to_date. "', leave_subject = '" .$leave_subject. "', leave_message = '" .$leave_message. "', lsm_id = '" .$lsm_id. "' WHERE assign_id = '" .$assign_id. "' ";
+				$result = $con->query($sql);*/
+			}else{				
+				$status = true;
+				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."') ";
+				$result = $con->query($sql);
+			}
+				
+		} catch (PDOException $e) {
+			die("Error occurred:" . $e->getMessage());
+		}
+		$return_result['status'] = $status;
+		
+		echo json_encode($return_result);
+	}//Save function end	
+
+	//function start
+	if($fn == 'getTableData'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		$author_bio1 = '';
+		$sess_user_type = $_SESSION["user_type"];
+		$sess_user_id = $_SESSION["user_id"];
+
+		$where_condition = "WHERE assign_maid.assign_id > '0' ";
+		if($sess_user_type > 3){
+			$where_condition = " AND assign_maid.assign_by = '" .$sess_user_id. "' ";
+		}
+
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status,
+		user_details.full_name
+		FROM assign_maid 
+		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
+		$where_condition
+		ORDER BY assign_maid.assign_id DESC";
+
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true;
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$assign_id = $row['assign_id'];					
+		 
+				$full_name = $row['full_name'];
+				$client_id = $row['client_id'];
+				$rcvabl_amount = $row['rcvabl_amount']; 
+				$worker_id = $row['worker_id'];
+				$exp_salary = $row['exp_salary'];
+
+				$from_date = $row['from_date'];
+				$to_date = $row['to_date'];
+				$from_time = $row['from_time']; 
+				$to_time = $row['to_time'];	
+				$bill_status = $row['bill_status'];
+				$bill_status_text = '';
+				if($bill_status == '0'){
+					$bill_status_text = 'Pending';
+				}else if($bill_status == '1'){
+					$bill_status_text = 'Paid';
+				}else{
+					$bill_status_text = 'Due';
+				}
+
+
+				$data[0] = $slno;
+				$data[1] = $full_name;
+				$data[2] = $rcvabl_amount;
+				$data[3] = $worker_id;
+				$data[4] = $exp_salary;
+				$data[5] = date('d-F Y', strtotime($from_date));
+				$data[6] = date('d-F Y', strtotime($to_date));
+				$data[7] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));
+				$data[8] = $bill_status_text;
+				$data[9] = "<a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$assign_id.")'></i></a>"; 
+				array_push($mainData, $data);
+				$slno++;
+			}
+		} else {
+			$status = false;
+		}
+		//$con->close();
+
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end	
+
+	//function start
+	if($fn == 'getFormEditData'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		$assign_id = $_POST['assign_id'];
+
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status,
+		user_details.full_name
+		FROM assign_maid 
+		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
+		WHERE assign_maid.assign_id = '" .$assign_id. "' "; 
+		//echo $sql;
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true;	
+			$row = $result->fetch_array();
+			
+			$return_array['assign_id'] = $row['assign_id'];
+			$return_array['assign_id'] = $row['assign_id'];					
+		
+			$return_array['full_name'] = $row['full_name'];
+			$return_array['client_id'] = $row['client_id'];
+			$return_array['rcvabl_amount'] = $row['rcvabl_amount']; 
+			$return_array['worker_id'] = $row['worker_id'];
+			$return_array['exp_salary'] = $row['exp_salary'];
+
+			$return_array['from_date'] = $row['from_date'];
+			$return_array['to_date'] = $row['to_date'];
+			$return_array['from_time'] = $row['from_time']; 
+			$return_array['to_time'] = $row['to_time'];	
+			$return_array['bill_status'] = $row['bill_status'];
+
+		} else {
+			$status = false;
+		}
+		
+
+		$return_array['status'] = $status;
+    	echo json_encode($return_array);
+	}//function end
+
+	//Delete function
+	if($fn == 'deleteTableData'){
+		$return_result = array();
+		$assign_id = $_POST["assign_id"];
+		$status = true;	
+
+		$sql = "DELETE FROM assign_maid WHERE assign_id = '".$assign_id."'";
+		$result = $con->query($sql);
+		$return_result['status'] = $status; 
+		echo json_encode($return_result);
+	}//end function deleteItem
+
+	//Get Category name
+	if($fn == 'getAllCategoryName'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+
+		$sql = "SELECT * FROM assign_maid WHERE almari_status = 'active' ORDER BY almari_name ASC";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true;
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$assign_id = $row['assign_id'];	
+				$almari_name = $row['almari_name'];
+				$data = new stdClass();
+
+				$data->assign_id = $assign_id;
+				$data->almari_name = $almari_name;
+				
+				array_push($mainData, $data);
+				$slno++;
+			}
+		} else {
+			$status = false;
+		}
+		//$con->close();
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end	
+
+	//Get Leave Status
+	if($fn == 'configureLeaveStatDD'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+
+		$sql = "SELECT * FROM leave_stat_master";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true;
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$lsm_id = $row['lsm_id'];	
+				$l_stat_name = $row['l_stat_name'];	
+				$data = new stdClass();
+
+				$data->lsm_id = $lsm_id;
+				$data->l_stat_name = $l_stat_name;
+				
+				array_push($mainData, $data);
+				$slno++;
+			}
+		} else {
+			$status = false;
+		}
+		//$con->close();
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end	
+
+?>

@@ -54,6 +54,11 @@
 			$title = "Leave Request";
 			include('leave/leave.php');		
 		break;
+		
+		case 'assign-maid':
+			$title = "Assign Maid";
+			include('assign_maid/assign_maid.php');		
+		break;
 						
 		default:
 		include('signin/signin.php');
