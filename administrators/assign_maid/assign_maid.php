@@ -176,9 +176,9 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div>
                                 </div>
                                 <div class="form-row d-none" id="div_p_history">
-                                    <h5>Payment Receive History</h5>
+                                    <!-- <h5>Payment Receive History</h5>
                                     <div class="col-md-12"> Amount: Rs. 1500/- Received by Cash on 02-Apr-2026 </div>
-                                    <div class="col-md-12"> Amount: Rs. 500/- Received by UPI on 03-Apr-2026 </div>
+                                    <div class="col-md-12"> Amount: Rs. 500/- Received by UPI on 03-Apr-2026 </div> -->
                                 </div>
                                 
                             </form>

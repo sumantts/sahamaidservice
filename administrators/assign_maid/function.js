@@ -273,6 +273,61 @@ $('#worker_id').on('change', function(){
     $('#exp_salary').val($expSalary);
 })
 
+$('#div_rcv_btn').on('click', function(){
+    $payment_mode = '';
+    $html = '';        
+    $assign_id = $('#assign_id').val();
+    $paid_amount = $('#paid_amount').val();
+    $transaction_id = $('#transaction_id').val();
+    
+    if ($('#payment_mode').is(':checked')) {
+        $payment_mode = '1';        
+    }else{
+        $payment_mode = '0';
+    }
+    console.log('fun call..'+$payment_mode);
+
+    if($paid_amount == ''){
+        alert('Please enter Amount');
+    }else if($payment_mode == '1' && $transaction_id == ''){
+        alert('Please enter transaction ID');
+    }else{        
+        $('#div_p_history').html($html);
+        $.ajax({
+            method: "POST",
+            url: "assign_maid/function.php",
+            data: { fn: "saveReceiveAmount", paid_amount: $paid_amount, payment_mode: $payment_mode, transaction_id: $transaction_id, assign_id: $assign_id }
+        })
+        .done(function( res ) {
+            $res1 = JSON.parse(res); 
+            if($res1.status == true){
+                $html += '<h5>Payment Receive History</h5>';
+                $payment_history = $res1.payment_history;                
+                $rcvabl_amount = $res1.rcvabl_amount;
+                $total_received = 0;
+                $total_due = 0;
+                if($payment_history.length > 0){
+                    for($i = 0; $i < $payment_history.length; $i++){
+                        $pay_mode = '';
+                        if($payment_history[$i].payment_mode == '1'){
+                            $pay_mode = 'UPI';
+                        }else{
+                            $pay_mode = 'Cash';
+                        }
+                        $html += '<div class="col-md-12"> Amount: Rs. '+$payment_history[$i].paid_amount+'/- Received by '+$pay_mode+' on '+$payment_history[$i].received_at_f+' </div>';
+                        $total_received = parseFloat($total_received) + parseFloat($payment_history[$i].paid_amount);
+                    }
+                }
+                $total_due = parseFloat($rcvabl_amount) - parseFloat($total_received);
+                $html += '<div class="col-md-12"> Total Amount Received: Rs. '+$total_received.toFixed(2)+'/- Total Due: Rs. '+$total_due.toFixed(2)+'</div>';                
+                $('#div_p_history').html($html);
+            }        
+        });//end ajax
+        
+        
+    }
+})
+
 $(document).ready(function () {
     populateDataTable(); 
     configureClientUsersDd();  

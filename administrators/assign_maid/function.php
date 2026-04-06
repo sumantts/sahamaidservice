@@ -238,4 +238,47 @@
     	echo json_encode($return_array);
 	}//function end	
 
+	//Get Leave Status
+	if($fn == 'saveReceiveAmount'){
+		$return_array = array();
+		$status = false;
+		$payment_history = array();
+		$rcvabl_amount = 0;
+
+		$paid_amount = $_POST['paid_amount'];
+		$payment_mode = $_POST['payment_mode'];
+		$transaction_id = $_POST['transaction_id'];
+		$assign_id = $_POST['assign_id'];
+
+		$sql = "SELECT * FROM assign_maid WHERE assign_id = '" .$assign_id. "' ";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array(); 
+			$rcvabl_amount = $row['rcvabl_amount'];
+			if($row['payment_history'] != ''){
+				$payment_history = json_decode($row['payment_history']);	
+			}
+		}
+		$payment_data = new stdClass();
+		$payment_data->paid_amount = $paid_amount;
+		$payment_data->payment_mode = $payment_mode;
+		$payment_data->transaction_id = $transaction_id;
+		$payment_data->received_at = date('Y-m-d H:i:s');
+		$payment_data->received_at_f = date('d-F Y h:i A');
+		array_push($payment_history, $payment_data);
+
+		$payment_history1 = json_encode($payment_history);
+		$sql = "UPDATE assign_maid SET payment_history = '" .$payment_history1. "' WHERE assign_id = '" .$assign_id. "' ";
+		$result = $con->query($sql);
+
+		if(sizeof($payment_history) > 0){
+			$status = true;
+		}
+		$return_array['status'] = $status;
+		$return_array['payment_history'] = $payment_history;		
+		$return_array['rcvabl_amount'] = $rcvabl_amount;
+    	echo json_encode($return_array);
+	}//function end	
+
 ?>
