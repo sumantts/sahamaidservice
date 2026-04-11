@@ -720,7 +720,7 @@ buttons.forEach(button => {
                 
 
                 //Section 8 Fields                 
-                $('#partEightSwitch').removeClass('d-none');
+                /*$('#partEightSwitch').removeClass('d-none');
                 $('#partEightSwitch').addClass('d-block');                
                 $('#partEightTitl').removeClass('d-none');
                 $('#partEightTitl').addClass('d-block');     
@@ -736,7 +736,7 @@ buttons.forEach(button => {
                 $('#partEightBoard5').removeClass('d-none');
                 $('#partEightBoard5').addClass('d-block');  
                 $('#partEightBoard6').removeClass('d-none');
-                $('#partEightBoard6').addClass('d-block');
+                $('#partEightBoard6').addClass('d-block');*/
                   
             }else{
                 // Section 4                    
@@ -805,7 +805,7 @@ buttons.forEach(button => {
                 $('#partSevenBoard3').addClass('d-none');
 
                 //Section 8 Fields                 
-                $('#partEightSwitch').removeClass('d-block');
+                /*$('#partEightSwitch').removeClass('d-block');
                 $('#partEightSwitch').addClass('d-none');                
                 $('#partEightTitl').removeClass('d-block');
                 $('#partEightTitl').addClass('d-none');                
@@ -820,7 +820,7 @@ buttons.forEach(button => {
                 $('#partEightBoard5').removeClass('d-block');
                 $('#partEightBoard5').addClass('d-none');               
                 $('#partEightBoard6').removeClass('d-block');
-                $('#partEightBoard6').addClass('d-none');
+                $('#partEightBoard6').addClass('d-none');*/
 
 
             }   

@@ -104,7 +104,7 @@
 				$data[6] = date('d-F Y', strtotime($to_date));
 				$data[7] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));
 				$data[8] = $bill_status_text;
-				$data[9] = "<a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$assign_id.")'></i></a>"; 
+				$data[9] = "<a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-calendar' aria-hidden='true' onclick='viewAttendanceData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$assign_id.")'></i></a>"; 
 				array_push($mainData, $data);
 				$slno++;
 			}
@@ -279,6 +279,113 @@
 		$return_array['payment_history'] = $payment_history;		
 		$return_array['rcvabl_amount'] = $rcvabl_amount;
     	echo json_encode($return_array);
-	}//function end	
+	}//function end		
+
+	//function start
+	if($fn == 'getAttendance'){
+		$return_array = array();
+		$atten_data = array();
+		$status = true;		
+		$error_message = 'Attendance found';	 
+		$from_date = '';
+		$to_date = '';
+		$full_name = '';
+
+		$assign_id = $_POST['assign_id']; 
+
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.atten_data,
+		user_details.full_name
+		FROM assign_maid 
+		LEFT OUTER JOIN user_details ON assign_maid.worker_id = user_details.user_id 
+		WHERE assign_maid.assign_id = '" .$assign_id. "' "; 
+
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array(); 
+			$from_date = $row['from_date'];
+			$to_date = $row['to_date'];
+			$full_name = $row['full_name'];
+			
+			if($row['atten_data'] != ''){
+				$atten_data = json_decode($row['atten_data']); 
+			}
+		}
+
+		if(sizeof($atten_data) == 0){
+			$current = strtotime($from_date);
+			$endDate = strtotime($to_date);
+			$slno = 1;
+			while ($current <= $endDate) {
+				//echo date("Y-m-d", $current) . "<br>";
+				$atten_data_obj = new stdClass();
+				$atten_data_obj->slno = $slno;
+				$atten_data_obj->atten_date = date('d-m-Y', $current);
+				$atten_data_obj->pre_abs_lev = '';
+				$atten_data_obj->atten_note = '';
+
+				array_push($atten_data, $atten_data_obj);
+				$current = strtotime("+1 day", $current);
+				$slno++;
+			}
+
+			// update attendance data
+			$atten_data1 = json_encode($atten_data);
+			$sql = "UPDATE assign_maid SET atten_data = '" .$atten_data1. "' WHERE assign_id = '" .$assign_id. "' ";
+			$result = $con->query($sql);
+		}//end if		
+
+		$return_array['status'] = $status;
+		$return_array['atten_data'] = $atten_data; 
+		$return_array['from_date'] = $from_date; 
+		$return_array['to_date'] = $to_date; 
+		$return_array['full_name'] = $full_name; 
+		
+    	echo json_encode($return_array);
+	}//function end	 
+
+	
+
+	//Save function start
+	if($fn == 'updateAttendance'){
+		$return_result = array();
+		$atten_data = array();
+		$status = true;
+
+		$serial_no = $_POST["serial_no"];	
+		$pre_abs_lev = $_POST["pre_abs_lev"];
+		$atten_note = $_POST["atten_note"];	
+		$assign_id = $_POST["assign_id"];	
+		
+		
+		try {
+			$sql = "SELECT * FROM assign_maid WHERE assign_id = '" .$assign_id. "' ";
+			$result = $mysqli->query($sql);
+
+			if ($result->num_rows > 0) {
+				$row = $result->fetch_array();
+				$atten_data = json_decode($row['atten_data']);
+
+				if(sizeof($atten_data) > 0){
+					for($i = 0; $i < sizeof($atten_data); $i++){
+						if($atten_data[$i]->slno == $serial_no){
+							$atten_data[$i]->pre_abs_lev = $pre_abs_lev;
+							$atten_data[$i]->atten_note = $atten_note;
+						}
+					}
+				}
+
+				$atten_data_en = json_encode($atten_data); 
+				$sql2 = "UPDATE assign_maid SET atten_data = '" .$atten_data_en. "' WHERE assign_id = '" .$assign_id. "' ";
+				$result2 = $mysqli->query($sql2);
+			} 		
+			
+		} catch (PDOException $e) {
+			die("Error occurred:" . $e->getMessage());
+		}
+		$return_result['status'] = $status; 
+
+		echo json_encode($return_result);
+	}//Save function end
 
 ?>

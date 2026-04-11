@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2026 at 09:29 AM
+-- Generation Time: Apr 07, 2026 at 06:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -37,6 +37,7 @@ CREATE TABLE `assign_maid` (
   `to_date` date NOT NULL,
   `from_time` varchar(255) NOT NULL,
   `to_time` varchar(255) NOT NULL,
+  `atten_data` text NOT NULL,
   `payment_history` text NOT NULL,
   `assign_by` int(11) NOT NULL COMMENT 'PK of user_details',
   `asssign_time` datetime NOT NULL DEFAULT current_timestamp(),
@@ -47,8 +48,9 @@ CREATE TABLE `assign_maid` (
 -- Dumping data for table `assign_maid`
 --
 
-INSERT INTO `assign_maid` (`assign_id`, `client_id`, `rcvabl_amount`, `worker_id`, `exp_salary`, `from_date`, `to_date`, `from_time`, `to_time`, `payment_history`, `assign_by`, `asssign_time`, `bill_status`) VALUES
-(1, 101, 20000.00, 30, 12000.00, '2026-04-04', '2026-04-30', '10:00', '13:00', '', 1, '2026-04-04 11:14:52', 0);
+INSERT INTO `assign_maid` (`assign_id`, `client_id`, `rcvabl_amount`, `worker_id`, `exp_salary`, `from_date`, `to_date`, `from_time`, `to_time`, `atten_data`, `payment_history`, `assign_by`, `asssign_time`, `bill_status`) VALUES
+(1, 101, 20000.00, 30, 12000.00, '2026-04-04', '2026-04-30', '10:00', '13:00', '[{\"slno\":1,\"atten_date\":\"04-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"10 minutes late\"},{\"slno\":2,\"atten_date\":\"05-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":3,\"atten_date\":\"06-04-2026\",\"pre_abs_lev\":\"3\",\"atten_note\":\"Puja occation\"},{\"slno\":4,\"atten_date\":\"07-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":5,\"atten_date\":\"08-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":6,\"atten_date\":\"09-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":7,\"atten_date\":\"10-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":8,\"atten_date\":\"11-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":9,\"atten_date\":\"12-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":10,\"atten_date\":\"13-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":11,\"atten_date\":\"14-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":12,\"atten_date\":\"15-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":13,\"atten_date\":\"16-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":14,\"atten_date\":\"17-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":15,\"atten_date\":\"18-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":16,\"atten_date\":\"19-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":17,\"atten_date\":\"20-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":18,\"atten_date\":\"21-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":19,\"atten_date\":\"22-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":20,\"atten_date\":\"23-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":21,\"atten_date\":\"24-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":22,\"atten_date\":\"25-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":23,\"atten_date\":\"26-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":24,\"atten_date\":\"27-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":25,\"atten_date\":\"28-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":26,\"atten_date\":\"29-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":27,\"atten_date\":\"30-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"}]', '[{\"paid_amount\":\"100\",\"payment_mode\":\"1\",\"transaction_id\":\"UPI12345\",\"received_at\":\"2026-04-06 06:12:30\",\"received_at_f\":\"06-April 2026 06:12 AM\"},{\"paid_amount\":\"500\",\"payment_mode\":\"0\",\"transaction_id\":\"\",\"received_at\":\"2026-04-06 06:13:57\",\"received_at_f\":\"06-April 2026 06:13 AM\"},{\"paid_amount\":\"450\",\"payment_mode\":\"1\",\"transaction_id\":\"TRN123\",\"received_at\":\"2026-04-06 06:15:23\",\"received_at_f\":\"06-April 2026 06:15 AM\"},{\"paid_amount\":\"1\",\"payment_mode\":\"0\",\"transaction_id\":\"\",\"received_at\":\"2026-04-06 06:18:42\",\"received_at_f\":\"06-April 2026 06:18 AM\"},{\"paid_amount\":\"123\",\"payment_mode\":\"0\",\"transaction_id\":\"3345\",\"received_at\":\"2026-04-06 06:22:05\",\"received_at_f\":\"06-April 2026 06:22 AM\"}]', 1, '2026-04-04 11:14:52', 0),
+(3, 114, 12000.00, 117, 18000.00, '2026-04-27', '2026-05-02', '07:00', '09:00', '[{\"slno\":1,\"atten_date\":\"27-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":2,\"atten_date\":\"28-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":3,\"atten_date\":\"29-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":4,\"atten_date\":\"30-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":5,\"atten_date\":\"01-05-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":6,\"atten_date\":\"02-05-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"}]', '', 1, '2026-04-07 09:42:48', 0);
 
 -- --------------------------------------------------------
 
@@ -1864,7 +1866,7 @@ ALTER TABLE `work_type`
 -- AUTO_INCREMENT for table `assign_maid`
 --
 ALTER TABLE `assign_maid`
-  MODIFY `assign_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `assign_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `attendance_register`

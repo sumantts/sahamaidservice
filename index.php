@@ -35,6 +35,10 @@
     	$title = "Book Now";
 		include('pages/book_now.php');
 		break;
+		case 'workers':
+    	$title = "Workers";
+		include('pages/workers.php');
+		break;
 						
 		default:
 		include('pages/home.php');

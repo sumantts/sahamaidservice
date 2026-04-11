@@ -170,17 +170,24 @@ function configureSkillsDd(){
 
             if($rows.length > 0){
                 $('#skills_wrapper').html('');
+                
+                //$('#portfolio-flters').html('');
+                $html_w = '<li data-filter="*" class="filter-active">All</li>';
                 $html = "";
                 for($i = 0; $i < $rows.length; $i++){
                     //$html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";    
                     $html +='<label class="custom-checkbox">';
                       $html +='<input type="checkbox" name="skills[]" value="'+$rows[$i].name+'">';
                       $html +='<span>'+$rows[$i].name+'</span>';
-                    $html +='</label>';                
+                    $html +='</label>'; 
+                    
+                    $html_w += '<li data-filter=".filter-'+$rows[$i].id+'">'+$rows[$i].name+'</li>';
                 }//end for                
-                $('#skills_wrapper').html($html);
+                $('#skills_wrapper').html($html);                
+                //$('#portfolio-flters').html($html_w);
             }else{
-                $('#skills_wrapper').html('');
+                $('#skills_wrapper').html('');                
+                //$('#portfolio-flters').html('');
             }//end if
         }        
     });//end ajax

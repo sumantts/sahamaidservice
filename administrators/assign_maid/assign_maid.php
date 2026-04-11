@@ -102,7 +102,7 @@ $sess_user_type = $_SESSION["user_type"];
                 </div>
             </div>
 
-            <!-- Modal start -->
+            <!-- Modal 1 start -->
             <div id="exampleModalLong" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -197,7 +197,46 @@ $sess_user_type = $_SESSION["user_type"];
                     </div>
                 </div>
             </div>
-            <!-- Modal end -->
+            <!-- Modal 1 end -->
+
+            <!-- Modal Attendance start -->
+            <div id="attenModalLong" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="attenModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="attenModalLongTitle"><?=$title?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#attenModalLong').modal('hide')"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-row" id="attendance_ui">
+                                <!-- <div class="col-md-3 mb-2">
+                                    <input class="form-control form-control-sm" type="date" id="atten_date_1" name="atten_date_1">
+                                </div>
+                                <div class="col-md-3 mb-2"> 
+                                    <select class="form-control form-control-sm" id="pre_abs_lev_1" name="pre_abs_lev_1">
+                                        <option value="">Present/Absent/Leave</option> 
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <input class="form-control form-control-sm" placeholder="Note" type="text" id="atten_note_1" name="atten_note_1">
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- <input type="hidden" name="assign_id" id="assign_id" value="0"> -->
+                            
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#attenModalLong').modal('hide')">Close</button>
+                            <!-- <button type="button" class="btn btn-primary">Save changes</button>
+                            <button class="btn  btn-primary d-block" type="button" id="submitForm">
+                                <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
+                                <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
+                                <span class="btn-text" id="submitForm_text">Save</span>
+                            </button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Attendance end -->
 
             <!-- [ sample-page ] end -->
         </div>

@@ -505,40 +505,40 @@ if($sess_user_type > 3){
                                         <input type="text" class="form-control" name="emg_cont_number" id="emg_cont_number" value="">
                                     </div>
                                 </div>
-                                <a href="javascript: void(0);" id="partEightSwitch" class="float-right d-none">Section 8</a>
+                                <a href="javascript: void(0);" id="partEightSwitch" class="float-right d-block">Section 8</a>
                                 <br>
                                 <hr> 
                                 
-                                <h5 id="partEightTitl" class="d-none">🔹 SECTION 8: Others</h5>
+                                <h5 id="partEightTitl" class="d-block">🔹 SECTION 8: Others</h5>
                                 <div class="row mb-2" id="partEightBoard">
-                                    <div class="col-md-6 d-none" id="partEightBoard1">
+                                    <div class="col-md-6 d-block" id="partEightBoard1">
                                         <label for="bank_details" class="form-label">Bank Details</label>
                                         <textarea class="form-control" name="bank_details" id="bank_details"></textarea>
                                     </div>
-                                    <div class="col-md-6 d-none" id="partEightBoard2">
+                                    <div class="col-md-6 d-block" id="partEightBoard2">
                                         <label for="highest_edu" class="form-label">Educational Qualification</label>
                                         <textarea class="form-control" name="highest_edu" id="highest_edu"></textarea>
                                     </div>
                                     
-                                    <div class="col-md-3 d-none" id="partEightBoard3">
+                                    <div class="col-md-3 d-block" id="partEightBoard3">
                                         <label for="bank_details_img" class="form-label">Bank Details Image</label>
                                         <input type="file" class="form-control-file" name="bank_details_img" id="bank_details_img" value="" oninput="uploadPhoto('bank_details_img')">
                                         <br>
                                         <div id="preview_bank_details_img"></div>
                                     </div>
-                                    <div class="col-md-3 d-none" id="partEightBoard4">
+                                    <div class="col-md-3 d-block" id="partEightBoard4">
                                         <label for="email_id" class="form-label">Email</label>
                                         <input type="text" class="form-control" name="email_id" id="email_id" value="">
                                     </div>
-                                    <div class="col-md-3 d-none" id="partEightBoard5">
+                                    <div class="col-md-3 d-block" id="partEightBoard5">
                                         <label for="username" class="form-label">Username</label>
                                         <input type="text" class="form-control" name="username" id="username" value="">
                                     </div>
-                                    <div class="col-md-3 d-none" id="partEightBoard6">
+                                    <div class="col-md-3 d-block" id="partEightBoard6">
                                         <label for="password" class="form-label">Password</label>
                                         <input type="text" class="form-control" name="password" id="password" value="">
                                     </div>
-                                    <div class="col-md-3 d-none" id="col_lc_id">
+                                    <div class="col-md-3 d-block" id="col_lc_id">
                                         <label for="lc_id" class="form-label">Lead / Confirm</label>
                                         <select class="form-control" name="lc_id" id="lc_id">
                                             <option value="0">Select</option>

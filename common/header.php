@@ -45,6 +45,7 @@
           <li><a class="nav-link scrollto <?php if($p == 'about'){?> active <?php } ?>" href="?p=about">About</a></li>
           <li><a class="nav-link scrollto <?php if($p == 'services'){?> active <?php } ?>" href="?p=services">Services</a></li>
           <li><a class="nav-link scrollto <?php if($p == 'portfolio'){?> active <?php } ?>" href="?p=portfolio">Portfolio</a></li>
+          <li><a class="nav-link scrollto <?php if($p == 'workers'){?> active <?php } ?>" href="?p=workers">Workers</a></li>
           <li><a class="nav-link scrollto <?php if($p == 'customer-review'){?> active <?php } ?>" href="?p=customer-review">Customer Review</a></li>
           <li><a class="nav-link scrollto <?php if($p == 'book-now'){?> active <?php } ?>" href="?p=book-now">Book Now</a></li>
 

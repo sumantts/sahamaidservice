@@ -291,5 +291,106 @@
 		"linkedin"=>'',
 	];
 
+	# Workers
+	function getSkillList_n($mysqli, $ids){
+		$skills_array = array();		
+		$query = "SELECT * FROM skills_master WHERE sk_id IN ($ids)";
+		$result = $mysqli->query($query);
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_array()){
+				$sk_id = $row['sk_id'];
+				$skill_name = $row['skill_name'];
+				if($skill_name != ''){
+					$skill_obj = new stdClass();
+					$skill_obj->sk_id = $sk_id;
+					$skill_obj->skill_name = $skill_name;
+					array_push($skills_array, $skill_obj);
+				}
+			}
+		} 
+
+		return $skills_array;
+	}//end if
+	
+	$skills = array();	
+	$sql = "SELECT * FROM skills_master ORDER BY skill_name ASC";
+	
+	$result = $con->query($sql);
+
+	if ($result->num_rows > 0) { 
+		while($row = $result->fetch_array()){
+			$skill = new stdClass();
+			$skill->sk_id = $row['sk_id'];
+			$skill->skill_name = $row['skill_name'];
+			
+			array_push($skills, $skill);
+		}
+	} 
+	
+	$workers = array();
+	$where_condition1 = 'WHERE user_details.user_id > 0';
+	$user_type1 = 5;
+	$where_condition1 .= ' AND user_details.user_type = '.$user_type1;
+
+	$sql = "SELECT user_details.user_id, user_details.username, user_details.password, user_details.user_type, user_details.added_by, user_details.full_name, user_details.fat_hus_name, user_details.email_id, user_details.phone_number, user_details.alt_phone_number, user_details.m_id, user_details.date_of_birth, user_details.gender, user_details.address, user_details.curr_address, user_details.city_id, user_details.state_id, user_details.country_id, user_details.pincode, user_details.adhar_card, user_details.adhar_card_img, user_details.adhar_card_back_img, user_details.pan_card, user_details.pan_card_img, user_details.voter_id_card, user_details.voter_id_card_img, user_details.voter_id_card_back_img, user_details.user_photo, user_details.wt_id, user_details.work_exp, user_details.earlier_work_city, user_details.last_emplr_name, user_details.sk_id, user_details.nr_id, user_details.l_id, user_details.work_loc, user_details.st_id, user_details.exp_salary, user_details.available_from, user_details.wf_id, user_details.il_id, user_details.pv_id, user_details.ch_id, user_details.emg_cont_person, user_details.relation, user_details.emg_cont_number, user_details.bank_details, user_details.bank_details_img, user_details.highest_edu, user_details.declaration, user_details.lc_id, user_details.wh_id, user_details.religion, user_details.nationality, user_details.family_bg_info, user_details.inserted_by, user_details.updated_by, user_details.insert_date, user_details.update_date, 
+	gender_master.gender_name,
+	marital_status_master.m_status_name,
+	working_hour_master.wh_name,
+	states.name AS state_name,
+	cities.city AS city_name
+	FROM user_details 
+	LEFT OUTER JOIN gender_master ON user_details.gender = gender_master.g_id 
+	LEFT OUTER JOIN marital_status_master ON user_details.m_id = marital_status_master.m_id 
+	LEFT OUTER JOIN working_hour_master ON user_details.wh_id = working_hour_master.wh_id
+	LEFT OUTER JOIN states ON user_details.state_id = states.id
+	LEFT OUTER JOIN cities ON user_details.city_id = cities.id
+	$where_condition1 
+	ORDER BY user_details.full_name ASC";
+	//echo $sql;
+
+	$result2 = $mysqli->query($sql);
+	if ($result->num_rows > 0) { 
+		$sl = 1;	
+		while($row = $result2->fetch_array()){
+			$user_id = $row['user_id'];
+			$full_name = $row['full_name'];  
+			$state_name = $row['state_name'];
+			$city_name = $row['city_name'];
+			$user_photo = $row['user_photo']; 
+			$user_img = '';
+			if($user_photo == ''){
+				$user_img = 'no_images.png';
+			}else{
+				$user_img = $user_photo;
+			}  
+			
+			$sk_id = array();      
+			if($row['sk_id'] != ''){
+				$sk_id = json_decode($row['sk_id']);
+			}
+
+			# Skills  
+			$skills_array = array();			 
+			if(sizeof($sk_id) > 0){
+				$ids = implode(',', $sk_id);
+				$skills_array = getSkillList_n($mysqli, $ids); 
+			} 
+			 
+
+			$worker = new stdClass();
+			$worker->user_id = $user_id;
+			$worker->full_name = $full_name;
+			$worker->state_name = $state_name;
+			$worker->city_name = $city_name;
+			$worker->user_img = $user_img;
+			$worker->skills_array = $skills_array;
+
+			array_push($workers, $worker);
+			$sl++;
+		}
+	}
+	
+
+
 		 
 ?>
