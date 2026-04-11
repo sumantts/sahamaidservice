@@ -241,7 +241,8 @@
 
 				# For Client
 				if($current_tab == 'client'){
-					$action_button .= '<br><a href="javascript: void(0);" class="action-icon" onClick="printTabledataC('.$user_id.')"><i class="fa fa-print"></i></a>';
+					$action_button .= ' <a href="javascript: void(0);" class="action-icon" onClick="printTabledataC('.$user_id.')"><i class="fa fa-print"></i></a>';
+					$action_button .= ' <a href="javascript: void(0);" class="action-icon" onClick="onBillModal('.$user_id.')"><i class="fa fa-money-bill"></i></a>';
 				}
 
 				$lead_conf = '';
@@ -265,33 +266,75 @@
 					} 
 				}
 
-				$data[0] = $sl;
-				$data[1] = $full_name;
-				$data[2] = $email_id;
-				$data[3] = $phone_number;
-				$data[4] = $adhar_card;
-				$data[5] = $pan_card;
-				$data[6] = $voter_id_card;
-				$data[7] = $state_name;
-				$data[8] = $city_name;
-				$data[9] = $pincode;
-				if($current_tab == 'client'){
-					$data[10] = $lead_conf;
-					$data[11] = $user_img;
-					$data[12] = $action_button;				
-				}
+				// $data[0] = $sl;
+				// $data[1] = $full_name;
+				// $data[2] = $email_id;
+				// $data[3] = $phone_number;
+				// $data[4] = $adhar_card;
+				// $data[5] = $pan_card;
+				// $data[6] = $voter_id_card;
+				// $data[7] = $state_name;
+				// $data[8] = $city_name;
+				// $data[9] = $pincode;
+				// if($current_tab == 'client'){
+				// 	$data[10] = $lead_conf;
+				// 	$data[11] = $user_img;
+				// 	$data[12] = $action_button;				
+				// }
 
-				if($current_tab == 'worker'){
+				// if($current_tab == 'worker'){
+				// 	$data[10] = $skills_text;
+				// 	$data[11] = $lead_conf;
+				// 	$data[12] = $user_img;
+				// 	$data[13] = $action_button;
+				// }
+				
+				// if($current_tab != 'client' && $current_tab != 'worker'){
+				// 	$data[10] = $user_img;
+				// 	$data[11] = $action_button;
+				// }
+
+				//Client
+				if($current_tab == 'client'){
+					$data[0] = $sl;
+					$data[1] = $full_name;
+					$data[2] = $email_id;
+					$data[3] = $phone_number;
+					$data[4] = $state_name;
+					$data[5] = $city_name;
+					$data[6] = $pincode;
+					$data[7] = $lead_conf;
+					$data[8] = $user_img;
+					$data[9] = $action_button;	
+				}else if($current_tab == 'worker'){
+					$data[0] = $sl;
+					$data[1] = $full_name;
+					$data[2] = $email_id;
+					$data[3] = $phone_number;
+					$data[4] = $adhar_card;
+					$data[5] = $pan_card;
+					$data[6] = $voter_id_card;
+					$data[7] = $state_name;
+					$data[8] = $city_name;
+					$data[9] = $pincode;
 					$data[10] = $skills_text;
 					$data[11] = $lead_conf;
 					$data[12] = $user_img;
 					$data[13] = $action_button;
-				}
-				
-				if($current_tab != 'client' && $current_tab != 'worker'){
+				}else{
+					$data[0] = $sl;
+					$data[1] = $full_name;
+					$data[2] = $email_id;
+					$data[3] = $phone_number;
+					$data[4] = $adhar_card;
+					$data[5] = $pan_card;
+					$data[6] = $voter_id_card;
+					$data[7] = $state_name;
+					$data[8] = $city_name;
+					$data[9] = $pincode;
 					$data[10] = $user_img;
 					$data[11] = $action_button;
-				}
+				}//end if
 
 
 				array_push($mainData, $data);

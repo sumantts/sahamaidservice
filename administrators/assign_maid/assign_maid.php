@@ -70,6 +70,7 @@ $sess_user_type = $_SESSION["user_type"];
                                 <thead>
                                     <tr>
                                         <th>Sl.No.</th>
+                                        <th>Inv. ID</th>
                                         <th>Client</th>
                                         <th>Receivable Amount</th>
                                         <th>Worker</th>
@@ -77,13 +78,14 @@ $sess_user_type = $_SESSION["user_type"];
                                         <th>From Date</th>
                                         <th>To Date</th>
                                         <th>From Time - To Time</th>
-                                        <th>Payment Status</th>
+                                        <th>Bill Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Sl.No.</th>
+                                        <th>Inv. ID</th>
                                         <th>Client</th>
                                         <th>Receivable Amount</th>
                                         <th>Worker</th>
@@ -91,7 +93,7 @@ $sess_user_type = $_SESSION["user_type"];
                                         <th>From Date</th>
                                         <th>To Date</th>
                                         <th>From Time - To Time</th>
-                                        <th>Payment Status</th>
+                                        <th>Bill Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -157,7 +159,11 @@ $sess_user_type = $_SESSION["user_type"];
                                         <select class="form-control" id="bill_status" name="bill_status">
                                             <option value="0">Select</option> 
                                         </select>
-                                    </div> 
+                                    </div>  
+                                    <div class="col-md-3 mb-2">
+                                        <label for="hsn_code">HSN Code</label>
+                                        <input type="text" class="form-control" name="hsn_code" id="hsn_code"> 
+                                    </div>  
                                 </div>
                                  
                                 <!-- <div class="form-row">  

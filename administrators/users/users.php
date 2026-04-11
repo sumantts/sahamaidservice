@@ -128,7 +128,7 @@ if($sess_user_type > 3){
                                         <thead>
                                             <tr>
                                                 <th>Sl.No.</th>
-                                                <th>Admin name</th>
+                                                <th>Manager name</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
                                                 <th>Adhar Card</th>
@@ -152,7 +152,7 @@ if($sess_user_type > 3){
                                         <thead>
                                             <tr>
                                                 <th>Sl.No.</th>
-                                                <th>Admin name</th>
+                                                <th>Emp. name</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
                                                 <th>Adhar Card</th>
@@ -176,12 +176,12 @@ if($sess_user_type > 3){
                                         <thead>
                                             <tr>
                                                 <th>Sl.No.</th>
-                                                <th>Admin name</th>
+                                                <th>Client name</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
-                                                <th>Adhar Card</th>
+                                                <!-- <th>Adhar Card</th>
                                                 <th>PAN Card</th>
-                                                <th>Voter Card</th>
+                                                <th>Voter Card</th> -->
                                                 <th>State</th> 
                                                 <th>City</th> 
                                                 <th>Pincode</th>
@@ -201,7 +201,7 @@ if($sess_user_type > 3){
                                         <thead>
                                             <tr>
                                                 <th>Sl.No.</th>
-                                                <th>Admin name</th>
+                                                <th>Worker Name</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
                                                 <th>Adhar Card</th>
@@ -568,6 +568,54 @@ if($sess_user_type > 3){
                 </div>
             </div>
             <!-- Modal end -->
+
+            
+
+            <!-- Modal Invoice Send start -->
+            <div id="invModalLong" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="invModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="invModalLongTitle"><?=$title?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#invModalLong').modal('hide')"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-row">
+                                <div class="col-md-3 mb-2">
+                                    <label for="lc_id" class="form-label text-danger">Month - Year*</label>
+                                    <input class="form-control form-control-sm" type="month" id="inv_month" name="inv_month">
+                                </div>  
+                            </div>
+
+                            <div class="form-row" id="attendance_ui">
+                                <div class="col-md-3 mb-2">
+                                    <input class="form-control form-control-sm" type="date" id="atten_date_1" name="atten_date_1">
+                                </div>
+                                <div class="col-md-3 mb-2"> 
+                                    <select class="form-control form-control-sm" id="pre_abs_lev_1" name="pre_abs_lev_1">
+                                        <option value="">Present/Absent/Leave</option> 
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <input class="form-control form-control-sm" placeholder="Note" type="text" id="atten_note_1" name="atten_note_1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="user_id" id="user_id" value="0">
+                            
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#invModalLong').modal('hide')">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button class="btn  btn-primary d-block" type="button" id="submitForm">
+                                <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
+                                <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
+                                <span class="btn-text" id="submitForm_text">Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Invoice Send end -->
 
             <!-- [ sample-page ] end -->
         </div>

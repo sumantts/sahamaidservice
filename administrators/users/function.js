@@ -1147,5 +1147,66 @@ function uploadPhoto(img_id){
 
 }//end if
 
+// Invoice function
+function onBillModal($user_id){
+    //$('#myForm2')[0].reset(); 
+    $('#invModalLong').modal('show');
+    $('#user_id').val($user_id);
+
+    $.ajax({
+        method: "POST",
+        url: "assign_maid/function.php",
+        data: { fn: "getAttendance", user_id: $user_id }
+    })
+    .done(function( res ) {
+        //console.log(res);
+        $res1 = JSON.parse(res);
+        if($res1.status == true){            
+            //Populate attendance list
+            $atten_data = $res1.atten_data; 
+            $full_name = $res1.full_name; 
+            $('#invModalLongTitle').html('Attendance Report of: ' + $full_name);
+            
+            /*if($atten_data.length > 0){
+                $attendance_ui = '';
+                for($i = 0; $i < $atten_data.length; $i++){
+                    $slno = $atten_data[$i].slno;
+                    $atten_date = $atten_data[$i].atten_date;
+                    $pre_abs_lev = $atten_data[$i].pre_abs_lev;
+                    $atten_note = $atten_data[$i].atten_note;
+
+                    $attendance_ui += '<div class="col-md-3 mb-2">';
+                        $attendance_ui += '<input class="form-control form-control-sm" type="text" id="atten_date_'+$slno+'" name="atten_date_'+$slno+'" value="'+$atten_date+'" readonly>';
+                        $attendance_ui += '</div>';
+                        $attendance_ui += '<div class="col-md-3 mb-2">'; 
+                            $attendance_ui += '<select class="form-control form-control-sm" id="pre_abs_lev_'+$slno+'" name="pre_abs_lev_'+$slno+'" onchange="updateAttendance('+$slno+')">';
+                                $attendance_ui += '<option value="">Present/Absent/Leave</option>'; 
+                                if($pre_abs_lev == '1'){
+                                    $attendance_ui += '<option value="1" selected>Present</option>'; 
+                                }else{
+                                    $attendance_ui += '<option value="1">Present</option>'; 
+                                }
+                                if($pre_abs_lev == '2'){
+                                    $attendance_ui += '<option value="2" selected>Absent</option>';
+                                }else{
+                                    $attendance_ui += '<option value="2">Absent</option>';
+                                } 
+                                if($pre_abs_lev == '2'){
+                                    $attendance_ui += '<option value="3" selected>Leave</option>'; 
+                                }else{
+                                    $attendance_ui += '<option value="3">Leave</option>'; 
+                                }
+                            $attendance_ui += '</select>';
+                        $attendance_ui += '</div>';
+                        $attendance_ui += '<div class="col-md-6 mb-2">';
+                        $attendance_ui += '<input class="form-control form-control-sm" placeholder="Note" type="text" id="atten_note_'+$slno+'" name="atten_note_'+$slno+'" value="'+$atten_note+'" onblur="updateAttendance('+$slno+')">';
+                    $attendance_ui += '</div>';
+                }//end for
+                $('#attendance_ui').html($attendance_ui);                
+            }*///end if attendance
+        }
+    });//end ajax 
+}
+
 
     

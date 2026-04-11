@@ -60,9 +60,11 @@
 		}
 
 		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status,
-		user_details.full_name
+		user_details.full_name,
+		bill_status_master.bill_status_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
+		LEFT OUTER JOIN bill_status_master ON assign_maid.bill_status = bill_status_master.bs_id 
 		$where_condition
 		ORDER BY assign_maid.assign_id DESC";
 
@@ -84,27 +86,28 @@
 				$to_date = $row['to_date'];
 				$from_time = $row['from_time']; 
 				$to_time = $row['to_time'];	
-				$bill_status = $row['bill_status'];
-				$bill_status_text = '';
-				if($bill_status == '0'){
-					$bill_status_text = 'Pending';
-				}else if($bill_status == '1'){
-					$bill_status_text = 'Paid';
-				}else{
-					$bill_status_text = 'Due';
-				}
+				$bill_status_name = $row['bill_status_name'];
+				// $bill_status_text = '';
+				// if($bill_status == '0'){
+				// 	$bill_status_text = 'Pending';
+				// }else if($bill_status == '1'){
+				// 	$bill_status_text = 'Paid';
+				// }else{
+				// 	$bill_status_text = 'Due';
+				// }
 
 
 				$data[0] = $slno;
-				$data[1] = $full_name;
-				$data[2] = $rcvabl_amount;
-				$data[3] = $worker_id;
-				$data[4] = $exp_salary;
-				$data[5] = date('d-F Y', strtotime($from_date));
-				$data[6] = date('d-F Y', strtotime($to_date));
-				$data[7] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));
-				$data[8] = $bill_status_text;
-				$data[9] = "<a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-calendar' aria-hidden='true' onclick='viewAttendanceData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$assign_id.")'></i></a>"; 
+				$data[1] = 'INV_'.str_pad($assign_id, 4, "0", STR_PAD_LEFT);
+				$data[2] = $full_name;
+				$data[3] = $rcvabl_amount;
+				$data[4] = $worker_id;
+				$data[5] = $exp_salary;
+				$data[6] = date('d-F Y', strtotime($from_date));
+				$data[7] = date('d-F Y', strtotime($to_date));
+				$data[8] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));
+				$data[9] = $bill_status_name;
+				$data[10] = "<a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-calendar' aria-hidden='true' onclick='viewAttendanceData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$assign_id.")'></i></a>"; 
 				array_push($mainData, $data);
 				$slno++;
 			}
