@@ -97,6 +97,7 @@ function editTableData($assign_id){
         if($res1.status == true){  
             $client_id = $res1.client_id;
             $worker_id = $res1.worker_id;
+            $bill_status = $res1.bill_status;
 
             $('#assign_id').val($res1.assign_id); 
             $('#rcvabl_amount').val($res1.rcvabl_amount);  
@@ -109,7 +110,8 @@ function editTableData($assign_id){
              
             setTimeout(function(){
                 $('#client_id').val($client_id).trigger('change');
-                $('#worker_id').val($worker_id).trigger('change'); 
+                $('#worker_id').val($worker_id).trigger('change');
+                $('#bill_status').val($bill_status).trigger('change'); 
             },300);
 
             $('#exampleModalLong').modal('show');
@@ -323,6 +325,34 @@ function configureClientUsersDd(){
     }//end if
 }//end 
 
+// Bill Status 
+function configureBillStatusDd(){ 
+    $.ajax({
+        method: "POST",
+        url: "assign_maid/function.php",
+        data: { fn: "configureBillStatusDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#bill_status').html('');
+                $html = "<option value=''>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].bs_id+"'>"+$rows[$i].bill_status_name+"</option>";                    
+                }//end for                
+                $('#bill_status').html($html);
+            }else{
+                $('#bill_status').html('');
+                $html = "<option value=''>Select</option>";
+                $('#bill_status').html($html);
+            }//end if
+        }        
+    });//end ajax 
+}//end 
+
 function configureWorkerUsersDd(){
     $user_type = '5';
     if(parseInt($user_type) > 0){
@@ -417,4 +447,5 @@ $(document).ready(function () {
     populateDataTable(); 
     configureClientUsersDd();  
     configureWorkerUsersDd(); 
+    configureBillStatusDd();
 });

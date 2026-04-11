@@ -388,4 +388,31 @@
 		echo json_encode($return_result);
 	}//Save function end
 
+	// Bill Status
+	if($fn == 'configureBillStatusDd'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM bill_status_master";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->bs_id = $row['bs_id'];
+				$data_obj->bill_status_name = $row['bill_status_name']; 
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+
 ?>

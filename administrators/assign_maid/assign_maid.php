@@ -152,9 +152,15 @@ $sess_user_type = $_SESSION["user_type"];
                                         <label for="to_time" class="text-danger">To Time*</label>
                                         <input type="time" class="form-control" name="to_time" id="to_time"> 
                                     </div> 
+                                    <div class="col-md-3 mb-2">
+                                        <label for="bill_status" class="text-danger">Bill Status*</label>
+                                        <select class="form-control" id="bill_status" name="bill_status">
+                                            <option value="0">Select</option> 
+                                        </select>
+                                    </div> 
                                 </div>
                                  
-                                <div class="form-row">  
+                                <!-- <div class="form-row">  
                                     <div class="col-md-3 mb-2 d-none" id="div_paid_amount">
                                         <label for="paid_amount" class="text-danger">Amount*</label>
                                         <input type="text" class="form-control" name="paid_amount" id="paid_amount"> 
@@ -176,10 +182,10 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div>
                                 </div>
                                 <div class="form-row d-none" id="div_p_history">
-                                    <!-- <h5>Payment Receive History</h5>
+                                    <h5>Payment Receive History</h5>
                                     <div class="col-md-12"> Amount: Rs. 1500/- Received by Cash on 02-Apr-2026 </div>
-                                    <div class="col-md-12"> Amount: Rs. 500/- Received by UPI on 03-Apr-2026 </div> -->
-                                </div>
+                                    <div class="col-md-12"> Amount: Rs. 500/- Received by UPI on 03-Apr-2026 </div>
+                                </div> -->
                                 
                             </form>
                         </div>

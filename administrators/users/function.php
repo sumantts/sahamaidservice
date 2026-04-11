@@ -20,13 +20,10 @@
 		$sess_user_type = $_SESSION["user_type"];
 		$sess_user_id = $_SESSION["user_id"];
 
-
 		$field_id = $_POST['field_id']; 
 		$field_val = $_POST['field_val'];  
 		$current_tab = $_POST['current_tab'];  
-		$serial_number = $_POST['serial_number'];
-		
-		
+		$serial_number = $_POST['serial_number'];		
 				
 		if($field_id == 'date_of_birth'){
 			$field_val = date('Y-m-d', strtotime($_POST['field_val']));
@@ -46,25 +43,10 @@
 			$user_type = 4;
 		}else if($current_tab == 'worker'){
 			$user_type = 5;
-		}else{}
-
-		
-		/*
-		
-		if($field_id == 'email_id'){
-			$error_message = 'Email ID already exists';
-		}else if($field_id == 'phone_number'){
-			$error_message = 'Phone number already exists';
-		}else if($field_id == 'adhar_card'){
-			$error_message = 'Aadhar number already exists';
-		}else if($field_id == 'pan_card'){
-			$error_message = 'PAN number already exists';
-		}else if($field_id == 'voter_id_card'){
-			$error_message = 'Voter ID already exists';
-		}*/
+		}else{} 
 		
 		if($serial_number > 0){			
-			if($field_id == 'email_id' || $field_id == 'phone_number' || $field_id == 'adhar_card' || $field_id == 'pan_card' || $field_id == 'voter_id_card'){	
+			if($field_id == 'email_id' || $field_id == 'phone_number' || $field_id == 'adhar_card' || $field_id == 'pan_card' || $field_id == 'voter_id_card' || $field_id == 'username'){	
 				$sql = "SELECT * FROM user_details WHERE $field_id = '".$field_val."' AND user_id != '" .$serial_number. "' ";
 				$result = $con->query($sql);
 
@@ -81,7 +63,7 @@
 				$error_message = 'Data updated successfully';	
 			}
 		}else{
-			if($field_id == 'email_id' || $field_id == 'phone_number' || $field_id == 'adhar_card' || $field_id == 'pan_card' || $field_id == 'voter_id_card'){
+			if($field_id == 'email_id' || $field_id == 'phone_number' || $field_id == 'adhar_card' || $field_id == 'pan_card' || $field_id == 'voter_id_card' || $field_id == 'username'){
 				$sql = "SELECT * FROM user_details WHERE $field_id = '".$field_val."' AND user_id != '" .$serial_number. "' ";
 				$result = $con->query($sql);
 
@@ -115,7 +97,9 @@
 				$error_message = 'PAN number already exists';
 			}else if($field_id == 'voter_id_card'){
 				$error_message = 'Voter ID already exists';
-			}
+			}else if($field_id == 'username'){
+				$error_message = 'Username already exists';
+			}else{}
 		}
 		
 		$return_array['status'] = $status;  
