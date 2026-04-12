@@ -576,7 +576,7 @@ if($sess_user_type > 3){
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="invModalLongTitle"><?=$title?></h5>
+                            <h5 class="modal-title" id="invoice_ui_title">Monthly Bill of: Client</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#invModalLong').modal('hide')"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
@@ -585,32 +585,69 @@ if($sess_user_type > 3){
                                     <label for="lc_id" class="form-label text-danger">Month - Year*</label>
                                     <input class="form-control form-control-sm" type="month" id="inv_month" name="inv_month">
                                 </div>  
-                            </div>
-
-                            <div class="form-row" id="attendance_ui">
+                                
                                 <div class="col-md-3 mb-2">
-                                    <input class="form-control form-control-sm" type="date" id="atten_date_1" name="atten_date_1">
-                                </div>
-                                <div class="col-md-3 mb-2"> 
-                                    <select class="form-control form-control-sm" id="pre_abs_lev_1" name="pre_abs_lev_1">
-                                        <option value="">Present/Absent/Leave</option> 
+                                    <label for="lc_id" class="form-label">Bill Type(Normal / GST)</label>
+                                    <select class="form-control form-control-sm" name="lc_id" id="lc_id">
+                                        <option value="1">Normal</option>
+                                        <option value="2">GST</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6 mb-2">
-                                    <input class="form-control form-control-sm" placeholder="Note" type="text" id="atten_note_1" name="atten_note_1">
+                            </div>
+
+                            <div class="form-row" id="invoice_ui_label">
+                                <div class="col-md-2 mb-2">
+                                    <label for="bill_status">INV ID</label>
                                 </div>
+                                <div class="col-md-2 mb-2">
+                                    <label for="bill_status">From Date</label>
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <label for="bill_status">To Date</label>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <label for="bill_status">Worker</label>
+                                </div>
+                                <div class="col-md-1 mb-2">
+                                    <input type="checkbox" id="selectAll"> Send
+                                </div>
+                                <div class="col-md-1 mb-2">
+                                    <input type="checkbox" id="selectAll"> Paid
+                                </div>
+                                
+                            </div>
+
+                            <div class="form-row" id="invoice_ui">
+                                <div class="col-md-2 mb-2">
+                                    <input class="form-control form-control-sm" type="test" id="inv_id" name="inv_id" placeholder="INV ID" readonly>
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <input class="form-control form-control-sm" type="test" id="from_date" name="from_date" placeholder="From Date" readonly>
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <input class="form-control form-control-sm" type="test" id="to_date" name="to_date" placeholder="To Date" readonly>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <input class="form-control form-control-sm" type="test" id="worker_id" name="worker_id" placeholder="Worker" readonly>
+                                </div>
+                                <div class="col-md-1 mb-2">
+                                    <input type="checkbox" id="selectAll">
+                                </div>
+                                <div class="col-md-1 mb-2">
+                                    <input type="checkbox" id="selectAll1">
+                                </div>                                
                             </div>
                         </div>
                         <div class="modal-footer">
                             <input type="hidden" name="user_id" id="user_id" value="0">
                             
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#invModalLong').modal('hide')">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                            <button class="btn  btn-primary d-block" type="button" id="submitForm">
+                            <button type="button" class="btn btn-primary">Save & Print</button>
+                            <!-- <button class="btn  btn-primary d-block" type="button" id="submitForm">
                                 <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                 <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
                                 <span class="btn-text" id="submitForm_text">Save</span>
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                 </div>

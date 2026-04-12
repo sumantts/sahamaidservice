@@ -926,5 +926,72 @@
     	echo json_encode($return_array);
 	}//function end
 
+	# getUnPaidBills 
+	if($fn == 'getUnPaidBills'){ 
+		$user_id = $_POST['user_id'];
+		$inv_month = $_POST['inv_month'];
+		$return_array = array();
+		$assign_maids = array();
+		$status = true;
+
+		$from_date1 = $inv_month.'-01';
+		$to_date1 = $inv_month.'-31';
+		$bill_status = '1';
+
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code,
+		user_details.full_name
+		FROM assign_maid 
+		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
+		WHERE assign_maid.client_id = '" .$user_id. "' AND from_date >= '" .$from_date1. "' AND to_date <= '" .$to_date1. "' AND bill_status = '" .$bill_status. "' "; 
+
+		//echo $sql;
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true;	
+			while($row = $result->fetch_array()){		
+				$assign_maid = new stdClass();	
+				$assign_id = $row['assign_id'];
+				$assign_maid->assign_id = $row['assign_id'];					
+			
+				$assign_maid->client_name = $row['full_name'];
+				$assign_maid->client_id = $row['client_id'];
+				$assign_maid->rcvabl_amount = $row['rcvabl_amount']; 
+				$assign_maid->worker_id = $row['worker_id'];
+				$assign_maid->exp_salary = $row['exp_salary'];
+
+				$assign_maid->from_date = date('d-F-Y', strtotime($row['from_date']));
+				$assign_maid->to_date = date('d-F-Y', strtotime($row['to_date']));
+				$assign_maid->from_time = $row['from_time']; 
+				$assign_maid->to_time = $row['to_time'];	
+				$assign_maid->bill_status = $row['bill_status'];
+				$assign_maid->hsn_code = $row['hsn_code'];
+				$assign_maid->inv_id = 'INV_'.str_pad($assign_id, 4, "0", STR_PAD_LEFT);
+
+				// Worker Name
+				$worker_id = $row['worker_id'];
+				$worker_name = '';
+				if($worker_id != ''){
+					$sql3 = "SELECT * FROM user_details WHERE user_id = '" .$worker_id. "' ";
+					$result3 = $con->query($sql3);
+
+					if ($result3->num_rows > 0) { 
+						$row3 = $result3->fetch_array();
+						$worker_name = $row3['full_name'];	
+					}
+				}//end if
+				$assign_maid->worker_name = $worker_name;
+
+				array_push($assign_maids, $assign_maid);
+			}
+		} else {
+			$status = false;
+		}
+
+		$return_array['status'] = $status;
+		$return_array['assign_maids'] = $assign_maids;
+    	echo json_encode($return_array);
+	}//function end
+
 	
 ?>

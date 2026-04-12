@@ -33,7 +33,8 @@ $('#submitForm').click(function(){
     $from_date = $('#from_date').val();
     $to_date = $('#to_date').val();
     $from_time = $('#from_time').val(); 
-    $to_time = $('#to_time').val();   
+    $to_time = $('#to_time').val();    
+    $hsn_code = $('#hsn_code').val(); 
 
     if($client_id <= 0 || $rcvabl_amount == '' || $worker_id == '' || $exp_salary <= 0 || $from_date == '' || $to_date == '' || $from_time == '' || $to_time == ''){
         alert('All fields are mandatory, please enter properly');
@@ -45,7 +46,7 @@ $('#submitForm').click(function(){
         $.ajax({
             method: "POST",
             url: "assign_maid/function.php",
-            data: { fn: "saveFormData", assign_id: $assign_id, client_id: $client_id, rcvabl_amount: $rcvabl_amount, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time }
+            data: { fn: "saveFormData", assign_id: $assign_id, client_id: $client_id, rcvabl_amount: $rcvabl_amount, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code }
         })
         .done(function( res ) {
             //console.log(res);
@@ -107,6 +108,7 @@ function editTableData($assign_id){
             $('#to_date').val($res1.to_date);
             $('#from_time').val($res1.from_time); 
             $('#to_time').val($res1.to_time); 
+            $('#hsn_code').val($res1.hsn_code); 
              
             setTimeout(function(){
                 $('#client_id').val($client_id).trigger('change');

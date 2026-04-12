@@ -23,6 +23,7 @@
 		$to_date = $_POST['to_date'];
 		$from_time = $_POST['from_time']; 
 		$to_time = $_POST['to_time']; 
+		$hsn_code = $_POST['hsn_code']; 
 
 		$sess_user_id = $_SESSION["user_id"];
 
@@ -33,7 +34,7 @@
 				$result = $con->query($sql);*/
 			}else{				
 				$status = true;
-				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."') ";
+				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."') ";
 				$result = $con->query($sql);
 			}
 				
@@ -59,7 +60,7 @@
 			$where_condition = " AND assign_maid.assign_by = '" .$sess_user_id. "' ";
 		}
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code,
 		user_details.full_name,
 		bill_status_master.bill_status_name
 		FROM assign_maid 
@@ -86,22 +87,27 @@
 				$to_date = $row['to_date'];
 				$from_time = $row['from_time']; 
 				$to_time = $row['to_time'];	
-				$bill_status_name = $row['bill_status_name'];
-				// $bill_status_text = '';
-				// if($bill_status == '0'){
-				// 	$bill_status_text = 'Pending';
-				// }else if($bill_status == '1'){
-				// 	$bill_status_text = 'Paid';
-				// }else{
-				// 	$bill_status_text = 'Due';
-				// }
+				$bill_status_name = $row['bill_status_name']; 
+				$hsn_code = $row['hsn_code']; 
+
+				// Worker Name
+				$worker_name = '';
+				if($worker_id != ''){
+					$sql3 = "SELECT * FROM user_details WHERE user_id = '" .$worker_id. "' ";
+					$result3 = $con->query($sql3);
+
+					if ($result3->num_rows > 0) { 
+						$row3 = $result3->fetch_array();
+						$worker_name = $row3['full_name'];	
+					}
+				}//end if
 
 
 				$data[0] = $slno;
 				$data[1] = 'INV_'.str_pad($assign_id, 4, "0", STR_PAD_LEFT);
 				$data[2] = $full_name;
 				$data[3] = $rcvabl_amount;
-				$data[4] = $worker_id;
+				$data[4] = $worker_name;
 				$data[5] = $exp_salary;
 				$data[6] = date('d-F Y', strtotime($from_date));
 				$data[7] = date('d-F Y', strtotime($to_date));
@@ -127,7 +133,7 @@
 		$mainData = array();
 		$assign_id = $_POST['assign_id'];
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code,
 		user_details.full_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
@@ -153,7 +159,7 @@
 			$return_array['from_time'] = $row['from_time']; 
 			$return_array['to_time'] = $row['to_time'];	
 			$return_array['bill_status'] = $row['bill_status'];
-
+			$return_array['hsn_code'] = $row['hsn_code'];
 		} else {
 			$status = false;
 		}
