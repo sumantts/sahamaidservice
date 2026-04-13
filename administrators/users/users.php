@@ -275,7 +275,7 @@ if($sess_user_type > 3){
                                         </select>
                                     </div>
                                 </div>
-                                <a href="javascript: void(0);" id="partTwoSwitch" class="float-right">Section 2</a>
+                                <a href="javascript: void(0);" id="partTwoSwitch" class="float-right">Section 2 &#8645;</a>
                                 <br>
                                 <hr>    
 
@@ -314,7 +314,7 @@ if($sess_user_type > 3){
                                         <input type="text" class="form-control" name="pincode" id="pincode" value="">
                                     </div>
                                 </div>
-                                <a href="javascript: void(0);" id="partThreeSwitch" class="float-right d-block">Section 3</a>
+                                <a href="javascript: void(0);" id="partThreeSwitch" class="float-right d-block">Section 3 &#8645;</a>
                                 <br>
                                 <hr> 
 
@@ -371,7 +371,7 @@ if($sess_user_type > 3){
                                         <div id="preview_user_photo"></div>
                                     </div>
                                 </div>
-                                <a href="javascript: void(0);" id="partFourSwitch" class="float-right d-none">Section 4</a>
+                                <a href="javascript: void(0);" id="partFourSwitch" class="float-right d-none">Section 4 &#8645;</a>
                                 <br>
                                 <hr> 
 
@@ -439,7 +439,7 @@ if($sess_user_type > 3){
                                         <textarea class="form-control" name="family_bg_info" id="family_bg_info"></textarea>
                                     </div>
                                 </div>
-                                <a href="javascript: void(0);" id="partFiveSwitch" class="float-right">Section 5</a>
+                                <a href="javascript: void(0);" id="partFiveSwitch" class="float-right">Section 5 &#8645;</a>
                                 <br>
                                 <hr> 
 
@@ -461,7 +461,7 @@ if($sess_user_type > 3){
                                         </select>
                                     </div> 
                                 </div>
-                                <a href="javascript: void(0);" id="partSixSwitch" class="float-right d-none">Section 6</a>
+                                <a href="javascript: void(0);" id="partSixSwitch" class="float-right d-none">Section 6 &#8645;</a>
                                 <br>
                                 <hr> 
 
@@ -486,7 +486,7 @@ if($sess_user_type > 3){
                                         </select>
                                     </div>
                                 </div>
-                                <a href="javascript: void(0);" id="partSevenSwitch" class="float-right d-none">Section 7</a>
+                                <a href="javascript: void(0);" id="partSevenSwitch" class="float-right d-none">Section 7 &#8645;</a>
                                 <br>
                                 <hr> 
 
@@ -505,7 +505,7 @@ if($sess_user_type > 3){
                                         <input type="text" class="form-control" name="emg_cont_number" id="emg_cont_number" value="">
                                     </div>
                                 </div>
-                                <a href="javascript: void(0);" id="partEightSwitch" class="float-right d-block">Section 8</a>
+                                <a href="javascript: void(0);" id="partEightSwitch" class="float-right d-block">Section 8 &#8645;</a>
                                 <br>
                                 <hr> 
                                 
@@ -545,7 +545,7 @@ if($sess_user_type > 3){
                                         </select>
                                     </div>
                                 </div>  
-                                <a href="javascript: void(0);" id="partNineSwitch" class="float-right">Section 9</a>
+                                <a href="javascript: void(0);" id="partNineSwitch" class="float-right">Section 9 &#8645;</a>
                                 <br>
                                 <hr> 
 
@@ -637,7 +637,40 @@ if($sess_user_type > 3){
                                     <input type="checkbox" id="selectAll1">
                                 </div>                                
                             </div>
+
+                            <!-- Start payment receive section -->
+                            <a href="javascript: void(0);" id="paymentSwitch" class="float-right d-block">Payment &#8645;</a>
+                            <br>
+                            <hr> 
+                            <div class="form-row" id="paymentBoard">  
+                                <div class="col-md-3 mb-2" id="div_paid_amount1">
+                                    <label for="paid_amount" class="text-danger">Amount*</label>
+                                    <input type="text" class="form-control form-control-sm" name="paid_amount" id="paid_amount"> 
+                                </div>  
+                                <div class="col-md-2 mb-2" id="div_payment_mode1">       
+                                    <label for="payment_mode">Payment Mode</label>                                 
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="payment_mode">
+                                        <label class="custom-control-label" for="payment_mode">Cash/UPI</label>
+                                    </div>
+                                </div> 
+                                <div class="col-md-3 mb-2" id="div_transaction_id1">
+                                    <label for="transaction_id">Transaction ID</label>
+                                    <input type="text" class="form-control form-control-sm" name="transaction_id" id="transaction_id"> 
+                                </div>
+                                <div class="col-md-3 mt-4" id="div_rcv_btn1">
+                                    <label for="rcv_btn">&nbsp;</label>
+                                    <button type="button" class="btn btn-primary btn-sm">Received</button> 
+                                </div>
+                            </div>
+                            <div class="form-row" id="div_p_history1">
+                                <h5>Payment Receive History</h5>
+                                <div class="col-md-12"> Amount: Rs. 1500/- Received by Cash on 02-Apr-2026 </div>
+                                <div class="col-md-12"> Amount: Rs. 500/- Received by UPI on 03-Apr-2026 </div>
+                            </div>
+                            <!-- End payment section -->
                         </div>
+
                         <div class="modal-footer">
                             <input type="hidden" name="user_id" id="user_id" value="0">
                             

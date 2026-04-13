@@ -1151,6 +1151,23 @@ function uploadPhoto(img_id){
 function onBillModal($user_id){
     $('#user_id').val($user_id);
     $('#invModalLong').modal('show');
+    $("#paymentBoard").hide();
+    $("#div_p_history1").hide();
+
+    /*$('#div_paid_amount').removeClass('d-block');
+    $('#div_paid_amount').addClass('d-none');
+
+    $('#div_payment_mode').removeClass('d-block');
+    $('#div_payment_mode').addClass('d-none');
+
+    $('#div_transaction_id').removeClass('d-block');
+    $('#div_transaction_id').addClass('d-none');
+
+    $('#div_rcv_btn').removeClass('d-block');
+    $('#div_rcv_btn').addClass('d-none');
+
+    $('#div_p_history').removeClass('d-block');
+    $('#div_p_history').addClass('d-none');*/
 }
 
 $('#inv_month').on('change', function(){
@@ -1206,7 +1223,10 @@ function getUnPaidBills(){
     });//end ajax 
 }//end if
 
-
+$("#paymentSwitch").click(function(){
+    $("#paymentBoard").toggle('slow');
+    $("#div_p_history1").toggle('slow');
+});
 
 // Check All function
 $(document).ready(function(){
