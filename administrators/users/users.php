@@ -596,46 +596,46 @@ if($sess_user_type > 3){
                             </div>
 
                             <div class="form-row" id="invoice_ui_label">
-                                <div class="col-md-2 mb-2">
+                                <div class="col-md-3 mb-2">
                                     <label for="bill_status">INV ID</label>
                                 </div>
-                                <div class="col-md-2 mb-2">
+                                <div class="col-md-3 mb-2">
                                     <label for="bill_status">From Date</label>
                                 </div>
-                                <div class="col-md-2 mb-2">
+                                <div class="col-md-3 mb-2">
                                     <label for="bill_status">To Date</label>
                                 </div>
                                 <div class="col-md-3 mb-2">
                                     <label for="bill_status">Worker</label>
                                 </div>
-                                <div class="col-md-1 mb-2">
+                                <!-- <div class="col-md-1 mb-2">
                                     <input type="checkbox" id="selectAll"> Send
                                 </div>
                                 <div class="col-md-1 mb-2">
                                     <input type="checkbox" id="selectAll"> Paid
-                                </div>
+                                </div> -->
                                 
                             </div>
 
                             <div class="form-row" id="invoice_ui">
-                                <div class="col-md-2 mb-2">
+                                <div class="col-md-3 mb-2">
                                     <input class="form-control form-control-sm" type="test" id="inv_id" name="inv_id" placeholder="INV ID" readonly>
                                 </div>
-                                <div class="col-md-2 mb-2">
+                                <div class="col-md-3 mb-2">
                                     <input class="form-control form-control-sm" type="test" id="from_date" name="from_date" placeholder="From Date" readonly>
                                 </div>
-                                <div class="col-md-2 mb-2">
+                                <div class="col-md-3 mb-2">
                                     <input class="form-control form-control-sm" type="test" id="to_date" name="to_date" placeholder="To Date" readonly>
                                 </div>
                                 <div class="col-md-3 mb-2">
                                     <input class="form-control form-control-sm" type="test" id="worker_id" name="worker_id" placeholder="Worker" readonly>
                                 </div>
-                                <div class="col-md-1 mb-2">
+                                <!-- <div class="col-md-1 mb-2">
                                     <input type="checkbox" id="selectAll">
                                 </div>
                                 <div class="col-md-1 mb-2">
                                     <input type="checkbox" id="selectAll1">
-                                </div>                                
+                                </div>                                 -->
                             </div>
 
                             <!-- Start payment receive section -->
@@ -672,6 +672,7 @@ if($sess_user_type > 3){
                         </div>
 
                         <div class="modal-footer">
+                            <div class="float-lg-left">Total due till date: Rs. 5000.00</div>
                             <input type="hidden" name="user_id" id="user_id" value="0">
                             
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#invModalLong').modal('hide')">Close</button>

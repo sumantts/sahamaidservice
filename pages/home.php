@@ -164,43 +164,54 @@
               </div>
             </div>
           <?php } ?>
+        </div>
+      </div>
+    </section>
+    <?php } ?>
+    <!-- End Team Section -->
 
-          <!-- <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/team/team-3.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>CTO</span>
-                <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
+    
 
-          <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/team/team-4.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Amanda Jepson</h4>
-                <span>Accountant</span>
-                <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>  -->
+    <!-- ======= Team Section ======= -->
+    <?php if(sizeof($workers) > 0){?>
+    <section id="team" class="team section-bg">
+      <div class="container" data-aos="fade-up">
 
+        <div class="section-title">
+          <h2>Workers</h2>
+          <p>Meet our trained and reliable housekeeping professionals, committed to delivering exceptional cleaning services with care and precision.</p>
         </div>
 
+        <div class="row">
+          
+          <?php for($k = 0; $k < sizeof($workers); $k++){            
+            $skills_array = $workers[$k]->skills_array;
+            $filter_text = '';
+            if(sizeof($skills_array) > 0){
+              $filter_text = $skills_array[0]->sk_id;
+            }
+            ?>
+            <div class="col-lg-4 mt-4" data-aos="zoom-in" data-aos-delay="300">
+              <div class="member d-flex align-items-start">
+                <div class=""><img src="administrators/users/uploads/<?=$workers[$k]->user_img?>" class="img-fluid" alt="<?=$workers[$k]->full_name?>" style="margin-top: 5px;margin-left: 5px; border-radius: 5px;width: 100px;height: 130px;"></div>
+                <div class="member-info">
+                  <h4><?=$workers[$k]->full_name?></h4>
+                  <span><?=$workers[$k]->state_name?>, <?=$workers[$k]->city_name?></span>
+                  
+                  <div class="social">
+                    <?php
+                      if(sizeof($skills_array) > 0){
+                        for($s = 0; $s < sizeof($skills_array); $s++){
+                    ?>
+                    <span class="badge badge-pill" style="color: #fff;background-color: #6c757d; margin-right: 2px;"><?=$skills_array[$s]->skill_name?></span>
+                    <?php } } ?>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php } ?>
+        </div> 
+        <a href="?p=workers" style="float: right;">See More <i class="bi bi-arrow-right-short"></i></a> 
       </div>
     </section>
     <?php } ?>

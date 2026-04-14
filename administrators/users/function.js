@@ -1197,24 +1197,24 @@ function getUnPaidBills(){
                 $inv_ui = '';
                 $('#invoice_ui').html('');
                 for($i = 0; $i < $assign_maids.length; $i++){
-                    $inv_ui += '<div class="col-md-2 mb-2">';
+                    $inv_ui += '<div class="col-md-3 mb-2">';
                         $inv_ui += '<input class="form-control form-control-sm" type="text" id="inv_id" name="inv_id" placeholder="INV ID" value="'+$assign_maids[$i].inv_id+'" readonly>';
                     $inv_ui += '</div>';
-                    $inv_ui += '<div class="col-md-2 mb-2">';
+                    $inv_ui += '<div class="col-md-3 mb-2">';
                         $inv_ui += '<input class="form-control form-control-sm" type="text" id="from_date" name="from_date" placeholder="From Date"  value="'+$assign_maids[$i].from_date+'" readonly>';
                     $inv_ui += '</div>';
-                    $inv_ui += '<div class="col-md-2 mb-2">';
+                    $inv_ui += '<div class="col-md-3 mb-2">';
                         $inv_ui += '<input class="form-control form-control-sm" type="text" id="to_date" name="to_date" placeholder="To Date"  value="'+$assign_maids[$i].to_date+'" readonly>';
                     $inv_ui += '</div>';
                     $inv_ui += '<div class="col-md-3 mb-2">';
                         $inv_ui += '<input class="form-control form-control-sm" type="text" id="worker_id" name="worker_id" placeholder="Worker"  value="'+$assign_maids[$i].worker_name+'" readonly>';
                     $inv_ui += '</div>';
-                    $inv_ui += '<div class="col-md-1 mb-2">';
+                    /*$inv_ui += '<div class="col-md-1 mb-2">';
                         $inv_ui += '<input type="checkbox" class="rowCheckbox">';
                     $inv_ui += '</div>';
                     $inv_ui += '<div class="col-md-1 mb-2">';
                         $inv_ui += '<input type="checkbox" class="rowCheckbox1">';
-                    $inv_ui += '</div>';
+                    $inv_ui += '</div>';*/
                 }//end if
                 $('#invoice_ui').html($inv_ui);
             }
