@@ -592,6 +592,14 @@ if($sess_user_type > 3){
                                         <option value="1">Normal</option>
                                         <option value="2">GST</option>
                                     </select>
+                                </div> 
+                                
+                                <div class="col-md-3 mb-2">
+                                    <label for="terms_condi" class="form-label">Terms & Conditions</label>
+                                    <select class="form-control form-control-sm" name="terms_condi" id="terms_condi">
+                                        <option value="1">Normal</option>
+                                        <option value="2">GST</option>
+                                    </select>
                                 </div>
                             </div>
 

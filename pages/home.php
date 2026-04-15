@@ -5,6 +5,16 @@
 
   
   <!-- End Header -->
+<style>
+  .mySpecialBtn {
+    background: #47b2e4;
+    border: 0;
+    padding: 12px 34px;
+    color: #fff;
+    transition: 0.4s;
+    border-radius: 50px;
+  }
+</style>
   
 
   <!-- ======= Hero Section ======= -->
@@ -211,7 +221,10 @@
             </div>
           <?php } ?>
         </div> 
-        <a href="?p=workers" style="float: right;">See More <i class="bi bi-arrow-right-short"></i></a> 
+
+        <div class="text-center mt-4"><a href="?p=workers"><button type="button" id="sendMessage" class="mySpecialBtn">See More <i class="bi bi-arrow-right-short"></i></button></a></div>
+        <!-- <a href="?p=workers" style="float: right;">See More <i class="bi bi-arrow-right-short"></i></a>  -->
+
       </div>
     </section>
     <?php } ?>

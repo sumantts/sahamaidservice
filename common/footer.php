@@ -36,6 +36,9 @@
           <li><i class="bx bx-chevron-right"></i> <a href="?p=portfolio">Portfolio</a></li>
           <li><i class="bx bx-chevron-right"></i> <a href="?p=customer-review">Customer Review</a></li>
           <li><i class="bx bx-chevron-right"></i> <a href="?p=write-review">Write a Review</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="assets/tc/TERMS&CONDITIONS(KOLKATA).pdf" target="_blank">T & C (Kolkata)</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="assets/tc/TERMS&CONDITIONS(OFS).pdf" target="_blank">T & C (Out of State)</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="assets/tc/Term&Conditions(PartTime).pdf" target="_blank">T & C (Part Time)</a></li>
         </ul>
       </div>
 
