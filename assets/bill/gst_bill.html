@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tax Invoice</title>
+
+<style>
+@page {
+    size: A4;
+    margin: 10mm;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    margin: 0;
+}
+
+.invoice-box {
+    width: 100%;
+    border: 2px solid #000;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.center {
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #000;
+    padding: 5px;
+    vertical-align: top;
+}
+
+.no-border {
+    border: none !important;
+}
+
+.small {
+    font-size: 11px;
+}
+
+.right {
+    text-align: right;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.signature {
+    height: 80px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 11px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="invoice-box">
+
+    <div class="center">Tax Invoice</div>
+
+    <!-- Header Section -->
+    <table>
+        <tr>
+            <td width="50%">
+                <b>SAHA ENTERPRISE</b><br>
+                Santoshpur, Bauria, Howrah West Bengal, 711310<br>
+                GSTIN/UIN: 19AEYFS5433H1ZA<br>
+                State Name : West Bengal, Code : 19
+            </td>
+
+            <td width="50%">
+                <table>
+                    <tr>
+                        <td>Invoice No.</td>
+                        <td>17</td>
+                        <td>Dated</td>
+                        <td>31-JULY-24</td>
+                    </tr>
+                    <tr>
+                        <td>Delivery Note</td>
+                        <td></td>
+                        <td>Mode/Terms of Payment</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Reference No. & Date</td>
+                        <td></td>
+                        <td>Other References</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Buyer -->
+    <table>
+        <tr>
+            <td width="50%">
+                Buyer (Bill to)<br>
+                <b>HOSPITALITY LLP</b><br>
+                3A, AC -189 , Prafulla Karan East, Rajarhat<br>
+                Gopalpur (M) North 24 Pargana KOLKATA, WEST BENGAL 700101<br>
+                GSTIN/UIN: 29AATFC4514A1ZK
+            </td>
+
+            <td width="50%">
+                <table>
+                    <tr>
+                        <td>Buyer's Order No.</td>
+                        <td></td>
+                        <td>Dated</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Dispatch Doc No.</td>
+                        <td></td>
+                        <td>Delivery Note Date</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Dispatched through</td>
+                        <td></td>
+                        <td>Destination</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Product Table -->
+    <table>
+        <tr class="bold">
+            <td width="5%">Sl No.</td>
+            <td>Description of Goods</td>
+            <td width="10%">HSN/SAC</td>
+            <td width="10%">Amount</td>
+        </tr>
+
+        <tr>
+            <td>1</td>
+            <td>Sonalika biswas @ working days_30 days</td>
+            <td>998513</td>
+            <td class="right">12,650</td>
+        </tr>
+
+        <tr>
+            <td colspan="3" class="right">CGST</td>
+            <td class="right">1138.50</td>
+        </tr>
+
+        <tr>
+            <td colspan="3" class="right">SGST</td>
+            <td class="right">1138.50</td>
+        </tr>
+
+        <tr class="bold">
+            <td colspan="3" class="right">Total</td>
+            <td class="right">14927.00</td>
+        </tr>
+    </table>
+
+    <!-- Tax Summary -->
+    <table>
+        <tr class="bold">
+            <td>HSN/SAC</td>
+            <td>Taxable Value</td>
+            <td>CGST</td>
+            <td>SGST</td>
+            <td>Total Tax</td>
+        </tr>
+
+        <tr>
+            <td>998513</td>
+            <td class="right">12,650</td>
+            <td class="right">1138.50</td>
+            <td class="right">1138.50</td>
+            <td class="right">2277.00</td>
+        </tr>
+    </table>
+
+    <!-- Bank Details -->
+    <table>
+        <tr>
+            <td width="50%">
+                Company's PAN: AEYFS5433H Declaration<br><br>
+                We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.
+            </td>
+
+            <td width="50%">
+                <b>Company's Bank Details</b><br>
+                Bank Name: State Bank of India<br>
+                A/c No.: 41873277474<br>
+                Branch & IFSC: Bauria & SBIN0001295
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td class="signature">
+                for SAHA ENTERPRISE<br><br>
+                Authorised Signatory
+            </td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        This is a Computer Generated Invoice
+    </div>
+
+</div>
+
+</body>
+</html>

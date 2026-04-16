@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2026 at 06:23 AM
+-- Generation Time: Apr 16, 2026 at 06:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -41,16 +41,18 @@ CREATE TABLE `assign_maid` (
   `payment_history` text NOT NULL,
   `assign_by` int(11) NOT NULL COMMENT 'PK of user_details',
   `asssign_time` datetime NOT NULL DEFAULT current_timestamp(),
-  `bill_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=pending 1=Paid 2=Due'
+  `bill_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'from bill_status_master',
+  `hsn_code` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `assign_maid`
 --
 
-INSERT INTO `assign_maid` (`assign_id`, `client_id`, `rcvabl_amount`, `worker_id`, `exp_salary`, `from_date`, `to_date`, `from_time`, `to_time`, `atten_data`, `payment_history`, `assign_by`, `asssign_time`, `bill_status`) VALUES
-(1, 101, 20000.00, 30, 12000.00, '2026-04-04', '2026-04-30', '10:00', '13:00', '[{\"slno\":1,\"atten_date\":\"04-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"10 minutes late\"},{\"slno\":2,\"atten_date\":\"05-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":3,\"atten_date\":\"06-04-2026\",\"pre_abs_lev\":\"3\",\"atten_note\":\"Puja occation\"},{\"slno\":4,\"atten_date\":\"07-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":5,\"atten_date\":\"08-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":6,\"atten_date\":\"09-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":7,\"atten_date\":\"10-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":8,\"atten_date\":\"11-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":9,\"atten_date\":\"12-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":10,\"atten_date\":\"13-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":11,\"atten_date\":\"14-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":12,\"atten_date\":\"15-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":13,\"atten_date\":\"16-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":14,\"atten_date\":\"17-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":15,\"atten_date\":\"18-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":16,\"atten_date\":\"19-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":17,\"atten_date\":\"20-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":18,\"atten_date\":\"21-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":19,\"atten_date\":\"22-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":20,\"atten_date\":\"23-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":21,\"atten_date\":\"24-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":22,\"atten_date\":\"25-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":23,\"atten_date\":\"26-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":24,\"atten_date\":\"27-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":25,\"atten_date\":\"28-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":26,\"atten_date\":\"29-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":27,\"atten_date\":\"30-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"}]', '[{\"paid_amount\":\"100\",\"payment_mode\":\"1\",\"transaction_id\":\"UPI12345\",\"received_at\":\"2026-04-06 06:12:30\",\"received_at_f\":\"06-April 2026 06:12 AM\"},{\"paid_amount\":\"500\",\"payment_mode\":\"0\",\"transaction_id\":\"\",\"received_at\":\"2026-04-06 06:13:57\",\"received_at_f\":\"06-April 2026 06:13 AM\"},{\"paid_amount\":\"450\",\"payment_mode\":\"1\",\"transaction_id\":\"TRN123\",\"received_at\":\"2026-04-06 06:15:23\",\"received_at_f\":\"06-April 2026 06:15 AM\"},{\"paid_amount\":\"1\",\"payment_mode\":\"0\",\"transaction_id\":\"\",\"received_at\":\"2026-04-06 06:18:42\",\"received_at_f\":\"06-April 2026 06:18 AM\"},{\"paid_amount\":\"123\",\"payment_mode\":\"0\",\"transaction_id\":\"3345\",\"received_at\":\"2026-04-06 06:22:05\",\"received_at_f\":\"06-April 2026 06:22 AM\"}]', 1, '2026-04-04 11:14:52', 0),
-(3, 114, 12000.00, 117, 18000.00, '2026-04-27', '2026-05-02', '07:00', '09:00', '[{\"slno\":1,\"atten_date\":\"27-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":2,\"atten_date\":\"28-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":3,\"atten_date\":\"29-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":4,\"atten_date\":\"30-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":5,\"atten_date\":\"01-05-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":6,\"atten_date\":\"02-05-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"}]', '', 1, '2026-04-07 09:42:48', 0);
+INSERT INTO `assign_maid` (`assign_id`, `client_id`, `rcvabl_amount`, `worker_id`, `exp_salary`, `from_date`, `to_date`, `from_time`, `to_time`, `atten_data`, `payment_history`, `assign_by`, `asssign_time`, `bill_status`, `hsn_code`) VALUES
+(1, 101, 20000.00, 30, 12000.00, '2026-04-04', '2026-04-30', '10:00', '13:00', '[{\"slno\":1,\"atten_date\":\"04-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"10 minutes late\"},{\"slno\":2,\"atten_date\":\"05-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":3,\"atten_date\":\"06-04-2026\",\"pre_abs_lev\":\"3\",\"atten_note\":\"Puja occation\"},{\"slno\":4,\"atten_date\":\"07-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":5,\"atten_date\":\"08-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":6,\"atten_date\":\"09-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":7,\"atten_date\":\"10-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":8,\"atten_date\":\"11-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":9,\"atten_date\":\"12-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":10,\"atten_date\":\"13-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":11,\"atten_date\":\"14-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":12,\"atten_date\":\"15-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":13,\"atten_date\":\"16-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":14,\"atten_date\":\"17-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":15,\"atten_date\":\"18-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":16,\"atten_date\":\"19-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":17,\"atten_date\":\"20-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":18,\"atten_date\":\"21-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":19,\"atten_date\":\"22-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":20,\"atten_date\":\"23-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":21,\"atten_date\":\"24-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":22,\"atten_date\":\"25-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":23,\"atten_date\":\"26-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":24,\"atten_date\":\"27-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":25,\"atten_date\":\"28-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":26,\"atten_date\":\"29-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":27,\"atten_date\":\"30-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"}]', '[{\"paid_amount\":\"100\",\"payment_mode\":\"1\",\"transaction_id\":\"UPI12345\",\"received_at\":\"2026-04-06 06:12:30\",\"received_at_f\":\"06-April 2026 06:12 AM\"},{\"paid_amount\":\"500\",\"payment_mode\":\"0\",\"transaction_id\":\"\",\"received_at\":\"2026-04-06 06:13:57\",\"received_at_f\":\"06-April 2026 06:13 AM\"},{\"paid_amount\":\"450\",\"payment_mode\":\"1\",\"transaction_id\":\"TRN123\",\"received_at\":\"2026-04-06 06:15:23\",\"received_at_f\":\"06-April 2026 06:15 AM\"},{\"paid_amount\":\"1\",\"payment_mode\":\"0\",\"transaction_id\":\"\",\"received_at\":\"2026-04-06 06:18:42\",\"received_at_f\":\"06-April 2026 06:18 AM\"},{\"paid_amount\":\"123\",\"payment_mode\":\"0\",\"transaction_id\":\"3345\",\"received_at\":\"2026-04-06 06:22:05\",\"received_at_f\":\"06-April 2026 06:22 AM\"}]', 1, '2026-04-04 11:14:52', 1, ''),
+(3, 114, 12000.00, 117, 18000.00, '2026-04-27', '2026-04-30', '07:00', '09:00', '[{\"slno\":1,\"atten_date\":\"27-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":2,\"atten_date\":\"28-04-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":3,\"atten_date\":\"29-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":4,\"atten_date\":\"30-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":5,\"atten_date\":\"01-05-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":6,\"atten_date\":\"02-05-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"}]', '', 1, '2026-04-07 09:42:48', 1, ''),
+(4, 114, 20000.00, 39, 18000.00, '2026-04-01', '2026-04-30', '11:00', '13:00', '', '', 1, '2026-04-12 10:09:16', 1, 'HSN001');
 
 -- --------------------------------------------------------
 
@@ -76,6 +78,51 @@ INSERT INTO `attendance_register` (`atten_id`, `user_id`, `month_date`, `atten_d
 (4, 0, '2026-04', '[{\"slno\":1,\"atten_date\":\"01-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":2,\"atten_date\":\"02-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":3,\"atten_date\":\"03-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":4,\"atten_date\":\"04-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":5,\"atten_date\":\"05-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":6,\"atten_date\":\"06-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":7,\"atten_date\":\"07-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":8,\"atten_date\":\"08-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":9,\"atten_date\":\"09-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":10,\"atten_date\":\"10-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":11,\"atten_date\":\"11-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":12,\"atten_date\":\"12-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":13,\"atten_date\":\"13-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":14,\"atten_date\":\"14-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":15,\"atten_date\":\"15-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":16,\"atten_date\":\"16-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":17,\"atten_date\":\"17-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":18,\"atten_date\":\"18-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":19,\"atten_date\":\"19-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":20,\"atten_date\":\"20-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":21,\"atten_date\":\"21-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":22,\"atten_date\":\"22-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":23,\"atten_date\":\"23-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":24,\"atten_date\":\"24-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":25,\"atten_date\":\"25-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":26,\"atten_date\":\"26-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":27,\"atten_date\":\"27-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":28,\"atten_date\":\"28-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":29,\"atten_date\":\"29-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":30,\"atten_date\":\"30-04-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"}]'),
 (5, 119, '2026-01', '[{\"slno\":1,\"atten_date\":\"01-01-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":2,\"atten_date\":\"02-01-2026\",\"pre_abs_lev\":\"1\",\"atten_note\":\"\"},{\"slno\":3,\"atten_date\":\"03-01-2026\",\"pre_abs_lev\":\"2\",\"atten_note\":\"\"},{\"slno\":4,\"atten_date\":\"04-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":5,\"atten_date\":\"05-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":6,\"atten_date\":\"06-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":7,\"atten_date\":\"07-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":8,\"atten_date\":\"08-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":9,\"atten_date\":\"09-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":10,\"atten_date\":\"10-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":11,\"atten_date\":\"11-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":12,\"atten_date\":\"12-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":13,\"atten_date\":\"13-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":14,\"atten_date\":\"14-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":15,\"atten_date\":\"15-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":16,\"atten_date\":\"16-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":17,\"atten_date\":\"17-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":18,\"atten_date\":\"18-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":19,\"atten_date\":\"19-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":20,\"atten_date\":\"20-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":21,\"atten_date\":\"21-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":22,\"atten_date\":\"22-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":23,\"atten_date\":\"23-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":24,\"atten_date\":\"24-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":25,\"atten_date\":\"25-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":26,\"atten_date\":\"26-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":27,\"atten_date\":\"27-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":28,\"atten_date\":\"28-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":29,\"atten_date\":\"29-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":30,\"atten_date\":\"30-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":31,\"atten_date\":\"31-01-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"}]'),
 (6, 119, '2026-02', '[{\"slno\":1,\"atten_date\":\"01-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":2,\"atten_date\":\"02-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":3,\"atten_date\":\"03-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":4,\"atten_date\":\"04-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":5,\"atten_date\":\"05-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":6,\"atten_date\":\"06-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":7,\"atten_date\":\"07-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":8,\"atten_date\":\"08-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":9,\"atten_date\":\"09-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":10,\"atten_date\":\"10-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":11,\"atten_date\":\"11-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":12,\"atten_date\":\"12-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":13,\"atten_date\":\"13-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":14,\"atten_date\":\"14-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":15,\"atten_date\":\"15-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":16,\"atten_date\":\"16-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":17,\"atten_date\":\"17-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":18,\"atten_date\":\"18-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":19,\"atten_date\":\"19-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":20,\"atten_date\":\"20-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":21,\"atten_date\":\"21-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":22,\"atten_date\":\"22-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":23,\"atten_date\":\"23-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":24,\"atten_date\":\"24-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":25,\"atten_date\":\"25-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":26,\"atten_date\":\"26-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":27,\"atten_date\":\"27-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"},{\"slno\":28,\"atten_date\":\"28-02-2026\",\"pre_abs_lev\":\"\",\"atten_note\":\"\"}]');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bill_details`
+--
+
+CREATE TABLE `bill_details` (
+  `bill_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL COMMENT 'user_id from user_details',
+  `inv_month` varchar(255) NOT NULL,
+  `normal_gst` tinyint(1) NOT NULL,
+  `terms_condi` tinyint(1) NOT NULL,
+  `bill_total` decimal(10,2) NOT NULL,
+  `bill_created_on` datetime NOT NULL DEFAULT current_timestamp(),
+  `bill_updated_on` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `bill_created_by` int(11) NOT NULL,
+  `bill_updated_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bill_details`
+--
+
+INSERT INTO `bill_details` (`bill_id`, `client_id`, `inv_month`, `normal_gst`, `terms_condi`, `bill_total`, `bill_created_on`, `bill_updated_on`, `bill_created_by`, `bill_updated_by`) VALUES
+(1, 114, '2026-04', 2, 2, 0.00, '2026-04-16 09:27:52', '2026-04-16 09:27:52', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bill_status_master`
+--
+
+CREATE TABLE `bill_status_master` (
+  `bs_id` tinyint(1) NOT NULL,
+  `bill_status_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bill_status_master`
+--
+
+INSERT INTO `bill_status_master` (`bs_id`, `bill_status_name`) VALUES
+(1, 'DUE'),
+(2, 'PAID');
 
 -- --------------------------------------------------------
 
@@ -1607,7 +1654,11 @@ INSERT INTO `user_details` (`user_id`, `username`, `password`, `user_type`, `add
 (202, '', '', 5, 1, 'Shankari Sahani', 'Shankar Sahani ', '', '9088251604', '', 2, '1990-01-01', 2, 'Bauria Bhasapara Howrah West Bengal ', '', 592, 24, 105, '711305', '758495887520', '1774703818.jpeg', '1774703821.jpeg', '', '', '', '', '', '1774703835.jpeg', '', 18, '', '', '[\"5\"]', '[\"1\",\"3\"]', '', 1, 0.00, '2026-03-28 18:44:16', 0, 0, 0, 0, '', '', '', '', '', '4th passed', 0, 0, 0, '', '', '', '', 1, 1, '2026-03-28 18:44:16', '2026-03-30 08:39:09'),
 (203, '', '', 5, 1, 'Purbasa Das', 'Abhijit Das', '', '', '', 2, '2008-06-25', 1, 'Bhagabanpur Mollahal Shyampur 1 Howrah West Bengal', '', 592, 24, 105, '711314', '326063008755', '', '', '', '', '', '', '', '', '', 0, '', '', '[\"1\"]', '[\"1\"]', '', 0, 0.00, '2026-03-28 18:49:38', 0, 0, 0, 0, '', '', '', '', '', '8th passed', 0, 0, 0, '', '', '', '', 1, 1, '2026-03-28 18:49:38', '2026-03-30 08:39:09'),
 (204, '', '', 5, 1, 'Rupa Bhattacharya ', 'Ganesh Prasad Srivastab', '', '9038296094', '', 1, '1972-09-04', 2, 'A.K Mukherjee Road Baranagar North 24 pgs ', '', 600, 24, 105, '711310', '', '', '', '', '', '', '', '', '', '', 10, '', '', '[\"3\"]', '[\"1\"]', '', 1, 0.00, '2026-03-28 18:55:52', 0, 0, 0, 0, '', '', '', '', '', '', 0, 0, 0, '', '', '', '', 1, 1, '2026-03-28 18:55:52', '2026-03-30 08:39:09'),
-(205, '', '', 5, 1, 'Rita Baidya ', 'Suranjan Baidya ', '', '8481834600', '', 2, '1985-02-11', 2, '', '', 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', 0, 0.00, '2026-03-28 19:00:09', 0, 0, 0, 0, '', '', '', '', '', '', 0, 0, 0, '', '', '', '', 1, 1, '2026-03-28 19:00:09', '2026-03-28 19:01:08');
+(205, '', '', 5, 1, 'Rita Baidya ', 'Suranjan Baidya ', '', '8481834600', '', 2, '1985-02-11', 2, '', '', 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', 0, 0.00, '2026-03-28 19:00:09', 0, 0, 0, 0, '', '', '', '', '', '', 0, 0, 0, '', '', '', '', 1, 1, '2026-03-28 19:00:09', '2026-03-28 19:01:08'),
+(206, '', '', 4, 1, '', '', '', '', '', 1, '0000-00-00', 1, '', '', 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', 0, 0.00, '2026-04-13 09:17:51', 0, 0, 0, 0, '', '', '', '', '', '', 0, 2, 0, '', '', '', '', 1, 1, '2026-04-13 09:17:51', '2026-04-13 09:25:07'),
+(207, '', '', 4, 1, '', '', '', '', '', 1, '0000-00-00', 1, '', '', 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', 0, 0.00, '2026-04-15 08:35:35', 0, 0, 0, 0, '', '', '', '', '', '', 0, 1, 0, '', '', '', '', 1, 1, '2026-04-15 08:35:35', '2026-04-15 08:37:32'),
+(208, '', '', 4, 1, '', '', '', '', '', 1, '0000-00-00', 1, '', '', 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', 0, 0.00, '2026-04-15 09:57:23', 0, 0, 0, 0, '', '', '', '', '', '', 0, 1, 0, '', '', '', '', 1, 1, '2026-04-15 09:57:23', '2026-04-15 09:59:51'),
+(209, '', '', 4, 1, '', '', '', '', '', 1, '0000-00-00', 1, '', '', 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', 0, 0.00, '2026-04-16 08:10:41', 0, 0, 0, 0, '', '', '', '', '', '', 0, 1, 0, '', '', '', '', 1, 1, '2026-04-16 08:10:41', '2026-04-16 08:11:16');
 
 -- --------------------------------------------------------
 
@@ -1712,6 +1763,18 @@ ALTER TABLE `assign_maid`
 --
 ALTER TABLE `attendance_register`
   ADD PRIMARY KEY (`atten_id`);
+
+--
+-- Indexes for table `bill_details`
+--
+ALTER TABLE `bill_details`
+  ADD PRIMARY KEY (`bill_id`);
+
+--
+-- Indexes for table `bill_status_master`
+--
+ALTER TABLE `bill_status_master`
+  ADD PRIMARY KEY (`bs_id`);
 
 --
 -- Indexes for table `cities`
@@ -1866,13 +1929,25 @@ ALTER TABLE `work_type`
 -- AUTO_INCREMENT for table `assign_maid`
 --
 ALTER TABLE `assign_maid`
-  MODIFY `assign_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `assign_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `attendance_register`
 --
 ALTER TABLE `attendance_register`
   MODIFY `atten_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `bill_details`
+--
+ALTER TABLE `bill_details`
+  MODIFY `bill_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `bill_status_master`
+--
+ALTER TABLE `bill_status_master`
+  MODIFY `bs_id` tinyint(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cities`
@@ -1992,7 +2067,7 @@ ALTER TABLE `stay_type`
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=206;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=210;
 
 --
 -- AUTO_INCREMENT for table `user_type_master`

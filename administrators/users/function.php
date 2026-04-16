@@ -933,6 +933,7 @@
 		$return_array = array();
 		$assign_maids = array();
 		$status = true;
+		$bill_id = 0;
 
 		$from_date1 = $inv_month.'-01';
 		$to_date1 = $inv_month.'-31';
@@ -986,12 +987,58 @@
 			}
 		} else {
 			$status = false;
+		}		
+		
+		# Bill Info
+		$normal_gst = '';
+		$terms_condi = '';
+		$bill_total = 0;
+
+		$sql = "SELECT * FROM bill_details WHERE client_id = '" .$user_id. "' AND inv_month = '" .$inv_month. "' ";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array(); 
+			$bill_id = $row['bill_id'];
+			$normal_gst = $row['normal_gst'];
+			$terms_condi = $row['terms_condi'];
+			$bill_total = $row['bill_total']; 
 		}
 
 		$return_array['status'] = $status;
+		$return_array['bill_id'] = $bill_id;
+		$return_array['normal_gst'] = $normal_gst;
+		$return_array['terms_condi'] = $terms_condi;
+		$return_array['bill_total'] = $bill_total;
 		$return_array['assign_maids'] = $assign_maids;
     	echo json_encode($return_array);
 	}//function end
 
-	
+	//save Invoice Data
+	if($fn == 'saveInvoiceData'){
+		$return_result = array();
+		$status = true;
+
+		$user_id = $_POST['user_id'];
+		$bill_id = $_POST['bill_id'];
+		$inv_month = $_POST['inv_month'];
+		$normal_gst = $_POST['normal_gst'];
+		$terms_condi = $_POST['terms_condi'];  
+		$bill_total = $_POST['bill_total'];
+		$sess_user_id = $_SESSION["user_id"];
+
+		if($bill_id > 0){ 
+			$sql1 = "UPDATE bill_details SET inv_month = '" .$inv_month. "', normal_gst = '" .$normal_gst. "', terms_condi = '" .$terms_condi. "', bill_total = '" .$bill_total. "', bill_updated_by = '" .$sess_user_id. "' WHERE bill_id = '" .$bill_id. "' ";
+			$result1 = $con->query($sql1);
+		}else{	 
+			$sql2 = "INSERT INTO bill_details (client_id, inv_month, normal_gst, terms_condi, bill_total, bill_created_by) VALUES ('".$user_id."', '".$inv_month."', '".$normal_gst."', '".$terms_condi."', '".$bill_total."', '".$sess_user_id."')";
+			$result2 = $con->query($sql2);
+			$bill_id = $con->insert_id;
+		} 
+		$return_result['status'] = $status;
+		$return_result['bill_id'] = $bill_id;
+		
+		echo json_encode($return_result);
+	}//Save function end
+
 ?>

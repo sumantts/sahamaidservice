@@ -8,7 +8,7 @@ $(document).on("blur", ".form-control", function(){
 
     $serial_number = $('#serial_number').val();
 
-    if(fieldValue != '' && fieldId != 'inv_month'){
+    if(fieldValue != '' && fieldId != 'inv_month' && fieldId != 'terms_condi'){
         $.ajax({
             type: "POST",
             url: "users/function.php",
@@ -1093,26 +1093,23 @@ $("#declaration").change(function(){
     console.log('check_box_val: ' + $check_box_val);
     
 
-    $serial_number = $('#serial_number').val();
-
-    //if(fieldValue != ''){
-        $.ajax({
-            type: "POST",
-            url: "users/function.php",
-            dataType: "json",
-            data: { fn: "saveFormData", field_id: 'declaration', field_val: $check_box_val, current_tab: $current_tab, serial_number: $serial_number }
-        })
-        .done(function( res ) {
-            //console.log(JSON.stringify(res))
-            if(res.status == true){    
-                $serial_number = res.serial_number;
-                $('#serial_number').val($serial_number); 
-                //populateDataTable(); 
-            }else{
-                alert('Error: ' + res.error_message);
-            }        
-        });//end ajax 
-    //}//end if
+    $serial_number = $('#serial_number').val(); 
+    $.ajax({
+        type: "POST",
+        url: "users/function.php",
+        dataType: "json",
+        data: { fn: "saveFormData", field_id: 'declaration', field_val: $check_box_val, current_tab: $current_tab, serial_number: $serial_number }
+    })
+    .done(function( res ) {
+        //console.log(JSON.stringify(res))
+        if(res.status == true){    
+            $serial_number = res.serial_number;
+            $('#serial_number').val($serial_number); 
+            //populateDataTable(); 
+        }else{
+            alert('Error: ' + res.error_message);
+        }        
+    });//end ajax  
 
 });
 
@@ -1152,33 +1149,42 @@ function onBillModal($user_id){
     $('#user_id').val($user_id);
     $('#invModalLong').modal('show');
     $("#paymentBoard").hide();
-    $("#div_p_history1").hide();
+    $("#div_p_history1").hide(); 
 
-    /*$('#div_paid_amount').removeClass('d-block');
-    $('#div_paid_amount').addClass('d-none');
-
-    $('#div_payment_mode').removeClass('d-block');
-    $('#div_payment_mode').addClass('d-none');
-
-    $('#div_transaction_id').removeClass('d-block');
-    $('#div_transaction_id').addClass('d-none');
-
-    $('#div_rcv_btn').removeClass('d-block');
-    $('#div_rcv_btn').addClass('d-none');
-
-    $('#div_p_history').removeClass('d-block');
-    $('#div_p_history').addClass('d-none');*/
+    
 }
 
 $('#inv_month').on('change', function(){
     $inv_month = $('#inv_month').val();
     console.log('inv_month: ' + $inv_month);
     getUnPaidBills();
+
+    $inv_ui1 = '';
+    $inv_ui1 += '<div class="col-md-3 mb-2">';
+        $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="inv_id" name="inv_id" placeholder="INV ID" readonly>';
+    $inv_ui1 += '</div>';
+    $inv_ui1 += '<div class="col-md-3 mb-2">';
+        $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="from_date" name="from_date" placeholder="From Date" readonly>';
+    $inv_ui1 += '</div>';
+    $inv_ui1 += '<div class="col-md-3 mb-2">';
+        $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="to_date" name="to_date" placeholder="To Date" readonly>';
+    $inv_ui1 += '</div>';
+    $inv_ui1 += '<div class="col-md-3 mb-2">';
+        $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="worker_id" name="worker_id" placeholder="Worker" readonly>';
+    $inv_ui1 += '</div>';
+    $('#invoice_ui').html($inv_ui1);
+    $('#normal_gst').val('1').trigger('change'); 
+    $('#terms_condi').val('1').trigger('change');
 })//end if
 
 function getUnPaidBills(){
     $user_id = $('#user_id').val();
     $inv_month = $('#inv_month').val();
+
+    $bill_id = 0;
+    $bill_total = 0;
+    $('#bill_id').val($bill_id);
+    $('#bill_total').val($bill_total); 
 
     $.ajax({
         method: "POST",
@@ -1189,6 +1195,11 @@ function getUnPaidBills(){
         $res1 = JSON.parse(res);
         if($res1.status == true){            
             //Populate attendance list
+            $bill_id = $res1.bill_id;
+            $normal_gst = $res1.normal_gst;
+            $terms_condi = $res1.terms_condi;
+            $bill_total = $res1.bill_total; 
+
             $assign_maids = $res1.assign_maids; 
             $client_name = $assign_maids[0].client_name; 
             $('#invoice_ui_title').html('Monthly Bill of: ' + $client_name);
@@ -1216,9 +1227,37 @@ function getUnPaidBills(){
                         $inv_ui += '<input type="checkbox" class="rowCheckbox1">';
                     $inv_ui += '</div>';*/
                 }//end if
-                $('#invoice_ui').html($inv_ui);
+                $('#invoice_ui').html($inv_ui);                
+            }else{
+                $('#invoice_ui').html('');
+
             }
-            
+
+            $('#bill_id').val($bill_id);
+            $('#bill_total').val($bill_total);    
+            if($normal_gst != ''){
+                $('#normal_gst').val($normal_gst).trigger('change');  
+            }           
+            if($terms_condi != ''){ 
+                $('#terms_condi').val($terms_condi).trigger('change');  
+            }    
+        }else{
+            $inv_ui1 = '';
+            $inv_ui1 += '<div class="col-md-3 mb-2">';
+                $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="inv_id" name="inv_id" placeholder="INV ID" readonly>';
+            $inv_ui1 += '</div>';
+            $inv_ui1 += '<div class="col-md-3 mb-2">';
+                $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="from_date" name="from_date" placeholder="From Date" readonly>';
+            $inv_ui1 += '</div>';
+            $inv_ui1 += '<div class="col-md-3 mb-2">';
+                $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="to_date" name="to_date" placeholder="To Date" readonly>';
+            $inv_ui1 += '</div>';
+            $inv_ui1 += '<div class="col-md-3 mb-2">';
+                $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="worker_id" name="worker_id" placeholder="Worker" readonly>';
+            $inv_ui1 += '</div>';
+            $('#invoice_ui').html($inv_ui1);
+            $('#normal_gst').val('1').trigger('change'); 
+            $('#terms_condi').val('1').trigger('change');
         }
     });//end ajax 
 }//end if
@@ -1244,3 +1283,39 @@ $(document).ready(function(){
         }
     });
 });    
+
+// Save Inv Data
+$('#savePrint').on('click', function(){
+    $user_id = $('#user_id').val();
+    $bill_id = $('#bill_id').val();
+    $inv_month = $('#inv_month').val();
+    $normal_gst = $('#normal_gst').val();
+    $terms_condi = $('#terms_condi').val();
+    $bill_total = $('#bill_total').val();
+    
+    console.log('user_id: ' + $user_id + ' inv_month: ' + $inv_month);
+
+    if(parseInt($user_id) > 0 && $inv_month != ''){
+        if(parseInt($bill_total) > 0){
+            $.ajax({
+                type: "POST",
+                url: "users/function.php",
+                dataType: "json",
+                data: { fn: "saveInvoiceData", user_id: $user_id, bill_id: $bill_id, inv_month: $inv_month, normal_gst: $normal_gst, terms_condi: $terms_condi, bill_total: $bill_total }
+            })
+            .done(function( res ) {
+                //console.log(JSON.stringify(res))
+                if(res.status == true){    
+                    $bill_id = res.bill_id;
+                    $('#bill_id').val($bill_id);
+                }else{
+                    alert('Error: ' + res.error_message);
+                }        
+            });//end ajax
+        }else{
+            alert('Bill amount should be greater than zero.');
+        }//end if
+    }else{
+        alert('Please choose Month - Year* first');
+    }//end if
+});

@@ -587,18 +587,19 @@ if($sess_user_type > 3){
                                 </div>  
                                 
                                 <div class="col-md-3 mb-2">
-                                    <label for="lc_id" class="form-label">Bill Type(Normal / GST)</label>
-                                    <select class="form-control form-control-sm" name="lc_id" id="lc_id">
+                                    <label for="normal_gst" class="form-label text-danger">Bill Type(Normal / GST)*</label>
+                                    <select class="form-control form-control-sm" name="normal_gst" id="normal_gst">
                                         <option value="1">Normal</option>
                                         <option value="2">GST</option>
                                     </select>
                                 </div> 
                                 
                                 <div class="col-md-3 mb-2">
-                                    <label for="terms_condi" class="form-label">Terms & Conditions</label>
+                                    <label for="terms_condi" class="form-label text-danger">Terms & Conditions*</label>
                                     <select class="form-control form-control-sm" name="terms_condi" id="terms_condi">
-                                        <option value="1">Normal</option>
-                                        <option value="2">GST</option>
+                                        <option value="1">T & C (Kolkata)</option>
+                                        <option value="2">T & C (Out of State)</option>
+                                        <option value="3">T & C (Part Time)</option>
                                     </select>
                                 </div>
                             </div>
@@ -682,9 +683,11 @@ if($sess_user_type > 3){
                         <div class="modal-footer">
                             <div class="float-lg-left">Total due till date: Rs. 5000.00</div>
                             <input type="hidden" name="user_id" id="user_id" value="0">
+                            <input type="hidden" name="bill_id" id="bill_id" value="0">
+                            <input type="hidden" name="bill_total" id="bill_total" value="0">
                             
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#invModalLong').modal('hide')">Close</button>
-                            <button type="button" class="btn btn-primary">Save & Print</button>
+                            <button type="button" class="btn btn-primary" id="savePrint">Save & Print</button>
                             <!-- <button class="btn  btn-primary d-block" type="button" id="submitForm">
                                 <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                 <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
