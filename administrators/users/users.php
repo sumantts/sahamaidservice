@@ -593,6 +593,10 @@ if($sess_user_type > 3){
                                         <option value="2">GST</option>
                                     </select>
                                 </div> 
+                                <div class="col-md-3 mb-2">
+                                    <label for="gst_percentage" class="form-label">GST Percentage</label>
+                                    <input class="form-control form-control-sm" type="text" id="gst_percentage" name="gst_percentage">
+                                </div>  
                                 
                                 <div class="col-md-3 mb-2">
                                     <label for="terms_condi" class="form-label text-danger">Terms & Conditions*</label>
@@ -616,13 +620,7 @@ if($sess_user_type > 3){
                                 </div>
                                 <div class="col-md-3 mb-2">
                                     <label for="bill_status">Worker</label>
-                                </div>
-                                <!-- <div class="col-md-1 mb-2">
-                                    <input type="checkbox" id="selectAll"> Send
-                                </div>
-                                <div class="col-md-1 mb-2">
-                                    <input type="checkbox" id="selectAll"> Paid
-                                </div> -->
+                                </div> 
                                 
                             </div>
 
@@ -638,13 +636,7 @@ if($sess_user_type > 3){
                                 </div>
                                 <div class="col-md-3 mb-2">
                                     <input class="form-control form-control-sm" type="test" id="worker_id" name="worker_id" placeholder="Worker" readonly>
-                                </div>
-                                <!-- <div class="col-md-1 mb-2">
-                                    <input type="checkbox" id="selectAll">
-                                </div>
-                                <div class="col-md-1 mb-2">
-                                    <input type="checkbox" id="selectAll1">
-                                </div>                                 -->
+                                </div> 
                             </div>
 
                             <!-- Start payment receive section -->
@@ -669,7 +661,7 @@ if($sess_user_type > 3){
                                 </div>
                                 <div class="col-md-3 mt-4" id="div_rcv_btn1">
                                     <label for="rcv_btn">&nbsp;</label>
-                                    <button type="button" class="btn btn-primary btn-sm">Received</button> 
+                                    <button type="button" class="btn btn-primary btn-sm" id="receivePayment">Received</button> 
                                 </div>
                             </div>
                             <div class="form-row" id="div_p_history1">
@@ -681,10 +673,11 @@ if($sess_user_type > 3){
                         </div>
 
                         <div class="modal-footer">
-                            <div class="float-lg-left">Total due till date: Rs. 5000.00</div>
+                            <div class="float-lg-left" id="footer_text">Total Bill Amount: Rs. 20000.00/- Total due till date: Rs. 5000.00</div>
                             <input type="hidden" name="user_id" id="user_id" value="0">
                             <input type="hidden" name="bill_id" id="bill_id" value="0">
                             <input type="hidden" name="bill_total" id="bill_total" value="0">
+                            <input type="hidden" name="total_rcvabl_amount" id="total_rcvabl_amount" value="0">
                             
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#invModalLong').modal('hide')">Close</button>
                             <button type="button" class="btn btn-primary" id="savePrint">Save & Print</button>

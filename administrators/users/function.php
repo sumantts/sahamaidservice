@@ -938,6 +938,7 @@
 		$from_date1 = $inv_month.'-01';
 		$to_date1 = $inv_month.'-31';
 		$bill_status = '1';
+		$total_rcvabl_amount = 0;
 
 		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code,
 		user_details.full_name
@@ -982,6 +983,8 @@
 					}
 				}//end if
 				$assign_maid->worker_name = $worker_name;
+				
+				$total_rcvabl_amount = $total_rcvabl_amount + $row['rcvabl_amount'];
 
 				array_push($assign_maids, $assign_maid);
 			}
@@ -993,6 +996,7 @@
 		$normal_gst = '';
 		$terms_condi = '';
 		$bill_total = 0;
+		$gst_percentage = 0;
 
 		$sql = "SELECT * FROM bill_details WHERE client_id = '" .$user_id. "' AND inv_month = '" .$inv_month. "' ";
 		$result = $con->query($sql);
@@ -1001,6 +1005,7 @@
 			$row = $result->fetch_array(); 
 			$bill_id = $row['bill_id'];
 			$normal_gst = $row['normal_gst'];
+			$gst_percentage = $row['gst_percentage'];
 			$terms_condi = $row['terms_condi'];
 			$bill_total = $row['bill_total']; 
 		}
@@ -1008,9 +1013,11 @@
 		$return_array['status'] = $status;
 		$return_array['bill_id'] = $bill_id;
 		$return_array['normal_gst'] = $normal_gst;
+		$return_array['gst_percentage'] = $gst_percentage;
 		$return_array['terms_condi'] = $terms_condi;
 		$return_array['bill_total'] = $bill_total;
 		$return_array['assign_maids'] = $assign_maids;
+		$return_array['total_rcvabl_amount'] = $total_rcvabl_amount;
     	echo json_encode($return_array);
 	}//function end
 
@@ -1023,20 +1030,46 @@
 		$bill_id = $_POST['bill_id'];
 		$inv_month = $_POST['inv_month'];
 		$normal_gst = $_POST['normal_gst'];
+		$gst_percentage = $_POST['gst_percentage'];
 		$terms_condi = $_POST['terms_condi'];  
 		$bill_total = $_POST['bill_total'];
 		$sess_user_id = $_SESSION["user_id"];
 
 		if($bill_id > 0){ 
-			$sql1 = "UPDATE bill_details SET inv_month = '" .$inv_month. "', normal_gst = '" .$normal_gst. "', terms_condi = '" .$terms_condi. "', bill_total = '" .$bill_total. "', bill_updated_by = '" .$sess_user_id. "' WHERE bill_id = '" .$bill_id. "' ";
+			$sql1 = "UPDATE bill_details SET inv_month = '" .$inv_month. "', normal_gst = '" .$normal_gst. "', gst_percentage = '" .$gst_percentage. "', terms_condi = '" .$terms_condi. "', bill_total = '" .$bill_total. "', bill_updated_by = '" .$sess_user_id. "' WHERE bill_id = '" .$bill_id. "' ";
 			$result1 = $con->query($sql1);
 		}else{	 
-			$sql2 = "INSERT INTO bill_details (client_id, inv_month, normal_gst, terms_condi, bill_total, bill_created_by) VALUES ('".$user_id."', '".$inv_month."', '".$normal_gst."', '".$terms_condi."', '".$bill_total."', '".$sess_user_id."')";
+			$sql2 = "INSERT INTO bill_details (client_id, inv_month, normal_gst, gst_percentage, terms_condi, bill_total, bill_created_by) VALUES ('".$user_id."', '".$inv_month."', '".$normal_gst."', '".$gst_percentage."', '".$terms_condi."', '".$bill_total."', '".$sess_user_id."')";
 			$result2 = $con->query($sql2);
 			$bill_id = $con->insert_id;
 		} 
 		$return_result['status'] = $status;
 		$return_result['bill_id'] = $bill_id;
+		
+		echo json_encode($return_result);
+	}//Save function end
+
+	# savePaymentData 
+	if($fn == 'savePaymentData'){
+		$return_result = array();
+		$status = true;
+		$error_message = '';
+
+		$user_id = $_POST['user_id'];
+		$bill_id = $_POST['bill_id'];
+		$inv_month = $_POST['inv_month'];
+
+		$paid_amount = $_POST['paid_amount'];
+		$transaction_id = $_POST['transaction_id'];
+		$payment_mode = $_POST['payment_mode']; 
+
+		$payment_received_by = $_SESSION["user_id"];
+			 
+		$sql2 = "INSERT INTO bill_payment_details (bill_id, client_id, paid_amount, payment_mode, payment_received_by) VALUES ('".$bill_id."', '".$user_id."', '".$paid_amount."', '".$payment_mode."', '".$payment_received_by."')";
+		$result2 = $con->query($sql2); 
+		
+		$return_result['status'] = $status;	
+		$return_result['error_message'] = $error_message;	
 		
 		echo json_encode($return_result);
 	}//Save function end

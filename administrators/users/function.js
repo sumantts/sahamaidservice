@@ -8,7 +8,7 @@ $(document).on("blur", ".form-control", function(){
 
     $serial_number = $('#serial_number').val();
 
-    if(fieldValue != '' && fieldId != 'inv_month' && fieldId != 'terms_condi'){
+    if(fieldValue != '' && fieldId != 'inv_month' && fieldId != 'terms_condi' && fieldId != 'gst_percentage' && fieldId != 'paid_amount' && fieldId != 'transaction_id'){
         $.ajax({
             type: "POST",
             url: "users/function.php",
@@ -1152,6 +1152,24 @@ function onBillModal($user_id){
     $("#div_p_history1").hide(); 
 
     
+    $inv_ui1 = '';
+    $inv_ui1 += '<div class="col-md-3 mb-2">';
+        $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="inv_id" name="inv_id" placeholder="INV ID" readonly>';
+    $inv_ui1 += '</div>';
+    $inv_ui1 += '<div class="col-md-3 mb-2">';
+        $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="from_date" name="from_date" placeholder="From Date" readonly>';
+    $inv_ui1 += '</div>';
+    $inv_ui1 += '<div class="col-md-3 mb-2">';
+        $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="to_date" name="to_date" placeholder="To Date" readonly>';
+    $inv_ui1 += '</div>';
+    $inv_ui1 += '<div class="col-md-3 mb-2">';
+        $inv_ui1 += '<input class="form-control form-control-sm" type="test" id="worker_id" name="worker_id" placeholder="Worker" readonly>';
+    $inv_ui1 += '</div>';
+    $('#invoice_ui').html($inv_ui1);
+    $('#inv_month').html('');
+    $('#normal_gst').val('1').trigger('change'); 
+    $('#gst_percentage').val('');
+    $('#terms_condi').val('1').trigger('change');
 }
 
 $('#inv_month').on('change', function(){
@@ -1174,17 +1192,21 @@ $('#inv_month').on('change', function(){
     $inv_ui1 += '</div>';
     $('#invoice_ui').html($inv_ui1);
     $('#normal_gst').val('1').trigger('change'); 
-    $('#terms_condi').val('1').trigger('change');
+    $('#terms_condi').val('1').trigger('change'); 
 })//end if
 
 function getUnPaidBills(){
     $user_id = $('#user_id').val();
     $inv_month = $('#inv_month').val();
 
+    $total_rcvabl_amount = 0;
     $bill_id = 0;
     $bill_total = 0;
+    $gst_percentage = 0;
     $('#bill_id').val($bill_id);
     $('#bill_total').val($bill_total); 
+    //$('#gst_percentage').val($gst_percentage);
+    $('#total_rcvabl_amount').val($total_rcvabl_amount);
 
     $.ajax({
         method: "POST",
@@ -1199,6 +1221,15 @@ function getUnPaidBills(){
             $normal_gst = $res1.normal_gst;
             $terms_condi = $res1.terms_condi;
             $bill_total = $res1.bill_total; 
+            $gst_percentage = $res1.gst_percentage; 
+            $total_rcvabl_amount = $res1.total_rcvabl_amount; 
+
+    
+            
+            console.log('gst_percentage: ' + $gst_percentage )
+            if($gst_percentage != ''){ 
+                $('#gst_percentage').val($gst_percentage);  
+            }  
 
             $assign_maids = $res1.assign_maids; 
             $client_name = $assign_maids[0].client_name; 
@@ -1219,28 +1250,24 @@ function getUnPaidBills(){
                     $inv_ui += '</div>';
                     $inv_ui += '<div class="col-md-3 mb-2">';
                         $inv_ui += '<input class="form-control form-control-sm" type="text" id="worker_id" name="worker_id" placeholder="Worker"  value="'+$assign_maids[$i].worker_name+'" readonly>';
-                    $inv_ui += '</div>';
-                    /*$inv_ui += '<div class="col-md-1 mb-2">';
-                        $inv_ui += '<input type="checkbox" class="rowCheckbox">';
-                    $inv_ui += '</div>';
-                    $inv_ui += '<div class="col-md-1 mb-2">';
-                        $inv_ui += '<input type="checkbox" class="rowCheckbox1">';
-                    $inv_ui += '</div>';*/
+                    $inv_ui += '</div>'; 
                 }//end if
                 $('#invoice_ui').html($inv_ui);                
             }else{
                 $('#invoice_ui').html('');
-
             }
 
             $('#bill_id').val($bill_id);
-            $('#bill_total').val($bill_total);    
+            $('#bill_total').val($bill_total);   
+            $('#total_rcvabl_amount').val($total_rcvabl_amount); 
+
             if($normal_gst != ''){
                 $('#normal_gst').val($normal_gst).trigger('change');  
             }           
             if($terms_condi != ''){ 
                 $('#terms_condi').val($terms_condi).trigger('change');  
-            }    
+            }
+
         }else{
             $inv_ui1 = '';
             $inv_ui1 += '<div class="col-md-3 mb-2">';
@@ -1258,6 +1285,7 @@ function getUnPaidBills(){
             $('#invoice_ui').html($inv_ui1);
             $('#normal_gst').val('1').trigger('change'); 
             $('#terms_condi').val('1').trigger('change');
+            $('#gst_percentage').val('0');  
         }
     });//end ajax 
 }//end if
@@ -1284,14 +1312,18 @@ $(document).ready(function(){
     });
 });    
 
+
 // Save Inv Data
-$('#savePrint').on('click', function(){
+$('#savePrint').on('click', function(){    
+    calculateBillAmount();
+
     $user_id = $('#user_id').val();
     $bill_id = $('#bill_id').val();
     $inv_month = $('#inv_month').val();
     $normal_gst = $('#normal_gst').val();
     $terms_condi = $('#terms_condi').val();
     $bill_total = $('#bill_total').val();
+    $gst_percentage = $('#gst_percentage').val();
     
     console.log('user_id: ' + $user_id + ' inv_month: ' + $inv_month);
 
@@ -1301,7 +1333,7 @@ $('#savePrint').on('click', function(){
                 type: "POST",
                 url: "users/function.php",
                 dataType: "json",
-                data: { fn: "saveInvoiceData", user_id: $user_id, bill_id: $bill_id, inv_month: $inv_month, normal_gst: $normal_gst, terms_condi: $terms_condi, bill_total: $bill_total }
+                data: { fn: "saveInvoiceData", user_id: $user_id, bill_id: $bill_id, inv_month: $inv_month, normal_gst: $normal_gst, terms_condi: $terms_condi, bill_total: $bill_total, gst_percentage: $gst_percentage }
             })
             .done(function( res ) {
                 //console.log(JSON.stringify(res))
@@ -1318,4 +1350,71 @@ $('#savePrint').on('click', function(){
     }else{
         alert('Please choose Month - Year* first');
     }//end if
+});
+
+// start bill calculation
+$('#normal_gst').on('change', function(){     
+    calculateBillAmount();
+})
+function calculateBillAmount(){
+    $normal_gst = $('#normal_gst').val();
+    $gst_percentage = $('#gst_percentage').val();
+    $total_rcvabl_amount = $('#total_rcvabl_amount').val();
+    $bill_total = 0;
+    $gst_tax_val = 0;
+    if($normal_gst == '2'){
+        $gst_tax_val = (parseFloat($total_rcvabl_amount) * parseFloat($gst_percentage)) / 100;
+    }
+    $bill_total = parseFloat($total_rcvabl_amount) + parseFloat($gst_tax_val);
+    $('#bill_total').val($bill_total);
+
+    $foot_text = 'Total Bill Amount: Rs. '+$bill_total+'/- Total due till date: Rs. 5000.00';
+    $('#footer_text').html($foot_text);
+}//end if
+
+$('#receivePayment').on('click', function(){
+    $user_id = $('#user_id').val();
+    $inv_month = $('#inv_month').val(); 
+    $bill_id = $('#bill_id').val();
+    $bill_total = $('#bill_total').val();
+    $paid_amount = $('#paid_amount').val(); 
+    $transaction_id = $('#transaction_id').val();
+    $payment_mode = ''; //1=Cash 2=UPI
+    if($("#payment_mode").is(":checked")){
+        $payment_mode = '2';
+    }else{
+        $payment_mode = '1';
+    }
+    console.log('paid_amount: ' + $paid_amount + ' payment_mode: ' + $payment_mode);
+
+    if($bill_id > 0){
+        if(parseFloat($bill_total) > 0){
+            if(parseFloat($paid_amount) > 0){            
+                $.ajax({
+                    type: "POST",
+                    url: "users/function.php",
+                    dataType: "json",
+                    data: { fn: "savePaymentData", user_id: $user_id, bill_id: $bill_id, inv_month: $inv_month, paid_amount: $paid_amount, transaction_id: $transaction_id, payment_mode: $payment_mode}
+                })
+                .done(function( res ) {
+                    //console.log(JSON.stringify(res))
+                    if(res.status == true){    
+                        $('#paid_amount').val(''); 
+                        $('#transaction_id').val('');
+                        //$bill_id = res.bill_id;
+                        //$('#bill_id').val($bill_id);
+                        
+                    }else{
+                        alert('Error: ' + res.error_message);
+                    }        
+                });//end ajax
+            }else{
+                alert('Please enter payment amount');
+            }
+        }else{
+            alert('Bill amount is zero.');
+        }
+    }else{
+        alert('Please Create your bill first');
+    }
 });
