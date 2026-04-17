@@ -666,8 +666,9 @@ if($sess_user_type > 3){
                             </div>
                             <div class="form-row" id="div_p_history1">
                                 <h5>Payment Receive History</h5>
-                                <div class="col-md-12"> Amount: Rs. 1500/- Received by Cash on 02-Apr-2026 </div>
-                                <div class="col-md-12"> Amount: Rs. 500/- Received by UPI on 03-Apr-2026 </div>
+                                <div class="col-md-12">Please choose Month - Year first then payment histry will be available here.</div>
+                                <!-- <div class="col-md-12"> Amount: Rs. 1500/- Received by Cash on 02-Apr-2026 </div>
+                                <div class="col-md-12"> Amount: Rs. 500/- Received by UPI on 03-Apr-2026 </div> -->
                             </div>
                             <!-- End payment section -->
                         </div>
@@ -678,6 +679,7 @@ if($sess_user_type > 3){
                             <input type="hidden" name="bill_id" id="bill_id" value="0">
                             <input type="hidden" name="bill_total" id="bill_total" value="0">
                             <input type="hidden" name="total_rcvabl_amount" id="total_rcvabl_amount" value="0">
+                            <input type="hidden" name="bill_total_p" id="bill_total_p" value="0"> 
                             
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#invModalLong').modal('hide')">Close</button>
                             <button type="button" class="btn btn-primary" id="savePrint">Save & Print</button>

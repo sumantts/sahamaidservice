@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2026 at 07:24 PM
+-- Generation Time: Apr 17, 2026 at 06:19 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -104,7 +104,7 @@ CREATE TABLE `bill_details` (
 --
 
 INSERT INTO `bill_details` (`bill_id`, `client_id`, `inv_month`, `normal_gst`, `gst_percentage`, `terms_condi`, `bill_total`, `bill_created_on`, `bill_updated_on`, `bill_created_by`, `bill_updated_by`) VALUES
-(1, 114, '2026-04', 2, 18, 2, 37760.00, '2026-04-16 09:27:52', '2026-04-16 22:06:17', 1, 1);
+(1, 114, '2026-04', 2, 9, 2, 34880.00, '2026-04-16 09:27:52', '2026-04-17 09:47:26', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -118,9 +118,17 @@ CREATE TABLE `bill_payment_details` (
   `client_id` int(11) NOT NULL COMMENT 'pk of user_details',
   `paid_amount` decimal(10,2) NOT NULL,
   `payment_mode` tinyint(1) NOT NULL COMMENT '1=cash 2=UPI',
+  `transaction_id` varchar(255) NOT NULL,
   `pay_date` datetime NOT NULL DEFAULT current_timestamp(),
   `payment_received_by` int(11) NOT NULL COMMENT 'pk of user_details'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bill_payment_details`
+--
+
+INSERT INTO `bill_payment_details` (`bpd_id`, `bill_id`, `client_id`, `paid_amount`, `payment_mode`, `transaction_id`, `pay_date`, `payment_received_by`) VALUES
+(1, 1, 114, 10000.00, 2, 'phPay', '2026-04-17 09:46:35', 1);
 
 -- --------------------------------------------------------
 
@@ -1970,7 +1978,7 @@ ALTER TABLE `bill_details`
 -- AUTO_INCREMENT for table `bill_payment_details`
 --
 ALTER TABLE `bill_payment_details`
-  MODIFY `bpd_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `bpd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `bill_status_master`

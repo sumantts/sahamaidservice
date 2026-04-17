@@ -717,26 +717,6 @@ buttons.forEach(button => {
                 $('#partSevenBoard2').addClass('d-block');  
                 $('#partSevenBoard3').removeClass('d-none');
                 $('#partSevenBoard3').addClass('d-block'); 
-                
-
-                //Section 8 Fields                 
-                /*$('#partEightSwitch').removeClass('d-none');
-                $('#partEightSwitch').addClass('d-block');                
-                $('#partEightTitl').removeClass('d-none');
-                $('#partEightTitl').addClass('d-block');     
-
-                $('#partEightBoard1').removeClass('d-none');
-                $('#partEightBoard1').addClass('d-block');  
-                $('#partEightBoard2').removeClass('d-none');
-                $('#partEightBoard2').addClass('d-block');  
-                $('#partEightBoard3').removeClass('d-none');
-                $('#partEightBoard3').addClass('d-block');  
-                $('#partEightBoard4').removeClass('d-none');
-                $('#partEightBoard4').addClass('d-block');  
-                $('#partEightBoard5').removeClass('d-none');
-                $('#partEightBoard5').addClass('d-block');  
-                $('#partEightBoard6').removeClass('d-none');
-                $('#partEightBoard6').addClass('d-block');*/
                   
             }else{
                 // Section 4                    
@@ -802,25 +782,7 @@ buttons.forEach(button => {
                 $('#partSevenBoard2').removeClass('d-block');
                 $('#partSevenBoard2').addClass('d-none');                
                 $('#partSevenBoard3').removeClass('d-block');
-                $('#partSevenBoard3').addClass('d-none');
-
-                //Section 8 Fields                 
-                /*$('#partEightSwitch').removeClass('d-block');
-                $('#partEightSwitch').addClass('d-none');                
-                $('#partEightTitl').removeClass('d-block');
-                $('#partEightTitl').addClass('d-none');                
-                $('#partEightBoard1').removeClass('d-block');
-                $('#partEightBoard1').addClass('d-none');                
-                $('#partEightBoard2').removeClass('d-block');
-                $('#partEightBoard2').addClass('d-none');                
-                $('#partEightBoard3').removeClass('d-block');
-                $('#partEightBoard3').addClass('d-none');               
-                $('#partEightBoard4').removeClass('d-block');
-                $('#partEightBoard4').addClass('d-none');               
-                $('#partEightBoard5').removeClass('d-block');
-                $('#partEightBoard5').addClass('d-none');               
-                $('#partEightBoard6').removeClass('d-block');
-                $('#partEightBoard6').addClass('d-none');*/
+                $('#partSevenBoard3').addClass('d-none'); 
 
 
             }   
@@ -1170,6 +1132,9 @@ function onBillModal($user_id){
     $('#normal_gst').val('1').trigger('change'); 
     $('#gst_percentage').val('');
     $('#terms_condi').val('1').trigger('change');
+
+    $foot_text = 'Total Bill Amount: Rs. 0.00/- <br>Total Paid Amount: Rs. 0.00/-<br>Total Due Amount: Rs. 0.00/- ';
+    $('#footer_text').html($foot_text);
 }
 
 $('#inv_month').on('change', function(){
@@ -1202,9 +1167,12 @@ function getUnPaidBills(){
     $total_rcvabl_amount = 0;
     $bill_id = 0;
     $bill_total = 0;
+    $bill_total_p = 0;
     $gst_percentage = 0;
+    
     $('#bill_id').val($bill_id);
     $('#bill_total').val($bill_total); 
+    $('#bill_total_p').val($bill_total_p);  
     //$('#gst_percentage').val($gst_percentage);
     $('#total_rcvabl_amount').val($total_rcvabl_amount);
 
@@ -1221,9 +1189,13 @@ function getUnPaidBills(){
             $normal_gst = $res1.normal_gst;
             $terms_condi = $res1.terms_condi;
             $bill_total = $res1.bill_total; 
+            $bill_total_p = $res1.bill_total_p; 
             $gst_percentage = $res1.gst_percentage; 
-            $total_rcvabl_amount = $res1.total_rcvabl_amount; 
+            $total_rcvabl_amount = $res1.total_rcvabl_amount;
+            $payments = $res1.payments;
+            $total_paid_till_date = $res1.total_paid_till_date; 
 
+            populatePaymentHistory($payments);
     
             
             console.log('gst_percentage: ' + $gst_percentage )
@@ -1258,7 +1230,8 @@ function getUnPaidBills(){
             }
 
             $('#bill_id').val($bill_id);
-            $('#bill_total').val($bill_total);   
+            $('#bill_total').val($bill_total);  
+            $('#bill_total_p').val($bill_total_p);   
             $('#total_rcvabl_amount').val($total_rcvabl_amount); 
 
             if($normal_gst != ''){
@@ -1289,6 +1262,26 @@ function getUnPaidBills(){
         }
     });//end ajax 
 }//end if
+
+function populatePaymentHistory($payments){
+    $p_his = '<h5>Payment Receive History</h5>';
+    if($payments.length > 0){
+        for($i = 0; $i < $payments.length; $i++){
+            $payment_mode = ($payments[$i].payment_mode == '1') ? 'Cash' : 'UPI';
+            $transaction_id = $payments[$i].transaction_id;
+
+            $p_mode_text = ' '+$payment_mode;
+            if($payments[$i].payment_mode == 2){
+                $p_mode_text += ' ('+$transaction_id+')';
+            }
+            $p_his += '<div class="col-md-12">Rs. '+$payments[$i].paid_amount+'/- Received by '+$p_mode_text+' on '+$payments[$i].pay_date+' </div>';
+        }
+
+    }else{
+        $p_his += '<div class="col-md-12">No payment history available</div>';
+    }
+    $('#div_p_history1').html($p_his);
+}//end fun
 
 $("#paymentSwitch").click(function(){
     $("#paymentBoard").toggle('slow');
@@ -1356,10 +1349,17 @@ $('#savePrint').on('click', function(){
 $('#normal_gst').on('change', function(){     
     calculateBillAmount();
 })
+$('#gst_percentage').blur(function() {   
+    calculateBillAmount();
+})
+
 function calculateBillAmount(){
     $normal_gst = $('#normal_gst').val();
     $gst_percentage = $('#gst_percentage').val();
     $total_rcvabl_amount = $('#total_rcvabl_amount').val();
+    $bill_total_p = $('#bill_total_p').val();
+    $bill_total_d = 0;
+
     $bill_total = 0;
     $gst_tax_val = 0;
     if($normal_gst == '2'){
@@ -1368,7 +1368,9 @@ function calculateBillAmount(){
     $bill_total = parseFloat($total_rcvabl_amount) + parseFloat($gst_tax_val);
     $('#bill_total').val($bill_total);
 
-    $foot_text = 'Total Bill Amount: Rs. '+$bill_total+'/- Total due till date: Rs. 5000.00';
+    $bill_total_d = parseFloat($bill_total) - parseFloat($bill_total_p);
+
+    $foot_text = 'Total Bill Amount: Rs. '+$bill_total+'/- <br>Total Paid Amount: Rs. '+$bill_total_p+'/-<br>Total Due Amount: Rs. '+$bill_total_d+'/- ';
     $('#footer_text').html($foot_text);
 }//end if
 
@@ -1397,13 +1399,18 @@ $('#receivePayment').on('click', function(){
                     data: { fn: "savePaymentData", user_id: $user_id, bill_id: $bill_id, inv_month: $inv_month, paid_amount: $paid_amount, transaction_id: $transaction_id, payment_mode: $payment_mode}
                 })
                 .done(function( res ) {
-                    //console.log(JSON.stringify(res))
+                    //console.log(JSON.stringify(res)) 
                     if(res.status == true){    
                         $('#paid_amount').val(''); 
                         $('#transaction_id').val('');
-                        //$bill_id = res.bill_id;
-                        //$('#bill_id').val($bill_id);
+                        $payments = res.payments;
+                        $bill_total_p = res.bill_total_p; 
+                        $('#bill_total_p').val($bill_total_p);
+                        populatePaymentHistory($payments);                      
                         
+                        setTimeout(function(){
+                            calculateBillAmount();
+                        },300);
                     }else{
                         alert('Error: ' + res.error_message);
                     }        

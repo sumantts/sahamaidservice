@@ -932,6 +932,8 @@
 		$inv_month = $_POST['inv_month'];
 		$return_array = array();
 		$assign_maids = array();
+		$payments = array();
+		$total_paid_till_date = 0;
 		$status = true;
 		$bill_id = 0;
 
@@ -939,6 +941,7 @@
 		$to_date1 = $inv_month.'-31';
 		$bill_status = '1';
 		$total_rcvabl_amount = 0;
+		$bill_total_p = 0;
 
 		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code,
 		user_details.full_name
@@ -1010,14 +1013,47 @@
 			$bill_total = $row['bill_total']; 
 		}
 
+		# Get Payments  
+		if($bill_id > 0){
+			$sql4 = "SELECT * FROM bill_payment_details WHERE bill_id = '" .$bill_id. "' ";
+			$result4 = $con->query($sql4);
+
+			if ($result4->num_rows > 0) {
+				while($row4 = $result4->fetch_array()){
+					$payment = new stdClass();
+					$payment->paid_amount = $row4['paid_amount'];
+					$payment->payment_mode = $row4['payment_mode'];
+					$payment->transaction_id = $row4['transaction_id'];
+					$payment->pay_date = date('d-F-Y h:i A', strtotime($row4['pay_date'])); 
+					
+					# Total amount paid for this Bill 
+					$bill_total_p = $bill_total_p + $row4['paid_amount'];
+					array_push($payments, $payment);
+				}//end while
+			}//end if
+
+			# Total paid till date
+			$sql5 = "SELECT SUM(paid_amount) AS total_paid_till_date FROM bill_payment_details WHERE client_id = '" .$user_id. "' ";
+			$result5 = $con->query($sql5);
+
+			if ($result5->num_rows > 0) {
+				$row5 = $result5->fetch_array();
+				$total_paid_till_date = $row5['total_paid_till_date'];
+			}
+		}//end if
+
+
 		$return_array['status'] = $status;
 		$return_array['bill_id'] = $bill_id;
 		$return_array['normal_gst'] = $normal_gst;
 		$return_array['gst_percentage'] = $gst_percentage;
 		$return_array['terms_condi'] = $terms_condi;
 		$return_array['bill_total'] = $bill_total;
+		$return_array['bill_total_p'] = $bill_total_p;
 		$return_array['assign_maids'] = $assign_maids;
 		$return_array['total_rcvabl_amount'] = $total_rcvabl_amount;
+		$return_array['payments'] = $payments;
+		$return_array['total_paid_till_date'] = $total_paid_till_date;
     	echo json_encode($return_array);
 	}//function end
 
@@ -1054,6 +1090,9 @@
 		$return_result = array();
 		$status = true;
 		$error_message = '';
+		$payments = array();
+		$total_paid_till_date = 0;
+		$bill_total_p = 0;
 
 		$user_id = $_POST['user_id'];
 		$bill_id = $_POST['bill_id'];
@@ -1065,11 +1104,43 @@
 
 		$payment_received_by = $_SESSION["user_id"];
 			 
-		$sql2 = "INSERT INTO bill_payment_details (bill_id, client_id, paid_amount, payment_mode, payment_received_by) VALUES ('".$bill_id."', '".$user_id."', '".$paid_amount."', '".$payment_mode."', '".$payment_received_by."')";
+		$sql2 = "INSERT INTO bill_payment_details (bill_id, client_id, paid_amount, payment_mode, transaction_id, payment_received_by) VALUES ('".$bill_id."', '".$user_id."', '".$paid_amount."', '".$payment_mode."', '".$transaction_id."', '".$payment_received_by."')";
 		$result2 = $con->query($sql2); 
+
+		# Get Payments  
+		if($bill_id > 0){
+			$sql4 = "SELECT * FROM bill_payment_details WHERE bill_id = '" .$bill_id. "' ";
+			$result4 = $con->query($sql4);
+
+			if ($result4->num_rows > 0) {
+				while($row4 = $result4->fetch_array()){
+					$payment = new stdClass();
+					$payment->paid_amount = $row4['paid_amount'];
+					$payment->payment_mode = $row4['payment_mode'];
+					$payment->transaction_id = $row4['transaction_id'];
+					$payment->pay_date = date('d-F-Y h:i A', strtotime($row4['pay_date'])); 
+					
+					# Total amount paid for this Bill 
+					$bill_total_p = $bill_total_p + $row4['paid_amount'];
+					array_push($payments, $payment);
+				}//end while
+			}//end if
+
+			# Total paid till date
+			$sql5 = "SELECT SUM(paid_amount) AS total_paid_till_date FROM bill_payment_details WHERE client_id = '" .$user_id. "' ";
+			$result5 = $con->query($sql5);
+
+			if ($result5->num_rows > 0) {
+				$row5 = $result5->fetch_array();
+				$total_paid_till_date = $row5['total_paid_till_date'];
+			}
+		}//end if
 		
 		$return_result['status'] = $status;	
 		$return_result['error_message'] = $error_message;	
+		$return_result['total_paid_till_date'] = $total_paid_till_date;	
+		$return_result['payments'] = $payments;	
+		$return_result['bill_total_p'] = $bill_total_p;	
 		
 		echo json_encode($return_result);
 	}//Save function end
