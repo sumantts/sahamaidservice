@@ -1,0 +1,16 @@
+1. Expected salary field should be removed from the client info
+
+2. Remove extra hr line
+
+3. Workewr Available From (date) date not saved properly
+
+4. Remove Save & Clear button and provide Close button only. - Modal Close Hobe
+
+5. Assign Made Show all field in read only mode.
+
+6. If you want to make absent from present then show an confirmation alert.
+
+7. Add a new option "Present (in Holiday)" in "Attendance Report of: Ashalata Mandal" form
+
+8. show past due in "Monthly Bill of: Ram Manna" this form
+

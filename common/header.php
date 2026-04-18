@@ -67,7 +67,7 @@
             </ul>
           </li> -->
           <li><a class="nav-link scrollto <?php if($p == 'write-review'){?> active <?php } ?>" href="?p=write-review">Write a Review</a></li>
-          <li><a class="getstarted scrollto" href="./administrators">Administrator</a></li>
+          <li><a class="getstarted scrollto" href="./administrators">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->

@@ -1132,6 +1132,12 @@ function onBillModal($user_id){
     $('#normal_gst').val('1').trigger('change'); 
     $('#gst_percentage').val('');
     $('#terms_condi').val('1').trigger('change');
+    $tax_cgst = 0;
+    $tax_sgst = 0;
+    $('#tax_cgst').val($tax_cgst);
+    $('#tax_sgst').val($tax_sgst);
+    $('#bill_id').val('0');
+    $('#bill_total').val('0');
 
     $foot_text = 'Total Bill Amount: Rs. 0.00/- <br>Total Paid Amount: Rs. 0.00/-<br>Total Due Amount: Rs. 0.00/- ';
     $('#footer_text').html($foot_text);
@@ -1169,12 +1175,15 @@ function getUnPaidBills(){
     $bill_total = 0;
     $bill_total_p = 0;
     $gst_percentage = 0;
+    $tax_cgst = 0;
+    $tax_sgst = 0;
     
     $('#bill_id').val($bill_id);
     $('#bill_total').val($bill_total); 
     $('#bill_total_p').val($bill_total_p);  
-    //$('#gst_percentage').val($gst_percentage);
     $('#total_rcvabl_amount').val($total_rcvabl_amount);
+    $('#tax_cgst').val($tax_cgst);
+    $('#tax_sgst').val($tax_sgst);
 
     $.ajax({
         method: "POST",
@@ -1317,6 +1326,8 @@ $('#savePrint').on('click', function(){
     $terms_condi = $('#terms_condi').val();
     $bill_total = $('#bill_total').val();
     $gst_percentage = $('#gst_percentage').val();
+    $tax_cgst = $('#tax_cgst').val();
+    $tax_sgst = $('#tax_sgst').val();
     
     console.log('user_id: ' + $user_id + ' inv_month: ' + $inv_month);
 
@@ -1326,13 +1337,20 @@ $('#savePrint').on('click', function(){
                 type: "POST",
                 url: "users/function.php",
                 dataType: "json",
-                data: { fn: "saveInvoiceData", user_id: $user_id, bill_id: $bill_id, inv_month: $inv_month, normal_gst: $normal_gst, terms_condi: $terms_condi, bill_total: $bill_total, gst_percentage: $gst_percentage }
+                data: { fn: "saveInvoiceData", user_id: $user_id, bill_id: $bill_id, inv_month: $inv_month, normal_gst: $normal_gst, terms_condi: $terms_condi, bill_total: $bill_total, gst_percentage: $gst_percentage, tax_cgst: $tax_cgst, tax_sgst: $tax_sgst }
             })
             .done(function( res ) {
                 //console.log(JSON.stringify(res))
                 if(res.status == true){    
                     $bill_id = res.bill_id;
                     $('#bill_id').val($bill_id);
+
+                    if($normal_gst == '1'){
+                        window.open('./users/normal_bill.php?client_id='+$user_id+'&bill_id='+$bill_id, '_blank');
+                    }else{
+                        window.open('./users/gst_bill.php?client_id='+$user_id+'&bill_id='+$bill_id, '_blank');
+                    }
+
                 }else{
                     alert('Error: ' + res.error_message);
                 }        
@@ -1362,9 +1380,15 @@ function calculateBillAmount(){
 
     $bill_total = 0;
     $gst_tax_val = 0;
+    $tax_cgst = 0;
+    $tax_sgst = 0;
     if($normal_gst == '2'){
-        $gst_tax_val = (parseFloat($total_rcvabl_amount) * parseFloat($gst_percentage)) / 100;
+        $tax_cgst = (parseFloat($total_rcvabl_amount) * parseFloat($gst_percentage)) / 100;
+        $tax_sgst = (parseFloat($total_rcvabl_amount) * parseFloat($gst_percentage)) / 100;
+        $gst_tax_val = $tax_cgst + $tax_sgst;
     }
+    $('#tax_cgst').val($tax_cgst);
+    $('#tax_sgst').val($tax_sgst);
     $bill_total = parseFloat($total_rcvabl_amount) + parseFloat($gst_tax_val);
     $('#bill_total').val($bill_total);
 
