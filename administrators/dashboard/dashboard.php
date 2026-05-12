@@ -50,6 +50,16 @@ if ($result) {
     }
 }
 
+// Calculate totals
+$total_bill_sum = 0;
+$total_paid_sum = 0;
+$total_due_sum = 0;
+foreach ($client_dues as $client) {
+    $total_bill_sum += $client['total_bill'];
+    $total_paid_sum += $client['total_paid'];
+    $total_due_sum += $client['due_amount'];
+}
+
 include('common/head.php'); ?>
 
 <body class="">
@@ -145,6 +155,12 @@ include('common/head.php'); ?>
                                                 <td>₹<?= number_format($client['due_amount'], 2) ?></td>
                                             </tr>
                                         <?php endforeach; ?>
+                                        <tr class="table-info">
+                                            <td><strong>Subtotal</strong></td>
+                                            <td><strong>₹<?= number_format($total_bill_sum, 2) ?></strong></td>
+                                            <td><strong>₹<?= number_format($total_paid_sum, 2) ?></strong></td>
+                                            <td><strong>₹<?= number_format($total_due_sum, 2) ?></strong></td>
+                                        </tr>
                                     <?php else: ?>
                                         <tr>
                                             <td colspan="4" class="text-center">No clients with due amounts found.</td>
@@ -158,7 +174,7 @@ include('common/head.php'); ?>
             </div>
         </div>
         
-        <div class="row"> 
+        <!-- <div class="row"> 
             <div class="col-sm-12">
                 <div class="card">
 
@@ -188,7 +204,7 @@ include('common/head.php'); ?>
                     </div>
                 </div>
             </div> 
-        </div> 
+        </div>  -->
 
     </div>
 </div>
