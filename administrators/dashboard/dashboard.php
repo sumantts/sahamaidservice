@@ -60,6 +60,29 @@ foreach ($client_dues as $client) {
     $total_due_sum += $client['due_amount'];
 }
 
+// Query for upcoming maid assignments
+$upcoming_assignments = array();
+$sql = "SELECT 
+    assign_maid.assign_id,
+    c.full_name AS client_name,
+    w.full_name AS maid_name,
+    assign_maid.from_date,
+    assign_maid.from_time,
+    assign_maid.to_date,
+    assign_maid.to_time
+FROM assign_maid
+LEFT JOIN user_details c ON assign_maid.client_id = c.user_id
+LEFT JOIN user_details w ON assign_maid.worker_id = w.user_id
+WHERE assign_maid.from_date >= '$current_date'
+ORDER BY assign_maid.from_date ASC, assign_maid.from_time ASC";
+$result = $con->query($sql);
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $row['invoice_id'] = 'INV_'.str_pad($row['assign_id'], 4, '0', STR_PAD_LEFT);
+        $upcoming_assignments[] = $row;
+    }
+}
+
 include('common/head.php'); ?>
 
 <body class="">
@@ -164,6 +187,52 @@ include('common/head.php'); ?>
                                     <?php else: ?>
                                         <tr>
                                             <td colspan="4" class="text-center">No clients with due amounts found.</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Upcoming Maid Assignments</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice ID</th>
+                                        <th>Client Name</th>
+                                        <th>Maid Name</th>
+                                        <th>Start Date</th>
+                                        <th>Start Time</th>
+                                        <th>End Date</th>
+                                        <th>End Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (count($upcoming_assignments) > 0): ?>
+                                        <?php foreach ($upcoming_assignments as $assignment): ?>
+                                            <tr>
+                                                <td><?= htmlspecialchars($assignment['invoice_id']) ?></td>
+                                                <td><?= htmlspecialchars($assignment['client_name']) ?></td>
+                                                <td><?= htmlspecialchars($assignment['maid_name']) ?></td>
+                                                <td><?= date('d-F-Y', strtotime($assignment['from_date'])) ?></td>
+                                                <td><?= htmlspecialchars($assignment['from_time']) ?></td>
+                                                <td><?= date('d-F-Y', strtotime($assignment['to_date'])) ?></td>
+                                                <td><?= htmlspecialchars($assignment['to_time']) ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="6" class="text-center">No upcoming maid assignments found.</td>
                                         </tr>
                                     <?php endif; ?>
                                 </tbody>
