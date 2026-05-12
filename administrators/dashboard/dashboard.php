@@ -2,6 +2,54 @@
 if(!$_SESSION["user_id"]){
     header("location:?p=signin");
 }
+//include('../assets/php/sql_conn.php');
+
+$current_date = date('Y-m-d');
+
+$current_working_workers = 0;
+$free_active_workers = 0;
+$current_engaged_clients = 0;
+
+$sql = "SELECT COUNT(DISTINCT worker_id) AS total_working FROM assign_maid WHERE worker_id > 0 AND from_date <= '$current_date' AND to_date >= '$current_date'";
+$result = $con->query($sql);
+if ($result && $row = $result->fetch_assoc()) {
+    $current_working_workers = (int) $row['total_working'];
+}
+
+$sql = "SELECT COUNT(DISTINCT client_id) AS total_clients FROM assign_maid WHERE client_id > 0 AND from_date <= '$current_date' AND to_date >= '$current_date'";
+$result = $con->query($sql);
+if ($result && $row = $result->fetch_assoc()) {
+    $current_engaged_clients = (int) $row['total_clients'];
+}
+
+$sql = "SELECT COUNT(*) AS total_free FROM user_details WHERE user_type = 5";
+$sql .= " AND user_id NOT IN (SELECT DISTINCT worker_id FROM assign_maid WHERE worker_id > 0 AND from_date <= '$current_date' AND to_date >= '$current_date')";
+$result = $con->query($sql);
+if ($result && $row = $result->fetch_assoc()) {
+    $free_active_workers = (int) $row['total_free'];
+}
+
+// Query for clients with due amounts
+$client_dues = array();
+$sql = "SELECT 
+    user_details.full_name,
+    COALESCE(SUM(bill_details.bill_total), 0) AS total_bill,
+    COALESCE(SUM(bill_payment_details.paid_amount), 0) AS total_paid,
+    (COALESCE(SUM(bill_details.bill_total), 0) - COALESCE(SUM(bill_payment_details.paid_amount), 0)) AS due_amount
+FROM user_details 
+LEFT JOIN bill_details ON user_details.user_id = bill_details.client_id 
+LEFT JOIN bill_payment_details ON user_details.user_id = bill_payment_details.client_id 
+WHERE user_details.user_type = 4 
+GROUP BY user_details.user_id, user_details.full_name 
+HAVING due_amount > 0 
+ORDER BY due_amount DESC";
+$result = $con->query($sql);
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $client_dues[] = $row;
+    }
+}
+
 include('common/head.php'); ?>
 
 <body class="">
@@ -44,7 +92,73 @@ include('common/head.php'); ?>
         <!-- [ breadcrumb ] end -->
         <!-- [ Main Content ] start -->
         <div class="row">
-            <!-- [ sample-page ] start -->
+            <div class="col-md-4">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">Total Current Working Workers</h6>
+                        <h3 class="card-text"><?= $current_working_workers ?></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">Total Free Active Workers</h6>
+                        <h3 class="card-text"><?= $free_active_workers ?></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">Total Currently Engaged Clients</h6>
+                        <h3 class="card-text"><?= $current_engaged_clients ?></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Client List with Due Amounts</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Client Name</th>
+                                        <th>Total Bill Amount</th>
+                                        <th>Total Paid Amount</th>
+                                        <th>Total Due Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (count($client_dues) > 0): ?>
+                                        <?php foreach ($client_dues as $client): ?>
+                                            <tr>
+                                                <td><?= htmlspecialchars($client['full_name']) ?></td>
+                                                <td>₹<?= number_format($client['total_bill'], 2) ?></td>
+                                                <td>₹<?= number_format($client['total_paid'], 2) ?></td>
+                                                <td>₹<?= number_format($client['due_amount'], 2) ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="4" class="text-center">No clients with due amounts found.</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row"> 
             <div class="col-sm-12">
                 <div class="card">
 
@@ -69,12 +183,13 @@ include('common/head.php'); ?>
                             aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
                             officia deserunt mollit anim id est laborum."
                         </p>
+
+
                     </div>
                 </div>
-            </div>
-            <!-- [ sample-page ] end -->
-        </div>
-        <!-- [ Main Content ] end -->
+            </div> 
+        </div> 
+
     </div>
 </div>
 <!-- [ Main Content ] end -->
