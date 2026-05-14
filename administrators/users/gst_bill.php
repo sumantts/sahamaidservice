@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Tax Invoice</title>
+    <!-- Favicon icon -->
+    <link rel="icon" href="../assets/images/<?=$ico?>" type="image/x-icon">
 
 <style>
     @page {

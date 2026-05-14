@@ -86,7 +86,7 @@ if($sess_user_type == 4){
                         
                         <form method="POST" action="#" name="myForm" name="myForm">
                             <div class="form-row"> 
-                                <div class="col-md-3 mb-2">
+                                <div class="col-md-2 mb-2">
                                     <label for="user_type" class="form-label text-danger">User Type*</label>
                                     <select class="form-control" id="user_type" name="user_type" required>
                                         <option value="">Select</option> 
@@ -112,7 +112,11 @@ if($sess_user_type == 4){
 
                                 <div class="col-md-2 mt-4 d-none" id="csvDownloadDiv">
                                     <button type="button" class="btn btn-primary" id="csvDownload">CSV Download</button> 
-                                </div> 
+                                </div>  
+
+                                <div class="col-md-2 mt-4 d-none" id="paySlipDownloadDiv">
+                                    <button type="button" class="btn btn-primary" id="paySlipDownload">Pay Slip</button> 
+                                </div>
                             </div>
                         </form>
                         

@@ -34,10 +34,13 @@
     $('#submitForm_spinner_text').show();
     $('#submitForm_text').hide();
 
-
     // Hide CSV Download button
     $('#csvDownloadDiv').removeClass('d-block');
     $('#csvDownloadDiv').addClass('d-none');
+
+    // Hide Pay Slip Download button
+    $('#paySlipDownloadDiv').removeClass('d-block');
+    $('#paySlipDownloadDiv').addClass('d-none');
     
     $user_type = $('#user_type').val();  
     $user_id = $('#user_id').val();   
@@ -102,6 +105,10 @@
                 $('#csvDownloadDiv').removeClass('d-none');
                 $('#csvDownloadDiv').addClass('d-block');
 
+                // Active Pay Slip Download button
+                $('#paySlipDownloadDiv').removeClass('d-none');
+                $('#paySlipDownloadDiv').addClass('d-block');
+
             }//end if attendance
 
         }
@@ -111,6 +118,11 @@
 $('#csvDownload').on('click', function(){
     $atten_id = $('#atten_id').val();
     window.open("./attendance/attendance_csv.php?atten_id="+$atten_id, "_blank");
+})
+
+$('#paySlipDownload').on('click', function(){
+    $atten_id = $('#atten_id').val();
+    window.open("./attendance/pay_slip.php?atten_id="+$atten_id, "_blank");
 })
 
 // Update Attendance
