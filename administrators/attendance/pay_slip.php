@@ -185,10 +185,10 @@
 
                 <br><br>
 
-                Client Name – Rahul Mitra<br>
-                Address – 401, Victoria Apartment, Kadamtala<br>
-                Contact – 9731517926<br>
-                State - West Bengal
+                Client Name – <?php echo htmlspecialchars($client_name ?: 'Rahul Mitra'); ?><br>
+                Address – <?php echo htmlspecialchars($client_address ?: '401, Victoria Apartment, Kadamtala'); ?><br>
+                Contact – <?php echo htmlspecialchars($client_contact ?: '9731517926'); ?><br>
+                State - <?php echo htmlspecialchars($client_state ?: 'West Bengal'); ?>
 
             </td>
 
@@ -196,8 +196,8 @@
 
                 <table>
                     <tr>
-                        <td class="bold">Invoice no:-1116</td>
-                        <td class="bold">Date:- 01.05.2026</td>
+                        <td class="bold">Invoice no:-<?=$atten_id?></td>
+                        <td class="bold">Date:- <?=date('d.m.Y', strtotime($assignWhereDate))?></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="height:240px;"></td>

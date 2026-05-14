@@ -10,6 +10,11 @@
     $exp_salary = '';
     $amount_chargeable = 0; // Expected Salary - Deduction Amount
     $deduction_amount = 0; // Expected Salary / 30 * Total Absent Days
+    $client_name = '';
+    $client_address = '';
+    $client_contact = '';
+    $client_state = '';
+    $atten_id = '';
 
     
 
@@ -133,7 +138,31 @@
 			$month_date_txt = date('M_Y', strtotime($row['month_date']));
 		
 		
-			//Get User Data
+	
+            $assignWhereDate = $mysqli->real_escape_string($row['month_date']);
+            $assignUserId = $mysqli->real_escape_string($user_id);
+
+            $from_date = date('Y-m-01', strtotime($assignWhereDate));
+            $to_date = date('Y-m-t', strtotime($assignWhereDate));
+
+            $assignSql = "SELECT assign_maid.assign_id, assign_maid.worker_id, assign_maid.client_id, assign_maid.from_date, assign_maid.to_date, 
+            user_details.full_name, user_details.address, user_details.phone_number,
+            states.name AS client_state
+            FROM assign_maid 
+            LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
+            LEFT OUTER JOIN states ON user_details.state_id = states.id
+            WHERE assign_maid.worker_id = '$assignUserId' AND assign_maid.from_date >= '$from_date' AND assign_maid.to_date <= '$to_date'";
+
+            $assignResult = $mysqli->query($assignSql);
+            if ($assignResult && $assignResult->num_rows > 0) {
+                $assignRow = $assignResult->fetch_assoc();
+                $client_name = isset($assignRow['full_name']) ? $assignRow['full_name'] : '';
+                $client_address = isset($assignRow['address']) ? $assignRow['address'] : '';
+                $client_contact = isset($assignRow['phone_number']) ? $assignRow['phone_number'] : '';
+                $client_state = isset($assignRow['client_state']) ? $assignRow['client_state'] : '';
+            }
+
+		//Get User Data
 			$sql3 = "SELECT user_details.user_id, user_details.username, user_details.password, user_details.user_type, user_details.added_by, user_details.full_name, user_details.fat_hus_name, user_details.email_id, user_details.phone_number, user_details.alt_phone_number, user_details.m_id, user_details.date_of_birth, user_details.gender, user_details.address, user_details.curr_address, user_details.city_id, user_details.state_id, user_details.country_id, user_details.pincode, user_details.adhar_card, user_details.adhar_card_img, user_details.adhar_card_back_img, user_details.pan_card, user_details.pan_card_img, user_details.voter_id_card, user_details.voter_id_card_img, user_details.voter_id_card_back_img, user_details.user_photo, user_details.wt_id, user_details.work_exp, user_details.earlier_work_city, user_details.last_emplr_name, user_details.sk_id, user_details.nr_id, user_details.l_id, user_details.work_loc, user_details.st_id, user_details.exp_salary, user_details.available_from, user_details.wf_id, user_details.il_id, user_details.pv_id, user_details.ch_id, user_details.emg_cont_person, user_details.relation, user_details.emg_cont_number, user_details.bank_details, user_details.bank_details_img, user_details.highest_edu, user_details.declaration, user_details.lc_id, user_details.wh_id, user_details.religion, user_details.nationality, user_details.family_bg_info, user_details.inserted_by, user_details.updated_by, user_details.insert_date, user_details.update_date, 
             gender_master.gender_name,
             marital_status_master.m_status_name,
@@ -188,6 +217,9 @@
 
             $deduction_amount = ($exp_salary / 30) * $total_absent;
             $amount_chargeable = $exp_salary - $deduction_amount;
+
+
+
 		}//end if
 	}//end if
 ?>
