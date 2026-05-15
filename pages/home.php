@@ -141,12 +141,28 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Business Partner</h2>
-          <p><?=$partner_text?></p>
+          <h2>Our Employees</h2>
+          <p>Your dedication keeps our team strong and our goals achievable.</p>
         </div>
 
-        <div class="row">
-          
+        <div class="row">          
+          <?php for($k = 0; $k < sizeof($employees); $k++){?>
+            <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
+              <div class="member d-flex align-items-start">
+                <div class="pic"><img src="administrators/users/uploads/<?=$employees[$k]->user_img?>" class="img-fluid" alt=""></div>
+                <div class="member-info">
+                  <h4><?=$employees[$k]->full_name?></h4>
+                  <span>Employee</span>
+                  <p><a href="tel:<?=$employees[$k]->phone_number?>"><i class="bi bi-phone"></i> <?=$employees[$k]->phone_number?></p></a>
+                  <p><a href="mailto:<?=$employees[$k]->email_id?>"><i class="bi bi-envelope"></i> <?=$employees[$k]->email_id?></p></a>
+                  
+                </div>
+              </div>
+            </div>
+          <?php } ?>
+        </div>
+
+        <!-- <div class="row">          
           <?php for($k = 0; $k < sizeof($partners); $k++){?>
             <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
               <div class="member d-flex align-items-start">
@@ -174,7 +190,7 @@
               </div>
             </div>
           <?php } ?>
-        </div>
+        </div> -->
       </div>
     </section>
     <?php } ?>
