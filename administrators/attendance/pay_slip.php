@@ -32,6 +32,19 @@
         margin:auto;
         border:2px solid #000;
         box-sizing:border-box;
+        position: relative;
+    }
+
+    .watermark{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 400px;
+        opacity: 0.15;
+        pointer-events: none;
+        z-index: 0;
     }
 
     .company-title{
@@ -40,6 +53,8 @@
         font-weight:bold;
         padding:15px 10px;
         border-bottom:2px solid #000;
+        position: relative;
+        z-index: 1;
     }
 
     .invoice-title{
@@ -48,11 +63,15 @@
         font-weight:bold;
         border-bottom:2px solid #000;
         padding:8px;
+        position: relative;
+        z-index: 1;
     }
 
     table{
         width:100%;
         border-collapse:collapse;
+        position: relative;
+        z-index: 1;
     }
 
     td, th{
@@ -148,6 +167,10 @@
             min-height:auto;
         }
 
+        .watermark{
+            opacity: 0.1;
+        }
+
     }
 
 </style>
@@ -156,6 +179,9 @@
 <body>
 
 <div class="invoice-container">
+
+    <!-- Watermark -->
+    <img src="../assets/images/logo.png" class="watermark" alt="Watermark">
 
     <!-- Company Name -->
     <div class="company-title">
