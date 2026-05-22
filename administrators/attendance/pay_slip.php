@@ -300,7 +300,7 @@
         <tr>
 
             <td class="amount-words">
-                Amount chargeable (in word):- <?php echo numberToWords($amount_chargeable); ?>
+                Amount chargeable (in word):- <?php echo digitToinWordConverter($amount_chargeable); ?>
             </td>
 
             <td class="amount-column">
