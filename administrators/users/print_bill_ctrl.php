@@ -16,6 +16,8 @@
 	$gst_percentage = 0;
 	$terms_condi = 0;	
 	$wh_name = '';
+	$bank_information = '';
+	$bank_name = '';
 
 	# Get skill function
 	function getSkillList($mysqli, $ids){
@@ -125,6 +127,17 @@
 			$bill_total = $row['bill_total'];           
 			$gst_percentage = $row['gst_percentage'];             
 			$terms_condi = $row['terms_condi']; 
+			$bank_id = $row['bank_id'];
+			$bank_name = '';
+			if($bank_id > 0){
+				$sql2 = "SELECT * FROM bank_details WHERE bank_id = '" .$bank_id. "' ";
+				$result2 = $con->query($sql2);
+				if ($result2->num_rows > 0) {
+					$row2 = $result2->fetch_array();  
+					$bank_name = $row2['bank_name']; 
+					$bank_information = $row2['bank_information'];
+				}//end if
+			}
 		}
 
 

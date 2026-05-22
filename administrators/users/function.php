@@ -513,6 +513,34 @@
     	echo json_encode($return_array);
 	}//function end
 
+	// Bank Accounts
+	if($fn == 'configureBankAccountsDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM bank_details ORDER BY bank_name ASC";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->bank_id = $row['bank_id'];
+				$data_obj->bank_name = $row['bank_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+		echo json_encode($return_array);
+	}//function end
+
+
 	// Working Hours
 	if($fn == 'configureWorkingHoursDd'){ 
 		$return_array = array();
@@ -956,11 +984,12 @@
 			LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
 			WHERE assign_maid.client_id = '" .$user_id. "' AND from_date >= $from_date1 AND to_date <= $to_date1 AND bill_status = '" .$bill_status. "' "; 
 		}*/
-			$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code,
-			user_details.full_name
-			FROM assign_maid 
-			LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
-			WHERE assign_maid.client_id = '" .$user_id. "' AND from_date >= '" .$from_date1. "' AND to_date <= '" .$to_date1. "' AND bill_status = '" .$bill_status. "' "; 
+
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code,
+		user_details.full_name
+		FROM assign_maid 
+		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
+		WHERE assign_maid.client_id = '" .$user_id. "' AND from_date >= '" .$from_date1. "' AND to_date <= '" .$to_date1. "' AND bill_status = '" .$bill_status. "' "; 
 
 		//echo $sql;
 		$result = $con->query($sql);
@@ -1013,6 +1042,7 @@
 		$terms_condi = '';
 		$bill_total = 0;
 		$gst_percentage = 0;
+		$bank_id = 0;
 
 		$sql = "SELECT * FROM bill_details WHERE client_id = '" .$user_id. "' AND inv_month = '" .$inv_month. "' ";
 		$result = $con->query($sql);
@@ -1023,6 +1053,7 @@
 			$normal_gst = $row['normal_gst'];
 			$gst_percentage = $row['gst_percentage'];
 			$terms_condi = $row['terms_condi'];
+			$bank_id = $row['bank_id'];
 			$bill_total = $row['bill_total']; 
 		}
 
@@ -1061,6 +1092,7 @@
 		$return_array['normal_gst'] = $normal_gst;
 		$return_array['gst_percentage'] = $gst_percentage;
 		$return_array['terms_condi'] = $terms_condi;
+		$return_array['bank_id'] = $bank_id;
 		$return_array['bill_total'] = $bill_total;
 		$return_array['bill_total_p'] = $bill_total_p;
 		$return_array['assign_maids'] = $assign_maids;
@@ -1085,12 +1117,13 @@
 		$bill_total = $_POST['bill_total']; 
 		$tax_cgst = $_POST['tax_cgst']; 
 		$tax_sgst = $_POST['tax_sgst'];
+		$bank_id = $_POST['bank_id'];
 
 		if($bill_id > 0){ 
-			$sql1 = "UPDATE bill_details SET inv_month = '" .$inv_month. "', normal_gst = '" .$normal_gst. "', gst_percentage = '" .$gst_percentage. "', terms_condi = '" .$terms_condi. "', tax_cgst = '" .$tax_cgst. "',  tax_sgst = '" .$tax_sgst. "',  bill_total = '" .$bill_total. "', bill_updated_by = '" .$sess_user_id. "' WHERE bill_id = '" .$bill_id. "' ";
+			$sql1 = "UPDATE bill_details SET inv_month = '" .$inv_month. "', normal_gst = '" .$normal_gst. "', gst_percentage = '" .$gst_percentage. "', terms_condi = '" .$terms_condi. "', bank_id = '" .$bank_id. "', tax_cgst = '" .$tax_cgst. "',  tax_sgst = '" .$tax_sgst. "',  bill_total = '" .$bill_total. "', bill_updated_by = '" .$sess_user_id. "' WHERE bill_id = '" .$bill_id. "' ";
 			$result1 = $con->query($sql1);
 		}else{	 
-			$sql2 = "INSERT INTO bill_details (client_id, inv_month, normal_gst, gst_percentage, terms_condi, tax_cgst, tax_sgst, bill_total, bill_created_by) VALUES ('".$user_id."', '".$inv_month."', '".$normal_gst."', '".$gst_percentage."', '".$terms_condi."', '".$tax_cgst."', '".$tax_sgst."', '".$bill_total."', '".$sess_user_id."')";
+			$sql2 = "INSERT INTO bill_details (client_id, inv_month, normal_gst, gst_percentage, terms_condi, bank_id, tax_cgst, tax_sgst, bill_total, bill_created_by) VALUES ('".$user_id."', '".$inv_month."', '".$normal_gst."', '".$gst_percentage."', '".$terms_condi."', '".$bank_id."', '".$tax_cgst."', '".$tax_sgst."', '".$bill_total."', '".$sess_user_id."')";
 			$result2 = $con->query($sql2);
 			$bill_id = $con->insert_id;
 		} 

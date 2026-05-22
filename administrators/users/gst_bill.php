@@ -307,9 +307,7 @@
 
             <td width="50%">
                 <b>Company's Bank Details</b><br>
-                Bank Name: State Bank of India<br>
-                A/c No.: 41873277474<br>
-                Branch & IFSC: Bauria & SBIN0001295
+                <?=$bank_information?>
             </td>
         </tr>
 

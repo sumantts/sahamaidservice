@@ -137,6 +137,33 @@ function configureGenderDd(){
     });//end ajax
 }//end 
 
+// Bank Accounts
+function configureBankAccountsDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configureBankAccountsDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#bank_id').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].bank_id+"'>"+$rows[$i].bank_name+"</option>";                    
+                }//end for                
+                $('#bank_id').html($html);
+            }else{
+                $('#bank_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#bank_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
 
 // Working Hours 
 function configureWorkingHoursDd(){
@@ -607,7 +634,8 @@ $(document).ready(function () {
         configureMajorIllnessDd();
         configurePoliceVerificationDd();
         configureCriminalHistoryDd();
-        configureLeadConfirmDD();
+        configureLeadConfirmDD(); 
+        configureBankAccountsDd();
 
     },300);
 });
@@ -1250,6 +1278,11 @@ function getUnPaidBills(){
                 $('#terms_condi').val($terms_condi).trigger('change');  
             }
 
+            $bank_id = $res1.bank_id;
+            if($bank_id != ''){
+                $('#bank_id').val($bank_id).trigger('change');  
+            }
+
         }else{
             $inv_ui1 = '';
             $inv_ui1 += '<div class="col-md-3 mb-2">';
@@ -1268,6 +1301,7 @@ function getUnPaidBills(){
             $('#normal_gst').val('1').trigger('change'); 
             $('#terms_condi').val('1').trigger('change');
             $('#gst_percentage').val('0');  
+            $('#bank_id').val('').trigger('change');
         }
     });//end ajax 
 }//end if
@@ -1328,6 +1362,7 @@ $('#savePrint').on('click', function(){
     $gst_percentage = $('#gst_percentage').val();
     $tax_cgst = $('#tax_cgst').val();
     $tax_sgst = $('#tax_sgst').val();
+    $bank_id = $('#bank_id').val();
     
     console.log('user_id: ' + $user_id + ' inv_month: ' + $inv_month);
 
@@ -1337,7 +1372,7 @@ $('#savePrint').on('click', function(){
                 type: "POST",
                 url: "users/function.php",
                 dataType: "json",
-                data: { fn: "saveInvoiceData", user_id: $user_id, bill_id: $bill_id, inv_month: $inv_month, normal_gst: $normal_gst, terms_condi: $terms_condi, bill_total: $bill_total, gst_percentage: $gst_percentage, tax_cgst: $tax_cgst, tax_sgst: $tax_sgst }
+                data: { fn: "saveInvoiceData", user_id: $user_id, bill_id: $bill_id, inv_month: $inv_month, normal_gst: $normal_gst, terms_condi: $terms_condi, bill_total: $bill_total, gst_percentage: $gst_percentage, tax_cgst: $tax_cgst, tax_sgst: $tax_sgst, bank_id: $bank_id }
             })
             .done(function( res ) {
                 //console.log(JSON.stringify(res))

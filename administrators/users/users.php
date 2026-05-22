@@ -605,6 +605,13 @@ if($sess_user_type > 3){
                                         <option value="2">T & C (Out of State)</option>
                                         <option value="3">T & C (Part Time)</option>
                                     </select>
+                                </div>  
+                                
+                                <div class="col-md-3 mb-2">
+                                    <label for="bank_id" class="form-label text-danger">Bank Account*</label>
+                                    <select class="form-control form-control-sm" name="bank_id" id="bank_id" required>
+                                        <option value="">Select Bank Account</option> 
+                                    </select>
                                 </div>
                             </div>
 
