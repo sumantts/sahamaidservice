@@ -986,37 +986,37 @@ function editTabledata(sl){
 			$('#pincode').val($res1.pincode); 
 			$('#adhar_card').val($res1.adhar_card); 
             if($res1.adhar_card_img != ''){
-                $("#preview_adhar_card_img").html('<img src="users/uploads/'+$res1.adhar_card_img+'" width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'adhar_card_img\','+sl+')"><i class="fa fa-trash"></i></a>');
+                $("#preview_adhar_card_img").html('<div style="display:inline-block;margin:8px;position:relative;"><img src="users/uploads/'+$res1.adhar_card_img+'" width="120" height="90" style="border:1px solid #ddd;border-radius:4px;"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'adhar_card_img\','+sl+')" style="position:absolute;top:5px;right:5px;background:#ff4444;color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;"><i class="fa fa-trash" style="font-size:12px;"></i></a></div>');
             }
             if($res1.adhar_card_back_img != ''){
-                $("#preview_adhar_card_back_img").html('<img src="users/uploads/'+$res1.adhar_card_back_img+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'adhar_card_back_img\','+sl+')"><i class="fa fa-trash"></i></a>');
+                $("#preview_adhar_card_back_img").html('<div style="display:inline-block;margin:8px;position:relative;"><img src="users/uploads/'+$res1.adhar_card_back_img+'" width="120" height="90" style="border:1px solid #ddd;border-radius:4px;"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'adhar_card_back_img\','+sl+')" style="position:absolute;top:5px;right:5px;background:#ff4444;color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;"><i class="fa fa-trash" style="font-size:12px;"></i></a></div>');
             }
 
 			$('#pan_card').val($res1.pan_card); 
 			//$('#pan_card_img').val($res1.pan_card_img);  
             if($res1.pan_card_img != ''){
-                $("#preview_pan_card_img").html('<img src="users/uploads/'+$res1.pan_card_img+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'pan_card_img\','+sl+')"><i class="fa fa-trash"></i></a>');
+                $("#preview_pan_card_img").html('<div style="display:inline-block;margin:8px;position:relative;"><img src="users/uploads/'+$res1.pan_card_img+'" width="120" height="90" style="border:1px solid #ddd;border-radius:4px;"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'pan_card_img\','+sl+')" style="position:absolute;top:5px;right:5px;background:#ff4444;color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;"><i class="fa fa-trash" style="font-size:12px;"></i></a></div>');
             }
 
 			$('#voter_id_card').val($res1.voter_id_card);  
             if($res1.voter_id_card_img != ''){
-                $("#preview_voter_id_card_img").html('<img src="users/uploads/'+$res1.voter_id_card_img+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'voter_id_card_img\','+sl+')"><i class="fa fa-trash"></i></a>');
+                $("#preview_voter_id_card_img").html('<div style="display:inline-block;margin:8px;position:relative;"><img src="users/uploads/'+$res1.voter_id_card_img+'" width="120" height="90" style="border:1px solid #ddd;border-radius:4px;"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'voter_id_card_img\','+sl+')" style="position:absolute;top:5px;right:5px;background:#ff4444;color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;"><i class="fa fa-trash" style="font-size:12px;"></i></a></div>');
             }
             
             if($res1.voter_id_card_back_img != ''){
-                $("#preview_voter_id_card_back_img").html('<img src="users/uploads/'+$res1.voter_id_card_back_img+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'voter_id_card_back_img\','+sl+')"><i class="fa fa-trash"></i></a>');
+                $("#preview_voter_id_card_back_img").html('<div style="display:inline-block;margin:8px;position:relative;"><img src="users/uploads/'+$res1.voter_id_card_back_img+'" width="120" height="90" style="border:1px solid #ddd;border-radius:4px;"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'voter_id_card_back_img\','+sl+')" style="position:absolute;top:5px;right:5px;background:#ff4444;color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;"><i class="fa fa-trash" style="font-size:12px;"></i></a></div>');
             }
 
 			//$('#user_photo').val($res1.user_photo);  
             if($res1.user_photo != ''){
-                $("#preview_user_photo").html('<img src="users/uploads/'+$res1.user_photo+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'user_photo\','+sl+')"><i class="fa fa-trash"></i></a>');
+                $("#preview_user_photo").html('<div style="display:inline-block;margin:8px;position:relative;"><img src="users/uploads/'+$res1.user_photo+'" width="120" height="90" style="border:1px solid #ddd;border-radius:4px;"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'user_photo\','+sl+')" style="position:absolute;top:5px;right:5px;background:#ff4444;color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;"><i class="fa fa-trash" style="font-size:12px;"></i></a></div>');
             }
 
             $misce_docs = $res1.misce_docs;
             if($misce_docs.length > 0){
                 $html5 = '';
                 for(var j = 0; j < $misce_docs.length; j++){
-                    $html5 += '<div id="misce_doc_'+j+'" class="col-md-3"><img src="users/uploads/'+$misce_docs[j]+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'misce_doc_'+j+'\','+sl+')"><i class="fa fa-trash"></i></a></div>';
+                    $html5 += '<div id="misce_doc_'+j+'" style="display:inline-block;margin:8px;position:relative;"><img src="users/uploads/'+$misce_docs[j]+'" width="120" height="90" style="border:1px solid #ddd;border-radius:4px;"><a href="javascript: void(0);" onClick="deleteMiscAttachedImage(\''+$misce_docs[j]+'\','+sl+')" style="position:absolute;top:5px;right:5px;background:#ff4444;color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;"><i class="fa fa-trash" style="font-size:12px;"></i></a></div>';
                 }
                 $("#preview_misce_doc").html($html5);
             }
@@ -1079,6 +1079,34 @@ function deleteAttachedImage(img_field_name, sl){
         .done(function( res ) {
             if(res.status == true){
                 $("#preview_"+img_field_name).html('');
+            }else{
+                alert('Error: ' + res.message)
+            }        
+        });//end ajax 
+    }
+}//end fun
+
+function deleteMiscAttachedImage(img_field_name, sl){
+    if(confirm('Are you sure to delete the Image?')){
+        console.log('img_field_name: ' + img_field_name + ' sl: '+ sl)
+
+        $.ajax({
+            type: "POST",
+            url: "users/function.php",
+            dataType: "json",
+            data: { fn: "deleteMiscAttachedImage", imgFieldName: img_field_name, userId: sl }
+        })
+        .done(function( res ) {
+            if(res.status == true){
+                $html5 = '';
+                $("#preview_misce_doc").html($html5);
+                $misce_docs = res.ret_misce_docs;
+                if($misce_docs.length > 0){
+                    for(var j = 0; j < $misce_docs.length; j++){
+                        $html5 += '<div id="misce_doc_'+j+'" style="display:inline-block;margin:8px;position:relative;"><img src="users/uploads/'+$misce_docs[j]+'" width="120" height="90" style="border:1px solid #ddd;border-radius:4px;"><a href="javascript: void(0);" onClick="deleteMiscAttachedImage(\''+$misce_docs[j]+'\','+sl+')" style="position:absolute;top:5px;right:5px;background:#ff4444;color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;"><i class="fa fa-trash" style="font-size:12px;"></i></a></div>';
+                    }
+                    $("#preview_misce_doc").html($html5);
+                }
             }else{
                 alert('Error: ' + res.message)
             }        

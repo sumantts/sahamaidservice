@@ -223,9 +223,11 @@
 				}
 				$user_img = '';
 				if($user_photo == ''){
-					$user_img = '<img src="users/uploads/no_images.png" width="75">';
+					//$user_img = '<img src="users/uploads/no_images.png" width="75">';
+					$user_img = '<div style="display:inline-block;margin:4px;"><img src="users/uploads/no_images.png" width="75" height="56" style="border:1px solid #ddd;border-radius:4px;"></div>';
 				}else{
-					$user_img = '<img src="users/uploads/'.$user_photo.'" width="75">';
+					//$user_img = '<img src="users/uploads/'.$user_photo.'" width="75">';
+					$user_img = '<div style="display:inline-block;margin:4px;"><img src="users/uploads/'.$user_photo.'" width="75" height="56" style="border:1px solid #ddd;border-radius:4px;"></div>';
 				}  
 				
 				//$action_button = "<i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$user_id.")'></i>";
@@ -491,7 +493,55 @@
     	echo json_encode($return_array);
 	}//function end
 	
+	//Delete Misc Attached Image
+	if($fn == 'deleteMiscAttachedImage'){
+		$return_array = array();
+		$ret_misce_docs = array();
+		$status = true; 
+		$message = '';
+		$imgFieldName = $_POST['imgFieldName']; 
+		$userId = $_POST['userId'];
 
+		$sql = "SELECT * FROM user_details WHERE user_id = '" .$userId. "' ";
+		$result = $mysqli->query($sql);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array();
+			$misce_docs = explode(',', $row['misce_doc']);	
+
+			$file = "uploads/$imgFieldName";
+			if (file_exists($file)) {
+				if (unlink($file)) {
+					$message = "File deleted successfully.";
+					$status = true; 
+					$field_val = '';
+
+					$updated_misce_docs = array_diff($misce_docs, array($imgFieldName));
+					if(sizeof($updated_misce_docs) > 0){
+						$field_val = implode(',', $updated_misce_docs);
+						$ret_misce_docs = explode(',', $field_val);
+					}
+
+					$sql1 = "UPDATE user_details SET misce_doc = '" .$field_val. "' WHERE user_id = '".$userId."'";
+					$result1 = $con->query($sql1);
+				} else {
+					$message = "Error deleting file.";
+					$status = false; 
+				}
+			} else {
+				$message = "File does not exist.";
+				$status = false; 
+			}
+
+		}//end if
+
+		$return_array['status'] = $status; 
+		$return_array['message'] = $message;  
+		$return_array['ret_misce_docs'] = $ret_misce_docs; 
+    	echo json_encode($return_array);
+	}//function end
+
+	
+			
 	// Gender
 	if($fn == 'configureGenderDd'){ 
 		$return_array = array();
