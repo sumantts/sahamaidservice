@@ -342,15 +342,15 @@
 
                 <!-- Stamp Image -->
                 <!-- Replace with your image -->
-                <!--
-                <img src="stamp.png" class="stamp">
-                -->
+                
+                <!-- <img src="stamp.png" class="stamp"> -->
+                
 
                 <!-- Signature Image -->
                 <!-- Replace with your image -->
-                <!--
-                <img src="signature.png" class="signature">
-                -->
+            
+                <img src="../assets/images/auth_sign.jpeg" class="signature">
+                
 
                 <div class="auth-text">
                     Authorized Signatory
