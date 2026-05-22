@@ -77,21 +77,26 @@
                     $attendance_ui += '</div>';
                     $attendance_ui += '<div class="col-md-3 mb-2">'; 
                         $attendance_ui += '<select class="form-control form-control-sm" id="pre_abs_lev_'+$slno+'" name="pre_abs_lev_'+$slno+'" onchange="updateAttendance('+$slno+')">';
-                            $attendance_ui += '<option value="">Present/Absent/Leave</option>'; 
+                            $attendance_ui += '<option value="">Present/Half Duty/Absent/Leave</option>'; 
                             if($pre_abs_lev == '1'){
                                 $attendance_ui += '<option value="1" selected>Present</option>'; 
                             }else{
                                 $attendance_ui += '<option value="1">Present</option>'; 
                             }
                             if($pre_abs_lev == '2'){
-                                $attendance_ui += '<option value="2" selected>Absent</option>';
+                                $attendance_ui += '<option value="2" selected>Half Duty</option>';
                             }else{
-                                $attendance_ui += '<option value="2">Absent</option>';
+                                $attendance_ui += '<option value="2">Half Duty</option>';
+                            }
+                            if($pre_abs_lev == '3'){
+                                $attendance_ui += '<option value="3" selected>Absent</option>';
+                            }else{
+                                $attendance_ui += '<option value="3">Absent</option>';
                             } 
-                            if($pre_abs_lev == '2'){
-                                $attendance_ui += '<option value="3" selected>Leave</option>'; 
+                            if($pre_abs_lev == '4'){
+                                $attendance_ui += '<option value="4" selected>Leave</option>'; 
                             }else{
-                                $attendance_ui += '<option value="3">Leave</option>'; 
+                                $attendance_ui += '<option value="4">Leave</option>'; 
                             }
                         $attendance_ui += '</select>';
                     $attendance_ui += '</div>';
@@ -169,7 +174,9 @@ function configureUserTypeDd(){
                 $('#user_type').html('');
                 $html = "<option value=''>Select</option>";
                 for($i = 0; $i < $rows.length; $i++){
-                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
+                    if($rows[$i].name != 'Worker'){
+                        $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";   
+                    }                 
                 }//end for                
                 $('#user_type').html($html);
             }else{

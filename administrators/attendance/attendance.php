@@ -131,7 +131,7 @@ if($sess_user_type == 4){
                             </div>
                             <div class="col-md-3 mb-2"> 
                                 <select class="form-control form-control-sm" id="pre_abs_lev_1" name="pre_abs_lev_1">
-                                    <option value="">Present/Absent/Leave</option> 
+                                    <option value="">Present/Half Duty/Absent/Leave</option> 
                                 </select>
                             </div>
                             <div class="col-md-6 mb-2">

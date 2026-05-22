@@ -1,6 +1,7 @@
 <?php
 
     $total_present = 0;
+    $total_half_present = 0;
     $total_absent = 0;
     $total_leave = 0;
     $full_name = '';
@@ -15,6 +16,9 @@
     $client_contact = '';
     $client_state = '';
     $atten_id = '';
+    $present_amount = 0;
+    $hduty_amount = 0;
+    $total_working_days = 0;
 
     
 
@@ -197,6 +201,7 @@
 
 			$csv_fileName = 'attendance_report_'.$full_name.'_'.$month_date_txt.'.csv';
 
+            $total_working_days = sizeof($atten_data);
 			if(sizeof($atten_data) > 0){
 				for($i = 0; $i < sizeof($atten_data); $i++){	
 					$atten_date = date('d-F-Y', strtotime($atten_data[$i]->atten_date));	
@@ -206,8 +211,10 @@
 					if($pre_abs_lev == '1'){ 
                         $total_present++;
 					}else if($pre_abs_lev == '2'){ 
-                        $total_absent++;
+                        $total_half_present++;
 					}else if($pre_abs_lev == '3'){ 
+                        $total_absent++;
+					}else if($pre_abs_lev == '4'){ 
                         $total_leave++;
 					}else{  
                         $total_absent++;
@@ -215,7 +222,10 @@
 				}
 			}
 
-            $deduction_amount = ($exp_salary / 30) * $total_absent;
+            $effective_day = $total_present + ($total_half_present / 2);
+            $present_amount = ($exp_salary / 30) * $total_present;
+            $hduty_amount = ($exp_salary / 30) * ($total_half_present / 2);
+            $deduction_amount = $exp_salary - ($present_amount + $hduty_amount);
             $amount_chargeable = $exp_salary - $deduction_amount;
 
 

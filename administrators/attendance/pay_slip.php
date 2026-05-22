@@ -225,7 +225,7 @@
         <tr>
 
             <td class="bold">
-                Payment of maid
+                Payment of Staff (<?php echo $total_working_days; ?> days)
             </td>
 
             <td class="amount-column">
@@ -235,6 +235,40 @@
         </tr>
 
         <!-- Medical Purpose -->
+        <?php if($total_present > 0){ ?> 
+        <tr>
+            <td class="bold">
+                Present (<?php echo $total_present; ?> days)
+            </td>
+            <td class="amount-column">
+                <?php echo number_format($present_amount, 2); ?>/-
+            </td>
+        </tr>
+        <?php } ?>
+
+        <?php if($total_half_present > 0){ ?> 
+        <tr>
+            <td class="bold">
+                Half Duty (<?php echo $total_half_present; ?> days)
+            </td>
+            <td class="amount-column">
+                <?php echo number_format($hduty_amount, 2); ?>/-
+            </td>
+        </tr>
+        <?php } ?>
+
+        <?php if($total_leave > 0){ ?> 
+        <tr>
+            <td class="bold">
+                Leave (<?php echo $total_leave; ?> days)
+            </td>
+            <td class="amount-column">
+                0.00/-
+            </td>
+        </tr>
+        <?php } ?>
+
+
         <?php if($total_absent > 0){ ?> 
         <tr>
             <td class="bold">
@@ -284,17 +318,17 @@
 
                     Company's Bank Detail<br>
 
-                    A/C Holder Name : Kundan Kumar Saha<br>
+                    A/C Holder Name: Kundan Kumar Saha<br>
 
-                    Bank Name :- State Bank of India<br>
+                    Bank Name: State Bank of India<br>
 
                     A/C: 33378961528<br>
 
-                    IFSC code : SBIN0001295<br>
+                    IFSC code: SBIN0001295<br>
 
-                    Phone pay -8906161591<br>
+                    Phone pay: 8906161591<br>
 
-                    Google pay -8906161591 & UPI ID 8906161591@ybl
+                    Google pay: 8906161591 & UPI ID 8906161591@ybl
 
                 </div>
 

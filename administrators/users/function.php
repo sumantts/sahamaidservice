@@ -943,7 +943,7 @@
 		$total_rcvabl_amount = 0;
 		$bill_total_p = 0;
 
-		if($_SERVER['HTTP_HOST'] == 'localhost'){
+		/*if($_SERVER['HTTP_HOST'] == 'localhost'){
 			$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code,
 			user_details.full_name
 			FROM assign_maid 
@@ -955,7 +955,12 @@
 			FROM assign_maid 
 			LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
 			WHERE assign_maid.client_id = '" .$user_id. "' AND from_date >= $from_date1 AND to_date <= $to_date1 AND bill_status = '" .$bill_status. "' "; 
-		}
+		}*/
+			$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code,
+			user_details.full_name
+			FROM assign_maid 
+			LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
+			WHERE assign_maid.client_id = '" .$user_id. "' AND from_date >= '" .$from_date1. "' AND to_date <= '" .$to_date1. "' AND bill_status = '" .$bill_status. "' "; 
 
 		//echo $sql;
 		$result = $con->query($sql);
