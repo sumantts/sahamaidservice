@@ -212,7 +212,7 @@
 
         <tr>
             <td class="small bold">
-                Amount chargeable (in word):- <?=numberToWords($bill_total)?>
+                Amount chargeable (in word):- <?=digitToinWordConverter($bill_total)?>
             </td>
             <td class="right bold"><?=number_format($bill_total, 2)?>/-</td>
         </tr>
