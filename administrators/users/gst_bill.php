@@ -109,6 +109,30 @@
         margin-top: 10px;
     }
 
+    /* Watermark styles */
+    .invoice-box{
+        position: relative;
+        z-index: 1;
+    }
+
+    .watermark{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 420px;
+        height: auto;
+        opacity: 0.12;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    @media print{
+        .watermark{
+            opacity: 0.08;
+        }
+    }
+
     .declaration-title {
         text-align: center;
         font-weight: bold;
@@ -147,6 +171,7 @@
 <body>
 
 <div class="invoice-box">
+    <img src="../assets/images/logo.png" class="watermark" alt="Watermark">
 
     <div class="center">Tax Invoice</div>
 
@@ -315,7 +340,8 @@
             <td></td>
             <td class="signature">
                 for SAHA ENTERPRISE<br><br>
-                Authorised Signatory
+                Authorised Signatory<br>
+                <img src="../assets/images/auth_sign.jpeg" class="signature">
             </td>
         </tr>
     </table>

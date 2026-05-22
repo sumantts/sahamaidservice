@@ -116,12 +116,41 @@
         margin-top: 10px;
     }
 
+    /* Watermark styles */
+    .page{
+        position: relative;
+    }
+
+    .watermark{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: auto;
+        opacity: 0.12;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .invoice-box{
+        position: relative;
+        z-index: 1;
+    }
+
+    @media print{
+        .watermark{
+            opacity: 0.08;
+        }
+    }
+
 </style>
 </head>
 
 <body>
 
 <div class="page">
+    <img src="../assets/images/logo.png" class="watermark" alt="Watermark">
 <div class="invoice-box">
 
     <!-- Header -->
@@ -173,14 +202,14 @@
             <td width="30%" class="right">Amount</td>
         </tr>
         <?php
-            if(sizeof($assign_maids) > 0){
-                for($i = 0; $i < sizeof($assign_maids); $i++){
+            //if(sizeof($assign_maids) > 0){
+                //for($i = 0; $i < sizeof($assign_maids); $i++){
         ?>
-        <tr>
+        <!-- <tr>
             <td class="bold">Payments of Worker(s) -</td>
             <td class="right bold"><?=$assign_maids[$i]->rcvabl_amount?>/-</td>
-        </tr>
-        <?php } } ?>
+        </tr> -->
+        <?php //} } ?>
 
         <!-- If there is holiday --
         <tr>
@@ -206,7 +235,7 @@
                 Salary per month :- <?=$assign_maids[$i]->rcvabl_amount?>/-<br>
                 Working Month : <?=date('F Y', strtotime($inv_month))?>
             </td>
-            <td></td>
+            <td class="right bold"><?=number_format($assign_maids[$i]->rcvabl_amount, 2)?>/-</td>
         </tr>
         <?php } } ?>
 
@@ -223,17 +252,13 @@
         <tr>
             <td width="65%">
                 <b>Company's Bank Detail</b><br>
-                A/C Holder Name : Kundan Kumar Saha<br>
-                Bank Name : State Bank of India<br>
-                A/C : 33378961528<br>
-                IFSC code : SBIN0001295<br>
-                Phone pay : 8906161591<br>
-                Google pay : 8906161591 & UPI ID 8906161591@ybl
+                <?=$bank_information?>
             </td>
 
             <td width="35%" class="signature">
                 E & O E<br><br><br>
                 Authorized Signatory
+                <img src="../assets/images/auth_sign.jpeg" class="signature">
             </td>
         </tr>
     </table>
