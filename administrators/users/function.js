@@ -851,6 +851,8 @@ buttons.forEach(button => {
                 $('#partThreeBoard8').addClass('d-none');
                 $('#partThreeBoard9').removeClass('d-block');
                 $('#partThreeBoard9').addClass('d-none');
+                $('#partThreeBoard10').removeClass('d-block');
+                $('#partThreeBoard10').addClass('d-none');
             }else{
                 $('#partOneBoard1').removeClass('d-none');
                 $('#partOneBoard1').addClass('d-block');                
@@ -886,6 +888,8 @@ buttons.forEach(button => {
                 $('#partThreeBoard8').addClass('d-block');
                 $('#partThreeBoard9').removeClass('d-none');
                 $('#partThreeBoard9').addClass('d-block');
+                $('#partThreeBoard10').removeClass('d-none');
+                $('#partThreeBoard10').addClass('d-block');
             }
 
         }//end active tab
