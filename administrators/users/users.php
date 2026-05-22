@@ -372,7 +372,7 @@ if($sess_user_type > 3){
                                     </div>
                                     <div class="col-md-4 mt-2 d-block" id="partThreeBoard10">
                                         <label for="misce_doc" class="form-label">Miscellaneous Documents</label>
-                                        <input type="file" class="form-control-file" name="misce_doc" id="misce_doc" value="" oninput="uploadPhoto('misce_doc')">
+                                        <input type="file" class="form-control-file" name="misce_doc[]" id="misce_doc" multiple accept="image/*" oninput="uploadPhoto('misce_doc')">
                                         <br>
                                         <div id="preview_misce_doc"></div>
                                     </div>

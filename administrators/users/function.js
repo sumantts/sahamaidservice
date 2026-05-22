@@ -1109,34 +1109,50 @@ $("#declaration").change(function(){
 
 // Aadhar Card photo upload
 function uploadPhoto(img_id){
-    $("#"+img_id).change(function(){
-        $serial_number = $('#serial_number').val();
-        if(parseInt($serial_number) > 0){
-            var file_data = $('#'+img_id).prop('files')[0];
-            var form_data = new FormData();
-            form_data.append('image', file_data);
-            form_data.append('field_name', img_id);
-            form_data.append('serial_number', $serial_number);
-
-            $.ajax({
-                url: "users/upload.php",
-                type: "POST",
-                data: form_data,
-                contentType: false,
-                processData: false,
-                success:function(response)
-                {
-                    //$("#result_"+img_id).html(response);
-                    $("#preview_"+img_id).html('<img src="users/uploads/'+response+'"  width="200" height="150">');
-                }
-            });
-        }else{
-            alert('Please complete \'Basic Details\' first');
+    var $serial_number = $('#serial_number').val();
+    if(parseInt($serial_number) > 0){
+        var files = $('#'+img_id).prop('files');
+        if(!files || files.length === 0){
+            return;
         }
 
-    });
+        var form_data = new FormData();
+        if(img_id === 'misce_doc'){
+            for(var i = 0; i < files.length; i++){
+                form_data.append('image[]', files[i]);
+            }
+        } else {
+            form_data.append('image', files[0]);
+        }
+        form_data.append('field_name', img_id);
+        form_data.append('serial_number', $serial_number);
 
-}//end if
+        $.ajax({
+            url: "users/upload.php",
+            type: "POST",
+            data: form_data,
+            contentType: false,
+            processData: false,
+            success:function(response)
+            {
+                var previewHtml = '';
+                if(img_id === 'misce_doc'){
+                    var filesArray = response.split(',').filter(function(name){ return name.trim() !== ''; });
+                    for(var j = 0; j < filesArray.length; j++){
+                        previewHtml += '<img src="users/uploads/'+filesArray[j]+'" width="120" height="90" style="margin-right:8px;margin-bottom:8px;">';
+                    }
+                } else {
+                    previewHtml = '<img src="users/uploads/'+response+'"  width="200" height="150">';
+                }
+                $("#preview_"+img_id).html(previewHtml);
+            }
+        });
+    }else{
+        alert('Please complete \'Basic Details\' first');
+    }
+}
+
+//end if
 
 // Invoice function
 function onBillModal($user_id){
