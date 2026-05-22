@@ -1012,6 +1012,15 @@ function editTabledata(sl){
                 $("#preview_user_photo").html('<img src="users/uploads/'+$res1.user_photo+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'user_photo\','+sl+')"><i class="fa fa-trash"></i></a>');
             }
 
+            $misce_docs = $res1.misce_docs;
+            if($misce_docs.length > 0){
+                $html5 = '';
+                for(var j = 0; j < $misce_docs.length; j++){
+                    $html5 += '<div id="misce_doc_'+j+'" class="col-md-3"><img src="users/uploads/'+$misce_docs[j]+'"  width="200" height="150"><a href="javascript: void(0);" onClick="deleteAttachedImage(\'misce_doc_'+j+'\','+sl+')"><i class="fa fa-trash"></i></a></div>';
+                }
+                $("#preview_misce_doc").html($html5);
+            }
+
 			$('#wt_id').val($res1.wt_id); 
 			$('#work_exp').val($res1.work_exp); 
 			$('#earlier_work_city').val($res1.earlier_work_city); 

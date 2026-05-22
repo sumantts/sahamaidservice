@@ -422,7 +422,13 @@
 			$return_array['wh_id'] = $row['wh_id'];			 
 			$return_array['religion'] = $row['religion'];			 
 			$return_array['nationality'] = $row['nationality'];			 
-			$return_array['family_bg_info'] = $row['family_bg_info'];			
+			$return_array['family_bg_info'] = $row['family_bg_info'];	
+			if($row['misce_doc'] != ''){		 
+				$misce_docs = explode(',', $row['misce_doc']);	
+			}else{
+				$misce_docs = array();
+			} 
+			$return_array['misce_docs'] = $misce_docs;
 		}else{
 			$status = true; 
 		}

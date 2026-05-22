@@ -374,7 +374,7 @@ if($sess_user_type > 3){
                                         <label for="misce_doc" class="form-label">Miscellaneous Documents</label>
                                         <input type="file" class="form-control-file" name="misce_doc[]" id="misce_doc" multiple accept="image/*" oninput="uploadPhoto('misce_doc')">
                                         <br>
-                                        <div id="preview_misce_doc"></div>
+                                        <div id="preview_misce_doc"  class="row"></div>
                                     </div>
                                 </div>
                                 <a href="javascript: void(0);" id="partFourSwitch" class="float-right d-none">Section 4 &#8645;</a>
