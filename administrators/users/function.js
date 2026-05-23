@@ -744,7 +744,7 @@ buttons.forEach(button => {
                 $('#partSevenBoard2').removeClass('d-none');
                 $('#partSevenBoard2').addClass('d-block');  
                 $('#partSevenBoard3').removeClass('d-none');
-                $('#partSevenBoard3').addClass('d-block'); 
+                $('#partSevenBoard3').addClass('d-block');
                   
             }else{
                 // Section 4                    
@@ -811,8 +811,6 @@ buttons.forEach(button => {
                 $('#partSevenBoard2').addClass('d-none');                
                 $('#partSevenBoard3').removeClass('d-block');
                 $('#partSevenBoard3').addClass('d-none'); 
-
-
             }   
 
             console.log('current_tab: ' + $current_tab);
@@ -853,6 +851,9 @@ buttons.forEach(button => {
                 $('#partThreeBoard9').addClass('d-none');
                 $('#partThreeBoard10').removeClass('d-block');
                 $('#partThreeBoard10').addClass('d-none');
+                // Section 8 Fields  
+                $('#partEightBoard1, #partEightBoard3').removeClass('d-block');
+                $('#partEightBoard1, #partEightBoard3').addClass('d-none');
             }else{
                 $('#partOneBoard1').removeClass('d-none');
                 $('#partOneBoard1').addClass('d-block');                
@@ -890,6 +891,9 @@ buttons.forEach(button => {
                 $('#partThreeBoard9').addClass('d-block');
                 $('#partThreeBoard10').removeClass('d-none');
                 $('#partThreeBoard10').addClass('d-block');
+                // Section 8 Fields  
+                $('#partEightBoard1 #partEightBoard3').removeClass('d-none');
+                $('#partEightBoard1, #partEightBoard3').addClass('d-block');
             }
 
         }//end active tab

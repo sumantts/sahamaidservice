@@ -134,36 +134,36 @@
 
 
     /* A4 page setup */
-.doc-page {
-    width: 794px;              /* exact A4 width */
-    height: 1123px;            /* exact A4 height */
-    margin: auto;
+    .doc-page {
+        width: 794px;              /* exact A4 width */
+        height: 1123px;            /* exact A4 height */
+        margin: auto;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;   /* vertical center */
+        align-items: center;       /* horizontal center */
+        
+        text-align: center;
+    }
+
+    /* Page break for print */
+    .page-break {
+        page-break-before: always;
+    }
+
+    /* Full A4 document page */
+    .doc-page {
+        width: 800px;
+        margin: auto;
+        text-align: center;
+    }
+
+    /* Title */
     
-    display: flex;
-    flex-direction: column;
-    justify-content: center;   /* vertical center */
-    align-items: center;       /* horizontal center */
-    
-    text-align: center;
-}
+    /* Image container */ 
 
-/* Page break for print */
-.page-break {
-    page-break-before: always;
-}
-
-/* Full A4 document page */
-.doc-page {
-    width: 800px;
-    margin: auto;
-    text-align: center;
-}
-
-/* Title */
- 
-/* Image container */ 
-
-/* Image fit */ 
+    /* Image fit */ 
 
 
     /* Title */
@@ -336,7 +336,7 @@
 
     <?php if($adhar_card_back_img != ''){?>
     <!-- PAGE BREAK -->
-    <div class="page-break"></div>
+    <!-- <div class="page-break"></div> -->
 
     <!-- AADHAR CARD PAGE -->
     <div class="doc-page">
@@ -349,7 +349,7 @@
 
     <?php if($voter_id_card_img != ''){?>
     <!-- PAGE BREAK -->
-    <div class="page-break"></div>
+    <!-- <div class="page-break"></div> -->
 
     <!-- VOTER ID PAGE -->
     <div class="doc-page">
@@ -362,7 +362,7 @@
 
     <?php if($voter_id_card_back_img != ''){?>
     <!-- PAGE BREAK -->
-    <div class="page-break"></div>
+    <!-- <div class="page-break"></div> -->
 
     <!-- VOTER ID PAGE -->
     <div class="doc-page">
@@ -375,7 +375,7 @@
 
     <?php if($pan_card_img != ''){?>
     <!-- PAGE BREAK -->
-    <div class="page-break"></div>
+    <!-- <div class="page-break"></div> -->
 
     <!-- PAN ID PAGE -->
     <div class="doc-page">
@@ -383,6 +383,20 @@
         <div class="doc-box">
             <img src="uploads/<?=$pan_card_img?>" alt="Voter ID">
         </div>
+    </div>
+    <?php } ?>
+
+    <?php if(!empty($misce_doc)){?>
+    <!-- MISCELLANEOUS DOCUMENTS PAGE -->
+    <h2>Document: Miscellaneous</h2>  
+    <div class="row">  
+    <?php foreach($misce_doc as $doc){?>
+        
+        <div class="col-md-6">
+            <img src="uploads/<?=$doc?>" alt="Miscellaneous Document">
+        </div>
+     
+    <?php } ?>
     </div>
     <?php } ?>
 
