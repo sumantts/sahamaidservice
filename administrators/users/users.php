@@ -388,6 +388,10 @@ if($sess_user_type > 3){
                                         <select class="form-control" name="wt_id" id="wt_id" multiple>
                                         </select>
                                     </div>
+                                    <div class="col-md-3 mb-2 d-none" id="sec_4_20">
+                                        <label for="work_type_others" class="form-label">Work Type (Others)</label>
+                                        <input type="text" class="form-control" name="work_type_others" id="work_type_others" value="">
+                                    </div>
                                     <div class="col-md-3 mb-2 d-none" id="sec_4_2">
                                         <label for="work_exp" class="form-label">Work Experience (in years)</label>
                                         <input type="text" class="form-control" name="work_exp" id="work_exp" value="">

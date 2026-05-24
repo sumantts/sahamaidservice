@@ -687,7 +687,9 @@ buttons.forEach(button => {
                 $('#sec_4_1').removeClass('d-none');
                 $('#sec_4_1').addClass('d-block');  
                 $('#sec_4_2').removeClass('d-none');
-                $('#sec_4_2').addClass('d-block');  
+                $('#sec_4_2').addClass('d-block');   
+                $('#sec_4_20').removeClass('d-none');
+                $('#sec_4_20').addClass('d-block');  
                 $('#sec_4_3').removeClass('d-none');
                 $('#sec_4_3').addClass('d-block');  
                 $('#sec_4_4').removeClass('d-none');
@@ -756,7 +758,9 @@ buttons.forEach(button => {
                 $('#sec_4_1').removeClass('d-block');
                 $('#sec_4_1').addClass('d-none');                
                 $('#sec_4_2').removeClass('d-block');
-                $('#sec_4_2').addClass('d-none');                
+                $('#sec_4_2').addClass('d-none');                  
+                $('#sec_4_20').removeClass('d-block');
+                $('#sec_4_20').addClass('d-none');              
                 $('#sec_4_3').removeClass('d-block');
                 $('#sec_4_3').addClass('d-none');                
                 $('#sec_4_4').removeClass('d-block');
@@ -1026,6 +1030,7 @@ function editTabledata(sl){
             }
 
 			$('#wt_id').val($res1.wt_id); 
+            $('#work_type_others').val($res1.work_type_others);
 			$('#work_exp').val($res1.work_exp); 
 			$('#earlier_work_city').val($res1.earlier_work_city); 
 			$('#last_emplr_name').val($res1.last_emplr_name); 
