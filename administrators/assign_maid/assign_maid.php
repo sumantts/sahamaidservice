@@ -164,6 +164,12 @@ $sess_user_type = $_SESSION["user_type"];
                                         <label for="hsn_code">HSN Code</label>
                                         <input type="text" class="form-control" name="hsn_code" id="hsn_code"> 
                                     </div>  
+                                    <div class="col-md-3 mb-2">
+                                        <label for="wt_id">Work Type</label>
+                                        <select class="form-control" name="wt_id" id="wt_id">
+                                            <option value="0">Select</option> 
+                                        </select>
+                                    </div>
                                 </div>
                                  
                                 <!-- <div class="form-row">  

@@ -24,6 +24,7 @@
 		$from_time = $_POST['from_time']; 
 		$to_time = $_POST['to_time']; 
 		$hsn_code = $_POST['hsn_code']; 
+		$wt_id = $_POST['wt_id'];
 
 		$sess_user_id = $_SESSION["user_id"];
 
@@ -34,7 +35,7 @@
 				$result = $con->query($sql);*/
 			}else{				
 				$status = true;
-				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."') ";
+				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code, wt_id) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."', '".$wt_id."') ";
 				$result = $con->query($sql);
 			}
 				
@@ -60,7 +61,7 @@
 			$where_condition = " AND assign_maid.assign_by = '" .$sess_user_id. "' ";
 		}
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id,
 		user_details.full_name,
 		bill_status_master.bill_status_name
 		FROM assign_maid 
@@ -89,7 +90,7 @@
 				$to_time = $row['to_time'];	
 				$bill_status_name = $row['bill_status_name']; 
 				$hsn_code = $row['hsn_code']; 
-
+				$wt_id = $row['wt_id'];
 				// Worker Name
 				$worker_name = '';
 				if($worker_id != ''){
@@ -133,7 +134,7 @@
 		$mainData = array();
 		$assign_id = $_POST['assign_id'];
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id,
 		user_details.full_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
@@ -160,6 +161,7 @@
 			$return_array['to_time'] = $row['to_time'];	
 			$return_array['bill_status'] = $row['bill_status'];
 			$return_array['hsn_code'] = $row['hsn_code'];
+			$return_array['wt_id'] = $row['wt_id'];
 		} else {
 			$status = false;
 		}
