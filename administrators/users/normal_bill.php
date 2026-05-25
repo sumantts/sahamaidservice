@@ -229,11 +229,12 @@
         ?>
         <tr>
             <td>
-                Name :- <?=$assign_maids[$i]->worker_name?><br>
-                Skill :- <?=$assign_maids[$i]->skills_text?><br>
-                Hours :- <?=$assign_maids[$i]->wh_name?><br>
-                Salary per month :- <?=$assign_maids[$i]->rcvabl_amount?>/-<br>
-                Working Month : <?=date('F Y', strtotime($inv_month))?>
+                Name: <?=$assign_maids[$i]->worker_name?><br>
+                Skill: <?=$assign_maids[$i]->skills_text?><br>
+                Hours: <?=$assign_maids[$i]->wh_name?><br>
+                Salary per month: <?=$assign_maids[$i]->rcvabl_amount?>/-<br>
+                Working Month: <?=date('F Y', strtotime($inv_month))?><br>
+                Assigned Work Type: <?=$assign_maids[$i]->type_name?>
             </td>
             <td class="right bold"><?=number_format($assign_maids[$i]->rcvabl_amount, 2)?>/-</td>
         </tr>

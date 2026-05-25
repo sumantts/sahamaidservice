@@ -37,64 +37,7 @@
 
 		return $skills_text;
 	}//end if
-
-	# Number to word
-	/*function numberToWords($number) {
-		$no = floor($number);
-		$decimal = round($number - $no, 2) * 100;
-
-		$words = array(
-			0 => '', 1 => 'One', 2 => 'Two', 3 => 'Three', 4 => 'Four',
-			5 => 'Five', 6 => 'Six', 7 => 'Seven', 8 => 'Eight', 9 => 'Nine',
-			10 => 'Ten', 11 => 'Eleven', 12 => 'Twelve', 13 => 'Thirteen',
-			14 => 'Fourteen', 15 => 'Fifteen', 16 => 'Sixteen',
-			17 => 'Seventeen', 18 => 'Eighteen', 19 => 'Nineteen',
-			20 => 'Twenty', 30 => 'Thirty', 40 => 'Forty',
-			50 => 'Fifty', 60 => 'Sixty', 70 => 'Seventy',
-			80 => 'Eighty', 90 => 'Ninety'
-		);
-
-		$digits = array('', 'Hundred', 'Thousand', 'Lakh', 'Crore');
-
-		$str = array();
-		$i = 0;
-
-		while ($no > 0) {
-			if ($i == 0) {
-				$divider = 1000;
-			} else {
-				$divider = 100;
-			}
-
-			$number_part = $no % $divider;
-			$no = floor($no / $divider);
-
-			if ($number_part) {
-				$plural = (($number_part > 9) && count($str)) ? '' : '';
-				$hundred = (count($str) == 1 && $str[0]) ? ' and ' : '';
-
-				if ($number_part < 21) {
-					$str[] = $words[$number_part] . " " . $digits[$i];
-				} else {
-					$str[] = $words[floor($number_part / 10) * 10]
-						. " " . $words[$number_part % 10]
-						. " " . $digits[$i];
-				}
-			} else {
-				$str[] = null;
-			}
-			$i++;
-		}
-
-		$result = implode(' ', array_reverse($str));
-
-		$points = '';
-		if ($decimal > 0) {
-			$points = " and " . $words[$decimal / 10 * 10] . " " . $words[$decimal % 10] . " Paise";
-		}
-
-		return trim($result) . " Rupees" . $points . " Only";
-	}*/
+	
 
 	function digitToinWordConverter($number){
 		$no = floor($number);
@@ -187,10 +130,12 @@
         # Get Invoice Info
         $from_date1 = $inv_month.'-01';
 		$to_date1 = $inv_month.'-31';
-        $sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.atten_data,
-		user_details.full_name
+        $sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.atten_data, assign_maid.wt_id,
+		user_details.full_name, 
+		work_type.type_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
+		LEFT OUTER JOIN work_type ON assign_maid.wt_id = work_type.wt_id
 		WHERE assign_maid.client_id = '" .$client_id. "' AND from_date >= '" .$from_date1. "' AND to_date <= '" .$to_date1. "' "; 
 
 		//echo $sql;
@@ -208,6 +153,7 @@
 				$assign_maid->rcvabl_amount = $row['rcvabl_amount']; 
 				$assign_maid->worker_id = $row['worker_id'];
 				$assign_maid->exp_salary = $row['exp_salary'];
+				$assign_maid->type_name = $row['type_name'];
 
 				$assign_maid->from_date = date('d-F-Y', strtotime($row['from_date']));
 				$assign_maid->to_date = date('d-F-Y', strtotime($row['to_date']));

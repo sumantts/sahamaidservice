@@ -169,6 +169,17 @@ if($sess_user_type > 3){
                                 </div>  
                             </div>
 
+                            <!-- 
+                            5. Client details:- E-mail,
+                            work details, 
+                            family members, 
+                            Refrence, 
+                            shift (6/8/10/24 multiple select), 
+                            previous feedback, 
+                            which type of property house/flats/villa, 
+                            any caste issue/ 
+                            Age category. 
+                            Ye sara option client details me add karna h . -->
                             <div class="tab-pane <?php if($sess_user_type == '4'){?> active <?php } ?>" id="client">
                                 <h4>Client List</h4> 
                                 <div class="table-responsive">
