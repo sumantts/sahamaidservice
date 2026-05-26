@@ -165,6 +165,34 @@ function configureBankAccountsDd(){
     });//end ajax
 }//end 
 
+// configurePropertyTypeDd
+function configurePropertyTypeDd(){
+    $.ajax({
+        method: "POST",
+        url: "users/function.php",
+        data: { fn: "configurePropertyTypeDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#property').html('');
+                $html = "<option value='0'>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].property_name+"</option>";                    
+                }//end for                
+                $('#property').html($html);
+            }else{
+                $('#property').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#property').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
 // Working Hours 
 function configureWorkingHoursDd(){
     $.ajax({
@@ -636,7 +664,7 @@ $(document).ready(function () {
         configureCriminalHistoryDd();
         configureLeadConfirmDD(); 
         configureBankAccountsDd();
-
+        configurePropertyTypeDd();
     },300);
 });
 
@@ -858,6 +886,20 @@ buttons.forEach(button => {
                 // Section 8 Fields  
                 $('#partEightBoard1, #partEightBoard3').removeClass('d-block');
                 $('#partEightBoard1, #partEightBoard3').addClass('d-none');
+
+                // clientFields
+                $('#cf_1').removeClass('d-none');
+                $('#cf_1').addClass('d-block');
+                $('#cf_2').removeClass('d-none');
+                $('#cf_2').addClass('d-block');
+                $('#cf_3').removeClass('d-none');
+                $('#cf_3').addClass('d-block');
+                $('#cf_4').removeClass('d-none');
+                $('#cf_4').addClass('d-block');
+                $('#cf_5').removeClass('d-none');
+                $('#cf_5').addClass('d-block');
+                $('#cf_6').removeClass('d-none');
+                $('#cf_6').addClass('d-block');
             }else{
                 $('#partOneBoard1').removeClass('d-none');
                 $('#partOneBoard1').addClass('d-block');                
@@ -898,6 +940,20 @@ buttons.forEach(button => {
                 // Section 8 Fields  
                 $('#partEightBoard1 #partEightBoard3').removeClass('d-none');
                 $('#partEightBoard1, #partEightBoard3').addClass('d-block');
+
+                // clientFields
+                $('#cf_1').removeClass('d-block');
+                $('#cf_2').removeClass('d-block');
+                $('#cf_3').removeClass('d-block');
+                $('#cf_4').removeClass('d-block');
+                $('#cf_5').removeClass('d-block');
+                $('#cf_6').removeClass('d-block');
+                $('#cf_1').addClass('d-none');
+                $('#cf_2').addClass('d-none');
+                $('#cf_3').addClass('d-none');
+                $('#cf_4').addClass('d-none');
+                $('#cf_5').addClass('d-none');
+                $('#cf_6').addClass('d-none');
             }
 
         }//end active tab
@@ -1071,6 +1127,17 @@ function editTabledata(sl){
 			$('#religion').val($res1.religion); 
 			$('#nationality').val($res1.nationality); 
 			$('#family_bg_info').val($res1.family_bg_info); 
+
+            
+			$('#work_details').val($res1.work_details); 
+			$('#family_members').val($res1.family_members); 
+			$('#refrence').val($res1.refrence); 
+			$('#shift').val($res1.shift); 
+			$('#prev_feed').val($res1.prev_feed); 
+            $property = $res1.property;
+            setTimeout(function(){
+			    $('#property').val($property).trigger('change'); 
+            },200);
         }        
     });//end ajax
 }//end if 

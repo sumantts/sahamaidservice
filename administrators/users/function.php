@@ -432,6 +432,13 @@
 				$misce_docs = array();
 			} 
 			$return_array['misce_docs'] = $misce_docs;
+
+			$return_array['work_details'] = $row['work_details'];
+			$return_array['family_members'] = $row['family_members'];
+			$return_array['refrence'] = $row['refrence'];
+			$return_array['shift'] = $row['shift'];
+			$return_array['prev_feed'] = $row['prev_feed'];
+			$return_array['property'] = $row['property']; 
 		}else{
 			$status = true; 
 		}
@@ -597,6 +604,32 @@
 		echo json_encode($return_array);
 	}//function end
 
+	
+	if($fn == 'configurePropertyTypeDd'){ 
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM property_master";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['id'];
+				$data_obj->property_name = $row['property_name'];
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+		echo json_encode($return_array);
+	}//function end
 
 	// Working Hours
 	if($fn == 'configureWorkingHoursDd'){ 

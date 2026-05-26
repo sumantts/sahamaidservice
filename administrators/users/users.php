@@ -270,6 +270,7 @@ if($sess_user_type > 3){
                                     </div>
                                 </div>
                                 
+                                <!-- Special fields only for Client -->
                                 <div class="row mb-2">
                                     <div class="col-md-3">
                                         <label for="phone_number" class="form-label text-danger">Mobile Number (WhatsApp active?)*</label>
@@ -286,6 +287,38 @@ if($sess_user_type > 3){
                                         </select>
                                     </div>
                                 </div>
+
+                                <!-- Special fields only for Client -->
+                                <div class="row">
+                                    <div class="col-md-3 mt-2 d-none" id="cf_1">
+                                        <label for="work_details" class="form-label">Work Details</label>
+                                        <input type="text" class="form-control" name="work_details" id="work_details" value="">
+                                    </div>
+                                    <div class="col-md-3 mt-2 d-none" id="cf_2">
+                                        <label for="family_members" class="form-label">Family Members</label>
+                                        <input type="text" class="form-control" name="family_members" id="family_members" value="">
+                                    </div>                                    
+                                    <div class="col-md-3 mt-2 d-none" id="cf_3">
+                                        <label for="refrence" class="form-label">Reference</label>
+                                        <input type="text" class="form-control" name="refrence" id="refrence" value="">
+                                    </div>                                   
+                                    <div class="col-md-3 mt-2 d-none" id="cf_4">
+                                        <label for="shift" class="form-label">Shift</label>
+                                        <input type="text" class="form-control" name="shift" id="shift" value="">
+                                    </div>                                   
+                                    <div class="col-md-3 mt-2 d-none" id="cf_5">
+                                        <label for="prev_feed" class="form-label">Previous Feedback</label>
+                                        <input type="text" class="form-control" name="prev_feed" id="prev_feed" value="">
+                                    </div>
+                                    <div class="col-md-3 mt-2 d-none" id="cf_6">
+                                        <label for="property" class="form-label">Property Type</label>
+                                        <select class="form-control" name="property" id="property">
+                                            <option value="0">Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Special fields only for Client -->
+
                                 <a href="javascript: void(0);" id="partTwoSwitch" class="float-right">Section 2 &#8645;</a>
                                 <br>
                                 <hr>    

@@ -14,3 +14,14 @@
 
 8. show past due in "Monthly Bill of: Ram Manna" this form
 
+
+Client details:- 
+E-mail, 
+work details, 
+family members, 
+Refrence, 
+shift, 
+previous feedback for maid side, 
+which type of property house/flats/villa, 
+any caste issue/ Age category. 
+Ye sara option client details me add karna h .
