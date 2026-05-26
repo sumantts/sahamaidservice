@@ -315,6 +315,14 @@ if($sess_user_type > 3){
                                         <select class="form-control" name="property" id="property">
                                             <option value="0">Select</option>
                                         </select>
+                                    </div>                                  
+                                    <div class="col-md-3 mt-2 d-none" id="cf_7">
+                                        <label for="caste" class="form-label">Caste</label>
+                                        <input type="text" class="form-control" name="caste" id="caste" value="">
+                                    </div>                                  
+                                    <div class="col-md-3 mt-2 d-none" id="cf_8">
+                                        <label for="age_category" class="form-label">Age Category</label>
+                                        <input type="text" class="form-control" name="age_category" id="age_category" value="">
                                     </div>
                                 </div>
                                 <!-- Special fields only for Client -->

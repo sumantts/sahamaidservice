@@ -900,6 +900,10 @@ buttons.forEach(button => {
                 $('#cf_5').addClass('d-block');
                 $('#cf_6').removeClass('d-none');
                 $('#cf_6').addClass('d-block');
+                $('#cf_7').removeClass('d-none');
+                $('#cf_7').addClass('d-block');
+                $('#cf_8').removeClass('d-none');
+                $('#cf_8').addClass('d-block');
             }else{
                 $('#partOneBoard1').removeClass('d-none');
                 $('#partOneBoard1').addClass('d-block');                
@@ -948,12 +952,16 @@ buttons.forEach(button => {
                 $('#cf_4').removeClass('d-block');
                 $('#cf_5').removeClass('d-block');
                 $('#cf_6').removeClass('d-block');
+                $('#cf_7').removeClass('d-block');
+                $('#cf_8').removeClass('d-block');
                 $('#cf_1').addClass('d-none');
                 $('#cf_2').addClass('d-none');
                 $('#cf_3').addClass('d-none');
                 $('#cf_4').addClass('d-none');
                 $('#cf_5').addClass('d-none');
                 $('#cf_6').addClass('d-none');
+                $('#cf_7').addClass('d-none');
+                $('#cf_8').addClass('d-none');
             }
 
         }//end active tab
@@ -1138,6 +1146,8 @@ function editTabledata(sl){
             setTimeout(function(){
 			    $('#property').val($property).trigger('change'); 
             },200);
+			$('#caste').val($res1.caste); 
+			$('#age_category').val($res1.age_category); 
         }        
     });//end ajax
 }//end if 

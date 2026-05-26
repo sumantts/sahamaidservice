@@ -439,6 +439,8 @@
 			$return_array['shift'] = $row['shift'];
 			$return_array['prev_feed'] = $row['prev_feed'];
 			$return_array['property'] = $row['property']; 
+			$return_array['caste'] = $row['caste']; 
+			$return_array['age_category'] = $row['age_category']; 
 		}else{
 			$status = true; 
 		}
