@@ -36,6 +36,7 @@ $('#submitForm').click(function(){
     $to_time = $('#to_time').val();    
     $hsn_code = $('#hsn_code').val(); 
     $wt_id = $('#wt_id').val();
+    $two_days_leave = $('#two_days_leave').is(':checked') ? '1' : '0';
 
     if($client_id <= 0 || $rcvabl_amount == '' || $worker_id == '' || $exp_salary <= 0 || $from_date == '' || $to_date == '' || $from_time == '' || $to_time == ''){
         alert('All fields are mandatory, please enter properly');
@@ -47,7 +48,7 @@ $('#submitForm').click(function(){
         $.ajax({
             method: "POST",
             url: "assign_maid/function.php",
-            data: { fn: "saveFormData", assign_id: $assign_id, client_id: $client_id, rcvabl_amount: $rcvabl_amount, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code, wt_id: $wt_id}
+            data: { fn: "saveFormData", assign_id: $assign_id, client_id: $client_id, rcvabl_amount: $rcvabl_amount, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code, wt_id: $wt_id, two_days_leave: $two_days_leave }
         })
         .done(function( res ) {
             //console.log(res);
@@ -111,6 +112,12 @@ function editTableData($assign_id){
             $('#to_time').val($res1.to_time); 
             $('#hsn_code').val($res1.hsn_code); 
             $('#wt_id').val($res1.wt_id); 
+            $two_days_leave = $res1.two_days_leave;
+            if($two_days_leave == '1'){
+                $('#two_days_leave').prop('checked', true);
+            }else{
+                $('#two_days_leave').prop('checked', false);
+            }
             setTimeout(function(){
                 $('#client_id').val($client_id).trigger('change');
                 $('#worker_id').val($worker_id).trigger('change');

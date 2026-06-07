@@ -235,8 +235,18 @@
                 Salary per month: <?=$assign_maids[$i]->rcvabl_amount?>/-<br>
                 Working Month: <?=date('F Y', strtotime($inv_month))?><br>
                 Assigned Work Type: <?=$assign_maids[$i]->type_name?>
+                <!-- If there is leave --> 
+                <?php if($assign_maids[$i]->two_days_leave == '1'){ ?>   
+                    <br>Two Days Extra Amount: <?=number_format($assign_maids[$i]->two_days_extra_amount, 2)?>/-
+                <?php } ?>
             </td>
-            <td class="right bold"><?=number_format($assign_maids[$i]->rcvabl_amount, 2)?>/-</td>
+            <td class="right bold">
+            <?php     
+                $two_days_extra_amount = $assign_maids[$i]->two_days_extra_amount; 
+                $rcvabl_amount = $assign_maids[$i]->rcvabl_amount;
+                $total_amount = $rcvabl_amount + $two_days_extra_amount;
+                echo number_format($total_amount, 2);            
+            ?>/-</td>
         </tr>
         <?php } } ?>
 
