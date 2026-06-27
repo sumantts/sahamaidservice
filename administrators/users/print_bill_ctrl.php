@@ -129,7 +129,7 @@
 
         # Get Invoice Info
         $from_date1 = $inv_month.'-01';
-		$to_date1 = $inv_month.'-31';
+		$to_date1 = date('Y-m-t', strtotime($from_date1));//$inv_month.'-31';
         $sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.atten_data, assign_maid.wt_id, assign_maid.two_days_leave,
 		user_details.full_name, 
 		work_type.type_name
