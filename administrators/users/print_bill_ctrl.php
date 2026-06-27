@@ -150,7 +150,7 @@
 			
 				$assign_maid->client_name = $row['full_name'];
 				$assign_maid->client_id = $row['client_id'];
-				$assign_maid->rcvabl_amount = $row['rcvabl_amount']; 
+				//$assign_maid->rcvabl_amount = $row['rcvabl_amount']; 
 				$assign_maid->worker_id = $row['worker_id'];
 				$assign_maid->exp_salary = $row['exp_salary'];
 				$assign_maid->type_name = $row['type_name'];
@@ -172,6 +172,18 @@
 					$two_days_extra_amount = 0;
 				}
 				$assign_maid->two_days_extra_amount = $two_days_extra_amount;
+
+				// Days count
+				$from_date = $row['from_date'];
+				$to_date = $row['to_date'];
+				$days_count = (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
+				$assign_maid->days_count = $days_count;
+				$rcvabl_amount = $row['rcvabl_amount']; 
+				$daily_amount = $rcvabl_amount / 30;
+				$assign_maid->daily_amount = round($daily_amount);
+				$calculated_receivable_amount = round($daily_amount * $days_count);
+				$assign_maid->calculated_receivable_amount = $calculated_receivable_amount;
+				$assign_maid->rcvabl_amount = $calculated_receivable_amount + $two_days_extra_amount;
 
 				// Worker Name
 				$worker_id = $row['worker_id'];
@@ -197,7 +209,7 @@
 				$assign_maid->worker_name = $worker_name;
 				$assign_maid->wh_name = $wh_name;
 				
-				$total_rcvabl_amount = $total_rcvabl_amount + $row['rcvabl_amount'] + $two_days_extra_amount;
+				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount + $two_days_extra_amount;
 
                 # Attendance calculation
                 $present_days = 0;
