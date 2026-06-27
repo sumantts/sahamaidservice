@@ -20,22 +20,18 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <div class="dropdown">
-                        <a class="dropdown-toggle h-drop" href="#" data-toggle="dropdown">
-                            Dropdown
-                        </a>
+                        <a class="dropdown-toggle h-drop" href="#" data-toggle="dropdown" id="selected_branch"><?=$_SESSION["br_name"]?></a>
                         <div class="dropdown-menu profile-notification ">
-                            <ul class="pro-body">
-                                <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Profile</a></li>
-                                <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> My Messages</a></li>
-                                <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Lock Screen</a></li>
+                            <ul class="pro-body" id="branch_list">
+                                <!-- <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Profile</a></li> -->
                             </ul>
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <div class="dropdown mega-menu">
                         <a class="dropdown-toggle h-drop" href="#" data-toggle="dropdown">
                             Quick Link
@@ -88,6 +84,9 @@
                         </div>
                     </div>
                 </li> -->
+
+
+                
             </ul>
             <ul class="navbar-nav ml-auto">
                 <!-- <li>
@@ -154,6 +153,8 @@
                         </div>
                     </div>
                 </li>-->
+
+                
                 <li>
                     <div class="dropdown drp-user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">

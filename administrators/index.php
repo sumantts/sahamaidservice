@@ -29,7 +29,13 @@
 		include('dashboard/dashboard.php');		
 		break;
 
-		//SETUP		
+		//SETUP
+		
+		case 'branches':
+			$title = "Branches";
+			include('branches/branches.php');		
+		break;
+		
 		case 'maid_request':
 			$title = "Maid Request";
 			include('setup/maid_request/maid_request.php');		

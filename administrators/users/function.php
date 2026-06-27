@@ -1058,7 +1058,7 @@
 		$bill_id = 0;
 
 		$from_date1 = $inv_month.'-01';
-		$to_date1 = $inv_month.'-31';
+		$to_date1 = date('Y-m-t', strtotime($from_date1));//$inv_month.'-31';
 		$bill_status = '1';
 		$total_rcvabl_amount = 0;
 		$bill_total_p = 0;
@@ -1279,5 +1279,64 @@
 		
 		echo json_encode($return_result);
 	}//Save function end
+
+
+	// Branches dropdown
+	if($fn == 'populateCompanyDD'){
+	    //$login_id = $_SESSION['login_id'];
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM branches";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true;
+			$slno = 1;
+
+			while($row = $result->fetch_array()){
+				$br_id = $row['br_id']; 
+				$br_name = $row['br_name'];
+				$last_selected = $row['last_selected'];
+
+				$data_obj = new stdClass();
+				$data_obj->br_id = $br_id; 
+				$data_obj->br_name = $br_name;
+				$data_obj->last_selected = $last_selected;
+				array_push($mainData, $data_obj);
+			}
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+
+
+	
+			
+	//Get Table Data
+	if($fn == 'updateSelectedCompany'){
+		$return_array = array();
+		$status = true; 
+		
+		$br_id = $_POST['br_id_key'];
+		$br_name = $_POST['br_name_key'];
+		$_SESSION["br_id"] = $br_id;
+		$_SESSION["br_name"] = $br_name;
+		
+		$last_selected_zero = 0;
+		$sql1 = "UPDATE branches SET last_selected = '" .$last_selected_zero. "'";
+		$result1 = $con->query($sql1);
+
+		$last_selected_one = 1;
+		$sql2 = "UPDATE branches SET last_selected = '" .$last_selected_one. "' WHERE br_id = '" .$br_id. "' ";
+		$result2 = $con->query($sql2);
+
+		$return_array['status'] = $status;
+		
+    	echo json_encode($return_array);
+	}//function end
 
 ?>

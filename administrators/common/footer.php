@@ -91,6 +91,14 @@
         <script src="assets/js/plugins/apexcharts.min.js"></script>
         <!-- custom-chart js -->
         <script src="assets/js/pages/dashboard-main.js"></script>
+
+        <script>
+        //Left menu Scroll up to nth position
+        $(document).ready(function(){
+            // Populate Branch DD
+            populateCompanyDD(); 
+        });
+        </script>
     <?php } ?>
     
     <script>
@@ -99,6 +107,9 @@
             var gr_offset = $('#<?=$gr?>').offset();
             var upto = parseInt(gr_offset.top) - 50;
             $("#nav_bar").scrollTop(upto, 0);
+
+            // Populate Branch DD
+            populateCompanyDD(); 
         });
 
         // common for all function.js page 
@@ -152,6 +163,61 @@
 
         });//end function
         
+
+        
+        // Populate Branch DD
+        function populateCompanyDD(){
+            $text = '';
+            $s_br_name = '';
+            $.ajax({
+                type: "POST",
+                url: "users/function.php",
+                dataType: "json",
+                data: { fn: "populateCompanyDD"}
+            })
+            .done(function( res ) { 
+                //console.log(JSON.stringify(res));
+                if(res.status == true){
+                    $branches = res.data;
+                    
+                    if($branches.length > 0){
+                        $sl = 1;
+                        $br_id = '';
+                        for($c = 0; $c < $branches.length; $c++){ 
+                            /*$text += '<a href="javascript:void(0);" class="dropdown-item" onClick="selectCompany(\''+$branches[$c].br_id+'\',\''+$branches[$c].br_name+'\')">';
+                                $text += '<span class="align-middle">'+$branches[$c].br_name+'</span>';
+                            $text += '</a>';*/
+                            $text += '<li><a href="javascript: void(0)" class="dropdown-item" onClick="selectCompany(\''+$branches[$c].br_id+'\',\''+$branches[$c].br_name+'\')"><i class="fas fa-circle"></i>'+$branches[$c].br_name+'</a></li>';
+                            $sl++;
+
+                            if($branches[$c].last_selected == '1'){
+                                $s_br_name = $branches[$c].br_name;
+                            }
+                        } 
+                        $('#branch_list').html($text);
+                        //$('#selected_branch').html($s_br_name);
+                    }    
+                }  
+            });//end ajax 
+        }//end fun
+
+        
+
+        //Company Dropdown
+        function selectCompany(br_id, br_name){            
+            $.ajax({
+                type: "POST",
+                url: "users/function.php",
+                dataType: "json",
+                data: { fn: "updateSelectedCompany", br_id_key: br_id, br_name_key: br_name}
+            })
+            .done(function( res ) { 
+                if(res.status == true){
+                    location.reload();
+                    populateCompanyDD();                     
+                }  
+            });//end ajax 
+        }//end fun
     </script>
     
     <!-- Place at bottom of page Loading -->

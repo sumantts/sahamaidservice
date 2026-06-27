@@ -31,6 +31,9 @@ $sess_user_type = $_SESSION["user_type"];
 					<li class="nav-item pcoded-menu-caption" id="setup">
 						<label>SETUP</label>
 					</li>
+					<li class="nav-item <?php if($p == 'branches'){ ?> active <?php } ?>">
+					    <a href="?p=branches&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Branches</span></a>
+					</li>
 					<li class="nav-item <?php if($p == 'maid_request'){ ?> active <?php } ?>">
 					    <a href="?p=maid_request&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Maid Request List</span></a>
 					</li>

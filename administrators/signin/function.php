@@ -27,6 +27,26 @@
 				$_SESSION["user_type"] = $user_type;
 				$_SESSION["full_name"] = $full_name; 		
 				$_SESSION["user_id"] = $user_id;
+
+				
+
+				$br_id = 0;
+				$br_name = '';
+				$_SESSION["br_id"] = $br_id;
+				$_SESSION["br_name"] = $br_name;
+
+				$last_selected = '1';
+				$sql2 = "SELECT * FROM branches WHERE last_selected = '".$last_selected."'";
+				$result2 = $con->query($sql2);
+
+				if ($result2->num_rows > 0) { 
+					$row2 = $result2->fetch_array();
+					$br_id = $row2['br_id'];
+					$br_name = $row2['br_name'];
+					$_SESSION["br_id"] = $br_id;
+					$_SESSION["br_name"] = $br_name;
+				}
+				
 			} else {
 				$status = false;
 			}
