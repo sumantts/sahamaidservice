@@ -244,7 +244,8 @@
             <?php     
                 $two_days_extra_amount = $assign_maids[$i]->two_days_extra_amount; 
                 $rcvabl_amount = $assign_maids[$i]->rcvabl_amount;
-                $total_amount = $rcvabl_amount + $two_days_extra_amount;
+                //$total_amount = $rcvabl_amount + $two_days_extra_amount;
+                $total_amount = $rcvabl_amount;
                 echo number_format($total_amount, 2);            
             ?>/-</td>
         </tr>

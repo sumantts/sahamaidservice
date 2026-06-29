@@ -209,7 +209,7 @@
 				$assign_maid->worker_name = $worker_name;
 				$assign_maid->wh_name = $wh_name;
 				
-				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount + $two_days_extra_amount;
+				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount;
 
                 # Attendance calculation
                 $present_days = 0;

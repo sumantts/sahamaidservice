@@ -1116,6 +1116,8 @@
 					$two_days_extra_amount = 0;
 				}
 
+				//echo "Two Days Extra Amount: ".$two_days_extra_amount."<br>";
+
 				// Days count
 				$from_date = $row['from_date'];
 				$to_date = $row['to_date'];
@@ -1130,6 +1132,7 @@
 
 				// total_rcvabl_amount
 				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount + $two_days_extra_amount;
+				//echo "Total Receivable Amount: ".$total_rcvabl_amount."<br>";
 
 				array_push($assign_maids, $assign_maid);
 			}
