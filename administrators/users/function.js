@@ -8,7 +8,7 @@ $(document).on("blur", ".form-control", function(){
 
     $serial_number = $('#serial_number').val();
 
-    if(fieldValue != '' && fieldId != 'inv_month' && fieldId != 'terms_condi' && fieldId != 'gst_percentage' && fieldId != 'paid_amount' && fieldId != 'transaction_id' && fieldId != 'bank_id'){
+    if(fieldValue != '' && fieldId != 'inv_month' && fieldId != 'terms_condi' && fieldId != 'gst_percentage' && fieldId != 'paid_amount' && fieldId != 'transaction_id' && fieldId != 'bank_id' && fieldId != 'inv_id'){
         $.ajax({
             type: "POST",
             url: "users/function.php",
