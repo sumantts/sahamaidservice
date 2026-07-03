@@ -13,11 +13,24 @@
 		$gr = '';
 	}
 
+	
+ 
+	if(isset($_GET["log"]) && $_GET["log"] == "out"){
+		session_destroy();
+		header("location:?p=signin");
+	}
+
 	switch($p){
 		case 'signin':
         $title = "Signin";
-		include('signin/signin.php');
+		
+		if(isset($_SESSION["user_id"]) && $_SESSION["user_id"] != ''){
+			header("location:?p=dashboard");
+		}else{ 
+			include('signin/signin.php');
+		}
 		break;
+
 
 		case 'signup':
         $title = "Signup";
@@ -67,7 +80,11 @@
 		break;
 						
 		default:
-		include('signin/signin.php');
+		if(isset($_SESSION["user_id"]) && $_SESSION["user_id"] != ''){
+			header("location:?p=dashboard");
+		}else{ 
+			include('signin/signin.php');
+		} 
 	}
     
 

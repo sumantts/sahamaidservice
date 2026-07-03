@@ -164,7 +164,7 @@
                             <div class="pro-head">
                                 <!-- <img src="assets/images/user/avatar-1.jpg" class="img-radius" alt="User-Profile-Image"> -->
                                 <span><?=$_SESSION["full_name"]?></span>
-                                <a href="?p=signin" class="dud-logout" title="Logout">
+                                <a href="?p=signin&log=out" class="dud-logout" title="Logout">
                                     <i class="feather icon-log-out"></i>
                                 </a>
                             </div>

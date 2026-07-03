@@ -51,7 +51,6 @@
 	</style>
 	<!-- //Spinner Loader -->
 </head>
-
 <!-- [ auth-signin ] start -->
 <div class="auth-wrapper">
 	<div class="auth-content text-center">
