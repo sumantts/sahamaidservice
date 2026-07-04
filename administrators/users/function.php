@@ -1064,7 +1064,7 @@
 		$bill_total_p = 0;
 		$two_days_extra_amount = 0;
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.two_days_leave,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.holiday_count,
 		user_details.full_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
@@ -1092,7 +1092,7 @@
 				$assign_maid->to_time = $row['to_time'];	
 				$assign_maid->bill_status = $row['bill_status'];
 				$assign_maid->hsn_code = $row['hsn_code'];
-				$assign_maid->two_days_leave = $row['two_days_leave'];
+				$assign_maid->holiday_count = $row['holiday_count'];
 				$assign_maid->inv_id = 'INV_'.str_pad($assign_id, 4, "0", STR_PAD_LEFT);
 
 				// Worker Name
@@ -1109,8 +1109,9 @@
 				}//end if
 				$assign_maid->worker_name = $worker_name;
 				
-				if($row['two_days_leave'] == '1'){
-					$two_days_extra_amount1 = 2 * ($row['rcvabl_amount']/30);	
+				if($row['holiday_count'] > 0){
+					$holiday_count = $row['holiday_count'];
+					$two_days_extra_amount1 = $holiday_count * ($row['rcvabl_amount'] / 30);	
 					$two_days_extra_amount = round($two_days_extra_amount1);
 				}else{
 					$two_days_extra_amount = 0;

@@ -232,12 +232,12 @@
                 Name: <?=$assign_maids[$i]->worker_name?><br>
                 Skill: <?=$assign_maids[$i]->skills_text?><br>
                 Hours: <?=$assign_maids[$i]->wh_name?><br>
-                Salary per month: <?=$assign_maids[$i]->rcvabl_amount?>/-<br>
+                Salary per month: <?php echo ($assign_maids[$i]->rcvabl_amount - $assign_maid->two_days_extra_amount); ?>/-<br>
                 Working Month: <?=date('F Y', strtotime($inv_month))?><br>
                 Assigned Work Type: <?=$assign_maids[$i]->type_name?>
                 <!-- If there is leave --> 
-                <?php if($assign_maids[$i]->two_days_leave == '1'){ ?>   
-                    <br>Two Days Extra Amount: <?=number_format($assign_maids[$i]->two_days_extra_amount, 2)?>/-
+                <?php if($assign_maids[$i]->holiday_count > 0){ ?>   
+                    <br><?=$assign_maids[$i]->holiday_count?> Day(s) Extra Amount: <?=number_format($assign_maids[$i]->two_days_extra_amount, 2)?>/-
                 <?php } ?>
             </td>
             <td class="right bold">

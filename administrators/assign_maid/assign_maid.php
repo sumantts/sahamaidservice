@@ -170,12 +170,16 @@ $sess_user_type = $_SESSION["user_type"];
                                             <option value="0">Select</option> 
                                         </select>
                                     </div>
-                                    <div class="col-md-2 mb-2">
+                                    <!-- <div class="col-md-2 mb-2">
                                         <label class="form-label">&nbsp;</label>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="two_days_leave" name="two_days_leave">
                                             <label class="form-check-label" for="two_days_leave">Default 2 days leave</label>
                                         </div>
+                                    </div> -->  
+                                    <div class="col-md-3 mb-2">
+                                        <label for="holiday_count">Holiday Count</label>
+                                        <input type="text" class="form-control" name="holiday_count" id="holiday_count"> 
                                     </div>
                                     
                                 </div>

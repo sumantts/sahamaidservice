@@ -25,7 +25,8 @@
 		$to_time = $_POST['to_time']; 
 		$hsn_code = $_POST['hsn_code']; 
 		$wt_id = $_POST['wt_id'];
-		$two_days_leave = $_POST['two_days_leave'];
+		//$two_days_leave = $_POST['two_days_leave'];
+		$holiday_count = $_POST['holiday_count'];
 
 		$sess_user_id = $_SESSION["user_id"];
 
@@ -36,7 +37,7 @@
 				$result = $con->query($sql);*/
 			}else{				
 				$status = true;
-				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code, wt_id, two_days_leave) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."', '".$wt_id."', '".$two_days_leave."') ";
+				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code, wt_id, holiday_count) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."', '".$wt_id."', '".$holiday_count."') ";
 				$result = $con->query($sql);
 			}
 				
@@ -62,7 +63,7 @@
 			$where_condition = " AND assign_maid.assign_by = '" .$sess_user_id. "' ";
 		}
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.two_days_leave,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.holiday_count,
 		user_details.full_name,
 		bill_status_master.bill_status_name
 		FROM assign_maid 
@@ -92,7 +93,7 @@
 				$bill_status_name = $row['bill_status_name']; 
 				$hsn_code = $row['hsn_code']; 
 				$wt_id = $row['wt_id'];
-				$two_days_leave = $row['two_days_leave'];
+				$holiday_count = $row['holiday_count'];
 
 				// Worker Name
 				$worker_name = '';
@@ -137,7 +138,7 @@
 		$mainData = array();
 		$assign_id = $_POST['assign_id'];
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.two_days_leave,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.holiday_count,
 		user_details.full_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
@@ -165,7 +166,7 @@
 			$return_array['bill_status'] = $row['bill_status'];
 			$return_array['hsn_code'] = $row['hsn_code'];
 			$return_array['wt_id'] = $row['wt_id'];
-			$return_array['two_days_leave'] = $row['two_days_leave'];
+			$return_array['holiday_count'] = $row['holiday_count'];
 		} else {
 			$status = false;
 		}

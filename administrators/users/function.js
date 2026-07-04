@@ -8,7 +8,7 @@ $(document).on("blur", ".form-control", function(){
 
     $serial_number = $('#serial_number').val();
 
-    if(fieldValue != '' && fieldId != 'inv_month' && fieldId != 'terms_condi' && fieldId != 'gst_percentage' && fieldId != 'paid_amount' && fieldId != 'transaction_id' && fieldId != 'bank_id' && fieldId != 'inv_id'){
+    if(fieldValue != '' && fieldId != 'inv_month' && fieldId != 'terms_condi' && fieldId != 'gst_percentage' && fieldId != 'paid_amount' && fieldId != 'transaction_id' && fieldId != 'bank_id' && fieldId != 'inv_id' && fieldId != 'normal_gst'){
         $.ajax({
             type: "POST",
             url: "users/function.php",
@@ -1572,7 +1572,7 @@ function calculateBillAmount(){
 
     $bill_total_d = parseFloat($bill_total) - parseFloat($bill_total_p);
 
-    $foot_text = 'Total Bill Amount: Rs. '+$bill_total+'/- <br>Total Paid Amount: Rs. '+$bill_total_p+'/-<br>Total Due Amount: Rs. '+$bill_total_d+'/- ';
+    $foot_text = 'Total Bill Amount: Rs. '+$bill_total.toFixed(2)+'/- <br>Total Paid Amount: Rs. '+$bill_total_p+'/-<br>Total Due Amount: Rs. '+$bill_total_d.toFixed(2)+'/- ';
     $('#footer_text').html($foot_text);
 }//end if
 

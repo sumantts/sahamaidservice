@@ -261,14 +261,22 @@
         ?>
         <tr>
             <td><?=$sl?></td>
-            <td><?=$assign_maids[$i]->worker_name?> @ working days_<?=$assign_maids[$i]->present_days?> days</td>
+            <td>
+                <?=$assign_maids[$i]->worker_name?> @ working days_<?=$assign_maids[$i]->present_days?> days
+
+                <?php 
+                    if($assign_maid->holiday_count > 0){
+                        echo "@ ".$assign_maid->holiday_count." Day(s) Extra Amount: ".number_format($assign_maid->two_days_extra_amount, 2)."/-"; 
+                    }   
+                ?>
+            </td>
             <td><?=$assign_maids[$i]->hsn_code?></td>
             <td class="right">                
             <?php     
                 $two_days_extra_amount = $assign_maids[$i]->two_days_extra_amount; 
                 $rcvabl_amount = $assign_maids[$i]->rcvabl_amount;
                 $total_amount = $rcvabl_amount + $two_days_extra_amount;
-                echo number_format($total_amount, 2);            
+                echo number_format($rcvabl_amount, 2);            
             ?>
             </td>
         </tr>
@@ -321,13 +329,13 @@
                     $total_amount = $rcvabl_amount + $two_days_extra_amount;
                     //echo number_format($total_amount, 2);  
 
-                    $cgst_val = ($total_amount * $gst_percentage) / 100;
-                    $sgst_val = ($total_amount * $gst_percentage) / 100;
+                    $cgst_val = ($rcvabl_amount * $gst_percentage) / 100;
+                    $sgst_val = ($rcvabl_amount * $gst_percentage) / 100;
                     $tax_total = ($cgst_val + $sgst_val);
         ?>
         <tr>
             <td><?=$assign_maids[$i]->hsn_code?></td>
-            <td class="right"><?=$total_amount?></td>
+            <td class="right"><?=number_format($rcvabl_amount, 2)?></td>
             <td class="right"><?=number_format($cgst_val, 2)?></td>
             <td class="right"><?=number_format($sgst_val, 2)?></td>
             <td class="right"><?=number_format($tax_total, 2)?></td>
