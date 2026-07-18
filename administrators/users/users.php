@@ -65,7 +65,7 @@ if($sess_user_type > 3){
                 <div class="card">
                     <div class="card-header">
                         <h5> <?=$title?> </h5>
-                        <div class="card-header-right">
+                        <div class="card-header-right d-none">
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="feather icon-more-horizontal"></i>
@@ -75,12 +75,13 @@ if($sess_user_type > 3){
                                     <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
                                     <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
                                     <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
-                                    <li><a href="#!" data-toggle="modal" data-target="#exampleModalLong" id="addNewBtn"><i class="feather icon-file-plus"></i> add new</a> </li>
+                                    <li><a href="#!" data-toggle="modal" data-target="#exampleModalLong" id="addNewBtnOld"><i class="feather icon-file-plus"></i> add new</a> </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="card-body"> 
+                        <button type="button" class="btn btn-primary mb-2 float-right" data-toggle="modal" data-target="#exampleModalLong" id="addNewBtn">Add New</button>
                         
 
                         <!-- Nav -->
