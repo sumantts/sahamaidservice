@@ -1109,9 +1109,15 @@
 				}//end if
 				$assign_maid->worker_name = $worker_name;
 				
+				// Days count
+				$from_date = $row['from_date'];
+				$to_date = $row['to_date'];
+				$days_count = (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
+				$assign_maid->days_count = $days_count;
+
 				if($row['holiday_count'] > 0){
 					$holiday_count = $row['holiday_count'];
-					$two_days_extra_amount1 = $holiday_count * ($row['rcvabl_amount'] / 30);	
+					$two_days_extra_amount1 = $holiday_count * ($row['rcvabl_amount'] / $days_count);	
 					$two_days_extra_amount = round($two_days_extra_amount1);
 				}else{
 					$two_days_extra_amount = 0;
@@ -1119,13 +1125,9 @@
 
 				//echo "Two Days Extra Amount: ".$two_days_extra_amount."<br>";
 
-				// Days count
-				$from_date = $row['from_date'];
-				$to_date = $row['to_date'];
-				$days_count = (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
-				$assign_maid->days_count = $days_count;
+				
 				$rcvabl_amount = $row['rcvabl_amount']; 
-				$daily_amount = $rcvabl_amount / 30;
+				$daily_amount = $rcvabl_amount / $days_count;
 				$assign_maid->daily_amount = round($daily_amount);
 				$calculated_receivable_amount = round($daily_amount * $days_count);
 				$assign_maid->calculated_receivable_amount = $calculated_receivable_amount;
