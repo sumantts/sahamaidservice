@@ -231,12 +231,12 @@
 
         <!-- CENTER: COMPANY INFO -->
         <div class="company-info">
-            <h2>SAHA MAID SERVICE AND ENTERPRISE</h2>
+            <h2><?=$p_name?></h2>
             <div class="header">
                 Registration No - 2621 Company<br>
                 Pan No - AFYES5433H<br>
                 Service Area - Howrah, Kolkata, Delhi, Chennai, Bangalore, Hyderabad, Mumbai (Pan India)<br>
-                Email ID - 24x7@sahamaidservice.com<br>
+                Email ID - <?=$contact_email?><br>
                 Website - www.sahamaidservice.com<br>
                 Phone No - 7003662260 / 8906165191
             </div>

@@ -47,10 +47,10 @@
 		echo $r['SocietyNm'];
 	endwhile;*/
 
-	$title = 'Saha Maid Service and Enterprise';
+	$title = 'Saha Enterprise';
 	$logo_text = 'Saha';
 
-    $p_name = 'Saha Maid Service and Enterprise';
+    $p_name = 'Saha Enterprise';
 	$logo = 'logo.png';//'confirm-logo.jpg';//'logo.png';
 	$ico = 'logo.png';//'confirm-logo.jpg';//'favicon.ico';
 
@@ -108,7 +108,7 @@
 	$contact_us_text = 'Feel free to contact us. We will be available on your doorstep with a single message. We are ready to serve you.';
 
 	$location = 'NCC park, West Burikhali; opposite of Electric office, P.O: Santosh pur Burikhali, Bauria, Howrah: 711310';
-	$contact_email = '24x7@sahamaidservice.com';
+	$contact_email = 'kundansahaenterprise@gmail.com';
 	$contact_ph_number = '+91 7003662260';
 	
 	//Posrfolio
