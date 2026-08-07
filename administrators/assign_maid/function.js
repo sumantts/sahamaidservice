@@ -179,7 +179,7 @@ function viewAttendanceData($assign_id){
                                 }else{
                                     $attendance_ui += '<option value="2">Absent</option>';
                                 } 
-                                if($pre_abs_lev == '2'){
+                                if($pre_abs_lev == '3'){
                                     $attendance_ui += '<option value="3" selected>Leave</option>'; 
                                 }else{
                                     $attendance_ui += '<option value="3">Leave</option>'; 
