@@ -1090,6 +1090,7 @@
 				$present_count = 0;
 				$absent_count = 0;
 				$leave_count = 0;
+				$half_day_count = 0;
 				if(sizeOf($atten_data) > 0){
 					// Process attendance data
 					for($i = 0; $i < sizeOf($atten_data); $i++){
@@ -1100,6 +1101,8 @@
 							$absent_count++;
 						}elseif($value->pre_abs_lev == '3'){
 							$leave_count++;
+						}elseif($value->pre_abs_lev == '4'){
+							$half_day_count++;
 						}
 					}
 				}
@@ -1146,20 +1149,23 @@
 				}else{
 					$two_days_extra_amount = 0;
 				}
-
-				//echo "Two Days Extra Amount: ".$two_days_extra_amount."<br>";
-
 				
 				$rcvabl_amount = $row['rcvabl_amount']; 
-				$daily_amount = $rcvabl_amount / $days_count;
+				$daily_amount = $rcvabl_amount / $days_count; // Amount for full day attendance
+				$half_daily_amount = $daily_amount / 2; // Amount for half day attendance
 				$assign_maid->daily_amount = round($daily_amount);
+				$assign_maid->half_daily_amount = round($half_daily_amount);
+
 				//$calculated_receivable_amount = round($daily_amount * $days_count);
 				$calculated_receivable_amount = round($daily_amount * $present_count); // multiply with present days count
+				$calculated_half_day_amount = round($half_daily_amount * $half_day_count); // multiply with half days count
+				$calculated_receivable_amount = $calculated_receivable_amount + $calculated_half_day_amount; // add half day amount
 				$assign_maid->calculated_receivable_amount = $calculated_receivable_amount;
+				$assign_maid->calculated_half_day_amount = $calculated_half_day_amount;
 
 
 				// total_rcvabl_amount
-				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount + $two_days_extra_amount;
+				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount + $two_days_extra_amount + $calculated_half_day_amount;
 				//echo "Total Receivable Amount: ".$total_rcvabl_amount."<br>";
 
 				array_push($assign_maids, $assign_maid);

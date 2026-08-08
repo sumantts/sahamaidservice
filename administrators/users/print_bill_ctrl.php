@@ -158,6 +158,7 @@
 				$present_count = 0;
 				$absent_count = 0;
 				$leave_count = 0;
+				$half_day_count = 0;
 				if(sizeOf($atten_data) > 0){
 					// Process attendance data
 					for($i = 0; $i < sizeOf($atten_data); $i++){
@@ -168,6 +169,8 @@
 							$absent_count++;
 						}elseif($value->pre_abs_lev == '3'){
 							$leave_count++;
+						}elseif($value->pre_abs_lev == '4'){
+							$half_day_count++;
 						}
 					}
 				}				
@@ -205,12 +208,18 @@
 
 				
 				$rcvabl_amount = $row['rcvabl_amount']; 
-				$daily_amount = $rcvabl_amount / $days_count;
+				$daily_amount = $rcvabl_amount / $days_count; // Amount for full day attendance
+				$half_daily_amount = $daily_amount / 2; // Amount for half day attendance
 				$assign_maid->daily_amount = round($daily_amount);
+				$assign_maid->half_daily_amount = round($half_daily_amount);
+
 				//$calculated_receivable_amount = round($daily_amount * $days_count);
 				$calculated_receivable_amount = round($daily_amount * $present_count); // multiply with present days count
+				$calculated_half_day_amount = round($half_daily_amount * $half_day_count); // multiply with half days count
+				$calculated_receivable_amount = $calculated_receivable_amount + $calculated_half_day_amount; // add half day amount
 				$assign_maid->calculated_receivable_amount = $calculated_receivable_amount;
 				$assign_maid->rcvabl_amount = $calculated_receivable_amount + $two_days_extra_amount;
+				$assign_maid->calculated_half_day_amount = $calculated_half_day_amount;
 
 				// Worker Name
 				$worker_id = $row['worker_id'];
@@ -235,11 +244,13 @@
 				}//end if
 				$assign_maid->worker_name = $worker_name;
 				$assign_maid->wh_name = $wh_name;
-				
-				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount;
+								
+				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount + $two_days_extra_amount + $calculated_half_day_amount;
+				$assign_maid->t_amt = 0;
+				$assign_maid->t_amt = $total_rcvabl_amount;
 
                 # Attendance calculation
-                $present_days = 0;
+                /*$present_days = 0;
                 if($row['atten_data'] != ''){
                     $atten_data = json_decode($row['atten_data']);
 
@@ -250,8 +261,9 @@
                             }
                         }
                     }
-                }
-				$assign_maid->present_days = $present_days;
+                }*/
+				$assign_maid->present_days = $present_count;
+				$assign_maid->half_day_count = $half_day_count;
 
 				# Skills 
 				$skills_text = '';  

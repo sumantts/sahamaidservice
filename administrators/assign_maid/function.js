@@ -168,7 +168,7 @@ function viewAttendanceData($assign_id){
                         $attendance_ui += '</div>';
                         $attendance_ui += '<div class="col-md-3 mb-2">'; 
                             $attendance_ui += '<select class="form-control form-control-sm" id="pre_abs_lev_'+$slno+'" name="pre_abs_lev_'+$slno+'" onchange="updateAttendance('+$slno+')">';
-                                $attendance_ui += '<option value="">Present/Absent/Leave</option>'; 
+                                $attendance_ui += '<option value="">Present/Absent/Leave/Half Day</option>'; 
                                 if($pre_abs_lev == '1'){
                                     $attendance_ui += '<option value="1" selected>Present</option>'; 
                                 }else{
@@ -183,6 +183,11 @@ function viewAttendanceData($assign_id){
                                     $attendance_ui += '<option value="3" selected>Leave</option>'; 
                                 }else{
                                     $attendance_ui += '<option value="3">Leave</option>'; 
+                                }
+                                if($pre_abs_lev == '4'){
+                                    $attendance_ui += '<option value="4" selected>Half Day</option>'; 
+                                }else{
+                                    $attendance_ui += '<option value="4">Half Day</option>'; 
                                 }
                             $attendance_ui += '</select>';
                         $attendance_ui += '</div>';

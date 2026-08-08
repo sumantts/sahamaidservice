@@ -232,10 +232,16 @@
                 Name: <?=$assign_maids[$i]->worker_name?><br>
                 Skill: <?=$assign_maids[$i]->skills_text?><br>
                 Hours: <?=$assign_maids[$i]->wh_name?><br>
-                Salary per month: <?php echo ($assign_maids[$i]->rcvabl_amount - $assign_maid->two_days_extra_amount); ?>/-<br>
-                Working Month: <?=date('F Y', strtotime($inv_month))?><br>
-                Assigned Work Type: <?=$assign_maids[$i]->type_name?>
+                Assigned Work Type: <?=$assign_maids[$i]->type_name?><br><hr>
+                Working Month: <?=date('F Y', strtotime($inv_month))?>  (<?=$assign_maids[$i]->days_count?> Days)<br>
                 <!-- If there is leave --> 
+                 
+                Present Day (<?=$assign_maids[$i]->present_days?> Day(s)) Amount: <?php $pda = $assign_maids[$i]->rcvabl_amount - $assign_maid->two_days_extra_amount; echo number_format($pda, 2); ?>/-
+                
+                <?php if($assign_maids[$i]->half_day_count > 0){?>
+                <br> Half Day (<?=$assign_maids[$i]->half_day_count?> Day(s)) Amount: <?=number_format($assign_maids[$i]->calculated_half_day_amount, 2)?>/- 
+                <?php } ?>
+
                 <?php if($assign_maids[$i]->holiday_count > 0){ ?>   
                     <br><?=$assign_maids[$i]->holiday_count?> Day(s) Extra Amount: <?=number_format($assign_maids[$i]->two_days_extra_amount, 2)?>/-
                 <?php } ?>
@@ -246,7 +252,7 @@
                 $rcvabl_amount = $assign_maids[$i]->rcvabl_amount;
                 //$total_amount = $rcvabl_amount + $two_days_extra_amount;
                 $total_amount = $rcvabl_amount;
-                echo number_format($total_amount, 2);            
+                echo number_format($assign_maids[$i]->t_amt, 2);            
             ?>/-</td>
         </tr>
         <?php } } ?>
