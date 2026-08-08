@@ -1064,7 +1064,7 @@
 		$bill_total_p = 0;
 		$two_days_extra_amount = 0;
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.holiday_count,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.holiday_count, assign_maid.atten_data,
 		user_details.full_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
@@ -1078,8 +1078,32 @@
 			while($row = $result->fetch_array()){		
 				$assign_maid = new stdClass();	
 				$assign_id = $row['assign_id'];
-				$assign_maid->assign_id = $row['assign_id'];					
-			
+				$assign_maid->assign_id = $row['assign_id'];
+				
+				// Calculate present absent leave days from attendance data
+				$atten_data = array();	
+				if($row['atten_data'] != ''){
+					$atten_data = json_decode($row['atten_data']);
+				}
+				$assign_maid->atten_data = $atten_data;	
+
+				$present_count = 0;
+				$absent_count = 0;
+				$leave_count = 0;
+				if(sizeOf($atten_data) > 0){
+					// Process attendance data
+					for($i = 0; $i < sizeOf($atten_data); $i++){
+						$value = $atten_data[$i];
+						if($value->pre_abs_lev == '1'){
+							$present_count++;
+						}elseif($value->pre_abs_lev == '2'){
+							$absent_count++;
+						}elseif($value->pre_abs_lev == '3'){
+							$leave_count++;
+						}
+					}
+				}
+
 				$assign_maid->client_name = $row['full_name'];
 				$assign_maid->client_id = $row['client_id'];
 				$assign_maid->rcvabl_amount = $row['rcvabl_amount']; 
@@ -1129,7 +1153,8 @@
 				$rcvabl_amount = $row['rcvabl_amount']; 
 				$daily_amount = $rcvabl_amount / $days_count;
 				$assign_maid->daily_amount = round($daily_amount);
-				$calculated_receivable_amount = round($daily_amount * $days_count);
+				//$calculated_receivable_amount = round($daily_amount * $days_count);
+				$calculated_receivable_amount = round($daily_amount * $present_count); // multiply with present days count
 				$assign_maid->calculated_receivable_amount = $calculated_receivable_amount;
 
 
