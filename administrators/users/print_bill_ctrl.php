@@ -182,8 +182,8 @@
 				$assign_maid->exp_salary = $row['exp_salary'];
 				$assign_maid->type_name = $row['type_name'];
 
-				$assign_maid->from_date = date('d-F-Y', strtotime($row['from_date']));
-				$assign_maid->to_date = date('d-F-Y', strtotime($row['to_date']));
+				$assign_maid->from_date = date('d-F-Y', strtotime($from_date1));
+				$assign_maid->to_date = date('d-F-Y', strtotime($to_date1));
 				$assign_maid->from_time = $row['from_time']; 
 				$assign_maid->to_time = $row['to_time'];	
 				$assign_maid->bill_status = $row['bill_status'];
@@ -192,19 +192,10 @@
 				$assign_maid->inv_id = 'INV_'.str_pad($assign_id, 4, "0", STR_PAD_LEFT);
 				
 				// Days count
-				$from_date = $row['from_date'];
-				$to_date = $row['to_date'];
-				$days_count = (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
+				$from_date = $from_date1;//$row['from_date'];
+				$to_date = $to_date1;//$row['to_date'];
+				$days_count = 30; // (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
 				$assign_maid->days_count = $days_count;
-
-				$two_days_extra_amount = 0;				  
-				if($row['holiday_count'] > 0){
-					$two_days_extra_amount1 = $row['holiday_count'] * ($row['rcvabl_amount'] / $days_count);	
-					$two_days_extra_amount = round($two_days_extra_amount1);
-				}else{
-					$two_days_extra_amount = 0;
-				}
-				$assign_maid->two_days_extra_amount = $two_days_extra_amount;
 
 				
 				$rcvabl_amount = $row['rcvabl_amount']; 
@@ -213,10 +204,23 @@
 				$assign_maid->daily_amount = round($daily_amount);
 				$assign_maid->half_daily_amount = round($half_daily_amount);
 
-				//$calculated_receivable_amount = round($daily_amount * $days_count);
-				$calculated_receivable_amount = round($daily_amount * $present_count); // multiply with present days count
-				$calculated_half_day_amount = round($half_daily_amount * $half_day_count); // multiply with half days count
-				$calculated_receivable_amount = $calculated_receivable_amount + $calculated_half_day_amount; // add half day amount
+				
+
+				$two_days_extra_amount = 0;				  
+				if($row['holiday_count'] > 0){
+					$two_days_extra_amount1 = $row['holiday_count'] * $daily_amount;	
+					$two_days_extra_amount = round($two_days_extra_amount1);
+				}else{
+					$two_days_extra_amount = 0;
+				}
+				$assign_maid->two_days_extra_amount = $two_days_extra_amount;
+				
+				
+				$calculated_receivable_amount = round($daily_amount * $present_count); 
+				
+				$calculated_half_day_amount = round($half_daily_amount * $half_day_count);
+
+				//$calculated_receivable_amount = $calculated_receivable_amount + $calculated_half_day_amount; // add half day amount
 				$assign_maid->calculated_receivable_amount = $calculated_receivable_amount;
 				$assign_maid->rcvabl_amount = $calculated_receivable_amount + $two_days_extra_amount;
 				$assign_maid->calculated_half_day_amount = $calculated_half_day_amount;
@@ -248,20 +252,7 @@
 				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount + $two_days_extra_amount + $calculated_half_day_amount;
 				$assign_maid->t_amt = 0;
 				$assign_maid->t_amt = $total_rcvabl_amount;
-
-                # Attendance calculation
-                /*$present_days = 0;
-                if($row['atten_data'] != ''){
-                    $atten_data = json_decode($row['atten_data']);
-
-                    if(sizeof($atten_data)){
-                        for($i = 0; $i < sizeof($atten_data); $i++){
-                            if($atten_data[$i]->pre_abs_lev == '1'){
-                                $present_days++;
-                            }
-                        }
-                    }
-                }*/
+				
 				$assign_maid->present_days = $present_count;
 				$assign_maid->half_day_count = $half_day_count;
 

@@ -32,9 +32,9 @@
 
 		try {
 			if($assign_id > 0){
-				/*$status = true;
-				$sql = "UPDATE assign_maid SET user_type = '" .$user_type. "', user_id = '" .$user_id. "', from_date = '" .$from_date. "', to_date = '" .$to_date. "', leave_subject = '" .$leave_subject. "', leave_message = '" .$leave_message. "', lsm_id = '" .$lsm_id. "' WHERE assign_id = '" .$assign_id. "' ";
-				$result = $con->query($sql);*/
+				$status = true;
+				$sql = "UPDATE assign_maid SET holiday_count = '" .$holiday_count. "' WHERE assign_id = '" .$assign_id. "' ";
+				$result = $con->query($sql);
 			}else{				
 				$status = true;
 				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code, wt_id, holiday_count) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."', '".$wt_id."', '".$holiday_count."') ";
@@ -118,7 +118,7 @@
 				$data[7] = date('d-F Y', strtotime($to_date));
 				$data[8] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));
 				$data[9] = $bill_status_name;
-				$data[10] = "<a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-calendar' aria-hidden='true' onclick='viewAttendanceData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$assign_id.")'></i></a>"; 
+				$data[10] = "<a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-pencil' aria-hidden='true' onclick='editTableData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-calendar' aria-hidden='true' onclick='viewAttendanceData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$assign_id.")'></i></a>"; 
 				array_push($mainData, $data);
 				$slno++;
 			}

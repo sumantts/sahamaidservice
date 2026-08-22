@@ -1113,8 +1113,8 @@
 				$assign_maid->worker_id = $row['worker_id'];
 				$assign_maid->exp_salary = $row['exp_salary'];
 
-				$assign_maid->from_date = date('d-F-Y', strtotime($row['from_date']));
-				$assign_maid->to_date = date('d-F-Y', strtotime($row['to_date']));
+				$assign_maid->from_date = date('d-F-Y', strtotime($from_date1));
+				$assign_maid->to_date = date('d-F-Y', strtotime($to_date1));
 				$assign_maid->from_time = $row['from_time']; 
 				$assign_maid->to_time = $row['to_time'];	
 				$assign_maid->bill_status = $row['bill_status'];
@@ -1137,18 +1137,10 @@
 				$assign_maid->worker_name = $worker_name;
 				
 				// Days count
-				$from_date = $row['from_date'];
-				$to_date = $row['to_date'];
-				$days_count = (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
+				$from_date = $from_date1;//$row['from_date'];
+				$to_date = $to_date1;//$row['to_date'];
+				$days_count = 30;// (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
 				$assign_maid->days_count = $days_count;
-
-				if($row['holiday_count'] > 0){
-					$holiday_count = $row['holiday_count'];
-					$two_days_extra_amount1 = $holiday_count * ($row['rcvabl_amount'] / $days_count);	
-					$two_days_extra_amount = round($two_days_extra_amount1);
-				}else{
-					$two_days_extra_amount = 0;
-				}
 				
 				$rcvabl_amount = $row['rcvabl_amount']; 
 				$daily_amount = $rcvabl_amount / $days_count; // Amount for full day attendance
@@ -1156,10 +1148,20 @@
 				$assign_maid->daily_amount = round($daily_amount);
 				$assign_maid->half_daily_amount = round($half_daily_amount);
 
+
+				if($row['holiday_count'] > 0){
+					$holiday_count = $row['holiday_count'];
+					$two_days_extra_amount1 = $holiday_count * $daily_amount;	
+					$two_days_extra_amount = round($two_days_extra_amount1);
+				}else{
+					$two_days_extra_amount = 0;
+				}
+
+
 				//$calculated_receivable_amount = round($daily_amount * $days_count);
 				$calculated_receivable_amount = round($daily_amount * $present_count); // multiply with present days count
 				$calculated_half_day_amount = round($half_daily_amount * $half_day_count); // multiply with half days count
-				$calculated_receivable_amount = $calculated_receivable_amount + $calculated_half_day_amount; // add half day amount
+				//$calculated_receivable_amount = $calculated_receivable_amount + $calculated_half_day_amount; // add half day amount
 				$assign_maid->calculated_receivable_amount = $calculated_receivable_amount;
 				$assign_maid->calculated_half_day_amount = $calculated_half_day_amount;
 

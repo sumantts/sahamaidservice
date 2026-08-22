@@ -236,7 +236,7 @@
                 Working Month: <?=date('F Y', strtotime($inv_month))?>  (<?=$assign_maids[$i]->days_count?> Days)<br>
                 <!-- If there is leave --> 
                  
-                Present Day (<?=$assign_maids[$i]->present_days?> Day(s)) Amount: <?php $pda = $assign_maids[$i]->rcvabl_amount - $assign_maid->two_days_extra_amount; echo number_format($pda, 2); ?>/-
+                Present Day (<?=$assign_maids[$i]->present_days?> Day(s)) Amount: <?php echo number_format($assign_maids[$i]->calculated_receivable_amount, 2); ?>/-
                 
                 <?php if($assign_maids[$i]->half_day_count > 0){?>
                 <br> Half Day (<?=$assign_maids[$i]->half_day_count?> Day(s)) Amount: <?=number_format($assign_maids[$i]->calculated_half_day_amount, 2)?>/- 
@@ -253,7 +253,8 @@
                 //$total_amount = $rcvabl_amount + $two_days_extra_amount;
                 $total_amount = $rcvabl_amount;
                 echo number_format($assign_maids[$i]->t_amt, 2);            
-            ?>/-</td>
+            ?>/-
+            </td>
         </tr>
         <?php } } ?>
 

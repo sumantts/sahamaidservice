@@ -70,8 +70,8 @@ $('#submitForm').click(function(){
 
 function editTableData($assign_id){
     $('#myForm')[0].reset(); 
-    $('#submitForm').removeClass('d-block');
-    $('#submitForm').addClass('d-none');
+    //$('#submitForm').removeClass('d-block');
+    //$('#submitForm').addClass('d-none');
 
     
 
