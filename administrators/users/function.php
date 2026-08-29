@@ -1063,8 +1063,9 @@
 		$total_rcvabl_amount = 0;
 		$bill_total_p = 0;
 		$two_days_extra_amount = 0;
+		$days_count = 0;
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.holiday_count, assign_maid.atten_data, 
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.holiday_count, assign_maid.atten_data, assign_maid.cal_ty_id,
 		user_details.full_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
@@ -1086,6 +1087,8 @@
 					$atten_data = json_decode($row['atten_data']);
 				}
 				$assign_maid->atten_data = $atten_data;	
+				$cal_ty_id = $row['cal_ty_id'];
+				$assign_maid->cal_ty_id = $cal_ty_id;
 
 				$present_count = 0;
 				$absent_count = 0;
@@ -1139,7 +1142,14 @@
 				// Days count
 				$from_date = $from_date1;//$row['from_date'];
 				$to_date = $to_date1;//$row['to_date'];
-				$days_count = 30;// (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
+				
+				//$days_count = 30;// (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
+				if($cal_ty_id == '1'){ // Daywise
+					$days_count = 30;
+				}else{
+					// Monthwise
+					$days_count = (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
+				}
 				$assign_maid->days_count = $days_count;
 				
 				$rcvabl_amount = $row['rcvabl_amount']; 
