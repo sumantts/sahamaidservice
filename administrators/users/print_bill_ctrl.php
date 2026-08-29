@@ -264,7 +264,13 @@
 				$assign_maid->worker_name = $worker_name;
 				$assign_maid->wh_name = $wh_name;
 								
-				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount + $two_days_extra_amount + $calculated_half_day_amount;
+				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount + $two_days_extra_amount + $calculated_half_day_amount;			
+
+				// If Bill is calculating Month wise (30days) but maid present 31 days then add extra 1 day amount to total receivable amount
+				if($cal_ty_id == '2' && $present_count > 30){ 
+					$total_rcvabl_amount = $total_rcvabl_amount + $daily_amount;
+				}
+
 				$assign_maid->t_amt = 0;
 				$assign_maid->t_amt = $total_rcvabl_amount;
 				

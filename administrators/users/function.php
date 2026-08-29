@@ -1151,8 +1151,12 @@
 					$days_count = 30;
 					if($present_count > 30){
 						$present_count = $days_count;
+
 					}
 				}
+
+
+
 				$assign_maid->days_count = $days_count;
 				$days_of_this_month = (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
 				$assign_maid->days_of_this_month = $days_of_this_month;
@@ -1176,13 +1180,18 @@
 				//$calculated_receivable_amount = round($daily_amount * $days_count);
 				$calculated_receivable_amount = round($daily_amount * $present_count); // multiply with present days count
 				$calculated_half_day_amount = round($half_daily_amount * $half_day_count); // multiply with half days count
-				//$calculated_receivable_amount = $calculated_receivable_amount + $calculated_half_day_amount; // add half day amount
+				
 				$assign_maid->calculated_receivable_amount = $calculated_receivable_amount;
 				$assign_maid->calculated_half_day_amount = $calculated_half_day_amount;
 
 
 				// total_rcvabl_amount
 				$total_rcvabl_amount = $total_rcvabl_amount + $calculated_receivable_amount + $two_days_extra_amount + $calculated_half_day_amount;
+
+				// If Bill is calculating Month wise (30days) but maid present 31 days then add extra 1 day amount to total receivable amount
+				if($cal_ty_id == '2' && $present_count > 30){ 
+					$total_rcvabl_amount = $total_rcvabl_amount + $daily_amount;
+				}
 				//echo "Total Receivable Amount: ".$total_rcvabl_amount."<br>";
 
 				array_push($assign_maids, $assign_maid);
