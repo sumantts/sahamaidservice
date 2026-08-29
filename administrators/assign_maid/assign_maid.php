@@ -180,6 +180,12 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3 mb-2">
                                         <label for="holiday_count">Holiday Count</label>
                                         <input type="text" class="form-control" name="holiday_count" id="holiday_count"> 
+                                    </div> 
+                                    <div class="col-md-3 mb-2">
+                                        <label for="cal_ty_id">Calculation Type</label>
+                                        <select class="form-control" name="cal_ty_id" id="cal_ty_id">
+                                            <option value="0">Select</option> 
+                                        </select>
                                     </div>
                                     
                                 </div>

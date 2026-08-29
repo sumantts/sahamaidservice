@@ -1064,7 +1064,7 @@
 		$bill_total_p = 0;
 		$two_days_extra_amount = 0;
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.holiday_count, assign_maid.atten_data,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.holiday_count, assign_maid.atten_data, 
 		user_details.full_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
@@ -1363,10 +1363,7 @@
 		$return_array['status'] = $status;
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
-	}//function end
-
-
-	
+	}//function end	
 			
 	//Get Table Data
 	if($fn == 'updateSelectedCompany'){

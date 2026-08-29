@@ -38,6 +38,7 @@ $('#submitForm').click(function(){
     $wt_id = $('#wt_id').val();
     // $two_days_leave = $('#two_days_leave').is(':checked') ? '1' : '0';
     $holiday_count = $('#holiday_count').val();
+    $cal_ty_id = $('#cal_ty_id').val();
 
     if($client_id <= 0 || $rcvabl_amount == '' || $worker_id == '' || $exp_salary <= 0 || $from_date == '' || $to_date == '' || $from_time == '' || $to_time == ''){
         alert('All fields are mandatory, please enter properly');
@@ -49,7 +50,7 @@ $('#submitForm').click(function(){
         $.ajax({
             method: "POST",
             url: "assign_maid/function.php",
-            data: { fn: "saveFormData", assign_id: $assign_id, client_id: $client_id, rcvabl_amount: $rcvabl_amount, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code, wt_id: $wt_id, holiday_count: $holiday_count }
+            data: { fn: "saveFormData", assign_id: $assign_id, client_id: $client_id, rcvabl_amount: $rcvabl_amount, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code, wt_id: $wt_id, holiday_count: $holiday_count, cal_ty_id: $cal_ty_id }
         })
         .done(function( res ) {
             //console.log(res);
@@ -121,6 +122,10 @@ function editTableData($assign_id){
             }*/
             $holiday_count = $res1.holiday_count;
             $('#holiday_count').val($holiday_count);
+            $cal_ty_id = $res1.cal_ty_id;
+            setTimeout(function(){
+                $('#cal_ty_id').val($cal_ty_id).trigger('change');
+            },300);
 
             setTimeout(function(){
                 $('#client_id').val($client_id).trigger('change');
@@ -490,10 +495,39 @@ function configureWorkTypeDd(){
     });//end ajax
 }//end 
 
+// Calculation Type
+function configureCalculationTypeeDd(){
+    $.ajax({
+        method: "POST",
+        url: "assign_maid/function.php",
+        data: { fn: "configureCalculationTypeeDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#cal_ty_id').html('');
+                $html = "";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].cal_ty_id+"'>"+$rows[$i].cal_ty_name+"</option>";                    
+                }//end for                
+                $('#cal_ty_id').html($html);
+            }else{
+                $('#cal_ty_id').html('');
+                $html = "<option value='0'>Select</option>";
+                $('#cal_ty_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
 $(document).ready(function () {
     populateDataTable(); 
     configureClientUsersDd();  
     configureWorkerUsersDd(); 
     configureBillStatusDd();
     configureWorkTypeDd();
+    configureCalculationTypeeDd();
 });

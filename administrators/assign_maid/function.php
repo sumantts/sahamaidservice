@@ -27,17 +27,18 @@
 		$wt_id = $_POST['wt_id'];
 		//$two_days_leave = $_POST['two_days_leave'];
 		$holiday_count = $_POST['holiday_count'];
+		$cal_ty_id = $_POST['cal_ty_id'];
 
 		$sess_user_id = $_SESSION["user_id"];
 
 		try {
 			if($assign_id > 0){
 				$status = true;
-				$sql = "UPDATE assign_maid SET holiday_count = '" .$holiday_count. "' WHERE assign_id = '" .$assign_id. "' ";
+				$sql = "UPDATE assign_maid SET holiday_count = '" .$holiday_count. "', rcvabl_amount = '" .$rcvabl_amount. "', cal_ty_id = '" .$cal_ty_id. "' WHERE assign_id = '" .$assign_id. "' ";
 				$result = $con->query($sql);
 			}else{				
 				$status = true;
-				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code, wt_id, holiday_count) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."', '".$wt_id."', '".$holiday_count."') ";
+				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code, wt_id, holiday_count, cal_ty_id) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."', '".$wt_id."', '".$holiday_count."', '".$cal_ty_id."') ";
 				$result = $con->query($sql);
 			}
 				
@@ -63,7 +64,7 @@
 			$where_condition = " AND assign_maid.assign_by = '" .$sess_user_id. "' ";
 		}
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.holiday_count,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.holiday_count, 
 		user_details.full_name,
 		bill_status_master.bill_status_name
 		FROM assign_maid 
@@ -138,7 +139,7 @@
 		$mainData = array();
 		$assign_id = $_POST['assign_id'];
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.holiday_count,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.holiday_count, assign_maid.cal_ty_id, assign_maid.holiday_count,
 		user_details.full_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
@@ -167,6 +168,7 @@
 			$return_array['hsn_code'] = $row['hsn_code'];
 			$return_array['wt_id'] = $row['wt_id'];
 			$return_array['holiday_count'] = $row['holiday_count'];
+			$return_array['cal_ty_id'] = $row['cal_ty_id'];
 		} else {
 			$status = false;
 		}
@@ -419,6 +421,33 @@
 				$data_obj = new stdClass();
 				$data_obj->bs_id = $row['bs_id'];
 				$data_obj->bill_status_name = $row['bill_status_name']; 
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end
+
+	// Calculation Type
+	if($fn == 'configureCalculationTypeeDd'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		
+		$sql = "SELECT * FROM calculation_type";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->cal_ty_id = $row['cal_ty_id'];
+				$data_obj->cal_ty_name = $row['cal_ty_name']; 
 				
 				array_push($mainData, $data_obj);
 			}

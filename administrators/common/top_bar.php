@@ -20,17 +20,15 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                </li> -->
+                </li>
                 <li class="nav-item">
                     <div class="dropdown">
                         <a class="dropdown-toggle h-drop" href="#" data-toggle="dropdown" id="selected_branch"><?=$_SESSION["br_name"]?></a>
                         <div class="dropdown-menu profile-notification ">
-                            <ul class="pro-body" id="branch_list">
-                                <!-- <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Profile</a></li> -->
-                            </ul>
+                            <ul class="pro-body" id="branch_list"></ul>
                         </div>
                     </div>
-                </li>
+                </li> -->
                 <!-- <li class="nav-item">
                     <div class="dropdown mega-menu">
                         <a class="dropdown-toggle h-drop" href="#" data-toggle="dropdown">
