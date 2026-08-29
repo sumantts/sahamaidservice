@@ -197,15 +197,20 @@
 				// Days count
 				$from_date = $from_date1;//$row['from_date'];
 				$to_date = $to_date1;//$row['to_date'];
-				//$days_count = 30; // (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;				
-				if($cal_ty_id == '1'){ // Daywise
-					$days_count = 30;
-				}else{
-					// Monthwise
+				//$days_count = 30; // (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;	
+				if($cal_ty_id == '1'){ // Daywise how many days in a month
 					$days_count = (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
+				}else{
+					// Monthwise wise 30 days
+					$days_count = 30;
+					if($present_count > 30){
+						$present_count = $days_count;
+					}
 				}
 
 				$assign_maid->days_count = $days_count;
+				$days_of_this_month = (strtotime($to_date) - strtotime($from_date)) / (60 * 60 * 24) + 1;
+				$assign_maid->days_of_this_month = $days_of_this_month;
 
 				
 				$rcvabl_amount = $row['rcvabl_amount']; 

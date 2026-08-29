@@ -233,7 +233,7 @@
                 Skill: <?=$assign_maids[$i]->skills_text?><br>
                 Hours: <?=$assign_maids[$i]->wh_name?><br>
                 Assigned Work Type: <?=$assign_maids[$i]->type_name?><br><hr>
-                Working Month: <?=date('F Y', strtotime($inv_month))?>  (<?=$assign_maids[$i]->days_count?> Days)<br>
+                Working Month: <?=date('F Y', strtotime($inv_month))?>  (<?=$assign_maids[$i]->days_of_this_month?> Days)<br>
                 <!-- If there is leave --> 
                  
                 Present Day (<?=$assign_maids[$i]->present_days?> Day(s)) Amount: <?php echo number_format($assign_maids[$i]->calculated_receivable_amount, 2); ?>/-
