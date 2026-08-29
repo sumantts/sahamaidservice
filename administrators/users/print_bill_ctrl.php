@@ -214,7 +214,8 @@
 
 				
 				$rcvabl_amount = $row['rcvabl_amount']; 
-				$daily_amount = $rcvabl_amount / $days_count; // Amount for full day attendance
+				//$daily_amount = $rcvabl_amount / $days_count; // Amount for full day attendance
+				$daily_amount = $rcvabl_amount / 30; // Amount for full day attendance (30 days)
 				$half_daily_amount = $daily_amount / 2; // Amount for half day attendance
 				$assign_maid->daily_amount = round($daily_amount);
 				$assign_maid->half_daily_amount = round($half_daily_amount);
@@ -268,7 +269,7 @@
 
 				// If Bill is calculating Month wise (30days) but maid present 31 days then add extra 1 day amount to total receivable amount
 				if($present_count > 30){ 
-					$total_rcvabl_amount = $total_rcvabl_amount + $daily_amount;
+					//$total_rcvabl_amount = $total_rcvabl_amount + $daily_amount;
 				}
 
 				$assign_maid->t_amt = 0;
