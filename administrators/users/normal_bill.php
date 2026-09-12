@@ -229,7 +229,7 @@
         ?>
         <tr>
             <td>
-                Name: <?=$assign_maids[$i]->worker_name?><br>
+                <strong>Name: <?=$assign_maids[$i]->worker_name?></strong><br>
                 Skill: <?=$assign_maids[$i]->skills_text?><br>
                 Hours: <?=$assign_maids[$i]->wh_name?><br>
                 Assigned Work Type: <?=$assign_maids[$i]->type_name?><br><hr>
@@ -245,6 +245,14 @@
                 <?php if($assign_maids[$i]->holiday_count > 0){ ?>   
                     <br><?=$assign_maids[$i]->holiday_count?> Day(s) Extra Amount: <?=number_format($assign_maids[$i]->two_days_extra_amount, 2)?>/-
                 <?php } ?>
+
+                <?php if($assign_maids[$i]->otcc > 0 || $assign_maids[$i]->ticket_fare > 0 || $assign_maids[$i]->food_cost > 0 || $assign_maids[$i]->tr_jc > 0){ ?>   
+                    <?php if($assign_maids[$i]->otcc > 0){ ?><br>One Time Consultantany charge: <?=$assign_maids[$i]->otcc?>/-<?php } ?>
+                    <?php if($assign_maids[$i]->ticket_fare > 0){ ?><br>Ticket Fare Amount: <?=$assign_maids[$i]->ticket_fare?>/-<?php } ?>
+                    <?php if($assign_maids[$i]->food_cost > 0){ ?><br>Food Cost Amount: <?=$assign_maids[$i]->food_cost?>/-<?php } ?>
+                    <?php if($assign_maids[$i]->tr_jc > 0){ ?><br>Travel & Journey Cost Amount: <?=$assign_maids[$i]->tr_jc?>/-<?php } ?>
+                <?php } ?>
+
             </td>
             <td class="right bold">
             <?php     
@@ -258,13 +266,45 @@
         </tr>
         <?php } } ?>
 
+
         <tr>
             <td class="small bold">
                 Amount chargeable (in word):- <?=digitToinWordConverter($bill_total)?>
             </td>
             <td class="right bold"><?=number_format($bill_total, 2)?>/-</td>
         </tr>
+
+        <!-- Payment Details --> 
     </table>
+    <table class="section">
+        <?php if(sizeof($payments) > 0){ ?>
+        <tr class="bold">
+            <td width="70%">Payment History</td>
+            <td width="30%" class="right">Amount</td>
+        </tr>
+        <?php for($i = 0; $i < sizeof($payments); $i++){ ?>
+        <tr>
+            <td> Paid By <?php echo ($payments[$i]->payment_mode == 1) ? 'Cash' : 'UPI'; ?> <?php if($payments[$i]->transaction_id) { echo '(Transaction ID: ' . $payments[$i]->transaction_id . ')'; } ?> as on <?=date('d-F-Y', strtotime($payments[$i]->pay_date))?> </td>
+            <td class="right bold"><?=number_format($payments[$i]->paid_amount, 2)?>/- </td>
+        </tr>
+        <?php } ?>
+        <tr>
+            <td class="small bold">
+                TotalPaid (in word):- <?=digitToinWordConverter($total_paid)?>
+            </td>
+            <td class="right bold"><?=number_format($total_paid, 2)?>/-</td>
+        </tr>
+        <tr>
+            <td class="small bold">
+                Amount Due (in word):- <?=digitToinWordConverter($total_due)?>
+            </td>
+            <td class="right bold"><?=number_format($total_due, 2)?>/-</td>
+        </tr>
+        <?php } ?>
+        <!-- //Payment Details --> 
+    </table>
+
+    
 
     <!-- Bank & Signature -->
     <table class="section">

@@ -20,6 +20,9 @@
 	$bank_name = '';
 	$days_count = 0;
 
+	$total_paid = 0;
+	$total_due = 0;
+
 	# Get skill function
 	function getSkillList($mysqli, $ids){
 		$skills_text = '';		
@@ -131,7 +134,7 @@
         # Get Invoice Info
         $from_date1 = $inv_month.'-01';
 		$to_date1 = date('Y-m-t', strtotime($from_date1));//$inv_month.'-31';
-        $sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.atten_data, assign_maid.wt_id, assign_maid.holiday_count,
+        $sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.atten_data, assign_maid.wt_id, assign_maid.holiday_count, assign_maid.otcc, assign_maid.ticket_fare, assign_maid.food_cost, assign_maid.tr_jc,
 		user_details.full_name, assign_maid.atten_data, assign_maid.cal_ty_id,
 		work_type.type_name
 		FROM assign_maid 
@@ -193,6 +196,12 @@
 				$assign_maid->hsn_code = $row['hsn_code'];
 				$assign_maid->holiday_count = $row['holiday_count'];
 				$assign_maid->inv_id = 'INV_'.str_pad($assign_id, 4, "0", STR_PAD_LEFT);
+
+				
+				$assign_maid->otcc = $row['otcc'];
+				$assign_maid->ticket_fare = $row['ticket_fare'];
+				$assign_maid->food_cost = $row['food_cost'];
+				$assign_maid->tr_jc = $row['tr_jc'];
 				
 				// Days count
 				$from_date = $from_date1;//$row['from_date'];
@@ -273,7 +282,7 @@
 				}
 
 				$assign_maid->t_amt = 0;
-				$assign_maid->t_amt = $total_rcvabl_amount;
+				$assign_maid->t_amt = $calculated_receivable_amount + $two_days_extra_amount + $calculated_half_day_amount + $row['otcc'] + $row['ticket_fare'] + $row['food_cost'] + $row['tr_jc'];
 				
 				$assign_maid->present_days = $present_count;
 				$assign_maid->half_day_count = $half_day_count;
@@ -291,6 +300,28 @@
 			}
 		}
         
+		# Get Payments  
+		if($bill_id > 0){
+			$payments = array();
+			$sql4 = "SELECT * FROM bill_payment_details WHERE bill_id = '" .$bill_id. "' ";
+			$result4 = $con->query($sql4);
+
+			if ($result4->num_rows > 0) {
+				while($row4 = $result4->fetch_array()){
+					$payment = new stdClass();
+					$payment->paid_amount = $row4['paid_amount'];
+					$payment->payment_mode = $row4['payment_mode'];
+					$payment->transaction_id = $row4['transaction_id'];
+					$payment->pay_date = date('d-F-Y h:i A', strtotime($row4['pay_date'])); 
+					
+					# Total amount paid for this Bill 
+					$total_paid = $total_paid + $row4['paid_amount'];
+					array_push($payments, $payment);
+				}//end while
+			}//end if 
+
+			$total_due = $bill_total - $total_paid;
+		}//end if
         
     }//end if
 ?>

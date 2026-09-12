@@ -1064,8 +1064,9 @@
 		$bill_total_p = 0;
 		$two_days_extra_amount = 0;
 		$days_count = 0;
+		$others_cost = 0;
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.holiday_count, assign_maid.atten_data, assign_maid.cal_ty_id,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.holiday_count, assign_maid.atten_data, assign_maid.cal_ty_id, assign_maid.otcc, assign_maid.ticket_fare, assign_maid.food_cost, assign_maid.tr_jc,
 		user_details.full_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
@@ -1118,12 +1119,22 @@
 
 				$assign_maid->from_date = date('d-F-Y', strtotime($from_date1));
 				$assign_maid->to_date = date('d-F-Y', strtotime($to_date1));
+				$assign_maid->from_date_n = date('d-F-Y', strtotime($row['from_date']));
+				$assign_maid->to_date_n = date('d-F-Y', strtotime($row['to_date']));
 				$assign_maid->from_time = $row['from_time']; 
 				$assign_maid->to_time = $row['to_time'];	
 				$assign_maid->bill_status = $row['bill_status'];
 				$assign_maid->hsn_code = $row['hsn_code'];
 				$assign_maid->holiday_count = $row['holiday_count'];
 				$assign_maid->inv_id = 'INV_'.str_pad($assign_id, 4, "0", STR_PAD_LEFT);
+
+				
+				$otcc = $row['otcc'];
+				$ticket_fare = $row['ticket_fare'];
+				$food_cost = $row['food_cost'];
+				$tr_jc = $row['tr_jc'];
+				$others_cost = $others_cost + ($otcc + $ticket_fare + $food_cost + $tr_jc);
+				
 
 				// Worker Name
 				$worker_id = $row['worker_id'];
@@ -1196,6 +1207,8 @@
 
 				array_push($assign_maids, $assign_maid);
 			}
+			$total_rcvabl_amount = $total_rcvabl_amount + $others_cost;
+
 		} else {
 			$status = false;
 		}		

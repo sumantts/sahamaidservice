@@ -751,7 +751,7 @@ if($sess_user_type > 3){
                             <input type="hidden" name="total_rcvabl_amount" id="total_rcvabl_amount" value="0">
                             <input type="hidden" name="tax_cgst" id="tax_cgst" value="0"> 
                             <input type="hidden" name="tax_sgst" id="tax_sgst" value="0"> 
-                            <input type="hidden" name="bill_total_p" id="bill_total_p" value="0"> 
+                            <input type="hidden" name="bill_total_p" id="bill_total_p" value="0">  
                             
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#invModalLong').modal('hide')">Close</button>
                             <button type="button" class="btn btn-primary" id="savePrint">Save & Print</button>

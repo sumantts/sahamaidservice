@@ -1347,8 +1347,8 @@ function getUnPaidBills(){
     $bill_total_p = 0;
     $gst_percentage = 0;
     $tax_cgst = 0;
-    $tax_sgst = 0;
-    
+    $tax_sgst = 0; 
+
     $('#bill_id').val($bill_id);
     $('#bill_total').val($bill_total); 
     $('#bill_total_p').val($bill_total_p);  
@@ -1373,7 +1373,7 @@ function getUnPaidBills(){
             $gst_percentage = $res1.gst_percentage; 
             $total_rcvabl_amount = $res1.total_rcvabl_amount;
             $payments = $res1.payments;
-            $total_paid_till_date = $res1.total_paid_till_date; 
+            $total_paid_till_date = $res1.total_paid_till_date;  
 
             populatePaymentHistory($payments);
     
@@ -1395,10 +1395,10 @@ function getUnPaidBills(){
                         $inv_ui += '<input class="form-control form-control-sm" type="text" id="inv_id" name="inv_id" placeholder="INV ID" value="'+$assign_maids[$i].inv_id+'" readonly>';
                     $inv_ui += '</div>';
                     $inv_ui += '<div class="col-md-3 mb-2">';
-                        $inv_ui += '<input class="form-control form-control-sm" type="text" id="from_date" name="from_date" placeholder="From Date"  value="'+$assign_maids[$i].from_date+'" readonly>';
+                        $inv_ui += '<input class="form-control form-control-sm" type="text" id="from_date" name="from_date" placeholder="From Date"  value="'+$assign_maids[$i].from_date_n+'" readonly>';
                     $inv_ui += '</div>';
                     $inv_ui += '<div class="col-md-3 mb-2">';
-                        $inv_ui += '<input class="form-control form-control-sm" type="text" id="to_date" name="to_date" placeholder="To Date"  value="'+$assign_maids[$i].to_date+'" readonly>';
+                        $inv_ui += '<input class="form-control form-control-sm" type="text" id="to_date" name="to_date" placeholder="To Date"  value="'+$assign_maids[$i].to_date_n+'" readonly>';
                     $inv_ui += '</div>';
                     $inv_ui += '<div class="col-md-3 mb-2">';
                         $inv_ui += '<input class="form-control form-control-sm" type="text" id="worker_id" name="worker_id" placeholder="Worker"  value="'+$assign_maids[$i].worker_name+'" readonly>';
@@ -1553,7 +1553,8 @@ function calculateBillAmount(){
     $normal_gst = $('#normal_gst').val();
     $gst_percentage = $('#gst_percentage').val();
     $total_rcvabl_amount = $('#total_rcvabl_amount').val();
-    $bill_total_p = $('#bill_total_p').val();
+    $bill_total_p = $('#bill_total_p').val(); 
+
     $bill_total_d = 0;
 
     $bill_total = 0;
@@ -1567,8 +1568,10 @@ function calculateBillAmount(){
     }
     $('#tax_cgst').val($tax_cgst);
     $('#tax_sgst').val($tax_sgst);
+
     $bill_total = parseFloat($total_rcvabl_amount) + parseFloat($gst_tax_val);
     $('#bill_total').val($bill_total);
+
 
     $bill_total_d = parseFloat($bill_total) - parseFloat($bill_total_p);
 

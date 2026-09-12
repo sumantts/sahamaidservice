@@ -275,8 +275,9 @@
             <?php     
                 $two_days_extra_amount = $assign_maids[$i]->two_days_extra_amount; 
                 $rcvabl_amount = $assign_maids[$i]->rcvabl_amount;
-                $total_amount = $rcvabl_amount + $two_days_extra_amount;
-                echo number_format($rcvabl_amount, 2);            
+                $t_amt = $assign_maids[$i]->t_amt;
+                $total_amount = $rcvabl_amount + $two_days_extra_amount + $assign_maids[$i]->otcc + $assign_maids[$i]->ticket_fare + $assign_maids[$i]->food_cost + $assign_maids[$i]->tr_jc;
+                echo number_format($t_amt, 2);            
             ?>
             </td>
         </tr>
@@ -326,16 +327,17 @@
                   
                     $two_days_extra_amount = $assign_maids[$i]->two_days_extra_amount; 
                     $rcvabl_amount = $assign_maids[$i]->rcvabl_amount;
+                    $t_amt = $assign_maids[$i]->t_amt;
                     $total_amount = $rcvabl_amount + $two_days_extra_amount;
                     //echo number_format($total_amount, 2);  
 
-                    $cgst_val = ($rcvabl_amount * $gst_percentage) / 100;
-                    $sgst_val = ($rcvabl_amount * $gst_percentage) / 100;
+                    $cgst_val = ($t_amt * $gst_percentage) / 100;
+                    $sgst_val = ($t_amt * $gst_percentage) / 100;
                     $tax_total = ($cgst_val + $sgst_val);
         ?>
         <tr>
             <td><?=$assign_maids[$i]->hsn_code?></td>
-            <td class="right"><?=number_format($rcvabl_amount, 2)?></td>
+            <td class="right"><?=number_format($t_amt, 2)?></td>
             <td class="right"><?=number_format($cgst_val, 2)?></td>
             <td class="right"><?=number_format($sgst_val, 2)?></td>
             <td class="right"><?=number_format($tax_total, 2)?></td>
