@@ -40,6 +40,11 @@ $('#submitForm').click(function(){
     $holiday_count = $('#holiday_count').val();
     $cal_ty_id = $('#cal_ty_id').val();
 
+    $otcc = $('#otcc').val();
+    $ticket_fare = $('#ticket_fare').val();
+    $food_cost = $('#food_cost').val();
+    $tr_jc = $('#tr_jc').val();
+
     if($client_id <= 0 || $rcvabl_amount == '' || $worker_id == '' || $exp_salary <= 0 || $from_date == '' || $to_date == '' || $from_time == '' || $to_time == ''){
         alert('All fields are mandatory, please enter properly');
     }else{
@@ -50,7 +55,7 @@ $('#submitForm').click(function(){
         $.ajax({
             method: "POST",
             url: "assign_maid/function.php",
-            data: { fn: "saveFormData", assign_id: $assign_id, client_id: $client_id, rcvabl_amount: $rcvabl_amount, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code, wt_id: $wt_id, holiday_count: $holiday_count, cal_ty_id: $cal_ty_id }
+            data: { fn: "saveFormData", assign_id: $assign_id, client_id: $client_id, rcvabl_amount: $rcvabl_amount, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code, wt_id: $wt_id, holiday_count: $holiday_count, cal_ty_id: $cal_ty_id, otcc: $otcc, ticket_fare: $ticket_fare, food_cost: $food_cost, tr_jc: $tr_jc }
         })
         .done(function( res ) {
             //console.log(res);
@@ -132,6 +137,11 @@ function editTableData($assign_id){
                 $('#worker_id').val($worker_id).trigger('change');
                 $('#bill_status').val($bill_status).trigger('change'); 
             },300);
+            
+            $('#otcc').val($res1.otcc); 
+            $('#ticket_fare').val($res1.ticket_fare); 
+            $('#food_cost').val($res1.food_cost); 
+            $('#tr_jc').val($res1.tr_jc); 
 
             $('#exampleModalLong').modal('show');
         }

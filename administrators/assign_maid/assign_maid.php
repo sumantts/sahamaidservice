@@ -187,6 +187,26 @@ $sess_user_type = $_SESSION["user_type"];
                                             <option value="0">Select</option> 
                                         </select>
                                     </div>
+
+                                    <!-- Others parameters -->
+                                     <div class="col-md-3 mb-2">
+                                        <label for="otcc">One Time Consultantany charge</label>
+                                        <input type="text" class="form-control" name="otcc" id="otcc"> 
+                                    </div> 
+                                     <div class="col-md-3 mb-2">
+                                        <label for="ticket_fare">Ticket fare</label>
+                                        <input type="text" class="form-control" name="ticket_fare" id="ticket_fare"> 
+                                    </div> 
+                                     <div class="col-md-3 mb-2">
+                                        <label for="food_cost">Food Cost</label>
+                                        <input type="text" class="form-control" name="food_cost" id="food_cost"> 
+                                    </div> 
+                                     <div class="col-md-3 mb-2">
+                                        <label for="tr_jc">Traveling and joining charge</label>
+                                        <input type="text" class="form-control" name="tr_jc" id="tr_jc"> 
+                                    </div> 
+                                    <!-- // Others parameters -->
+                                    
                                     
                                 </div>
                                  

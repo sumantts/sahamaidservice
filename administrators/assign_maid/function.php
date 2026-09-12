@@ -29,16 +29,21 @@
 		$holiday_count = $_POST['holiday_count'];
 		$cal_ty_id = $_POST['cal_ty_id'];
 
+		$otcc = $_POST['otcc'];
+		$ticket_fare = $_POST['ticket_fare'];
+		$food_cost = $_POST['food_cost'];
+		$tr_jc = $_POST['tr_jc'];
+
 		$sess_user_id = $_SESSION["user_id"];
 
 		try {
 			if($assign_id > 0){
 				$status = true;
-				$sql = "UPDATE assign_maid SET holiday_count = '" .$holiday_count. "', rcvabl_amount = '" .$rcvabl_amount. "', cal_ty_id = '" .$cal_ty_id. "' WHERE assign_id = '" .$assign_id. "' ";
+				$sql = "UPDATE assign_maid SET holiday_count = '" .$holiday_count. "', rcvabl_amount = '" .$rcvabl_amount. "', cal_ty_id = '" .$cal_ty_id. "', otcc = '" .$otcc. "', ticket_fare = '" .$ticket_fare. "', food_cost = '" .$food_cost. "', tr_jc = '" .$tr_jc. "' WHERE assign_id = '" .$assign_id. "' ";
 				$result = $con->query($sql);
 			}else{				
 				$status = true;
-				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code, wt_id, holiday_count, cal_ty_id) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."', '".$wt_id."', '".$holiday_count."', '".$cal_ty_id."') ";
+				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code, wt_id, holiday_count, cal_ty_id, otcc, ticket_fare, food_cost, tr_jc) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."', '".$wt_id."', '".$holiday_count."', '".$cal_ty_id."', '".$otcc."', '".$ticket_fare."', '".$food_cost."', '".$tr_jc."') ";
 				$result = $con->query($sql);
 			}
 				
@@ -139,7 +144,7 @@
 		$mainData = array();
 		$assign_id = $_POST['assign_id'];
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.holiday_count, assign_maid.cal_ty_id, assign_maid.holiday_count,
+		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.holiday_count, assign_maid.cal_ty_id, assign_maid.otcc, assign_maid.ticket_fare, assign_maid.food_cost, assign_maid.tr_jc,
 		user_details.full_name
 		FROM assign_maid 
 		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
@@ -169,6 +174,11 @@
 			$return_array['wt_id'] = $row['wt_id'];
 			$return_array['holiday_count'] = $row['holiday_count'];
 			$return_array['cal_ty_id'] = $row['cal_ty_id'];
+
+			$return_array['otcc'] = $row['otcc'];
+			$return_array['ticket_fare'] = $row['ticket_fare'];
+			$return_array['food_cost'] = $row['food_cost'];
+			$return_array['tr_jc'] = $row['tr_jc'];
 		} else {
 			$status = false;
 		}
