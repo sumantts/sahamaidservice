@@ -56,6 +56,20 @@ $sess_user_type = $_SESSION["user_type"];
 					<li class="nav-item <?php if($p == 'assign-maid'){ ?> active <?php } ?>">
 					    <a href="?p=assign-maid&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Assign Maid</span></a>
 					</li>
+					<li class="nav-item pcoded-menu-caption" id="setup">
+						<label>QUICK SERVICE</label>
+					</li>
+
+					<li class="nav-item pcoded-hasmenu <?php if($p == 'quick-services' || $p == 'service-area' || $p == 'service-rate-chart' || $p == 'schedule-log'){ ?> active pcoded-trigger <?php } ?>">
+						<a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Quick Services</span></a>
+						<ul class="pcoded-submenu">
+							<li <?php if($p == 'quick-services'){ ?> class="active" <?php } ?>><a href="?p=quick-services&gr=setup">Quick services</a></li>
+							<li <?php if($p == 'service-area'){ ?> class="active" <?php } ?>><a href="?p=service-area&gr=setup">Service Area</a></li>
+							<li <?php if($p == 'service-rate-chart'){ ?> class="active" <?php } ?>><a href="?p=service-rate-chart&gr=setup">Service Rate Chart</a></li>
+							<li <?php if($p == 'schedule-log'){ ?> class="active" <?php } ?>><a href="?p=schedule-log&gr=setup">Schedule Log</a></li>
+						</li>						
+						</ul>
+					</li>
 
 					<!-- <li class="nav-item pcoded-hasmenu <?php if($p == 'deposit' || $p == 'loan'){ ?> active pcoded-trigger <?php } ?>">
 					    <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Product</span></a>

@@ -78,6 +78,26 @@
 			$title = "Assign Maid";
 			include('assign_maid/assign_maid.php');		
 		break;
+		
+		case 'quick-services':
+			$title = "Quick Services";
+			include('quick_services/quick_services.php');		
+		break;
+		
+		case 'service-area':
+			$title = "Service Area";
+			include('service_area/service_area.php');		
+		break;
+		
+		case 'service-rate-chart':
+			$title = "Service Rate Chart";
+			include('service_rate_chart/service_rate_chart.php');		
+		break;
+		
+		case 'schedule-log':
+			$title = "Schedule Log";
+			include('schedule_log/schedule_log.php');		
+		break;
 						
 		default:
 		if(isset($_SESSION["user_id"]) && $_SESSION["user_id"] != ''){
