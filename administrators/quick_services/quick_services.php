@@ -92,6 +92,7 @@
                                         <th>Service Name</th>
                                         <th>Service Included</th>
                                         <th>Service Not Included</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -101,6 +102,7 @@
                                         <th>Service Name</th>
                                         <th>Service Included</th>
                                         <th>Service Not Included</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>

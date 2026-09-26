@@ -81,11 +81,20 @@
 				$svc_not_included = $format_service_names($row['svc_not_included']);
 				$svc_status = $row['svc_status'];
 				
+				
+				$svc_status_stat = '';
+				if($svc_status == '1'){
+					$svc_status_stat = 'checked';
+				}
+
+				$toggle_button = '<div class="form-check form-switch"> <input class="form-check-input svc_status" type="checkbox" role="switch" id="svc_status_'.$qs_id.'"  data-id="'.$qs_id.'" '.$svc_status_stat.'> <label class="form-check-label" for="svc_status_'.$qs_id.'" >Active</label> </div>';
+				
 				$data[0] = $slno;
 				$data[1] = $service_name;
 				$data[2] = $svc_included;
 				$data[3] = $svc_not_included;
-				$data[4] = "<a href='javascript: void(0);' onclick='editService(".$qs_id.")'><i class='fa fa-edit' aria-hidden='true'></i></a> <a href='javascript: void(0);' onclick='deleteService(".$qs_id.")'><i class='fa fa-trash' aria-hidden='true'></i></a>";
+				$data[4] = $toggle_button;
+				$data[5] = "<a href='javascript: void(0);' onclick='editService(".$qs_id.")'><i class='fa fa-edit' aria-hidden='true'></i></a> <a href='javascript: void(0);' onclick='deleteService(".$qs_id.")'><i class='fa fa-trash' aria-hidden='true'></i></a>";
 
 				array_push($mainData, $data);
 				$slno++;
@@ -150,5 +159,20 @@
 		
 		echo json_encode($return_result);
 	}//end function deleteItem
+
+
+	// Update seen status
+	if($fn == 'update_active_status'){
+		$return_result = array();
+		$status = true;
+
+		$qs_id = $_GET["qs_id"];	
+		$svc_status = $_GET["svc_status"]; 
+        $sql = "UPDATE quick_services SET svc_status = '" .$svc_status. "' WHERE qs_id = '" .$qs_id. "' ";
+        $result = $mysqli->query($sql);
+		
+		$return_result['status'] = $status; 
+		echo json_encode($return_result);
+	}//end	
 
 ?>
