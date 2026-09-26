@@ -83,11 +83,13 @@
 				
 				
 				$svc_status_stat = '';
+				$status_text = 'Inactive';
 				if($svc_status == '1'){
 					$svc_status_stat = 'checked';
+					$status_text = 'Active';
 				}
 
-				$toggle_button = '<div class="form-check form-switch"> <input class="form-check-input svc_status" type="checkbox" role="switch" id="svc_status_'.$qs_id.'"  data-id="'.$qs_id.'" '.$svc_status_stat.'> <label class="form-check-label" for="svc_status_'.$qs_id.'" >Active</label> </div>';
+				$toggle_button = '<div class="form-check form-switch"> <input class="form-check-input svc_status" type="checkbox" role="switch" id="svc_status_'.$qs_id.'"  data-id="'.$qs_id.'" '.$svc_status_stat.'> <label class="form-check-label" for="svc_status_'.$qs_id.'" >'.$status_text.'</label> </div>';
 				
 				$data[0] = $slno;
 				$data[1] = $service_name;
