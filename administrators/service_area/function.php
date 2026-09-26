@@ -66,6 +66,17 @@
 				$street_name = $row['street_name'];
 				$landmark = $row['landmark'];
 				$building_name = '';
+				$building_sql = "SELECT building_name FROM service_area WHERE parent_sa_id = " . (int) $sa_id . " ORDER BY building_name ASC";
+				$building_result = $mysqli->query($building_sql);
+				if ($building_result) {
+					$building_names = array();
+					$building_slno = 1;
+					while ($building_row = $building_result->fetch_assoc()) {
+						$building_names[] = '<strong>' . $building_slno . '.</strong> ' . htmlspecialchars($building_row['building_name'], ENT_QUOTES, 'UTF-8');
+						$building_slno++;
+					}
+					$building_name = implode('<br>', $building_names);
+				}
 				$sa_status = $row['sa_status'];
 				
 				
