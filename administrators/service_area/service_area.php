@@ -89,18 +89,24 @@
                                 <thead>
                                     <tr>
                                         <th>Sl.No.</th>
-                                        <th>Service Name</th>
-                                        <th>Service Included</th>
-                                        <th>Service Not Included</th>
+                                        <th>Area / Location</th>
+                                        <th>Pincode</th>
+                                        <th>Street name</th>
+                                        <th>Landmark</th>
+                                        <th>Building Name</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Sl.No.</th>
-                                        <th>Service Name</th>
-                                        <th>Service Included</th>
-                                        <th>Service Not Included</th>
+                                        <th>Area / Location</th>
+                                        <th>Pincode</th>
+                                        <th>Street name</th>
+                                        <th>Landmark</th>
+                                        <th>Building Name</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -122,15 +128,22 @@
                         <div class="modal-body">
                             <form class="needs-validation" novalidate>
                                 <div class="form-row">
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-md-8 mb-3">
                                         <label for="serviceName" class="text-danger">Service Name*</label>
-                                        <input type="text" class="form-control" id="serviceName" placeholder="Service Name" value="" required >
+                                        <input type="text" class="form-control" id="serviceName" value="" required >
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
                                         <div class="invalid-feedback">
                                             Please provide Service Name.
                                         </div>
+                                    </div> 
+                                    <div class="col-md-4 mb-3">
+                                        <label for="serviceName" class="text-danger">Status*</label>
+                                        <select class="form-control" id="sa_status" name="sa_status" required>
+                                            <option value="1">Active</option> 
+                                            <option value="2">Inactive</option> 
+                                        </select>
                                     </div> 
                                     
                                     <!-- Service Included Start -->
@@ -208,7 +221,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <input type="hidden" id="qs_id" value="0">
+                            <input type="hidden" id="sa_id" value="0">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#exampleModalLong').modal('hide')">Close</button>
                             <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                             <button class="btn  btn-primary" type="button" id="submitForm">

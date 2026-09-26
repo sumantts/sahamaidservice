@@ -29,13 +29,14 @@ function clearForm(){
     $('#serviceDescription').val('');
     $('#serviceDescription').removeClass('is-valid');
     $('#serviceDescription').removeClass('is-invalid');
-    $('#qs_id').val('0');
+    $('#sa_id').val('0');
 
 }//end 
 
 $('#addNewBtn, .card-option a[data-target="#exampleModalLong"]').on('click', function(){
-    $('#qs_id').val('0');
+    $('#sa_id').val('0');
     $('#serviceName').val('');
+    $('#sa_status').val('1').trigger('change');
     $('#serviceName').removeClass('is-valid');
     $('#serviceName').removeClass('is-invalid');
     initObjects();
@@ -56,13 +57,14 @@ $('#submitForm').click(function(){
         $formVallidStatus = validateForm();
 
         if($formVallidStatus == true){
-            $qs_id = $('#qs_id').val();
+            $sa_id = $('#sa_id').val();
             $serviceName = $('#serviceName').val().replace(/^\s+|\s+$/gm,'');
+            $sa_status = $('#sa_status').val();
 
             $.ajax({
                 method: "POST",
-                url: "quick_services/function.php",
-                data: { fn: "saveServices", qs_id: $qs_id, serviceName: $serviceName, scv_inc_arr: JSON.stringify($scv_inc_arr), scv_notinc_arr: JSON.stringify($scv_notinc_arr) }
+                url: "service_area/function.php",
+                data: { fn: "saveServices", sa_id: $sa_id, serviceName: $serviceName, scv_inc_arr: JSON.stringify($scv_inc_arr), scv_notinc_arr: JSON.stringify($scv_notinc_arr), sa_status: $sa_status }
             })
             .done(function( res ) {
                 //console.log(res);
@@ -70,7 +72,7 @@ $('#submitForm').click(function(){
                 if($res1.status == true){
                     $('#orgFormAlert1').css("display", "block");
                     $('.toast-right').toast('show');
-                    $('#qs_id').val($res1.qs_id); 
+                    $('#sa_id').val($res1.sa_id); 
                     populateDataTable();
 
                     alert('Quick Service saved successfully!');
@@ -83,21 +85,23 @@ $('#submitForm').click(function(){
     //}, 500)    
 })
 
-function editService($qs_id){
+function editService($sa_id){
     $('#exampleModalLong').modal('show');
     $.ajax({
         method: "POST",
-        url: "quick_services/function.php",
-        data: { fn: "getServiceData", qs_id: $qs_id }
+        url: "service_area/function.php",
+        data: { fn: "getServiceData", sa_id: $sa_id }
     })
     .done(function( res ) {
         //console.log(res);
         $res1 = JSON.parse(res);
         if($res1.status == true){
             $('#serviceName').val($res1.service_name);
-            $('#qs_id').val($qs_id);
-                $scv_inc_arr = $res1.svc_included;
-                $scv_notinc_arr = $res1.svc_not_included;
+            $('#sa_id').val($sa_id);
+            $('#sa_status').val($res1.sa_status).trigger('change');
+            $scv_inc_arr = $res1.svc_included;
+            $scv_notinc_arr = $res1.svc_not_included;
+
             renderIncludedTableData();
             renderNotIncludedTableData();
         }
@@ -106,12 +110,12 @@ function editService($qs_id){
 }
 
 //Delete function	
-function deleteService($qs_id){
+function deleteService($sa_id){
     if (confirm('Are you sure to delete the Service?')) {
         $.ajax({
             method: "POST",
-            url: "quick_services/function.php",
-            data: { fn: "deleteService", qs_id: $qs_id }
+            url: "service_area/function.php",
+            data: { fn: "deleteService", sa_id: $sa_id }
         })
         .done(function( res ) {
             //console.log(res);
@@ -153,7 +157,7 @@ function populateDataTable(){
     $('#example').DataTable({ 
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'quick_services/function.php?fn=getServices' },
+        ajax: {'url': 'service_area/function.php?fn=getServices' },
         dom: 'Bfrtip',
         buttons: [
             {
@@ -322,6 +326,39 @@ $('#notIncludedServicesTable').on('click', '.remove-not-included-service', funct
         renderNotIncludedTableData();
     }
 });
+
+
+
+
+$(document).on("change", "[id^='sa_status_']", function(){
+    let id = this.id.split("_").pop();
+    let status = $(this).is(":checked") ? 1 : 2;
+
+    console.log('id: ' + id + ' status: ' +  status);
+
+    $status_text = ''
+    if(status == '1'){
+        $status_text = 'Active';
+    }else{
+        $status_text = 'Inactive';
+    }
+
+    if(confirm('Are you sure to change the status to '+$status_text+'?')){
+        $.ajax({
+            method: "GET",
+            url: "service_area/function.php",
+            data: { fn: "update_active_status", sa_id: id, sa_status: status }
+        })
+        .done(function( res ) {
+            console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                populateDataTable();
+                
+            }
+        });//end ajax
+    }
+}); 
 
 $(document).ready(function () {
     populateDataTable();
