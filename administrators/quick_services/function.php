@@ -17,13 +17,14 @@
 		$serviceName = $_POST["serviceName"];
 		$scv_inc_arr = $_POST["scv_inc_arr"];	
 		$scv_notinc_arr = $_POST["scv_notinc_arr"]; 
+		$svc_status = $_POST['svc_status'];
 		
 		try {
 			if($qs_id > 0){
-				$sql = "UPDATE quick_services SET service_name = '" .$serviceName. "', svc_included = '" .$scv_inc_arr. "', svc_not_included = '" .$scv_notinc_arr. "'  WHERE qs_id = '" .$qs_id. "' ";
+				$sql = "UPDATE quick_services SET service_name = '" .$serviceName. "', svc_included = '" .$scv_inc_arr. "', svc_not_included = '" .$scv_notinc_arr. "', svc_status = '" .$svc_status. "' WHERE qs_id = '" .$qs_id. "' ";
 				$result = $mysqli->query($sql);
 			}else{
-				$sql = "INSERT INTO quick_services (service_name, svc_included, svc_not_included) VALUES ('" .$serviceName. "', '" .$scv_inc_arr. "', '" .$scv_notinc_arr. "')";
+				$sql = "INSERT INTO quick_services (service_name, svc_included, svc_not_included, svc_status) VALUES ('" .$serviceName. "', '" .$scv_inc_arr. "', '" .$scv_notinc_arr. "', '" .$svc_status. "')";
 				$result = $mysqli->query($sql);
 
 				$insert_id = $mysqli->insert_id;
@@ -106,6 +107,7 @@
 		$qs_id = $_POST['qs_id'];
 		$svc_included = array();
 		$svc_not_included = array();
+		$svc_status = 1;
 
 		$sql = "SELECT * FROM quick_services WHERE qs_id = '" .$qs_id. "'";
 		$result = $mysqli->query($sql);
@@ -114,7 +116,8 @@
 			$status = true;	
 			$row = $result->fetch_array();
 			$qs_id = $row['qs_id'];			
-			$service_name = $row['service_name'];
+			$service_name = $row['service_name'];		
+			$svc_status = $row['svc_status'];
 
 			if($row['svc_included'] != ''){
 				$svc_included = json_decode($row['svc_included'], true);
@@ -130,6 +133,7 @@
 		$return_array['service_name'] = $service_name;
 		$return_array['svc_included'] = $svc_included;
 		$return_array['svc_not_included'] = $svc_not_included;
+		$return_array['svc_status'] = $svc_status;
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
 	}//function end

@@ -1,11 +1,19 @@
-<?php
+<?php include('common/head.php'); ?>
+<script type="text/javascript">   
 
-if(!$_SESSION["user_id"]){
-    header("location:?p=signin");
-}
-include('common/head.php'); 
-$sess_user_type = $_SESSION["user_type"];
-?>
+</script>
+<style>
+    table td {
+        word-break: break-word;
+        vertical-align: top;
+        white-space: normal !important;
+    }
+
+    .service-items-scroll {
+        max-height: 185px;
+        overflow-y: auto;
+    }
+</style>
 
 <body class="">
 	<!-- [ Pre-loader ] start -->
@@ -52,7 +60,17 @@ $sess_user_type = $_SESSION["user_type"];
                 <div class="card">
 
                     <div class="card-header">
-                        <h5> <?=$title?> </h5>
+                        <h5> <?=$title?> Table</h5>
+                        <div class="card-header-right d-none">
+                            <div class="btn-group card-option">
+                                <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="feather icon-more-horizontal"></i>
+                                </button>
+                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                    <li><a href="#!" data-toggle="modal" data-target="#exampleModalLong"><i class="feather icon-file-plus"></i> add new</a> </li> 
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
@@ -60,32 +78,29 @@ $sess_user_type = $_SESSION["user_type"];
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
                         <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert1">
-							<strong>Success!</strong> Your Data saved successfully.
+							<strong>Success!</strong> Your Service saved successfully.
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
-                        <button type="button" class="btn btn-primary mb-2 float-right" id="onMyModal">Request a Leave</button>
+                        <button type="button" class="btn btn-primary mb-2 float-right" data-toggle="modal" data-target="#exampleModalLong" id="addNewBtn">Add New</button>
+
                         
                         <div class="table-responsive">
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Sl.No.</th>
-                                        <th>User (Type)</th>
-                                        <th>From Date</th>
-                                        <th>To Date</th>
-                                        <th>Subject</th>
-                                        <th>Status</th>
+                                        <th>Service Name</th>
+                                        <th>Service Included</th>
+                                        <th>Service Not Included</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Sl.No.</th>
-                                        <th>User (Type)</th>
-                                        <th>From Date</th>
-                                        <th>To Date</th>
-                                        <th>Subject</th>
-                                        <th>Status</th>
+                                        <th>Service Name</th>
+                                        <th>Service Included</th>
+                                        <th>Service Not Included</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -105,67 +120,95 @@ $sess_user_type = $_SESSION["user_type"];
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#exampleModalLong').modal('hide')"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
-                            <form class="needs-validation" novalidate id="myForm" name="myForm">
-                                <div class="form-row">                                      
-                                    <?php if($sess_user_type == '1' || $sess_user_type == '2' || $sess_user_type == '3'){?>
-                                    <div class="col-md-3 mb-2">
-                                        <label for="user_type" class="form-label">User Type</label>
-                                        <select class="form-control" id="user_type" name="user_type">
-                                            <option value="">Select</option> 
-                                        </select>
+                            <form class="needs-validation" novalidate>
+                                <div class="form-row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="serviceName" class="text-danger">Service Name*</label>
+                                        <input type="text" class="form-control" id="serviceName" placeholder="Service Name" value="" required >
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>                                    
+                                        <div class="invalid-feedback">
+                                            Please provide Service Name.
+                                        </div>
+                                    </div> 
+                                    
+                                    <!-- Service Included Start -->
+                                    <div class="col-md-12 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-10 mb-3">
+                                                <label for="scv_inc" class="text-danger">Service Included*</label>
+                                                <input type="text" class="form-control" id="scv_inc" value="" required >
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                                <label for="scv_inc">&nbsp;</label>
+                                                <button type="button" class="btn btn-secondary mt-4" id="scv_inc_btn">Add</button>
+                                            </div>
+                                        </div> 
+                                    </div> 
+
+                                    <!-- Service Included -->
+                                    <div class="col-md-12 mb-3">
+                                        <div class="table-responsive service-items-scroll">
+                                            <table class="table table-sm" id="includedServicesTable">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Service Included</th>
+                                                    <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th colspan="3">Add new service included</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- Service Included -->
+
+                                    <!-- Not Inclided Start -->
+                                    <div class="col-md-12 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-10 mb-3">
+                                                <label for="svc_notinc" class="text-danger">Service Not Included*</label>
+                                                <input type="text" class="form-control" id="svc_notinc" value="" required >
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                                <label for="serviceName">&nbsp;</label>
+                                                <button type="button" class="btn btn-secondary mt-4" id="svc_notinc_btn">Add</button>
+                                            </div>
+                                        </div>
                                     </div>
                                     
-                                    <div class="col-md-3 mb-2">
-                                        <label for="user_id" class="form-label">User</label>
-                                        <select class="form-control" id="user_id" name="user_id">
-                                            <option value="">Select</option> 
-                                        </select>
-                                    </div>  
-                                    <?php } ?>
-                                    
-                                    <!-- <div class="col-md-3 mb-3">
-                                        <label for="full_name">User Name</label>
-                                        <input type="text" class="form-control" name="full_name" id="full_name"> 
-                                    </div>                                    
-                                    <div class="col-md-3 mb-3">
-                                        <label for="user_type_text">User Type</label>
-                                        <input type="text" class="form-control" name="user_type_text" id="user_type_text"> 
-                                    </div>  -->
-                                                                    
-                                    <div class="col-md-3 mb-3">
-                                        <label for="from_date" class="text-danger">From Date*</label>
-                                        <input type="date" class="form-control" name="from_date" id="from_date"> 
-                                    </div>                                   
-                                    <div class="col-md-3 mb-3">
-                                        <label for="to_date" class="text-danger">To Date*</label>
-                                        <input type="date" class="form-control" name="to_date" id="to_date"> 
-                                    </div> 
-                                </div> 
-                                <div class="form-row">                                    
+                                    <!-- Service Not Included -->
                                     <div class="col-md-12 mb-3">
-                                        <label for="leave_subject" class="text-danger">Subject*</label>
-                                        <input type="text" class="form-control" name="leave_subject" id="leave_subject" > 
-                                    </div> 
-                                </div> 
-                                <div class="form-row">                                    
-                                    <div class="col-md-12 mb-3">
-                                        <label for="leave_message" class="text-danger">Message*</label>
-                                        <textarea class="form-control" name="leave_message" id="leave_message"></textarea>
+                                        <div class="table-responsive service-items-scroll">
+                                            
+                                            <table class="table table-sm" id="notIncludedServicesTable">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Service Not Included</th>
+                                                    <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th colspan="3">Add new service not included</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div> 
-                                <?php if($sess_user_type == '1' || $sess_user_type == '2'){?>
-                                <div class="form-row"> 
-                                    <div class="col-md-4 mb-3">
-                                        <label for="lsm_id">Leave Status</label>
-                                        <select class="form-control" name="lsm_id" id="lsm_id">
-                                        </select>
-                                        <input type="hidden" name="l_id" id="l_id" value="0">
-                                    </div> 
+                                    <!-- Service Not Included -->
+
                                 </div>
-                                <?php } ?> 
                             </form>
                         </div>
                         <div class="modal-footer">
+                            <input type="hidden" id="qs_id" value="0">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#exampleModalLong').modal('hide')">Close</button>
                             <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                             <button class="btn  btn-primary" type="button" id="submitForm">
@@ -187,4 +230,4 @@ $sess_user_type = $_SESSION["user_type"];
 <!-- [ Main Content ] end -->
 	<?php include('common/footer.php'); ?>
     
-    <script src="service_area/function.js?d=<?=date('YmdHis')?>"></script>
+    <script src="service_area/function.js?d=<?php echo time(); ?>"></script>

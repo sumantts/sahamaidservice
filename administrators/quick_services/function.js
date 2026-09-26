@@ -36,6 +36,7 @@ function clearForm(){
 $('#addNewBtn, .card-option a[data-target="#exampleModalLong"]').on('click', function(){
     $('#qs_id').val('0');
     $('#serviceName').val('');
+    $('#svc_status').val('1').trigger('change');
     $('#serviceName').removeClass('is-valid');
     $('#serviceName').removeClass('is-invalid');
     initObjects();
@@ -58,11 +59,12 @@ $('#submitForm').click(function(){
         if($formVallidStatus == true){
             $qs_id = $('#qs_id').val();
             $serviceName = $('#serviceName').val().replace(/^\s+|\s+$/gm,'');
+            $svc_status = $('#svc_status').val();
 
             $.ajax({
                 method: "POST",
                 url: "quick_services/function.php",
-                data: { fn: "saveServices", qs_id: $qs_id, serviceName: $serviceName, scv_inc_arr: JSON.stringify($scv_inc_arr), scv_notinc_arr: JSON.stringify($scv_notinc_arr) }
+                data: { fn: "saveServices", qs_id: $qs_id, serviceName: $serviceName, scv_inc_arr: JSON.stringify($scv_inc_arr), scv_notinc_arr: JSON.stringify($scv_notinc_arr), svc_status: $svc_status }
             })
             .done(function( res ) {
                 //console.log(res);
@@ -96,8 +98,10 @@ function editService($qs_id){
         if($res1.status == true){
             $('#serviceName').val($res1.service_name);
             $('#qs_id').val($qs_id);
-                $scv_inc_arr = $res1.svc_included;
-                $scv_notinc_arr = $res1.svc_not_included;
+            $('#svc_status').val($res1.svc_status).trigger('change');
+            $scv_inc_arr = $res1.svc_included;
+            $scv_notinc_arr = $res1.svc_not_included;
+
             renderIncludedTableData();
             renderNotIncludedTableData();
         }

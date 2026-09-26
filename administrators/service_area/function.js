@@ -1,97 +1,117 @@
-$('#onMyModal').on('click', function(){
-    $('#myForm')[0].reset(); 
-    $('#l_id').val('0'); 
-    $('#exampleModalLong').modal('show');
-})
 
+function validateForm(){
+    $serviceName = $('#serviceName').val().replace(/^\s+|\s+$/gm,'');
+    //$serviceDescription = $('#serviceDescription').val().replace(/^\s+|\s+$/gm,'');
+    $status = true;
 
-$('#submitForm').click(function(){ 
-    $l_id = $('#l_id').val();
-    $user_type = $('#user_type').val();
-    $user_id = $('#user_id').val(); 
-    $from_date = $('#from_date').val();
-    $to_date = $('#to_date').val();
-    $leave_subject = $('#leave_subject').val();
-    $leave_message = $('#leave_message').val();
-    $lsm_id = $('#lsm_id').val(); 
-
-    if($from_date == ''){
-        alert('Please Choose From Date');
-    }else if($to_date == ''){
-        alert('Please Choose To Date');
-    }else if($leave_subject == ''){
-        alert('Please enter Subject');
-    }else if($leave_message == ''){
-        alert('Please enter Message');
+    if($serviceName == ''){
+        $status = false;
+        $('#serviceName').removeClass('is-valid');
+        $('#serviceName').addClass('is-invalid');
     }else{
-        $('#submitForm_spinner').show();
-        $('#submitForm_spinner_text').show();
-        $('#submitForm_text').hide();
+        $status = true;
+        $('#serviceName').removeClass('is-invalid');
+        $('#serviceName').addClass('is-valid');
+    }   
 
-        $.ajax({
-            method: "POST",
-            url: "service_area/function.php",
-            data: { fn: "saveFormData", l_id: $l_id, user_type: $user_type, user_id: $user_id, from_date: $from_date, to_date: $to_date, leave_subject: $leave_subject, leave_message: $leave_message, lsm_id: $lsm_id }
-        })
-        .done(function( res ) {
-            //console.log(res);
-            $res1 = JSON.parse(res);
-            if($res1.status == true){
-                $('#orgFormAlert1').show();
-                $('#myForm')[0].reset();
-                $('#exampleModalLong').modal('hide');
-                populateDataTable();
-            }
-                            
-            $('#submitForm_spinner').hide();
-            $('#submitForm_spinner_text').hide();
-            $('#submitForm_text').show();
-        });//end ajax
-    }  
+    $('#submitForm_spinner').hide();
+    $('#submitForm_spinner_text').hide();
+    $('#submitForm_text').show();
+
+    return $status;
+}//en validate form
+
+function clearForm(){
+    $('#serviceName').val('');
+    $('#serviceName').removeClass('is-valid');
+    $('#serviceName').removeClass('is-invalid');
+
+    $('#serviceDescription').val('');
+    $('#serviceDescription').removeClass('is-valid');
+    $('#serviceDescription').removeClass('is-invalid');
+    $('#qs_id').val('0');
+
+}//end 
+
+$('#addNewBtn, .card-option a[data-target="#exampleModalLong"]').on('click', function(){
+    $('#qs_id').val('0');
+    $('#serviceName').val('');
+    $('#serviceName').removeClass('is-valid');
+    $('#serviceName').removeClass('is-invalid');
+    initObjects();
+    renderIncludedTableData();
+    renderNotIncludedTableData();
+});
+
+$(".form-control").blur(function(){
+    $('#orgFormAlert').css("display", "none");
+    $formVallidStatus = validateForm();
+});
+
+$('#submitForm').click(function(){
+    $('#submitForm_spinner').show();
+    $('#submitForm_spinner_text').show();
+    $('#submitForm_text').hide();
+    //setTimeout(function(){
+        $formVallidStatus = validateForm();
+
+        if($formVallidStatus == true){
+            $qs_id = $('#qs_id').val();
+            $serviceName = $('#serviceName').val().replace(/^\s+|\s+$/gm,'');
+
+            $.ajax({
+                method: "POST",
+                url: "quick_services/function.php",
+                data: { fn: "saveServices", qs_id: $qs_id, serviceName: $serviceName, scv_inc_arr: JSON.stringify($scv_inc_arr), scv_notinc_arr: JSON.stringify($scv_notinc_arr) }
+            })
+            .done(function( res ) {
+                //console.log(res);
+                $res1 = JSON.parse(res);
+                if($res1.status == true){
+                    $('#orgFormAlert1').css("display", "block");
+                    $('.toast-right').toast('show');
+                    $('#qs_id').val($res1.qs_id); 
+                    populateDataTable();
+
+                    alert('Quick Service saved successfully!');
+                }else{
+                    alert('Error occurred while saving the Quick Service.');
+                }
+            });//end ajax
+        }
+
+    //}, 500)    
 })
 
-function editTableData($l_id){
-    $('#myForm')[0].reset(); 
-
+function editService($qs_id){
+    $('#exampleModalLong').modal('show');
     $.ajax({
         method: "POST",
-        url: "service_area/function.php",
-        data: { fn: "getFormEditData", l_id: $l_id }
+        url: "quick_services/function.php",
+        data: { fn: "getServiceData", qs_id: $qs_id }
     })
     .done(function( res ) {
         //console.log(res);
         $res1 = JSON.parse(res);
-        if($res1.status == true){   
-            $('#l_id').val($res1.l_id);   
-            //$('#full_name').val($res1.full_name);   
-            //$('#user_type_text').val($res1.user_type_text);   
-            $('#from_date').val($res1.from_date);   
-            $('#to_date').val($res1.to_date);   
-            $('#leave_subject').val($res1.leave_subject);
-            $('#leave_message').val($res1.leave_message); 
-            $('#lsm_id').val($res1.lsm_id).trigger('change'); 
-
-            $user_type = $res1.user_type;
-            $user_id = $res1.user_id;
-             
-            $('#user_type').val($user_type).trigger('change'); 
-            setTimeout(function(){
-                $('#user_id').val($user_id).trigger('change'); 
-            },300);
-
-            $('#exampleModalLong').modal('show');
+        if($res1.status == true){
+            $('#serviceName').val($res1.service_name);
+            $('#qs_id').val($qs_id);
+                $scv_inc_arr = $res1.svc_included;
+                $scv_notinc_arr = $res1.svc_not_included;
+            renderIncludedTableData();
+            renderNotIncludedTableData();
         }
     });//end ajax
 
 }
 
 //Delete function	
-function deleteTableData($l_id){
-    if (confirm('Are you sure to delete the data?')) {
+function deleteService($qs_id){
+    if (confirm('Are you sure to delete the Service?')) {
         $.ajax({
             method: "POST",
-            url: "service_area/function.php",
-            data: { fn: "deleteTableData", l_id: $l_id }
+            url: "quick_services/function.php",
+            data: { fn: "deleteService", qs_id: $qs_id }
         })
         .done(function( res ) {
             //console.log(res);
@@ -104,6 +124,26 @@ function deleteTableData($l_id){
     }		
 }//end delete
 
+//Image upload
+function savePhoto(){
+    const imgPath = document.querySelector('input[type=file]').files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function () {
+        // convert image file to base64 string and save to localStorage
+        localStorage.setItem("image", reader.result);
+    }, false);
+
+    if (imgPath) {
+        reader.readAsDataURL(imgPath);
+    }
+
+    //To display image again
+    setTimeout(function(){
+    let img = document.getElementById('image');
+    img.src = localStorage.getItem('image');
+    }, 250);
+}
 
 
 function populateDataTable(){
@@ -113,7 +153,7 @@ function populateDataTable(){
     $('#example').DataTable({ 
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'service_area/function.php?fn=getTableData' },
+        ajax: {'url': 'quick_services/function.php?fn=getServices' },
         dom: 'Bfrtip',
         buttons: [
             {
@@ -142,132 +182,148 @@ function populateDataTable(){
                 titleAttr: 'Print'
             },
         ],
+        order: [[0, 'asc']],
 
     });
 }//end fun
 
-function configureCategoryDropDown(){
-    $.ajax({
-        method: "POST",
-        url: "service_area/function.php",
-        data: { fn: "getAllCategoryName" }
-    })
-    .done(function( res ) {
-        $res1 = JSON.parse(res);
-        //console.log(JSON.stringify($res1));
-        if($res1.status == true){
-            $rows = $res1.data;
+$('#scv_inc_btn').on('click', function(){
+    $scv_inc = $('#scv_inc').val().replace(/^\s+|\s+$/gm,'');
+    if($scv_inc == ''){
+        alert('Please enter Service Included');
+    }else{
+        $('#scv_inc').val('');
+        
+        $svc_inc_obj = {
+            obj_id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+            name: $scv_inc,
+        };
 
-            if($rows.length > 0){
-                $('#l_id').html('');
-                $option_l_id = "<option value='0'>Select</option>";
+        $scv_inc_arr.push($svc_inc_obj);
+        renderIncludedTableData();
+        
+        $svc_inc_obj = {
+            obj_id: '',
+            name: '',
+        };
 
-                for($i = 0; $i < $rows.length; $i++){
-                    $option_l_id += "<option value='"+$rows[$i].l_id+"'>"+$rows[$i].almari_name+"</option>";                    
-                }//end for
-                
-                $('#l_id').html($option_l_id);
-            }//end if
-        }        
-    });//end ajax
-}//end
+        console.log(JSON.stringify($scv_inc_arr));
 
-function configureLeaveStatDD(){
-    $.ajax({
-        method: "POST",
-        url: "service_area/function.php",
-        data: { fn: "configureLeaveStatDD" }
-    })
-    .done(function( res ) {
-        $res1 = JSON.parse(res);
-        //console.log(JSON.stringify($res1));
-        if($res1.status == true){
-            $rows = $res1.data;
-
-            if($rows.length > 0){
-                $('#lsm_id').html('');
-                $html = "";
-
-                for($i = 0; $i < $rows.length; $i++){
-                    $html += "<option value='"+$rows[$i].lsm_id+"'>"+$rows[$i].l_stat_name+"</option>";                    
-                }//end for
-                
-                $('#lsm_id').html($html);
-            }//end if
-        }        
-    });//end ajax
-}//end
-
-
-
-
-// user type 
-function configureUserTypeDd(){
-    $.ajax({
-        method: "POST",
-        url: "attendance/function.php",
-        data: { fn: "configureUserTypeDd" }
-    })
-    .done(function( res ) {
-        $res1 = JSON.parse(res); 
-        if($res1.status == true){
-            $rows = $res1.data;
-
-            if($rows.length > 0){
-                $('#user_type').html('');
-                $html = "<option value=''>Select</option>";
-                for($i = 0; $i < $rows.length; $i++){
-                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
-                }//end for                
-                $('#user_type').html($html);
-            }else{
-                $('#user_type').html('');
-                $html = "<option value=''>Select</option>";
-                $('#user_type').html($html);
-            }//end if
-        }        
-    });//end ajax
-}//end 
-
-$('#user_type').on('change', function(){
-    configureUsersDd();    
+    }
 });
 
 
-// User 
-function configureUsersDd(){
-    $user_type = $('#user_type').val();
-    if(parseInt($user_type) > 0){
-        $.ajax({
-            method: "POST",
-            url: "attendance/function.php",
-            data: { fn: "configureUsersDd", user_type: $user_type }
-        })
-        .done(function( res ) {
-            $res1 = JSON.parse(res); 
-            if($res1.status == true){
-                $rows = $res1.data;
+$('#svc_notinc_btn').on('click', function(){
+    $svc_notinc = $('#svc_notinc').val().replace(/^\s+|\s+$/gm,'');
+    if($svc_notinc == ''){
+        alert('Please enter Service Not Included');
+    }else{
+        $('#svc_notinc').val('');
+        
+        $svc_notinc_obj = {
+            obj_id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+            name: $svc_notinc,
+        };
 
-                if($rows.length > 0){
-                    $('#user_id').html('');
-                    $html = "<option value=''>Select</option>";
-                    for($i = 0; $i < $rows.length; $i++){
-                        $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";                    
-                    }//end for                
-                    $('#user_id').html($html);
-                }else{
-                    $('#user_id').html('');
-                    $html = "<option value=''>Select</option>";
-                    $('#user_id').html($html);
-                }//end if
-            }        
-        });//end ajax
-    }//end if
-}//end 
+        $scv_notinc_arr.push($svc_notinc_obj);
+        renderNotIncludedTableData();
+        
+        $svc_notinc_obj = {
+            obj_id: '',
+            name: '',
+        };
+
+        console.log('not inc: ' + JSON.stringify($scv_notinc_arr));
+
+    }
+});
+
+
+function initObjects(){
+
+    $scv_inc_arr = [];
+    $svc_inc_obj = {
+        obj_id: '',
+        name: '',
+    };
+
+    $scv_notinc_arr = [];
+    $svc_notinc_obj = {
+        obj_id: '',
+        name: '',
+    };
+
+}
+
+function renderIncludedTableData(){
+    const $tbody = $('#includedServicesTable tbody').empty();
+
+    $scv_inc_arr.forEach(function(service, index){
+        const $row = $('<tr>');
+        $('<th>', { scope: 'row' }).text(index + 1).appendTo($row);
+        $('<td>').text(service.name).appendTo($row);
+        const $removeButton = $('<button>', {
+            type: 'button',
+            class: 'btn btn-sm remove-included-service',
+            'aria-label': 'Remove included service',
+        }).attr('data-obj-id', service.obj_id);
+        $('<i>', { class: 'fas fa-trash', 'aria-hidden': 'true' }).appendTo($removeButton);
+        $('<td>').append($removeButton).appendTo($row);
+        $tbody.append($row);
+    });
+}
+
+$('#includedServicesTable').on('click', '.remove-included-service', function(){
+    if(!confirm('Are you sure you want to remove this included service?')){
+        return;
+    }
+
+    const objId = $(this).attr('data-obj-id');
+    const serviceIndex = $scv_inc_arr.findIndex(function(service){
+        return service.obj_id === objId;
+    });
+
+    if(serviceIndex !== -1){
+        $scv_inc_arr.splice(serviceIndex, 1);
+        renderIncludedTableData();
+    }
+});
+
+function renderNotIncludedTableData(){
+    const $tbody = $('#notIncludedServicesTable tbody').empty();
+
+    $scv_notinc_arr.forEach(function(service, index){
+        const $row = $('<tr>');
+        $('<th>', { scope: 'row' }).text(index + 1).appendTo($row);
+        $('<td>').text(service.name).appendTo($row);
+        const $removeButton = $('<button>', {
+            type: 'button',
+            class: 'btn btn-sm remove-not-included-service',
+            'aria-label': 'Remove not-included service',
+        }).attr('data-obj-id', service.obj_id);
+        $('<i>', { class: 'fas fa-trash', 'aria-hidden': 'true' }).appendTo($removeButton);
+        $('<td>').append($removeButton).appendTo($row);
+        $tbody.append($row);
+    });
+}
+
+$('#notIncludedServicesTable').on('click', '.remove-not-included-service', function(){
+    if(!confirm('Are you sure you want to remove this not-included service?')){
+        return;
+    }
+
+    const objId = $(this).attr('data-obj-id');
+    const serviceIndex = $scv_notinc_arr.findIndex(function(service){
+        return service.obj_id === objId;
+    });
+
+    if(serviceIndex !== -1){
+        $scv_notinc_arr.splice(serviceIndex, 1);
+        renderNotIncludedTableData();
+    }
+});
 
 $(document).ready(function () {
     populateDataTable();
-    configureLeaveStatDD();
-    configureUserTypeDd();
-    //configureCategoryDropDown();
+    initObjects();
 });

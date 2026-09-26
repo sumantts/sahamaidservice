@@ -122,15 +122,22 @@
                         <div class="modal-body">
                             <form class="needs-validation" novalidate>
                                 <div class="form-row">
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-md-8 mb-3">
                                         <label for="serviceName" class="text-danger">Service Name*</label>
-                                        <input type="text" class="form-control" id="serviceName" placeholder="Service Name" value="" required >
+                                        <input type="text" class="form-control" id="serviceName" value="" required >
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
                                         <div class="invalid-feedback">
                                             Please provide Service Name.
                                         </div>
+                                    </div> 
+                                    <div class="col-md-4 mb-3">
+                                        <label for="serviceName" class="text-danger">Status*</label>
+                                        <select class="form-control" id="svc_status" name="svc_status" required>
+                                            <option value="1">Active</option> 
+                                            <option value="2">Inactive</option> 
+                                        </select>
                                     </div> 
                                     
                                     <!-- Service Included Start -->

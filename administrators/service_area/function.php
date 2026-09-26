@@ -9,225 +9,142 @@
 	}
 
 	//Save function start
-	if($fn == 'saveFormData'){
+	if($fn == 'saveServices'){
 		$return_result = array();
 		$status = true;
 
-		$l_id = $_POST["l_id"];	 
-		$user_type = $_POST['user_type'];
-		$user_id = $_POST['user_id']; 
-		$from_date = $_POST['from_date'];
-		$to_date = $_POST['to_date'];
-		$leave_subject = $_POST['leave_subject'];
-		$leave_message = $_POST['leave_message'];
-		$lsm_id = $_POST['lsm_id']; 
-
-		if($user_type == '' || $user_id == ''){
-			$user_type = $_SESSION["user_type"];
-			$user_id = $_SESSION["user_id"];
-		}
+		$qs_id = $_POST["qs_id"];	
+		$serviceName = $_POST["serviceName"];
+		$scv_inc_arr = $_POST["scv_inc_arr"];	
+		$scv_notinc_arr = $_POST["scv_notinc_arr"]; 
 		
 		try {
-			if($l_id > 0){
-				$status = true;
-				$sql = "UPDATE leave_request SET user_type = '" .$user_type. "', user_id = '" .$user_id. "', from_date = '" .$from_date. "', to_date = '" .$to_date. "', leave_subject = '" .$leave_subject. "', leave_message = '" .$leave_message. "', lsm_id = '" .$lsm_id. "' WHERE l_id = '" .$l_id. "' ";
-				$result = $con->query($sql);
-			}else{				
-				$status = true;
-				$sql = "INSERT INTO leave_request (user_type, user_id, from_date, to_date, leave_subject, leave_message) VALUES ('".$user_type."', '".$user_id."', '".$from_date."', '".$to_date."', '".$leave_subject."', '".$leave_message."')";
-				$result = $con->query($sql);
-			}
-				
+			if($qs_id > 0){
+				$sql = "UPDATE quick_services SET service_name = '" .$serviceName. "', svc_included = '" .$scv_inc_arr. "', svc_not_included = '" .$scv_notinc_arr. "'  WHERE qs_id = '" .$qs_id. "' ";
+				$result = $mysqli->query($sql);
+			}else{
+				$sql = "INSERT INTO quick_services (service_name, svc_included, svc_not_included) VALUES ('" .$serviceName. "', '" .$scv_inc_arr. "', '" .$scv_notinc_arr. "')";
+				$result = $mysqli->query($sql);
+
+				$insert_id = $mysqli->insert_id;
+				if($insert_id > 0){
+					$qs_id = $insert_id;
+					$status = true;
+				}else{
+					$status = false;
+				}		
+			}	
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());
 		}
+
 		$return_result['status'] = $status;
+		$return_result['qs_id'] = $qs_id;
 		
 		echo json_encode($return_result);
 	}//Save function end	
 
 	//function start
-	if($fn == 'getTableData'){
+	if($fn == 'getServices'){
 		$return_array = array();
 		$status = true;
 		$mainData = array();
-		$author_bio1 = '';
-		$sess_user_type = $_SESSION["user_type"];
-		$sess_user_id = $_SESSION["user_id"];
+		$format_service_names = function($services_json){
+			$services = json_decode($services_json, true);
+			if(!is_array($services)){
+				return '';
+			}
 
-		$where_condition = "WHERE leave_request.l_id > '0' ";
-		if($sess_user_type > 3){
-			$where_condition = " AND leave_request.user_id = '" .$sess_user_id. "' ";
-		}
+			$names = array();
+			$serial_number = 1;
+			foreach($services as $service){
+				if(isset($service['name'])){
+					$names[] = '<strong>' . $serial_number . '.</strong> ' . htmlspecialchars((string)$service['name'], ENT_QUOTES, 'UTF-8');
+					$serial_number++;
+				}
+			}
 
-		$sql = "SELECT leave_request.l_id, leave_request.user_type, leave_request.user_id, leave_request.from_date, leave_request.to_date, leave_request.leave_subject, leave_request.leave_message, leave_request.lsm_id, leave_request.approved_by, leave_request.approve_date_time,
-		user_type_master.name AS user_type_text,
-		user_details.full_name,
-		leave_stat_master.l_stat_name
-		FROM leave_request
-		LEFT OUTER JOIN user_type_master ON leave_request.user_type = user_type_master.user_type
-		LEFT OUTER JOIN user_details ON leave_request.user_id = user_details.user_id
-		LEFT OUTER JOIN leave_stat_master ON leave_request.lsm_id = leave_stat_master.lsm_id
-		$where_condition
-		ORDER BY leave_request.l_id DESC";
+			return implode('<br>', $names);
+		};
 
-		$result = $con->query($sql);
+		$sql = "SELECT * FROM quick_services ORDER BY service_name ASC";
+		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
 			$status = true;
 			$slno = 1;
 			while($row = $result->fetch_array()){
-				$l_id = $row['l_id'];	
-				$full_name = $row['full_name'];	
-				$user_type_text = $row['user_type_text'];	
-				$from_date = $row['from_date'];	
-				$to_date = $row['to_date'];		
-				$leave_subject = $row['leave_subject'];		
-				$l_stat_name = $row['l_stat_name'];	
+				$qs_id = $row['qs_id'];			
+				$service_name = $row['service_name'];		
+				$svc_included = $format_service_names($row['svc_included']);
+				$svc_not_included = $format_service_names($row['svc_not_included']);
+				$svc_status = $row['svc_status'];
 				
-
 				$data[0] = $slno;
-				$data[1] = $full_name.'('.$user_type_text.')';
-				$data[2] = date('d-F-Y', strtotime($from_date));
-				$data[3] = date('d-F-Y', strtotime($to_date));
-				$data[4] = $leave_subject;
-				$data[5] = $l_stat_name;
-				$data[6] = "<a href='javascript: void(0)' data-l_id='.$l_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$l_id.")'></i></a>"; 
+				$data[1] = $service_name;
+				$data[2] = $svc_included;
+				$data[3] = $svc_not_included;
+				$data[4] = "<a href='javascript: void(0);' onclick='editService(".$qs_id.")'><i class='fa fa-edit' aria-hidden='true'></i></a> <a href='javascript: void(0);' onclick='deleteService(".$qs_id.")'><i class='fa fa-trash' aria-hidden='true'></i></a>";
+
 				array_push($mainData, $data);
 				$slno++;
 			}
 		} else {
 			$status = false;
 		}
-		//$con->close();
+		$mysqli->close();
 
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
 	}//function end	
 
 	//function start
-	if($fn == 'getFormEditData'){
+	if($fn == 'getServiceData'){
 		$return_array = array();
 		$status = true;
 		$mainData = array();
-		$l_id = $_POST['l_id'];
+		$qs_id = $_POST['qs_id'];
+		$svc_included = array();
+		$svc_not_included = array();
 
-		$sql = "SELECT leave_request.l_id, leave_request.user_type, leave_request.user_id, leave_request.from_date, leave_request.to_date, leave_request.leave_subject, leave_request.leave_message, leave_request.lsm_id, leave_request.approved_by, leave_request.approve_date_time,
-		user_type_master.name AS user_type_text,
-		user_details.full_name,
-		leave_stat_master.l_stat_name
-		FROM leave_request
-		LEFT OUTER JOIN user_type_master ON leave_request.user_type = user_type_master.user_type
-		LEFT OUTER JOIN user_details ON leave_request.user_id = user_details.user_id
-		LEFT OUTER JOIN leave_stat_master ON leave_request.lsm_id = leave_stat_master.lsm_id
-		WHERE leave_request.l_id = '" .$l_id. "' ";
-		//echo $sql;
-		$result = $con->query($sql);
+		$sql = "SELECT * FROM quick_services WHERE qs_id = '" .$qs_id. "'";
+		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
 			$status = true;	
 			$row = $result->fetch_array();
-			
-			$return_array['l_id'] = $row['l_id'];
-			$return_array['user_type'] = $row['user_type'];
-			$return_array['user_id'] = $row['user_id'];
-			$return_array['from_date'] = $row['from_date'];
-			$return_array['to_date'] = $row['to_date'];
-			$return_array['leave_subject'] = $row['leave_subject'];
-			$return_array['leave_message'] = $row['leave_message'];	
-			$return_array['l_stat_name'] = $row['l_stat_name'];	
-			$return_array['approved_by'] = $row['approved_by'];
-			$return_array['approve_date_time'] = $row['approve_date_time'];	
-			$return_array['lsm_id'] = $row['lsm_id'];	
-			$return_array['user_type_text'] = $row['user_type_text'];	
-			$return_array['full_name'] = $row['full_name'];
+			$qs_id = $row['qs_id'];			
+			$service_name = $row['service_name'];
 
+			if($row['svc_included'] != ''){
+				$svc_included = json_decode($row['svc_included'], true);
+			}
+			if($row['svc_not_included'] != ''){
+				$svc_not_included = json_decode($row['svc_not_included'], true);
+			}
 		} else {
 			$status = false;
 		}
-		
+		$mysqli->close();
 
+		$return_array['service_name'] = $service_name;
+		$return_array['svc_included'] = $svc_included;
+		$return_array['svc_not_included'] = $svc_not_included;
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
 	}//function end
 
 	//Delete function
-	if($fn == 'deleteTableData'){
+	if($fn == 'deleteService'){
 		$return_result = array();
-		$l_id = $_POST["l_id"];
+		$qs_id = $_POST["qs_id"];
 		$status = true;	
 
-		$sql = "DELETE FROM leave_request WHERE l_id = '".$l_id."'";
-		$result = $con->query($sql);
+		$sql = "DELETE FROM quick_services WHERE qs_id = '".$qs_id."'";
+		$result = $mysqli->query($sql);
 		$return_result['status'] = $status;
-		sleep(1);
+		
 		echo json_encode($return_result);
 	}//end function deleteItem
-
-	//Get Category name
-	if($fn == 'getAllCategoryName'){
-		$return_array = array();
-		$status = true;
-		$mainData = array();
-
-		$sql = "SELECT * FROM leave_request WHERE almari_status = 'active' ORDER BY almari_name ASC";
-		$result = $con->query($sql);
-
-		if ($result->num_rows > 0) {
-			$status = true;
-			$slno = 1;
-			while($row = $result->fetch_array()){
-				$l_id = $row['l_id'];	
-				$almari_name = $row['almari_name'];
-				$data = new stdClass();
-
-				$data->l_id = $l_id;
-				$data->almari_name = $almari_name;
-				
-				array_push($mainData, $data);
-				$slno++;
-			}
-		} else {
-			$status = false;
-		}
-		//$con->close();
-
-		$return_array['status'] = $status;
-		$return_array['data'] = $mainData;
-    	echo json_encode($return_array);
-	}//function end	
-
-	//Get Leave Status
-	if($fn == 'configureLeaveStatDD'){
-		$return_array = array();
-		$status = true;
-		$mainData = array();
-
-		$sql = "SELECT * FROM leave_stat_master";
-		$result = $con->query($sql);
-
-		if ($result->num_rows > 0) {
-			$status = true;
-			$slno = 1;
-			while($row = $result->fetch_array()){
-				$lsm_id = $row['lsm_id'];	
-				$l_stat_name = $row['l_stat_name'];	
-				$data = new stdClass();
-
-				$data->lsm_id = $lsm_id;
-				$data->l_stat_name = $l_stat_name;
-				
-				array_push($mainData, $data);
-				$slno++;
-			}
-		} else {
-			$status = false;
-		}
-		//$con->close();
-
-		$return_array['status'] = $status;
-		$return_array['data'] = $mainData;
-    	echo json_encode($return_array);
-	}//function end	
 
 ?>
