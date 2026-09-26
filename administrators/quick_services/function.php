@@ -49,6 +49,21 @@
 		$return_array = array();
 		$status = true;
 		$mainData = array();
+		$format_service_names = function($services_json){
+			$services = json_decode($services_json, true);
+			if(!is_array($services)){
+				return '';
+			}
+
+			$names = array();
+			foreach($services as $service){
+				if(isset($service['name'])){
+					$names[] = htmlspecialchars((string)$service['name'], ENT_QUOTES, 'UTF-8');
+				}
+			}
+
+			return implode('<br>', $names);
+		};
 
 		$sql = "SELECT * FROM quick_services ORDER BY service_name ASC";
 		$result = $mysqli->query($sql);
@@ -59,8 +74,8 @@
 			while($row = $result->fetch_array()){
 				$qs_id = $row['qs_id'];			
 				$service_name = $row['service_name'];		
-				$svc_included = json_decode($row['svc_included']);
-				$svc_not_included = json_decode($row['svc_not_included']);
+				$svc_included = $format_service_names($row['svc_included']);
+				$svc_not_included = $format_service_names($row['svc_not_included']);
 				$svc_status = $row['svc_status'];
 				
 				$data[0] = $slno;
