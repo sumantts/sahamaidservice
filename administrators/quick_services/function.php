@@ -46,28 +46,24 @@
 		$status = true;
 		$mainData = array();
 
-		$sql = "SELECT * FROM service_manager";
+		$sql = "SELECT * FROM quick_services ORDER BY service_name ASC";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
 			$status = true;
 			$slno = 1;
 			while($row = $result->fetch_array()){
-				$service_id = $row['service_id'];			
-				$name = $row['name'];		
-				$description = $row['description'];
-				$services_photo = '';
-				if($row['services_photo'] != ''){
-					$services_photo = $row['services_photo'];
-				}else{
-					$services_photo = '';
-				}
+				$qs_id = $row['qs_id'];			
+				$service_name = $row['service_name'];		
+				$svc_included = $row['svc_included'];
+				$svc_not_included = $row['svc_not_included'];
+				$svc_status = $row['svc_status'];
 				
 				$data[0] = $slno;
-				$data[1] = $name;
-				$data[2] = $description;
-				$data[3] = "<img src='".$services_photo."' id='saved_image' width='100'>";// $services_photo;
-				$data[4] = "<i class='fa fa-edit' aria-hidden='true' onclick='editService(".$service_id.")'></i> <i class='fa fa-trash' aria-hidden='true' onclick='deleteService(".$service_id.")'></i>";
+				$data[1] = $service_name;
+				$data[2] = $svc_included;
+				$data[3] = $svc_not_included;
+				$data[4] = "<i class='fa fa-edit' aria-hidden='true' onclick='editService(".$qs_id.")'></i> <i class='fa fa-trash' aria-hidden='true' onclick='deleteService(".$qs_id.")'></i>";
 
 				array_push($mainData, $data);
 				$slno++;

@@ -1,7 +1,7 @@
 
 function validateForm(){
     $serviceName = $('#serviceName').val().replace(/^\s+|\s+$/gm,'');
-    $serviceDescription = $('#serviceDescription').val().replace(/^\s+|\s+$/gm,'');
+    //$serviceDescription = $('#serviceDescription').val().replace(/^\s+|\s+$/gm,'');
     $status = true;
 
     if($serviceName == ''){
@@ -12,17 +12,7 @@ function validateForm(){
         $status = true;
         $('#serviceName').removeClass('is-invalid');
         $('#serviceName').addClass('is-valid');
-    }
-
-    if($serviceDescription == ''){
-        $status = false;
-        $('#serviceDescription').removeClass('is-valid');
-        $('#serviceDescription').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#serviceDescription').removeClass('is-invalid');
-        $('#serviceDescription').addClass('is-valid');
-    }    
+    }   
 
     $('#submitForm_spinner').hide();
     $('#submitForm_spinner_text').hide();
@@ -183,11 +173,84 @@ function populateDataTable(){
                 titleAttr: 'Print'
             },
         ],
-        order: [[0, 'desc']],
+        order: [[0, 'asc']],
 
     });
 }//end fun
 
+$('#scv_inc_btn').on('click', function(){
+    $scv_inc = $('#scv_inc').val().replace(/^\s+|\s+$/gm,'');
+    if($scv_inc == ''){
+        alert('Please enter Service Included');
+    }else{
+        $('#scv_inc').val('');
+        
+        $svc_inc_obj = {
+            obj_id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+            name: $scv_inc,
+        };
+
+        $scv_inc_arr.push($svc_inc_obj);
+        renderTableData();
+        
+        $svc_inc_obj = {
+            obj_id: '',
+            name: '',
+        };
+
+        console.log(JSON.stringify($scv_inc_arr));
+
+    }
+});
+
+
+$('#svc_notinc_btn').on('click', function(){
+    $svc_notinc = $('#svc_notinc').val().replace(/^\s+|\s+$/gm,'');
+    if($svc_notinc == ''){
+        alert('Please enter Service Not Included');
+    }else{
+        $('#svc_notinc').val('');
+        
+        $svc_notinc_obj = {
+            obj_id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+            name: $svc_notinc,
+        };
+
+        $scv_notinc_arr.push($svc_notinc_obj);
+        renderTableData();
+        
+        $svc_notinc_obj = {
+            obj_id: '',
+            name: '',
+        };
+
+        console.log('not inc: ' + JSON.stringify($scv_notinc_arr));
+
+    }
+});
+
+
+function initObjects(){
+
+    $scv_inc_arr = [];
+    $svc_inc_obj = {
+        obj_id: '',
+        name: '',
+    };
+
+    $scv_notinc_arr = [];
+    $svc_notinc_obj = {
+        obj_id: '',
+        name: '',
+    };
+
+}
+
+function renderTableData(){
+    console.log('Render the table from here');
+}
+
 $(document).ready(function () {
-    populateDataTable()
+    populateDataTable();
+    initObjects();
 });

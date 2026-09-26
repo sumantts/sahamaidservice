@@ -8,6 +8,11 @@
         vertical-align: top;
         white-space: normal !important;
     }
+
+    .service-items-scroll {
+        max-height: 185px;
+        overflow-y: auto;
+    }
 </style>
 
 <body class="">
@@ -84,18 +89,18 @@
                                 <thead>
                                     <tr>
                                         <th>Sl.No.</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Photo</th>
+                                        <th>Service Name</th>
+                                        <th>Service Included</th>
+                                        <th>Service Not Included</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Sl.No.</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Photo</th>
+                                        <th>Service Name</th>
+                                        <th>Service Included</th>
+                                        <th>Service Not Included</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -107,8 +112,8 @@
             </div>
 
             <!-- Modal start -->
-            <div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+            <div id="exampleModalLong" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle"><?=$title?></h5>
@@ -118,7 +123,7 @@
                             <form class="needs-validation" novalidate>
                                 <div class="form-row">
                                     <div class="col-md-12 mb-3">
-                                        <label for="serviceName">Service Name*</label>
+                                        <label for="serviceName" class="text-danger">Service Name*</label>
                                         <input type="text" class="form-control" id="serviceName" placeholder="Service Name" value="" required >
                                         <div class="valid-feedback">
                                             Looks good!
@@ -128,24 +133,130 @@
                                         </div>
                                     </div> 
                                     
+                                    <!-- Service Included Start -->
                                     <div class="col-md-12 mb-3">
-                                        <label for="serviceDescription">Service Description*</label>
-                                        <!-- <input type="text" class="form-control" id="serviceDescription" placeholder="Group Description" value="" required> -->
-                                        <textarea class="form-control" id="serviceDescription" value="" required></textarea>
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>                                    
-                                        <div class="invalid-feedback">
-                                            Please provide Service Description.
+                                        <div class="row">
+                                            <div class="col-md-10 mb-3">
+                                                <label for="scv_inc" class="text-danger">Service Included*</label>
+                                                <input type="text" class="form-control" id="scv_inc" value="" required >
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                                <label for="scv_inc">&nbsp;</label>
+                                                <button type="button" class="btn btn-secondary mt-4" id="scv_inc_btn">Add</button>
+                                            </div>
+                                        </div> 
+                                    </div> 
+
+                                    <!-- Service Included -->
+                                    <div class="col-md-12 mb-3">
+                                        <div class="table-responsive service-items-scroll">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Service Included</th>
+                                                    <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>1</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>2</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>3</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>4</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>5</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>6</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    </div> 
-                                    
+                                    </div>
+                                    <!-- Service Included -->
+
+                                    <!-- Not Inclided Start -->
                                     <div class="col-md-12 mb-3">
-                                        <input type="file" accept="image/*" class="custom-file-input" id="servicesPhoto" aria-describedby="servicesPhoto"  onchange="savePhoto()">
-                                        <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                                        <small id="servicesPhotoError" class="form-text text-danger"> </small>
-                                        <img src="" id="image" width="100">
-                                    </div> 
+                                        <div class="row">
+                                            <div class="col-md-10 mb-3">
+                                                <label for="svc_notinc" class="text-danger">Service Not Included*</label>
+                                                <input type="text" class="form-control" id="svc_notinc" value="" required >
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                                <label for="serviceName">&nbsp;</label>
+                                                <button type="button" class="btn btn-secondary mt-4" id="svc_notinc_btn">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Service Not Included -->
+                                    <div class="col-md-12 mb-3">
+                                        <div class="table-responsive service-items-scroll">
+                                            
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Service Not Included</th>
+                                                    <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>1</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>2</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>3</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>4</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>5</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>6</th>
+                                                        <td>Cleaning of toilet bowl inside and rim</td>
+                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- Service Not Included -->
 
                                 </div>
                             </form>
@@ -157,7 +268,7 @@
                             <button class="btn  btn-primary" type="button" id="submitForm">
                                 <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                 <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                <span class="btn-text" id="submitForm_text">Save Changes</span>
+                                <span class="btn-text" id="submitForm_text">Save</span>
                             </button>
                         </div>
                     </div>
@@ -173,4 +284,4 @@
 <!-- [ Main Content ] end -->
 	<?php include('common/footer.php'); ?>
     
-    <script src="quick_services/function.js"></script>
+    <script src="quick_services/function.js?d=<?php echo time(); ?>"></script>
