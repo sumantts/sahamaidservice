@@ -150,7 +150,7 @@
                                     <!-- Service Included -->
                                     <div class="col-md-12 mb-3">
                                         <div class="table-responsive service-items-scroll">
-                                            <table class="table table-sm">
+                                            <table class="table table-sm" id="includedServicesTable">
                                                 <thead>
                                                     <tr>
                                                     <th scope="col">#</th>
@@ -160,34 +160,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <th>1</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>2</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>3</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>4</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>5</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>6</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                        <th colspan="3">Add new service included</th>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -213,7 +186,7 @@
                                     <div class="col-md-12 mb-3">
                                         <div class="table-responsive service-items-scroll">
                                             
-                                            <table class="table table-sm">
+                                            <table class="table table-sm" id="notIncludedServicesTable">
                                                 <thead>
                                                     <tr>
                                                     <th scope="col">#</th>
@@ -223,34 +196,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <th>1</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>2</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>3</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>4</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>5</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>6</th>
-                                                        <td>Cleaning of toilet bowl inside and rim</td>
-                                                        <td><a href="#" class="btn btn-sm"><i class="fas fa-trash"></i></a></td>
+                                                        <th colspan="3">Add new service not included</th>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -262,7 +208,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <input type="hidden" id="service_id" value="0">
+                            <input type="hidden" id="qs_id" value="0">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                             <button class="btn  btn-primary" type="button" id="submitForm">

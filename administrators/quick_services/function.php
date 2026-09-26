@@ -13,20 +13,22 @@
 		$return_result = array();
 		$status = true;
 
-		$service_id = $_POST["service_id"];	
+		$qs_id = $_POST["qs_id"];	
 		$serviceName = $_POST["serviceName"];
-		$serviceDescription = $_POST["serviceDescription"];	
-		$servicesPhoto = $_POST["servicesPhoto"];	
+		$scv_inc_arr = $_POST["scv_inc_arr"];	
+		$scv_notinc_arr = $_POST["scv_notinc_arr"]; 
 		
 		try {
-			if($service_id > 0){
-				$status = true;$sql = "UPDATE service_manager SET name = '" .$serviceName. "', description = '" .$serviceDescription. "', services_photo = '" .$servicesPhoto. "' WHERE service_id = '" .$service_id. "' ";
+			if($qs_id > 0){
+				$status = true;$sql = "UPDATE quick_services SET service_name = '" .$serviceName. "', svc_included = '" .$scv_inc_arr. "', svc_not_included = '" .$scv_notinc_arr. "',  WHERE qs_id = '" .$qs_id. "' ";
 				$result = $mysqli->query($sql);
 			}else{
-				$sql = "INSERT INTO service_manager (name, description, services_photo) VALUES ('" .$serviceName. "', '" .$serviceDescription. "', '" .$servicesPhoto. "')";
+				$sql = "INSERT INTO quick_services (service_name, svc_included, svc_not_included) VALUES ('" .$serviceName. "', '" .$scv_inc_arr. "', '" .$scv_notinc_arr. "')";
 				$result = $mysqli->query($sql);
+
 				$insert_id = $mysqli->insert_id;
 				if($insert_id > 0){
+					$qs_id = $insert_id;
 					$status = true;
 				}else{
 					$status = false;
@@ -35,8 +37,10 @@
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());
 		}
+
 		$return_result['status'] = $status;
-		sleep(2);
+		$return_result['qs_id'] = $qs_id;
+		
 		echo json_encode($return_result);
 	}//Save function end	
 
@@ -55,8 +59,8 @@
 			while($row = $result->fetch_array()){
 				$qs_id = $row['qs_id'];			
 				$service_name = $row['service_name'];		
-				$svc_included = $row['svc_included'];
-				$svc_not_included = $row['svc_not_included'];
+				$svc_included = json_decode($row['svc_included']);
+				$svc_not_included = json_decode($row['svc_not_included']);
 				$svc_status = $row['svc_status'];
 				
 				$data[0] = $slno;
@@ -82,15 +86,15 @@
 		$return_array = array();
 		$status = true;
 		$mainData = array();
-		$service_id = $_POST['service_id'];
+		$qs_id = $_POST['qs_id'];
 
-		$sql = "SELECT * FROM service_manager WHERE service_id = '" .$service_id. "'";
+		$sql = "SELECT * FROM quick_services WHERE qs_id = '" .$qs_id. "'";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
 			$status = true;	
 			$row = $result->fetch_array();
-			$service_id = $row['service_id'];			
+			$qs_id = $row['qs_id'];			
 			$name = $row['name'];		
 			$description = $row['description'];		
 			if($row['services_photo'] != ''){
@@ -113,10 +117,10 @@
 	//Delete function
 	if($fn == 'deleteService'){
 		$return_result = array();
-		$service_id = $_POST["service_id"];
+		$qs_id = $_POST["qs_id"];
 		$status = true;	
 
-		$sql = "DELETE FROM service_manager WHERE service_id = '".$service_id."'";
+		$sql = "DELETE FROM quick_services WHERE qs_id = '".$qs_id."'";
 		$result = $mysqli->query($sql);
 		$return_result['status'] = $status;
 		sleep(1);

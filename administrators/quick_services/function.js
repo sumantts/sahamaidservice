@@ -29,7 +29,7 @@ function clearForm(){
     $('#serviceDescription').val('');
     $('#serviceDescription').removeClass('is-valid');
     $('#serviceDescription').removeClass('is-invalid');
-    $('#service_id').val('0');
+    $('#qs_id').val('0');
 
 }//end 
 
@@ -46,13 +46,13 @@ $('#submitForm').click(function(){
         $formVallidStatus = validateForm();
 
         if($formVallidStatus == true){
-            $service_id = $('#service_id').val();
-            $servicesPhoto = localStorage.getItem('image');
+            $qs_id = $('#qs_id').val();
+            $serviceName = $('#serviceName').val().replace(/^\s+|\s+$/gm,'');
 
             $.ajax({
                 method: "POST",
                 url: "quick_services/function.php",
-                data: { fn: "saveServices", service_id: $service_id, serviceName: $serviceName, serviceDescription: $serviceDescription, servicesPhoto: $servicesPhoto }
+                data: { fn: "saveServices", qs_id: $qs_id, serviceName: $serviceName, scv_inc_arr: JSON.stringify($scv_inc_arr), scv_notinc_arr: JSON.stringify($scv_notinc_arr) }
             })
             .done(function( res ) {
                 //console.log(res);
@@ -60,13 +60,16 @@ $('#submitForm').click(function(){
                 if($res1.status == true){
                     $('#orgFormAlert1').css("display", "block");
                     $('.toast-right').toast('show');
+                    $('#qs_id').val($res1.qs_id);
                     //$('#liveToast').toast('show');
-                    clearForm();
+                    //clearForm();
                     localStorage.setItem('image', '');
                     $('#exampleModalLong').modal('hide');
                     populateDataTable();
+
+                    alert('Quick Service saved successfully!');
                 }else{
-                    
+                    alert('Error occurred while saving the Quick Service.');
                 }
             });//end ajax
         }
@@ -74,12 +77,12 @@ $('#submitForm').click(function(){
     }, 500)    
 })
 
-function editService($service_id){
+function editService($qs_id){
     $('#exampleModalLong').modal('show');
     $.ajax({
         method: "POST",
         url: "quick_services/function.php",
-        data: { fn: "getServiceData", service_id: $service_id }
+        data: { fn: "getServiceData", qs_id: $qs_id }
     })
     .done(function( res ) {
         //console.log(res);
@@ -90,19 +93,19 @@ function editService($service_id){
             let img = document.getElementById('image');
             img.src = $res1.services_photo;
             localStorage.setItem("image", $res1.services_photo);
-            $('#service_id').val($service_id);
+            $('#qs_id').val($qs_id);
         }
     });//end ajax
 
 }
 
 //Delete function	
-function deleteService($service_id){
+function deleteService($qs_id){
     if (confirm('Are you sure to delete the Service?')) {
         $.ajax({
             method: "POST",
             url: "quick_services/function.php",
-            data: { fn: "deleteService", service_id: $service_id }
+            data: { fn: "deleteService", qs_id: $qs_id }
         })
         .done(function( res ) {
             //console.log(res);
@@ -191,7 +194,7 @@ $('#scv_inc_btn').on('click', function(){
         };
 
         $scv_inc_arr.push($svc_inc_obj);
-        renderTableData();
+        renderIncludedTableData();
         
         $svc_inc_obj = {
             obj_id: '',
@@ -217,7 +220,7 @@ $('#svc_notinc_btn').on('click', function(){
         };
 
         $scv_notinc_arr.push($svc_notinc_obj);
-        renderTableData();
+        renderNotIncludedTableData();
         
         $svc_notinc_obj = {
             obj_id: '',
@@ -246,9 +249,73 @@ function initObjects(){
 
 }
 
-function renderTableData(){
-    console.log('Render the table from here');
+function renderIncludedTableData(){
+    const $tbody = $('#includedServicesTable tbody').empty();
+
+    $scv_inc_arr.forEach(function(service, index){
+        const $row = $('<tr>');
+        $('<th>', { scope: 'row' }).text(index + 1).appendTo($row);
+        $('<td>').text(service.name).appendTo($row);
+        const $removeButton = $('<button>', {
+            type: 'button',
+            class: 'btn btn-sm remove-included-service',
+            'aria-label': 'Remove included service',
+        }).attr('data-obj-id', service.obj_id);
+        $('<i>', { class: 'fas fa-trash', 'aria-hidden': 'true' }).appendTo($removeButton);
+        $('<td>').append($removeButton).appendTo($row);
+        $tbody.append($row);
+    });
 }
+
+$('#includedServicesTable').on('click', '.remove-included-service', function(){
+    if(!confirm('Are you sure you want to remove this included service?')){
+        return;
+    }
+
+    const objId = $(this).attr('data-obj-id');
+    const serviceIndex = $scv_inc_arr.findIndex(function(service){
+        return service.obj_id === objId;
+    });
+
+    if(serviceIndex !== -1){
+        $scv_inc_arr.splice(serviceIndex, 1);
+        renderIncludedTableData();
+    }
+});
+
+function renderNotIncludedTableData(){
+    const $tbody = $('#notIncludedServicesTable tbody').empty();
+
+    $scv_notinc_arr.forEach(function(service, index){
+        const $row = $('<tr>');
+        $('<th>', { scope: 'row' }).text(index + 1).appendTo($row);
+        $('<td>').text(service.name).appendTo($row);
+        const $removeButton = $('<button>', {
+            type: 'button',
+            class: 'btn btn-sm remove-not-included-service',
+            'aria-label': 'Remove not-included service',
+        }).attr('data-obj-id', service.obj_id);
+        $('<i>', { class: 'fas fa-trash', 'aria-hidden': 'true' }).appendTo($removeButton);
+        $('<td>').append($removeButton).appendTo($row);
+        $tbody.append($row);
+    });
+}
+
+$('#notIncludedServicesTable').on('click', '.remove-not-included-service', function(){
+    if(!confirm('Are you sure you want to remove this not-included service?')){
+        return;
+    }
+
+    const objId = $(this).attr('data-obj-id');
+    const serviceIndex = $scv_notinc_arr.findIndex(function(service){
+        return service.obj_id === objId;
+    });
+
+    if(serviceIndex !== -1){
+        $scv_notinc_arr.splice(serviceIndex, 1);
+        renderNotIncludedTableData();
+    }
+});
 
 $(document).ready(function () {
     populateDataTable();
