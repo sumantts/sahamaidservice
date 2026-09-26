@@ -33,17 +33,18 @@
 		$ticket_fare = $_POST['ticket_fare'];
 		$food_cost = $_POST['food_cost'];
 		$tr_jc = $_POST['tr_jc'];
+		$bill_status = $_POST['bill_status'];
 
 		$sess_user_id = $_SESSION["user_id"];
 
 		try {
 			if($assign_id > 0){
 				$status = true;
-				$sql = "UPDATE assign_maid SET holiday_count = '" .$holiday_count. "', rcvabl_amount = '" .$rcvabl_amount. "', cal_ty_id = '" .$cal_ty_id. "', otcc = '" .$otcc. "', ticket_fare = '" .$ticket_fare. "', food_cost = '" .$food_cost. "', tr_jc = '" .$tr_jc. "' WHERE assign_id = '" .$assign_id. "' ";
+				$sql = "UPDATE assign_maid SET holiday_count = '" .$holiday_count. "', rcvabl_amount = '" .$rcvabl_amount. "', cal_ty_id = '" .$cal_ty_id. "', otcc = '" .$otcc. "', ticket_fare = '" .$ticket_fare. "', food_cost = '" .$food_cost. "', tr_jc = '" .$tr_jc. "', bill_status = '" .$bill_status. "' WHERE assign_id = '" .$assign_id. "' ";
 				$result = $con->query($sql);
 			}else{				
 				$status = true;
-				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code, wt_id, holiday_count, cal_ty_id, otcc, ticket_fare, food_cost, tr_jc) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."', '".$wt_id."', '".$holiday_count."', '".$cal_ty_id."', '".$otcc."', '".$ticket_fare."', '".$food_cost."', '".$tr_jc."') ";
+				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code, wt_id, holiday_count, cal_ty_id, otcc, ticket_fare, food_cost, tr_jc, bill_status) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."', '".$wt_id."', '".$holiday_count."', '".$cal_ty_id."', '".$otcc."', '".$ticket_fare."', '".$food_cost."', '".$tr_jc."', '".$bill_status."') ";
 				$result = $con->query($sql);
 			}
 				

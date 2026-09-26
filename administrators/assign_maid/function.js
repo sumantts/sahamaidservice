@@ -44,6 +44,7 @@ $('#submitForm').click(function(){
     $ticket_fare = $('#ticket_fare').val();
     $food_cost = $('#food_cost').val();
     $tr_jc = $('#tr_jc').val();
+    $bill_status = $('#bill_status').val();
 
     if($client_id <= 0 || $rcvabl_amount == '' || $worker_id == '' || $exp_salary <= 0 || $from_date == '' || $to_date == '' || $from_time == '' || $to_time == ''){
         alert('All fields are mandatory, please enter properly');
@@ -55,7 +56,7 @@ $('#submitForm').click(function(){
         $.ajax({
             method: "POST",
             url: "assign_maid/function.php",
-            data: { fn: "saveFormData", assign_id: $assign_id, client_id: $client_id, rcvabl_amount: $rcvabl_amount, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code, wt_id: $wt_id, holiday_count: $holiday_count, cal_ty_id: $cal_ty_id, otcc: $otcc, ticket_fare: $ticket_fare, food_cost: $food_cost, tr_jc: $tr_jc }
+            data: { fn: "saveFormData", assign_id: $assign_id, client_id: $client_id, rcvabl_amount: $rcvabl_amount, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code, wt_id: $wt_id, holiday_count: $holiday_count, cal_ty_id: $cal_ty_id, otcc: $otcc, ticket_fare: $ticket_fare, food_cost: $food_cost, tr_jc: $tr_jc, bill_status: $bill_status }
         })
         .done(function( res ) {
             //console.log(res);
