@@ -56,9 +56,11 @@
 			}
 
 			$names = array();
+			$serial_number = 1;
 			foreach($services as $service){
 				if(isset($service['name'])){
-					$names[] = htmlspecialchars((string)$service['name'], ENT_QUOTES, 'UTF-8');
+					$names[] = '<strong>' . $serial_number . '.</strong> ' . htmlspecialchars((string)$service['name'], ENT_QUOTES, 'UTF-8');
+					$serial_number++;
 				}
 			}
 
