@@ -33,6 +33,16 @@ function clearForm(){
 
 }//end 
 
+$('#addNewBtn, .card-option a[data-target="#exampleModalLong"]').on('click', function(){
+    $('#qs_id').val('0');
+    $('#serviceName').val('');
+    $('#serviceName').removeClass('is-valid');
+    $('#serviceName').removeClass('is-invalid');
+    initObjects();
+    renderIncludedTableData();
+    renderNotIncludedTableData();
+});
+
 $(".form-control").blur(function(){
     $('#orgFormAlert').css("display", "none");
     $formVallidStatus = validateForm();
@@ -42,7 +52,7 @@ $('#submitForm').click(function(){
     $('#submitForm_spinner').show();
     $('#submitForm_spinner_text').show();
     $('#submitForm_text').hide();
-    setTimeout(function(){
+    //setTimeout(function(){
         $formVallidStatus = validateForm();
 
         if($formVallidStatus == true){
@@ -60,11 +70,7 @@ $('#submitForm').click(function(){
                 if($res1.status == true){
                     $('#orgFormAlert1').css("display", "block");
                     $('.toast-right').toast('show');
-                    $('#qs_id').val($res1.qs_id);
-                    //$('#liveToast').toast('show');
-                    //clearForm();
-                    localStorage.setItem('image', '');
-                    $('#exampleModalLong').modal('hide');
+                    $('#qs_id').val($res1.qs_id); 
                     populateDataTable();
 
                     alert('Quick Service saved successfully!');
@@ -74,7 +80,7 @@ $('#submitForm').click(function(){
             });//end ajax
         }
 
-    }, 500)    
+    //}, 500)    
 })
 
 function editService($qs_id){
@@ -88,12 +94,12 @@ function editService($qs_id){
         //console.log(res);
         $res1 = JSON.parse(res);
         if($res1.status == true){
-            $('#serviceName').val($res1.name);
-            $('#serviceDescription').val($res1.description);            
-            let img = document.getElementById('image');
-            img.src = $res1.services_photo;
-            localStorage.setItem("image", $res1.services_photo);
+            $('#serviceName').val($res1.service_name);
             $('#qs_id').val($qs_id);
+                $scv_inc_arr = $res1.svc_included;
+                $scv_notinc_arr = $res1.svc_not_included;
+            renderIncludedTableData();
+            renderNotIncludedTableData();
         }
     });//end ajax
 

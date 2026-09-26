@@ -20,7 +20,7 @@
 		
 		try {
 			if($qs_id > 0){
-				$status = true;$sql = "UPDATE quick_services SET service_name = '" .$serviceName. "', svc_included = '" .$scv_inc_arr. "', svc_not_included = '" .$scv_notinc_arr. "',  WHERE qs_id = '" .$qs_id. "' ";
+				$sql = "UPDATE quick_services SET service_name = '" .$serviceName. "', svc_included = '" .$scv_inc_arr. "', svc_not_included = '" .$scv_notinc_arr. "'  WHERE qs_id = '" .$qs_id. "' ";
 				$result = $mysqli->query($sql);
 			}else{
 				$sql = "INSERT INTO quick_services (service_name, svc_included, svc_not_included) VALUES ('" .$serviceName. "', '" .$scv_inc_arr. "', '" .$scv_notinc_arr. "')";
@@ -82,7 +82,7 @@
 				$data[1] = $service_name;
 				$data[2] = $svc_included;
 				$data[3] = $svc_not_included;
-				$data[4] = "<i class='fa fa-edit' aria-hidden='true' onclick='editService(".$qs_id.")'></i> <i class='fa fa-trash' aria-hidden='true' onclick='deleteService(".$qs_id.")'></i>";
+				$data[4] = "<a href='javascript: void(0);' onclick='editService(".$qs_id.")'><i class='fa fa-edit' aria-hidden='true'></i></a> <a href='javascript: void(0);' onclick='deleteService(".$qs_id.")'><i class='fa fa-trash' aria-hidden='true'></i></a>";
 
 				array_push($mainData, $data);
 				$slno++;
@@ -102,6 +102,8 @@
 		$status = true;
 		$mainData = array();
 		$qs_id = $_POST['qs_id'];
+		$svc_included = array();
+		$svc_not_included = array();
 
 		$sql = "SELECT * FROM quick_services WHERE qs_id = '" .$qs_id. "'";
 		$result = $mysqli->query($sql);
@@ -110,21 +112,22 @@
 			$status = true;	
 			$row = $result->fetch_array();
 			$qs_id = $row['qs_id'];			
-			$name = $row['name'];		
-			$description = $row['description'];		
-			if($row['services_photo'] != ''){
-				$services_photo = $row['services_photo'];	
-			}else{
-				$services_photo = '';
+			$service_name = $row['service_name'];
+
+			if($row['svc_included'] != ''){
+				$svc_included = json_decode($row['svc_included'], true);
+			}
+			if($row['svc_not_included'] != ''){
+				$svc_not_included = json_decode($row['svc_not_included'], true);
 			}
 		} else {
 			$status = false;
 		}
 		$mysqli->close();
 
-		$return_array['name'] = $name;
-		$return_array['description'] = $description;
-		$return_array['services_photo'] = $services_photo;
+		$return_array['service_name'] = $service_name;
+		$return_array['svc_included'] = $svc_included;
+		$return_array['svc_not_included'] = $svc_not_included;
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
 	}//function end
@@ -138,7 +141,7 @@
 		$sql = "DELETE FROM quick_services WHERE qs_id = '".$qs_id."'";
 		$result = $mysqli->query($sql);
 		$return_result['status'] = $status;
-		sleep(1);
+		
 		echo json_encode($return_result);
 	}//end function deleteItem
 
