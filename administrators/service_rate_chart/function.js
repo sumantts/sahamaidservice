@@ -261,10 +261,35 @@ saveMultipleRate
 
 // Save Multiple Rate
 $('#saveMultipleRate').on('click', function () {
-    var sa_id_child_values = [];
-    var rate_first_values = [];
-    var rate_normal_values = [];
-    
+    $qs_id = $('#qs_id').val();
+    $sa_id = $('#sa_id').val();
+
+    var rateChartData = [];
+
+    $('#rate_chart_table tbody tr').each(function () {
+        var $row = $(this);
+        rateChartData.push({
+            sa_id_child: $row.find('input[id^="sa_id_child_"]').val(),
+            rate_first: $row.find('input[id^="rate_first_"]').val(),
+            rate_normal: $row.find('input[id^="rate_normal_"]').val()
+        });
+    });
+
+    console.log('Rate Chart Data:', rateChartData);
+
+    $.ajax({
+        method: "POST",
+        url: "service_rate_chart/function.php",
+        data: { fn: "saveMultipleRate", qs_id: $qs_id, sa_id: $sa_id, rateChartData: JSON.stringify(rateChartData) }
+    })
+    .done(function( res ) {
+        console.log('Save Multiple Rate Response:', res);
+        $res1 = JSON.parse(res);
+        if($res1.status == true){
+            alert('Rates saved successfully.');
+        }
+    });
+
 });
 
 $(document).ready(function () {

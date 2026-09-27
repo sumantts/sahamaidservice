@@ -71,8 +71,8 @@
 			while($row = $result->fetch_array()){
 				$sa_id_child = $row['sa_id'];
 				$building_name = $row['building_name']; 
-				$rate_first_value = '5';
-				$rate_normal_value = '6';
+				$rate_first_value = 0;
+				$rate_normal_value = 0;
 
 				$services_obj = new stdClass();
 				$services_obj->sa_id_child = $sa_id_child;
@@ -82,7 +82,28 @@
 				array_push($services, $services_obj);
 			}
 		} 
-		
+
+		if(sizeof($services) > 0){
+			$status = true;
+			for($i = 0; $i < sizeof($services); $i++){
+				$sa_id_child = $services[$i]->sa_id_child;
+
+				$sql2 = "SELECT * FROM service_rate_chart WHERE qs_id = '" .$qs_id. "' AND sa_id = '" .$sa_id. "' AND sa_id_child = '" .$sa_id_child. "' ";
+				$result2 = $mysqli->query($sql2);
+
+				if ($result2->num_rows > 0) {
+					$row2 = $result2->fetch_array();
+					$rate_first_value = $row2['rate_first'];
+					$rate_normal_value = $row2['rate_normal'];
+
+					$services[$i]->rate_first_value = $rate_first_value;
+					$services[$i]->rate_normal_value = $rate_normal_value;
+				}
+			}
+		}else{
+			$status = false;
+			$error_message = 'No service area found';
+		}
 
 		$return_array['status'] = $status;
 		$return_array['services'] = $services; 
@@ -176,5 +197,58 @@
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
 	}//function end
+
+	// Save Multiple Rate
+	if($fn == 'saveMultipleRate'){
+		$return_result = array();
+		$status = true;
+		$error_message = '';
+		
+		$qs_id = $_POST["qs_id"];
+		$sa_id = $_POST["sa_id"];
+		$rateChartData = json_decode($_POST["rateChartData"], true);
+		
+		
+		try {
+			if($qs_id != '' && $sa_id != ''){
+				if(sizeof($rateChartData) > 0){
+					for($i = 0; $i < sizeof($rateChartData); $i++){
+						$sa_id_child = $rateChartData[$i]['sa_id_child'];
+						$rate_first = $rateChartData[$i]['rate_first'];
+						$rate_normal = $rateChartData[$i]['rate_normal'];
+
+						//echo "QS ID: " .$qs_id. ", SA ID: " .$sa_id. ", SA ID Child: " .$sa_id_child. ", Rate First: " .$rate_first. ", Rate Normal: " .$rate_normal. "<br>";
+
+
+						$sql = "SELECT * FROM service_rate_chart WHERE qs_id = '" .$qs_id. "' AND sa_id = '" .$sa_id. "' AND sa_id_child = '" .$sa_id_child. "' ";
+						$result = $mysqli->query($sql);
+
+						if ($result->num_rows > 0) {
+							// update row
+							$sql3 = "UPDATE service_rate_chart SET rate_first = '" .$rate_first. "', rate_normal = '" .$rate_normal. "' WHERE qs_id = '" .$qs_id. "' AND sa_id = '" .$sa_id. "' AND sa_id_child = '" .$sa_id_child. "' ";
+							$result3 = $mysqli->query($sql3);
+						} else {
+							// insert row
+							$sql2 = "INSERT INTO service_rate_chart (qs_id, sa_id, sa_id_child, rate_first, rate_normal) VALUES ('" .$qs_id. "', '" .$sa_id. "', '" .$sa_id_child. "', '" .$rate_first. "', '" .$rate_normal. "') ";
+							$result2 = $mysqli->query($sql2);
+						}
+						
+					}
+				}
+			}else{
+				$status = false;
+				$error_message = 'Please select Quick Service and Service Area';
+			}
+			
+		} catch (PDOException $e) {
+			die("Error occurred:" . $e->getMessage());
+			$status = false;
+			$error_message = 'Error occurred while saving the data';
+		}
+
+		$return_result['status'] = $status;
+		$return_result['error_message'] = $error_message;
+		echo json_encode($return_result);
+	}
 
 ?>
