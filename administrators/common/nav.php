@@ -1,10 +1,10 @@
 <?php  
-if(!isset($_SESSION["user_type"])){
-	header("Location: index.php");
-	
-}else{
-	$sess_user_type = $_SESSION["user_type"];
+if (empty($_SESSION["user_type"])) {
+	header("Location: ?p=signin");
+	//exit;
 }
+
+$sess_user_type = $_SESSION["user_type"];
 
 ?>
 <nav class="pcoded-navbar ">

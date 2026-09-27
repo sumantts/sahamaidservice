@@ -1,6 +1,7 @@
 <?php 
-if(!isset($_SESSION["user_id"])){
-    header("location:?p=signin");
+if (empty($_SESSION["user_id"])) {
+    header("Location: ?p=signin");
+    //exit;
 }
 //include('../assets/php/sql_conn.php');
 
