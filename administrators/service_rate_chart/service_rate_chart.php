@@ -106,7 +106,7 @@ if(!isset($_SESSION["user_type"])){
                                     </select>
                                 </div>  
 
-                                <div class="col-md-2 mb-2 d-none" id="all_over_rate_first_div">
+                                <!-- <div class="col-md-2 mb-2 d-none" id="all_over_rate_first_div">
                                     <label for="all_over_rate_first" class="form-label text-danger">1st time rate*</label>
                                     <input class="form-control" type="number" id="all_over_rate_first" name="all_over_rate_first" >
                                 </div> 
@@ -114,7 +114,7 @@ if(!isset($_SESSION["user_type"])){
                                 <div class="col-md-2 mb-2 d-none" id="all_over_rate_normal_div">
                                     <label for="all_over_rate_normal" class="form-label text-danger">Normal Rate *</label>
                                     <input class="form-control" type="number" id="all_over_rate_normal" name="all_over_rate_normal" >
-                                </div>
+                                </div> -->
 
                                 <div class="col-md-2 mt-4">
                                     <input type="hidden" name="atten_id" id="atten_id" value="0">

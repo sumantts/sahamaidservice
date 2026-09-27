@@ -240,31 +240,35 @@ function configureUsersDd(){
     }//end if
 }//end 
 
+
+
+$('#sa_id').on('change', function () {
+    var selectedValue = parseInt($(this).val(), 10);
+    var selectedText = $(this).find('option:selected').text().trim();
+    var showRateFields = selectedText === 'All' && selectedValue > 0;
+    var showSubmitButton = selectedText !== 'All' && selectedValue > 0;
+
+    $('#all_over_rate_first_div, #all_over_rate_normal_div, #saveRate')
+        .toggleClass('d-none', !showRateFields);
+    $('#submitForm').first().toggleClass('d-none', !showSubmitButton);
+
+    if (selectedText === 'Select' || selectedText === 'All') {
+        $('#rate_chart_ui_div').removeClass('d-block').addClass('d-none');
+    }
+});
+
+saveMultipleRate
+
+// Save Multiple Rate
+$('#saveMultipleRate').on('click', function () {
+    var sa_id_child_values = [];
+    var rate_first_values = [];
+    var rate_normal_values = [];
+    
+});
+
 $(document).ready(function () {
     //populateDataTable();
-    $('#qs_id').on('change', function () {
-        var selectedText = $(this).val()
-            ? $(this).find('option:selected').text().trim()
-            : '';
-
-        $('#serviceName').first().text(selectedText);
-    });
-
-    $('#sa_id').on('change', function () {
-        var selectedValue = parseInt($(this).val(), 10);
-        var selectedText = $(this).find('option:selected').text().trim();
-        var showRateFields = selectedText === 'All' && selectedValue > 0;
-        var showSubmitButton = selectedText !== 'All' && selectedValue > 0;
-
-        $('#all_over_rate_first_div, #all_over_rate_normal_div, #saveRate')
-            .toggleClass('d-none', !showRateFields);
-        $('#submitForm').first().toggleClass('d-none', !showSubmitButton);
-
-        if (selectedText === 'Select' || selectedText === 'All') {
-            $('#rate_chart_ui_div').removeClass('d-block').addClass('d-none');
-        }
-    });
-
     configureQuickServicesDd();
     configureServiceAreaDd();
 });

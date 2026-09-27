@@ -1,7 +1,7 @@
 <?php  
 if(!isset($_SESSION["user_type"])){
 	header("Location: index.php");
-	exit();
+	
 }else{
 	$sess_user_type = $_SESSION["user_type"];
 }
