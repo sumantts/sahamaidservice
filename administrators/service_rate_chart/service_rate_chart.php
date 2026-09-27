@@ -164,6 +164,11 @@ if(!isset($_SESSION["user_type"])){
                                 </tbody>
                             </table>
                         
+                            
+
+                            <div class="col-12 d-flex justify-content-end mt-4"> 
+                                <button type="button" class="btn btn-primary" id="saveMultipleRate">Save</button> 
+                            </div> 
                         </div>
                     </div>
                     <!-- end second card body -->

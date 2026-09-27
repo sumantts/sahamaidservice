@@ -71,10 +71,14 @@
 			while($row = $result->fetch_array()){
 				$sa_id_child = $row['sa_id'];
 				$building_name = $row['building_name']; 
+				$rate_first_value = '5';
+				$rate_normal_value = '6';
 
 				$services_obj = new stdClass();
 				$services_obj->sa_id_child = $sa_id_child;
 				$services_obj->building_name = $building_name;
+				$services_obj->rate_first_value = $rate_first_value;
+				$services_obj->rate_normal_value = $rate_normal_value;
 				array_push($services, $services_obj);
 			}
 		} 

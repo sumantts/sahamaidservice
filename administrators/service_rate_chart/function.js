@@ -64,19 +64,35 @@
             
             if($services.length > 0){
                 for($i = 0; $i < $services.length; $i++){
+                    $sa_id_child = $services[$i].sa_id_child;
+                    $building_name = $services[$i].building_name;
+                    $rate_first_value = $services[$i].rate_first_value;
+                    $rate_normal_value = $services[$i].rate_normal_value;
+
                     var service = $services[$i];
                     var $row = $('<tr>');
                     $('<th>', { scope: 'row', text: $i + 1 }).appendTo($row);
-                    $('<td>').text(service.building_name).appendTo($row);
+                    var $buildingCell = $('<td>').text($building_name);
+                    $('<input>', {
+                        type: 'hidden',
+                        id: 'sa_id_child_' + $sa_id_child,
+                        name: 'sa_id_child[]',
+                        value: $sa_id_child
+                    }).appendTo($buildingCell);
+                    $buildingCell.appendTo($row);
+                    
                     $('<td>').append($('<input>', {
                         type: 'text',
                         class: 'form-control form-control-sm',
-                        value: ''
+                        id: 'rate_first_' + $sa_id_child,
+                        value: $rate_first_value
                     })).appendTo($row);
+
                     $('<td>').append($('<input>', {
                         type: 'text',
                         class: 'form-control form-control-sm',
-                        value: ''
+                        id: 'rate_normal_' + $sa_id_child,
+                        value: $rate_normal_value
                     })).appendTo($row);
                     $tableBody.append($row);
                 }//end for
