@@ -14,17 +14,19 @@
 		$status = true;
 
 		$sa_id = $_POST["sa_id"];	
-		$serviceName = $_POST["serviceName"];
-		$scv_inc_arr = $_POST["scv_inc_arr"];	
-		$scv_notinc_arr = $_POST["scv_notinc_arr"]; 
+		$area_location = $_POST["area_location"];
+		$pincode = $_POST["pincode"];
+		$street_name = $_POST["street_name"];
+		$landmark = $_POST["landmark"];
+		$building_name_arr = json_decode($_POST["building_name_arr"]); 
 		$sa_status = $_POST['sa_status'];
 		
 		try {
 			if($sa_id > 0){
-				$sql = "UPDATE quick_services SET service_name = '" .$serviceName. "', svc_included = '" .$scv_inc_arr. "', svc_not_included = '" .$scv_notinc_arr. "', sa_status = '" .$sa_status. "' WHERE sa_id = '" .$sa_id. "' ";
+				$sql = "UPDATE service_area SET area_location = '" .$area_location. "', pincode = '" .$pincode. "', street_name = '" .$street_name. "', landmark = '" .$landmark. "', sa_status = '" .$sa_status. "' WHERE sa_id = '" .$sa_id. "' ";
 				$result = $mysqli->query($sql);
 			}else{
-				$sql = "INSERT INTO quick_services (service_name, svc_included, svc_not_included, sa_status) VALUES ('" .$serviceName. "', '" .$scv_inc_arr. "', '" .$scv_notinc_arr. "', '" .$sa_status. "')";
+				$sql = "INSERT INTO service_area (area_location, pincode, street_name, landmark, sa_status) VALUES ('" .$area_location. "', '" .$pincode. "', '" .$street_name. "', '" .$landmark. "', '" .$sa_status. "')";
 				$result = $mysqli->query($sql);
 
 				$insert_id = $mysqli->insert_id;
@@ -35,6 +37,24 @@
 					$status = false;
 				}		
 			}	
+			
+			if($sa_id > 0){
+				if(sizeof($building_name_arr) > 0){
+					for($i = 0; $i < sizeof($building_name_arr); $i++){
+						$building_name = $building_name_arr[$i]->name;
+						$obj_id = $building_name_arr[$i]->obj_id;
+						if($building_name != ''){
+							$check_sql = "SELECT sa_id FROM service_area WHERE obj_id = '" . $mysqli->real_escape_string($obj_id) . "' LIMIT 1";
+							$check_result = $mysqli->query($check_sql);
+							if($check_result && $check_result->num_rows == 0){
+								$sql = "INSERT INTO service_area (parent_sa_id, building_name, obj_id) VALUES ('" .$sa_id. "', '" .$building_name. "', '" .$obj_id. "')";
+								$result = $mysqli->query($sql);
+							}
+						}
+					}
+
+				}
+			}
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());
 		}
@@ -96,7 +116,7 @@
 				$data[4] = $landmark;
 				$data[5] = $building_name;
 				$data[6] = $toggle_button;
-				$data[7] = "<a href='javascript: void(0);' onclick='editService(".$sa_id.")'><i class='fa fa-edit' aria-hidden='true'></i></a> <a href='javascript: void(0);' onclick='deleteService(".$sa_id.")'><i class='fa fa-trash' aria-hidden='true'></i></a>";
+				$data[7] = "<a href='javascript: void(0);' onclick='editService(".$sa_id.")'><i class='fa fa-edit' aria-hidden='true'></i></a> <a href='javascript: void(0);' onclick='deleteServiceArea(".$sa_id.")'><i class='fa fa-trash' aria-hidden='true'></i></a>";
 
 				array_push($mainData, $data);
 				$slno++;
@@ -111,51 +131,78 @@
 	}//function end	
 
 	//function start
-	if($fn == 'getServiceData'){
+	if($fn == 'getServiceAreaData'){
 		$return_array = array();
 		$status = true;
 		$mainData = array();
 		$sa_id = $_POST['sa_id'];
-		$svc_included = array();
-		$svc_not_included = array();
+		$building_names = array(); 
 		$sa_status = 1;
+		$area_location = '';
+		$pincode = '';
+		$street_name = '';
+		$landmark = '';
 
-		$sql = "SELECT * FROM quick_services WHERE sa_id = '" .$sa_id. "'";
+
+		$sql = "SELECT * FROM service_area WHERE sa_id = '" .$sa_id. "'";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
 			$status = true;	
 			$row = $result->fetch_array();
 			$sa_id = $row['sa_id'];			
-			$service_name = $row['service_name'];		
-			$sa_status = $row['sa_status'];
+			$area_location = $row['area_location'];					
+			$pincode = $row['pincode'];				
+			$street_name = $row['street_name'];				
+			$landmark = $row['landmark'];				
+			$sa_status = $row['sa_status']; 
 
-			if($row['svc_included'] != ''){
-				$svc_included = json_decode($row['svc_included'], true);
-			}
-			if($row['svc_not_included'] != ''){
-				$svc_not_included = json_decode($row['svc_not_included'], true);
+			$building_sql = "SELECT obj_id, building_name FROM service_area WHERE parent_sa_id = " . (int) $sa_id . " ORDER BY building_name ASC";
+			$building_result = $mysqli->query($building_sql);
+			$building_names = array();
+			if ($building_result) {
+				while ($building_row = $building_result->fetch_assoc()) {
+					$building_names[] = array(
+						'obj_id' => $building_row['obj_id'],
+						'name' => $building_row['building_name']
+					);
+				}
 			}
 		} else {
 			$status = false;
 		}
 		$mysqli->close();
 
-		$return_array['service_name'] = $service_name;
-		$return_array['svc_included'] = $svc_included;
-		$return_array['svc_not_included'] = $svc_not_included;
+		$return_array['area_location'] = $area_location;
+		$return_array['pincode'] = $pincode;
+		$return_array['street_name'] = $street_name;
+		$return_array['landmark'] = $landmark;
+		$return_array['building_names'] = $building_names; 
 		$return_array['sa_status'] = $sa_status;
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
 	}//function end
 
 	//Delete function
-	if($fn == 'deleteService'){
+	if($fn == 'deleteServiceArea'){
 		$return_result = array();
 		$sa_id = $_POST["sa_id"];
 		$status = true;	
 
-		$sql = "DELETE FROM quick_services WHERE sa_id = '".$sa_id."'";
+		$sql = "DELETE FROM service_area WHERE sa_id = '".$sa_id."'";
+		$result = $mysqli->query($sql);
+		$return_result['status'] = $status;
+		
+		echo json_encode($return_result);
+	}//end function deleteItem
+
+	
+	if($fn == 'deleteBuildingName'){
+		$return_result = array();
+		$obj_id = $_POST["obj_id"];
+		$status = true;	
+
+		$sql = "DELETE FROM service_area WHERE obj_id = '".$obj_id."'";
 		$result = $mysqli->query($sql);
 		$return_result['status'] = $status;
 		
@@ -170,7 +217,7 @@
 
 		$sa_id = $_GET["sa_id"];	
 		$sa_status = $_GET["sa_status"]; 
-        $sql = "UPDATE quick_services SET sa_status = '" .$sa_status. "' WHERE sa_id = '" .$sa_id. "' ";
+        $sql = "UPDATE service_area SET sa_status = '" .$sa_status. "' WHERE sa_id = '" .$sa_id. "' ";
         $result = $mysqli->query($sql);
 		
 		$return_result['status'] = $status; 

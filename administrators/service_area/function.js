@@ -1,17 +1,31 @@
 
 function validateForm(){
-    $serviceName = $('#serviceName').val().replace(/^\s+|\s+$/gm,'');
-    //$serviceDescription = $('#serviceDescription').val().replace(/^\s+|\s+$/gm,'');
+    $area_location = $('#area_location').val().replace(/^\s+|\s+$/gm,'');
+    $pincode = $('#pincode').val().replace(/^\s+|\s+$/gm,'');
+    $street_name = $('#street_name').val().replace(/^\s+|\s+$/gm,'');
+    $landmark = $('#landmark').val().replace(/^\s+|\s+$/gm,'');
+    $sa_status = $('#sa_status').val();
+
     $status = true;
 
-    if($serviceName == ''){
+    if($area_location == ''){
         $status = false;
-        $('#serviceName').removeClass('is-valid');
-        $('#serviceName').addClass('is-invalid');
+        $('#area_location').removeClass('is-valid');
+        $('#area_location').addClass('is-invalid');
     }else{
         $status = true;
-        $('#serviceName').removeClass('is-invalid');
-        $('#serviceName').addClass('is-valid');
+        $('#area_location').removeClass('is-invalid');
+        $('#area_location').addClass('is-valid');
+    }   
+
+    if($street_name == ''){
+        $status = false;
+        $('#street_name').removeClass('is-valid');
+        $('#street_name').addClass('is-invalid');
+    }else{
+        $status = true;
+        $('#street_name').removeClass('is-invalid');
+        $('#street_name').addClass('is-valid');
     }   
 
     $('#submitForm_spinner').hide();
@@ -22,9 +36,21 @@ function validateForm(){
 }//en validate form
 
 function clearForm(){
-    $('#serviceName').val('');
-    $('#serviceName').removeClass('is-valid');
-    $('#serviceName').removeClass('is-invalid');
+    $('#area_location').val('');
+    $('#area_location').removeClass('is-valid');
+    $('#area_location').removeClass('is-invalid');
+
+    $('#pincode').val('');
+    $('#pincode').removeClass('is-valid');
+    $('#pincode').removeClass('is-invalid');
+
+    $('#street_name').val('');
+    $('#street_name').removeClass('is-valid');
+    $('#street_name').removeClass('is-invalid');
+
+    $('#landmark').val('');
+    $('#landmark').removeClass('is-valid');
+    $('#landmark').removeClass('is-invalid');
 
     $('#serviceDescription').val('');
     $('#serviceDescription').removeClass('is-valid');
@@ -35,13 +61,26 @@ function clearForm(){
 
 $('#addNewBtn, .card-option a[data-target="#exampleModalLong"]').on('click', function(){
     $('#sa_id').val('0');
-    $('#serviceName').val('');
     $('#sa_status').val('1').trigger('change');
-    $('#serviceName').removeClass('is-valid');
-    $('#serviceName').removeClass('is-invalid');
+
+    $('#area_location').val('');
+    $('#area_location').removeClass('is-valid');
+    $('#area_location').removeClass('is-invalid');
+    
+    $('#pincode').val('');
+    $('#pincode').removeClass('is-valid');
+    $('#pincode').removeClass('is-invalid');
+    
+    $('#street_name').val('');
+    $('#street_name').removeClass('is-valid');
+    $('#street_name').removeClass('is-invalid');
+    
+    $('#landmark').val('');
+    $('#landmark').removeClass('is-valid');
+    $('#landmark').removeClass('is-invalid'); 
+
     initObjects();
-    renderIncludedTableData();
-    renderNotIncludedTableData();
+    renderIncludedTableData(); 
 });
 
 $(".form-control").blur(function(){
@@ -58,13 +97,13 @@ $('#submitForm').click(function(){
 
         if($formVallidStatus == true){
             $sa_id = $('#sa_id').val();
-            $serviceName = $('#serviceName').val().replace(/^\s+|\s+$/gm,'');
+            $area_location = $('#area_location').val().replace(/^\s+|\s+$/gm,'');
             $sa_status = $('#sa_status').val();
 
             $.ajax({
                 method: "POST",
                 url: "service_area/function.php",
-                data: { fn: "saveServices", sa_id: $sa_id, serviceName: $serviceName, scv_inc_arr: JSON.stringify($scv_inc_arr), scv_notinc_arr: JSON.stringify($scv_notinc_arr), sa_status: $sa_status }
+                data: { fn: "saveServices", sa_id: $sa_id, area_location: $area_location, pincode: $pincode, street_name: $street_name, landmark: $landmark, building_name_arr: JSON.stringify($building_name_arr), sa_status: $sa_status }
             })
             .done(function( res ) {
                 //console.log(res);
@@ -75,9 +114,9 @@ $('#submitForm').click(function(){
                     $('#sa_id').val($res1.sa_id); 
                     populateDataTable();
 
-                    alert('Quick Service saved successfully!');
+                    alert('Area / Location saved successfully!');
                 }else{
-                    alert('Error occurred while saving the Quick Service.');
+                    alert('Error occurred while saving the Area / Location.');
                 }
             });//end ajax
         }
@@ -90,32 +129,33 @@ function editService($sa_id){
     $.ajax({
         method: "POST",
         url: "service_area/function.php",
-        data: { fn: "getServiceData", sa_id: $sa_id }
+        data: { fn: "getServiceAreaData", sa_id: $sa_id }
     })
     .done(function( res ) {
         //console.log(res);
         $res1 = JSON.parse(res);
         if($res1.status == true){
-            $('#serviceName').val($res1.service_name);
+            $('#area_location').val($res1.area_location);
+            $('#pincode').val($res1.pincode);
+            $('#street_name').val($res1.street_name);
+            $('#landmark').val($res1.landmark);
             $('#sa_id').val($sa_id);
             $('#sa_status').val($res1.sa_status).trigger('change');
-            $scv_inc_arr = $res1.svc_included;
-            $scv_notinc_arr = $res1.svc_not_included;
+            $building_name_arr = $res1.building_names;
 
-            renderIncludedTableData();
-            renderNotIncludedTableData();
+            renderIncludedTableData(); 
         }
     });//end ajax
 
 }
 
 //Delete function	
-function deleteService($sa_id){
-    if (confirm('Are you sure to delete the Service?')) {
+function deleteServiceArea($sa_id){
+    if (confirm('Are you sure to delete the Location?')) {
         $.ajax({
             method: "POST",
             url: "service_area/function.php",
-            data: { fn: "deleteService", sa_id: $sa_id }
+            data: { fn: "deleteServiceArea", sa_id: $sa_id }
         })
         .done(function( res ) {
             //console.log(res);
@@ -126,28 +166,7 @@ function deleteService($sa_id){
             }
         });//end ajax
     }		
-}//end delete
-
-//Image upload
-function savePhoto(){
-    const imgPath = document.querySelector('input[type=file]').files[0];
-    const reader = new FileReader();
-
-    reader.addEventListener("load", function () {
-        // convert image file to base64 string and save to localStorage
-        localStorage.setItem("image", reader.result);
-    }, false);
-
-    if (imgPath) {
-        reader.readAsDataURL(imgPath);
-    }
-
-    //To display image again
-    setTimeout(function(){
-    let img = document.getElementById('image');
-    img.src = localStorage.getItem('image');
-    }, 250);
-}
+}//end delete 
 
 
 function populateDataTable(){
@@ -191,19 +210,19 @@ function populateDataTable(){
     });
 }//end fun
 
-$('#scv_inc_btn').on('click', function(){
-    $scv_inc = $('#scv_inc').val().replace(/^\s+|\s+$/gm,'');
-    if($scv_inc == ''){
-        alert('Please enter Service Included');
+$('#building_name_btn').on('click', function(){
+    $building_name = $('#building_name').val().replace(/^\s+|\s+$/gm,'');
+    if($building_name == ''){
+        alert('Please enter Building Name');
     }else{
-        $('#scv_inc').val('');
+        $('#building_name').val('');
         
         $svc_inc_obj = {
             obj_id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
-            name: $scv_inc,
+            name: $building_name,
         };
 
-        $scv_inc_arr.push($svc_inc_obj);
+        $building_name_arr.push($svc_inc_obj);
         renderIncludedTableData();
         
         $svc_inc_obj = {
@@ -211,58 +230,26 @@ $('#scv_inc_btn').on('click', function(){
             name: '',
         };
 
-        console.log(JSON.stringify($scv_inc_arr));
+        console.log(JSON.stringify($building_name_arr));
 
     }
-});
-
-
-$('#svc_notinc_btn').on('click', function(){
-    $svc_notinc = $('#svc_notinc').val().replace(/^\s+|\s+$/gm,'');
-    if($svc_notinc == ''){
-        alert('Please enter Service Not Included');
-    }else{
-        $('#svc_notinc').val('');
-        
-        $svc_notinc_obj = {
-            obj_id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
-            name: $svc_notinc,
-        };
-
-        $scv_notinc_arr.push($svc_notinc_obj);
-        renderNotIncludedTableData();
-        
-        $svc_notinc_obj = {
-            obj_id: '',
-            name: '',
-        };
-
-        console.log('not inc: ' + JSON.stringify($scv_notinc_arr));
-
-    }
-});
+}); 
 
 
 function initObjects(){
 
-    $scv_inc_arr = [];
+    $building_name_arr = [];
     $svc_inc_obj = {
         obj_id: '',
         name: '',
-    };
-
-    $scv_notinc_arr = [];
-    $svc_notinc_obj = {
-        obj_id: '',
-        name: '',
-    };
+    }; 
 
 }
 
 function renderIncludedTableData(){
     const $tbody = $('#includedServicesTable tbody').empty();
 
-    $scv_inc_arr.forEach(function(service, index){
+    $building_name_arr.forEach(function(service, index){
         const $row = $('<tr>');
         $('<th>', { scope: 'row' }).text(index + 1).appendTo($row);
         $('<td>').text(service.name).appendTo($row);
@@ -278,54 +265,37 @@ function renderIncludedTableData(){
 }
 
 $('#includedServicesTable').on('click', '.remove-included-service', function(){
-    if(!confirm('Are you sure you want to remove this included service?')){
+    if(!confirm('Are you sure you want to remove this Building Name?')){
         return;
     }
 
     const objId = $(this).attr('data-obj-id');
-    const serviceIndex = $scv_inc_arr.findIndex(function(service){
+
+    // remove it from database and then remove it from the array   
+    
+    $.ajax({
+        method: "POST",
+        url: "service_area/function.php",
+        data: { fn: "deleteBuildingName", obj_id: objId }
+    })
+    .done(function( res ) {
+        //console.log(res);
+        $res1 = JSON.parse(res);
+        if($res1.status == true){ 
+            populateDataTable();
+            alert('Building Name removed successfully!');
+        }
+    });//end ajax
+
+    const serviceIndex = $building_name_arr.findIndex(function(service){
         return service.obj_id === objId;
     });
 
     if(serviceIndex !== -1){
-        $scv_inc_arr.splice(serviceIndex, 1);
+        $building_name_arr.splice(serviceIndex, 1);
         renderIncludedTableData();
     }
-});
-
-function renderNotIncludedTableData(){
-    const $tbody = $('#notIncludedServicesTable tbody').empty();
-
-    $scv_notinc_arr.forEach(function(service, index){
-        const $row = $('<tr>');
-        $('<th>', { scope: 'row' }).text(index + 1).appendTo($row);
-        $('<td>').text(service.name).appendTo($row);
-        const $removeButton = $('<button>', {
-            type: 'button',
-            class: 'btn btn-sm remove-not-included-service',
-            'aria-label': 'Remove not-included service',
-        }).attr('data-obj-id', service.obj_id);
-        $('<i>', { class: 'fas fa-trash', 'aria-hidden': 'true' }).appendTo($removeButton);
-        $('<td>').append($removeButton).appendTo($row);
-        $tbody.append($row);
-    });
-}
-
-$('#notIncludedServicesTable').on('click', '.remove-not-included-service', function(){
-    if(!confirm('Are you sure you want to remove this not-included service?')){
-        return;
-    }
-
-    const objId = $(this).attr('data-obj-id');
-    const serviceIndex = $scv_notinc_arr.findIndex(function(service){
-        return service.obj_id === objId;
-    });
-
-    if(serviceIndex !== -1){
-        $scv_notinc_arr.splice(serviceIndex, 1);
-        renderNotIncludedTableData();
-    }
-});
+}); 
 
 
 

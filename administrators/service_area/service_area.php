@@ -128,16 +128,35 @@
                         <div class="modal-body">
                             <form class="needs-validation" novalidate>
                                 <div class="form-row">
-                                    <div class="col-md-8 mb-3">
-                                        <label for="serviceName" class="text-danger">Service Name*</label>
-                                        <input type="text" class="form-control" id="serviceName" value="" required >
+                                    <div class="col-md-4 mb-3">
+                                        <label for="area_location" class="text-danger">Area / Location*</label>
+                                        <input type="text" class="form-control" id="area_location" value="" required >
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
                                         <div class="invalid-feedback">
-                                            Please provide Service Name.
+                                            Please provide Area / Location.
                                         </div>
                                     </div> 
+                                    <div class="col-md-4 mb-3">
+                                        <label for="pincode">Pincode</label>
+                                        <input type="text" class="form-control" id="pincode" value="" > 
+                                    </div> 
+                                    <div class="col-md-4 mb-3">
+                                        <label for="street_name" class="text-danger">Street Name*</label>
+                                        <input type="text" class="form-control" id="street_name" value="" required >
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>                                    
+                                        <div class="invalid-feedback">
+                                            Please provide Street Name.
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-4 mb-3">
+                                        <label for="landmark">Landmark</label>
+                                        <input type="text" class="form-control" id="landmark" value=""  >
+                                    </div> 
+
                                     <div class="col-md-4 mb-3">
                                         <label for="serviceName" class="text-danger">Status*</label>
                                         <select class="form-control" id="sa_status" name="sa_status" required>
@@ -145,77 +164,43 @@
                                             <option value="2">Inactive</option> 
                                         </select>
                                     </div> 
-                                    
-                                    <!-- Service Included Start -->
+
+                                </div>
+
+                                <div class="form-row">
                                     <div class="col-md-12 mb-3">
                                         <div class="row">
                                             <div class="col-md-10 mb-3">
-                                                <label for="scv_inc" class="text-danger">Service Included*</label>
-                                                <input type="text" class="form-control" id="scv_inc" value="" required >
+                                                <label for="building_name" class="text-danger">Building Name*</label>
+                                                <input type="text" class="form-control" id="building_name" value="" required >
                                             </div> 
                                             <div class="col-md-2 mb-3">
-                                                <label for="scv_inc">&nbsp;</label>
-                                                <button type="button" class="btn btn-secondary mt-4" id="scv_inc_btn">Add</button>
+                                                <label for="building_name">&nbsp;</label>
+                                                <button type="button" class="btn btn-secondary mt-4" id="building_name_btn">Add</button>
                                             </div>
                                         </div> 
                                     </div> 
 
-                                    <!-- Service Included -->
+                                    <!-- Multiple building names -->
                                     <div class="col-md-12 mb-3">
                                         <div class="table-responsive service-items-scroll">
                                             <table class="table table-sm" id="includedServicesTable">
                                                 <thead>
                                                     <tr>
                                                     <th scope="col">#</th>
-                                                    <th scope="col">Service Included</th>
+                                                    <th scope="col">Building Name</th>
                                                     <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <th colspan="3">Add new service included</th>
+                                                        <th colspan="3">Add new Building Name</th>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                    <!-- Service Included -->
-
-                                    <!-- Not Inclided Start -->
-                                    <div class="col-md-12 mb-3">
-                                        <div class="row">
-                                            <div class="col-md-10 mb-3">
-                                                <label for="svc_notinc" class="text-danger">Service Not Included*</label>
-                                                <input type="text" class="form-control" id="svc_notinc" value="" required >
-                                            </div> 
-                                            <div class="col-md-2 mb-3">
-                                                <label for="serviceName">&nbsp;</label>
-                                                <button type="button" class="btn btn-secondary mt-4" id="svc_notinc_btn">Add</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Service Not Included -->
-                                    <div class="col-md-12 mb-3">
-                                        <div class="table-responsive service-items-scroll">
-                                            
-                                            <table class="table table-sm" id="notIncludedServicesTable">
-                                                <thead>
-                                                    <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Service Not Included</th>
-                                                    <th scope="col">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th colspan="3">Add new service not included</th>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!-- Service Not Included -->
+                                    <!-- Multiple building names --> 
 
                                 </div>
                             </form>
