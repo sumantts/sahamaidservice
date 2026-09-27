@@ -1,11 +1,17 @@
 <?php 
-if(!$_SESSION["user_id"]){
+if(!isset($_SESSION["user_id"])){
     header("location:?p=signin");
 }
+
 include('common/head.php'); 
-$sess_user_type = $_SESSION["user_type"];
-if($sess_user_type == 4){
+
+if(!isset($_SESSION["user_type"])){
     header("location:?p=signin");
+}else{
+    $sess_user_type = $_SESSION["user_type"];
+    if($sess_user_type == 4){
+        header("location:?p=signin");
+    }
 }
 
 ?>
@@ -86,28 +92,34 @@ if($sess_user_type == 4){
                         
                         <form method="POST" action="#" name="myForm" name="myForm">
                             <div class="form-row"> 
-                                <div class="col-md-2 mb-2">
-                                    <label for="user_type" class="form-label text-danger">User Type*</label>
-                                    <select class="form-control" id="user_type" name="user_type" required>
+                                <div class="col-md-3 mb-2">
+                                    <label for="qs_id" class="form-label text-danger">Quick Services*</label>
+                                    <select class="form-control" id="qs_id" name="qs_id" required>
                                         <option value="">Select</option> 
                                     </select>
                                 </div>
                                 
                                 <div class="col-md-3 mb-2">
-                                    <label for="user_id" class="form-label text-danger">User*</label>
-                                    <select class="form-control" id="user_id" name="user_id" required>
+                                    <label for="sa_id" class="form-label text-danger">Service Area*</label>
+                                    <select class="form-control" id="sa_id" name="sa_id" required>
                                         <option value="">Select</option> 
                                     </select>
                                 </div>  
 
-                                <div class="col-md-2 mb-2">
-                                    <label for="month_date" class="form-label text-danger">Select Month*</label>
-                                    <input class="form-control" type="month" id="month_date" name="month_date" required>
+                                <div class="col-md-2 mb-2 d-none" id="all_over_rate_first_div">
+                                    <label for="all_over_rate_first" class="form-label text-danger">1st time rate*</label>
+                                    <input class="form-control" type="number" id="all_over_rate_first" name="all_over_rate_first" >
+                                </div> 
+
+                                <div class="col-md-2 mb-2 d-none" id="all_over_rate_normal_div">
+                                    <label for="all_over_rate_normal" class="form-label text-danger">Normal Rate *</label>
+                                    <input class="form-control" type="number" id="all_over_rate_normal" name="all_over_rate_normal" >
                                 </div>
 
-                                <div class="col-md-1 mt-4">
+                                <div class="col-md-2 mt-4">
                                     <input type="hidden" name="atten_id" id="atten_id" value="0">
-                                    <button type="button" class="btn btn-primary" id="submitForm">Show</button> 
+                                    <button type="button" class="btn btn-primary d-none" id="submitForm">Show</button> 
+                                    <button type="button" class="btn btn-primary d-none" id="saveRate">Save</button> 
                                 </div> 
 
                                 <div class="col-md-2 mt-4 d-none" id="csvDownloadDiv">
@@ -124,19 +136,34 @@ if($sess_user_type == 4){
                     <!-- End first card body -->
 
                     <!-- start second card body -->
-                    <div class="card-body">
-                        <div class="form-row" id="attendance_ui">
-                            <!-- <div class="col-md-3 mb-2">
-                                <input class="form-control form-control-sm" type="date" id="atten_date_1" name="atten_date_1">
-                            </div>
-                            <div class="col-md-3 mb-2"> 
-                                <select class="form-control form-control-sm" id="pre_abs_lev_1" name="pre_abs_lev_1">
-                                    <option value="">Present/Half Duty/Absent/Leave</option> 
-                                </select>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <input class="form-control form-control-sm" placeholder="Note" type="text" id="atten_note_1" name="atten_note_1">
-                            </div> -->
+                    <div class="card-body d-none" id="rate_chart_ui_div">
+                        <h5>Rate Chart for the service: <span id="serviceName"></span></h5>
+                        <div class="form-row" id="rate_chart_ui">
+                            <table class="table table-sm" id="rate_chart_table">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Building Name</th>
+                                    <th scope="col">First Order Rate (per hour)</th>
+                                    <th scope="col">Normal Rate (per hour)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- <tr>
+                                        <th>1</th>
+                                        <td>Bengal Intelligent Park</td>
+                                        <td><input type="text" class="form-control form-control-sm" value="100"></td>
+                                        <td><input type="text" class="form-control form-control-sm" value="150"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>2</th>
+                                        <td>Bengal Intelligent Park New</td>
+                                        <td><input type="text" class="form-control form-control-sm" value="120"></td>
+                                        <td><input type="text" class="form-control form-control-sm" value="180"></td>
+                                    </tr>  -->
+                                </tbody>
+                            </table>
+                        
                         </div>
                     </div>
                     <!-- end second card body -->

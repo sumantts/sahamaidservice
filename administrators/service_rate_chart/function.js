@@ -40,79 +40,54 @@
 
     // Hide Pay Slip Download button
     $('#paySlipDownloadDiv').removeClass('d-block');
-    $('#paySlipDownloadDiv').addClass('d-none');
-    
-    $user_type = $('#user_type').val();  
-    $user_id = $('#user_id').val();   
-    $month_date = $('#month_date').val();  
+    $('#paySlipDownloadDiv').addClass('d-none'); 
 
-    console.log('month_date: ' + $month_date); 
-    $service_id = $('#service_id').val();
-    $servicesPhoto = localStorage.getItem('image');
+    $('#rate_chart_ui_div').removeClass('d-none');
+    $('#rate_chart_ui_div').addClass('d-block');
+
+    $qs_id = $('#qs_id').val();
+    $sa_id = $('#sa_id').val(); 
 
     $.ajax({
         method: "POST",
         url: "service_rate_chart/function.php",
-        data: { fn: "getAttendance", user_type: $user_type, user_id: $user_id, month_date: $month_date }
+        data: { fn: "getRateChartData", qs_id: $qs_id, sa_id: $sa_id }
     })
     .done(function( res ) {
         //console.log(res);
         $res1 = JSON.parse(res);
+        var $tableBody = $('#rate_chart_table tbody').empty();
         if($res1.status == true){            
-            //Populate attendance list
-            $atten_data = $res1.atten_data;
-            $atten_id = $res1.atten_id;
-            $('#atten_id').val($atten_id);
+            //Populate list
+            $services = $res1.services;
             
-            if($atten_data.length > 0){
-                $attendance_ui = '';
-                for($i = 0; $i < $atten_data.length; $i++){
-                    $slno = $atten_data[$i].slno;
-                    $atten_date = $atten_data[$i].atten_date;
-                    $pre_abs_lev = $atten_data[$i].pre_abs_lev;
-                    $atten_note = $atten_data[$i].atten_note;
-
-                    $attendance_ui += '<div class="col-md-3 mb-2">';
-                        $attendance_ui += '<input class="form-control form-control-sm" type="text" id="atten_date_'+$slno+'" name="atten_date_'+$slno+'" value="'+$atten_date+'" readonly>';
-                    $attendance_ui += '</div>';
-                    $attendance_ui += '<div class="col-md-3 mb-2">'; 
-                        $attendance_ui += '<select class="form-control form-control-sm" id="pre_abs_lev_'+$slno+'" name="pre_abs_lev_'+$slno+'" onchange="updateAttendance('+$slno+')">';
-                            $attendance_ui += '<option value="">Present/Half Duty/Absent/Leave</option>'; 
-                            if($pre_abs_lev == '1'){
-                                $attendance_ui += '<option value="1" selected>Present</option>'; 
-                            }else{
-                                $attendance_ui += '<option value="1">Present</option>'; 
-                            }
-                            if($pre_abs_lev == '2'){
-                                $attendance_ui += '<option value="2" selected>Half Duty</option>';
-                            }else{
-                                $attendance_ui += '<option value="2">Half Duty</option>';
-                            }
-                            if($pre_abs_lev == '3'){
-                                $attendance_ui += '<option value="3" selected>Absent</option>';
-                            }else{
-                                $attendance_ui += '<option value="3">Absent</option>';
-                            } 
-                            if($pre_abs_lev == '4'){
-                                $attendance_ui += '<option value="4" selected>Leave</option>'; 
-                            }else{
-                                $attendance_ui += '<option value="4">Leave</option>'; 
-                            }
-                        $attendance_ui += '</select>';
-                    $attendance_ui += '</div>';
-                    $attendance_ui += '<div class="col-md-6 mb-2">';
-                        $attendance_ui += '<input class="form-control form-control-sm" placeholder="Note" type="text" id="atten_note_'+$slno+'" name="atten_note_'+$slno+'" value="'+$atten_note+'" onblur="updateAttendance('+$slno+')">';
-                    $attendance_ui += '</div>';
+            
+            if($services.length > 0){
+                for($i = 0; $i < $services.length; $i++){
+                    var service = $services[$i];
+                    var $row = $('<tr>');
+                    $('<th>', { scope: 'row', text: $i + 1 }).appendTo($row);
+                    $('<td>').text(service.building_name).appendTo($row);
+                    $('<td>').append($('<input>', {
+                        type: 'text',
+                        class: 'form-control form-control-sm',
+                        value: ''
+                    })).appendTo($row);
+                    $('<td>').append($('<input>', {
+                        type: 'text',
+                        class: 'form-control form-control-sm',
+                        value: ''
+                    })).appendTo($row);
+                    $tableBody.append($row);
                 }//end for
-                $('#attendance_ui').html($attendance_ui);
 
                 // Active CSV Download button
-                $('#csvDownloadDiv').removeClass('d-none');
-                $('#csvDownloadDiv').addClass('d-block');
+                /*$('#csvDownloadDiv').removeClass('d-none');
+                $('#csvDownloadDiv').addClass('d-block');*/
 
                 // Active Pay Slip Download button
-                $('#paySlipDownloadDiv').removeClass('d-none');
-                $('#paySlipDownloadDiv').addClass('d-block');
+                /*$('#paySlipDownloadDiv').removeClass('d-none');
+                $('#paySlipDownloadDiv').addClass('d-block');*/
 
             }//end if attendance
 
@@ -158,12 +133,12 @@ function updateAttendance(slno){
 }//end if
 
 
-// User type 
-function configureUserTypeDd(){
+// Quick Services 
+function configureQuickServicesDd(){
     $.ajax({
         method: "POST",
         url: "service_rate_chart/function.php",
-        data: { fn: "configureUserTypeDd" }
+        data: { fn: "configureQuickServicesDd" }
     })
     .done(function( res ) {
         $res1 = JSON.parse(res); 
@@ -171,26 +146,51 @@ function configureUserTypeDd(){
             $rows = $res1.data;
 
             if($rows.length > 0){
-                $('#user_type').html('');
+                $('#qs_id').html('');
                 $html = "<option value=''>Select</option>";
-                for($i = 0; $i < $rows.length; $i++){
-                    if($rows[$i].name != 'Worker'){
-                        $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";   
-                    }                 
+                for($i = 0; $i < $rows.length; $i++){ 
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";   
+                                    
                 }//end for                
-                $('#user_type').html($html);
+                $('#qs_id').html($html);
             }else{
-                $('#user_type').html('');
+                $('#qs_id').html('');
                 $html = "<option value=''>Select</option>";
-                $('#user_type').html($html);
+                $('#qs_id').html($html);
             }//end if
         }        
     });//end ajax
 }//end 
 
-$('#user_type').on('change', function(){
-    configureUsersDd();    
-});
+// service area 
+function configureServiceAreaDd(){
+    $.ajax({
+        method: "POST",
+        url: "service_rate_chart/function.php",
+        data: { fn: "configureServiceAreaDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#sa_id').html('');
+                $html = "<option value=''>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){ 
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";   
+                                    
+                }//end for                
+                $('#sa_id').html($html);
+            }else{
+                $('#sa_id').html('');
+                $html = "<option value=''>Select</option>";
+                $('#sa_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+ 
 
 
 // User
@@ -226,5 +226,29 @@ function configureUsersDd(){
 
 $(document).ready(function () {
     //populateDataTable();
-    configureUserTypeDd();
+    $('#qs_id').on('change', function () {
+        var selectedText = $(this).val()
+            ? $(this).find('option:selected').text().trim()
+            : '';
+
+        $('#serviceName').first().text(selectedText);
+    });
+
+    $('#sa_id').on('change', function () {
+        var selectedValue = parseInt($(this).val(), 10);
+        var selectedText = $(this).find('option:selected').text().trim();
+        var showRateFields = selectedText === 'All' && selectedValue > 0;
+        var showSubmitButton = selectedText !== 'All' && selectedValue > 0;
+
+        $('#all_over_rate_first_div, #all_over_rate_normal_div, #saveRate')
+            .toggleClass('d-none', !showRateFields);
+        $('#submitForm').first().toggleClass('d-none', !showSubmitButton);
+
+        if (selectedText === 'Select' || selectedText === 'All') {
+            $('#rate_chart_ui_div').removeClass('d-block').addClass('d-none');
+        }
+    });
+
+    configureQuickServicesDd();
+    configureServiceAreaDd();
 });
