@@ -1,5 +1,5 @@
 <?php 
-if(!$_SESSION["user_id"]){
+if(!isset($_SESSION["user_id"])){
     header("location:?p=signin");
 }
 //include('../assets/php/sql_conn.php');
