@@ -127,15 +127,6 @@ if(sizeof($clients) > 0){
 
 //echo json_encode($clients);
 
-
-
-
-
-
-
-
-
-
 // Query for upcoming maid assignments
 $upcoming_assignments = array();
 $sql = "SELECT 
@@ -159,6 +150,48 @@ if ($result) {
     }
 }
 
+
+
+
+
+// Graph data
+
+# Get month wise bill sent data for the current year
+$month_wise_bill_total = array_fill(1, 12, 0);
+$bill_sent_array = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"];
+$bill_collection_array = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"];
+
+
+for($i = 0; $i < 12; $i++){
+    $bill_sent_array[$i] = "0";
+
+    $month = $i + 1; // Month number (1-12)
+    $month = ($month < 10) ? '0' . $month : (string) $month;
+
+    $inv_month_year = date('Y') . '-' . $month; // Format: YYYY-MM
+   
+   $sql = "SELECT SUM(bill_total) AS total_bill FROM `bill_details` WHERE `inv_month` = '" . $inv_month_year . "'";
+    $result = $con->query($sql);
+    $row = $result->fetch_array();
+    $total_bill = $row['total_bill'] ?? 0; // Use null coalescing operator to handle null values
+    $bill_sent_array[$i] = (int) $total_bill;
+
+    $first_day_of_month = date('Y-m-01', strtotime($inv_month_year . '-01')); // Get the first day of the month
+    $first_day_of_month1 = $first_day_of_month . ' 00:00:00'; // Append time to the first day of the month
+    $last_day_of_month = date('Y-m-t', strtotime($inv_month_year . '-01')); // Get the last day of the month
+    $last_day_of_month1 = $last_day_of_month . ' 23:59:59'; // Append time to the last day of the month
+
+    $sql2 = "SELECT SUM(paid_amount) AS total_paid FROM `bill_payment_details` WHERE `pay_date` BETWEEN '" . $first_day_of_month1 . "' AND '" . $last_day_of_month1 . "'";
+    $result2 = $con->query($sql2);
+    $row2 = $result2->fetch_array();
+    $total_paid = $row2['total_paid'] ?? 0; // Use null coalescing operator to handle null values
+    $bill_collection_array[$i] = (int) $total_paid;
+
+}
+
+//echo json_encode($bill_sent_array);
+
+
 include('common/head.php'); ?>
 
 <body class="">
@@ -177,7 +210,11 @@ include('common/head.php'); ?>
 	<?php include('common/top_bar.php'); ?>
 	<!-- [ Header ] end -->
 	
-	
+<!-- Highcharts -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+<!-- Highcharts Exporting / Menu -->
+<script src="https://code.highcharts.com/modules/exporting.js"></script>	
 
 <!-- [ Main Content ] start -->
 <div class="pcoded-main-container">
@@ -238,9 +275,10 @@ include('common/head.php'); ?>
                         <h5>Bill Sent & Collection</h5>
                          
                     </div>
-                    <div class="card-body" id="double_bar_graph">
-                        
-
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <div id="productionChart"></div>
+                        </div>
                     </div>
                 </div>
             </div> 

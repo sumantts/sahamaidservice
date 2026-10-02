@@ -243,6 +243,134 @@
 <!-- jQuery (REQUIRED FIRST) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+
+
+<script>
+$(document).ready(function () {
+
+    Highcharts.chart('productionChart', {
+
+        chart: {
+            type: 'column',
+            backgroundColor: '#ffffff'
+        },
+
+        title: {
+            text: 'Bill Sent vs Bill Collection',
+            align: 'left',
+            style: {
+                fontSize: '18px',
+                fontWeight: 'bold'
+            }
+        },
+
+        subtitle: {
+            text: 'Source: Assign Maid and Billing',
+            align: 'left',
+            style: {
+                fontSize: '12px'
+            }
+        },
+
+        credits: {
+            enabled: false
+        },
+
+        exporting: {
+            enabled: true
+        },
+
+        xAxis: {
+            categories: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            ],
+
+            lineColor: '#555555',
+
+            labels: {
+                style: {
+                    fontSize: '13px'
+                }
+            }
+        },
+
+        yAxis: {
+            min: 0,
+
+            title: {
+                text: 'Invoice Bill Amount (in thousand INR)',
+                style: {
+                    fontSize: '12px'
+                }
+            },
+
+            gridLineColor: '#e6e6e6',
+
+            labels: {
+                formatter: function () {
+                    return this.value >= 1000 ? (this.value / 1000) + 'K' : this.value + 'k';
+                }
+            }
+        },
+
+        tooltip: {
+            shared: true,
+
+            valueSuffix: ' INR',
+        },
+
+        legend: {
+            align: 'center',
+            verticalAlign: 'bottom',
+            layout: 'horizontal'
+        },
+
+        plotOptions: {
+
+            column: {
+                pointPadding: 0.05,
+                groupPadding: 0.15,
+                borderWidth: 0
+            }
+
+        },
+
+        series: [
+
+            {
+                name: 'Bill Sent',
+
+                data: <?php echo json_encode($bill_sent_array); ?>,
+
+                color: '#2fa4e7'
+            },
+
+            {
+                name: 'Bill Collection',
+
+                data: <?php echo json_encode($bill_collection_array); ?>,
+
+                color: '#5148c8'
+            }
+
+        ]
+
+    });
+
+});
+</script>
+
 </body>
 
 </html>
