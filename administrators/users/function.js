@@ -361,15 +361,31 @@ $('#qs_id, #sa_id').on('change', function(){
             if($services.length > 0){
                 $('#sa_id_child').html('');
                 $html = "";
+                var selectedAreaIds = [];
+                if (typeof $availableAreas !== 'undefined' && Array.isArray($availableAreas)) {
+                    for (var areaIndex = 0; areaIndex < $availableAreas.length; areaIndex++) {
+                        var availableArea = $availableAreas[areaIndex];
+                        if (String(availableArea.qs_id) === String($qs_id) &&
+                            String(availableArea.sa_id) === String($sa_id)) {
+                            var savedAreaIds = availableArea.sa_id_child;
+                            selectedAreaIds = Array.isArray(savedAreaIds)
+                                ? savedAreaIds.map(String)
+                                : (savedAreaIds == null ? [] : [String(savedAreaIds)]);
+                            break;
+                        }
+                    }
+                }
+
                 for($i = 0; $i < $services.length; $i++){
                     $sa_id_child = $services[$i].sa_id_child;
                     $building_name = $services[$i].building_name;
                     $rate_first_value = $services[$i].rate_first_value;
                     $rate_normal_value = $services[$i].rate_normal_value;
 
-                    //$availableAreas
-
-                    $html += "<option value='"+$sa_id_child+"'>"+$building_name+"</option>";
+                    var optionSelected = selectedAreaIds.indexOf(String($sa_id_child)) !== -1
+                        ? " selected='selected'"
+                        : "";
+                    $html += "<option value='"+$sa_id_child+"'"+optionSelected+">"+$building_name+"</option>";
                 }//end for            
                 $('#sa_id_child').html($html);
             }else{
