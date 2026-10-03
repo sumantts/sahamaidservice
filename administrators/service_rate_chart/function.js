@@ -257,7 +257,7 @@ $('#sa_id').on('change', function () {
     }
 });
 
-saveMultipleRate
+// saveMultipleRate
 
 // Save Multiple Rate
 $('#saveMultipleRate').on('click', function () {

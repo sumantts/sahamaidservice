@@ -8,7 +8,7 @@ $(document).on("blur", ".form-control", function(){
 
     $serial_number = $('#serial_number').val();
 
-    if(fieldValue != '' && fieldId != 'inv_month' && fieldId != 'terms_condi' && fieldId != 'gst_percentage' && fieldId != 'paid_amount' && fieldId != 'transaction_id' && fieldId != 'bank_id' && fieldId != 'inv_id' && fieldId != 'normal_gst'){
+    if(fieldValue != '' && fieldId != 'inv_month' && fieldId != 'terms_condi' && fieldId != 'gst_percentage' && fieldId != 'paid_amount' && fieldId != 'transaction_id' && fieldId != 'bank_id' && fieldId != 'inv_id' && fieldId != 'normal_gst' && fieldId != 'qs_id' && fieldId != 'sa_id' && fieldId != 'sa_id_child'){
         $.ajax({
             type: "POST",
             url: "users/function.php",
@@ -281,6 +281,105 @@ function configureCountrysDd(){
         }        
     });//end ajax
 }//end 
+
+// Quick Services 
+function configureQuickServicesDd(){
+    $.ajax({
+        method: "POST",
+        url: "service_rate_chart/function.php",
+        data: { fn: "configureQuickServicesDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#qs_id').html('');
+                $html = "<option value=''>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){ 
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";   
+                                    
+                }//end for                
+                $('#qs_id').html($html);
+            }else{
+                $('#qs_id').html('');
+                $html = "<option value=''>Select</option>";
+                $('#qs_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+// service area 
+function configureServiceAreaDd(){
+    $.ajax({
+        method: "POST",
+        url: "service_rate_chart/function.php",
+        data: { fn: "configureServiceAreaDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#sa_id').html('');
+                $html = "<option value=''>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){ 
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";   
+                                    
+                }//end for                
+                $('#sa_id').html($html);
+            }else{
+                $('#sa_id').html('');
+                $html = "<option value=''>Select</option>";
+                $('#sa_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+
+$('#qs_id, #sa_id').on('change', function(){
+    $qs_id = $('#qs_id').val();
+    $sa_id = $('#sa_id').val(); 
+
+    $.ajax({
+        method: "POST",
+        url: "service_rate_chart/function.php",
+        data: { fn: "getRateChartData", qs_id: $qs_id, sa_id: $sa_id }
+    })
+    .done(function( res ) {
+        //console.log(res);
+        $res1 = JSON.parse(res);
+        
+        if($res1.status == true){            
+            //Populate list
+            $services = $res1.services;            
+            
+            if($services.length > 0){
+                $('#sa_id_child').html('');
+                $html = "";
+                for($i = 0; $i < $services.length; $i++){
+                    $sa_id_child = $services[$i].sa_id_child;
+                    $building_name = $services[$i].building_name;
+                    $rate_first_value = $services[$i].rate_first_value;
+                    $rate_normal_value = $services[$i].rate_normal_value;
+
+                    //$availableAreas
+
+                    $html += "<option value='"+$sa_id_child+"'>"+$building_name+"</option>";
+                }//end for            
+                $('#sa_id_child').html($html);
+            }else{
+                $('#sa_id_child').html('');
+                $html = "<option value=''>Select</option>";
+                $('#sa_id_child').html($html);
+            }//end if
+        }
+    });//end ajax
+});
 
 $('#country_id').on('change', function(){
     configureStatesDd();    
@@ -670,6 +769,12 @@ $(document).ready(function () {
         configureLeadConfirmDD(); 
         configureBankAccountsDd();
         configurePropertyTypeDd();
+        
+        configureQuickServicesDd();
+        configureServiceAreaDd();
+
+        $availableAreas = [];
+
     },300);
 });
 
@@ -1769,3 +1874,145 @@ $(document).ready(function () {
         $(this).closest('.row').remove();
     });
 });
+
+// $availableAreas
+$('#sa_id_child').on('change', function () {
+    $qs_id = $('#qs_id').val();
+    $sa_id = $('#sa_id').val();
+    $areaisAvailable = false;
+    
+    var selectedValues = $(this).val();
+    console.log('Selected values:', selectedValues);
+
+    if ($availableAreas && $availableAreas.length > 0) {
+        for (var i = 0; i < $availableAreas.length; i++) {
+            if($availableAreas[i].qs_id === $qs_id) {
+                if($availableAreas[i].sa_id === $sa_id) {
+                    $availableAreas[i].sa_id_child = selectedValues;
+                    $areaisAvailable = true;
+                }
+            }
+        }
+    }
+    
+    if(!$areaisAvailable) {
+        $availableArea = {
+            qs_id: $qs_id,
+            sa_id: $sa_id,
+            sa_id_child: selectedValues
+        };
+        $availableAreas.push($availableArea);
+    }
+});
+
+$('#submitForm').on('click', function () {
+    event.preventDefault();
+    
+    $scheduleLapses = {
+        quick_service: $('#quick_service').is(':checked'),
+        availableAreas: $availableAreas,
+        availableSchedule: [
+            {
+                status: true,
+                day: 'monday',
+                lapses: [
+                    {
+                        from_add: '10:00',
+                        to_add: '13:00'
+                    },
+                    {
+                        from_add: '14:00',
+                        to_add: '16:00'
+                    },
+                ],
+            },
+            {
+                status: false,
+                day: 'tuesday',
+                lapses: [
+                    {
+                        from_add: '10:00',
+                        to_add: '13:00'
+                    },
+                    {
+                        from_add: '14:00',
+                        to_add: '16:00'
+                    },
+                ],
+            },
+            {
+                status: false,
+                day: 'wednesday',
+                lapses: [
+                    {
+                        from_add: '10:00',
+                        to_add: '13:00'
+                    },
+                    {
+                        from_add: '14:00',
+                        to_add: '16:00'
+                    },
+                ],
+            },
+            {
+                status: false,
+                day: 'thursday',
+                lapses: [
+                    {
+                        from_add: '10:00',
+                        to_add: '13:00'
+                    },
+                    {
+                        from_add: '14:00',
+                        to_add: '16:00'
+                    },
+                ],
+            },
+            {
+                status: false,
+                day: 'friday',
+                lapses: [
+                    {
+                        from_add: '10:00',
+                        to_add: '13:00'
+                    },
+                    {
+                        from_add: '14:00',
+                        to_add: '16:00'
+                    },
+                ],
+            },
+            {
+                status: false,
+                day: 'saturday',
+                lapses: [
+                    {
+                        from_add: '10:00',
+                        to_add: '13:00'
+                    },
+                    {
+                        from_add: '14:00',
+                        to_add: '16:00'
+                    },
+                ],
+            },
+            {
+                status: false,
+                day: 'sunday',
+                lapses: [
+                    {
+                        from_add: '10:00',
+                        to_add: '13:00'
+                    },
+                    {
+                        from_add: '14:00',
+                        to_add: '16:00'
+                    },
+                ],
+            },
+        ]
+    };
+
+    console.log('scheduleLapses:', JSON.stringify($scheduleLapses));
+
+});//end save function
