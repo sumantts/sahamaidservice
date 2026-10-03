@@ -790,6 +790,7 @@ $(document).ready(function () {
         configureServiceAreaDd();
 
         $availableAreas = [];
+        $availableSchedule = [];
 
     },300);
 });
@@ -1859,6 +1860,8 @@ function addScheduleLapse(day) {
     $('#' + day + '_lapses_list').append($row);
 
     $('#' + day + '_from_add, #' + day + '_to_add').val('');
+
+    
 }
 
 
@@ -1923,110 +1926,36 @@ $('#sa_id_child').on('change', function () {
 
 $('#submitForm').on('click', function () {
     event.preventDefault();
-    
+
+    $availableSchedule = [];
+    for (var dayIndex = 0; dayIndex < $week_days.length; dayIndex++) {
+        var day = $week_days[dayIndex];
+        var lapses = [];
+        var $fromInputs = $('#' + day + '_lapses_list input[name="' + day + '_from[]"]');
+        var $toInputs = $('#' + day + '_lapses_list input[name="' + day + '_to[]"]');
+
+        $fromInputs.each(function (lapseIndex) {
+            var from = $(this).val();
+            var to = $toInputs.eq(lapseIndex).val();
+            if (from && to) {
+                lapses.push({
+                    from_add: from,
+                    to_add: to
+                });
+            }
+        });
+
+        $availableSchedule.push({
+            status: $('#' + day + '_status').is(':checked'),
+            day: day,
+            lapses: lapses
+        });
+    }
+
     $scheduleLapses = {
         quick_service: $('#quick_service').is(':checked'),
         availableAreas: $availableAreas,
-        availableSchedule: [
-            {
-                status: true,
-                day: 'monday',
-                lapses: [
-                    {
-                        from_add: '10:00',
-                        to_add: '13:00'
-                    },
-                    {
-                        from_add: '14:00',
-                        to_add: '16:00'
-                    },
-                ],
-            },
-            {
-                status: false,
-                day: 'tuesday',
-                lapses: [
-                    {
-                        from_add: '10:00',
-                        to_add: '13:00'
-                    },
-                    {
-                        from_add: '14:00',
-                        to_add: '16:00'
-                    },
-                ],
-            },
-            {
-                status: false,
-                day: 'wednesday',
-                lapses: [
-                    {
-                        from_add: '10:00',
-                        to_add: '13:00'
-                    },
-                    {
-                        from_add: '14:00',
-                        to_add: '16:00'
-                    },
-                ],
-            },
-            {
-                status: false,
-                day: 'thursday',
-                lapses: [
-                    {
-                        from_add: '10:00',
-                        to_add: '13:00'
-                    },
-                    {
-                        from_add: '14:00',
-                        to_add: '16:00'
-                    },
-                ],
-            },
-            {
-                status: false,
-                day: 'friday',
-                lapses: [
-                    {
-                        from_add: '10:00',
-                        to_add: '13:00'
-                    },
-                    {
-                        from_add: '14:00',
-                        to_add: '16:00'
-                    },
-                ],
-            },
-            {
-                status: false,
-                day: 'saturday',
-                lapses: [
-                    {
-                        from_add: '10:00',
-                        to_add: '13:00'
-                    },
-                    {
-                        from_add: '14:00',
-                        to_add: '16:00'
-                    },
-                ],
-            },
-            {
-                status: false,
-                day: 'sunday',
-                lapses: [
-                    {
-                        from_add: '10:00',
-                        to_add: '13:00'
-                    },
-                    {
-                        from_add: '14:00',
-                        to_add: '16:00'
-                    },
-                ],
-            },
-        ]
+        availableSchedule: $availableSchedule
     };
 
     console.log('scheduleLapses:', JSON.stringify($scheduleLapses));
