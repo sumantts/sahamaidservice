@@ -955,24 +955,24 @@ if($sess_user_type > 3){
                             <div class="form-row">
                                 <div class="col-md-3 mb-2">
                                     <label for="lc_id" class="form-label text-danger">Month - Year*</label>
-                                    <input class="form-control form-control form-control-sm" type="month" id="inv_month" name="inv_month">
+                                    <input class="form-control form-control-sm" type="month" id="inv_month" name="inv_month">
                                 </div>  
                                 
                                 <div class="col-md-3 mb-2">
                                     <label for="normal_gst" class="form-label text-danger">Bill Type(Normal / GST)*</label>
-                                    <select class="form-control form-control form-control-sm" name="normal_gst" id="normal_gst">
+                                    <select class="form-control form-control-sm" name="normal_gst" id="normal_gst">
                                         <option value="1">Normal</option>
                                         <option value="2">GST</option>
                                     </select>
                                 </div> 
                                 <div class="col-md-3 mb-2">
                                     <label for="gst_percentage" class="form-label">GST Percentage</label>
-                                    <input class="form-control form-control form-control-sm" type="text" id="gst_percentage" name="gst_percentage">
+                                    <input class="form-control form-control-sm" type="text" id="gst_percentage" name="gst_percentage">
                                 </div>  
                                 
                                 <div class="col-md-3 mb-2">
                                     <label for="terms_condi" class="form-label text-danger">Terms & Conditions*</label>
-                                    <select class="form-control form-control form-control-sm" name="terms_condi" id="terms_condi">
+                                    <select class="form-control form-control-sm" name="terms_condi" id="terms_condi">
                                         <option value="1">T & C (Kolkata)</option>
                                         <option value="2">T & C (Out of State)</option>
                                         <option value="3">T & C (Part Time)</option>
@@ -981,7 +981,7 @@ if($sess_user_type > 3){
                                 
                                 <div class="col-md-3 mb-2">
                                     <label for="bank_id" class="form-label text-danger">Bank Account*</label>
-                                    <select class="form-control form-control form-control-sm" name="bank_id" id="bank_id" required>
+                                    <select class="form-control form-control-sm" name="bank_id" id="bank_id" required>
                                         <option value="">Select Bank Account</option> 
                                     </select>
                                 </div>
@@ -1005,16 +1005,16 @@ if($sess_user_type > 3){
 
                             <div class="form-row" id="invoice_ui">
                                 <div class="col-md-3 mb-2">
-                                    <input class="form-control form-control form-control-sm" type="test" id="inv_id" name="inv_id" placeholder="INV ID" readonly>
+                                    <input class="form-control form-control-sm" type="test" id="inv_id" name="inv_id" placeholder="INV ID" readonly>
                                 </div>
                                 <div class="col-md-3 mb-2">
-                                    <input class="form-control form-control form-control-sm" type="test" id="from_date" name="from_date" placeholder="From Date" readonly>
+                                    <input class="form-control form-control-sm" type="test" id="from_date" name="from_date" placeholder="From Date" readonly>
                                 </div>
                                 <div class="col-md-3 mb-2">
-                                    <input class="form-control form-control form-control-sm" type="test" id="to_date" name="to_date" placeholder="To Date" readonly>
+                                    <input class="form-control form-control-sm" type="test" id="to_date" name="to_date" placeholder="To Date" readonly>
                                 </div>
                                 <div class="col-md-3 mb-2">
-                                    <input class="form-control form-control form-control-sm" type="test" id="worker_id" name="worker_id" placeholder="Worker" readonly>
+                                    <input class="form-control form-control-sm" type="test" id="worker_id" name="worker_id" placeholder="Worker" readonly>
                                 </div> 
                             </div>
 
@@ -1023,9 +1023,13 @@ if($sess_user_type > 3){
                             <br>
                             <hr> 
                             <div class="form-row" id="paymentBoard">  
-                                <div class="col-md-3 mb-2" id="div_paid_amount1">
+                                <div class="col-md-2 mb-2" id="div_paid_amount1">
                                     <label for="paid_amount" class="text-danger">Amount*</label>
-                                    <input type="text" class="form-control form-control form-control-sm" name="paid_amount" id="paid_amount"> 
+                                    <input type="text" class="form-control form-control-sm" name="paid_amount" id="paid_amount"> 
+                                </div>   
+                                <div class="col-md-2 mb-2" id="div_paid_date">
+                                    <label for="paid_date" class="text-danger">Date*</label>
+                                    <input type="date" class="form-control form-control-sm" name="paid_date" id="paid_date"> 
                                 </div>  
                                 <div class="col-md-2 mb-2" id="div_payment_mode1">       
                                     <label for="payment_mode">Payment Mode</label>                                 
@@ -1034,11 +1038,11 @@ if($sess_user_type > 3){
                                         <label class="custom-control-label" for="payment_mode">Cash/UPI</label>
                                     </div>
                                 </div> 
-                                <div class="col-md-3 mb-2" id="div_transaction_id1">
+                                <div class="col-md-4 mb-2" id="div_transaction_id1">
                                     <label for="transaction_id">Transaction ID</label>
-                                    <input type="text" class="form-control form-control form-control-sm" name="transaction_id" id="transaction_id"> 
+                                    <input type="text" class="form-control form-control-sm" name="transaction_id" id="transaction_id"> 
                                 </div>
-                                <div class="col-md-3 mt-4" id="div_rcv_btn1">
+                                <div class="col-md-2 mt-4" id="div_rcv_btn1">
                                     <label for="rcv_btn">&nbsp;</label>
                                     <button type="button" class="btn btn-primary btn-sm" id="receivePayment">Received</button> 
                                 </div>

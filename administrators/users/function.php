@@ -1323,12 +1323,14 @@
 		$inv_month = $_POST['inv_month'];
 
 		$paid_amount = $_POST['paid_amount'];
+		$paid_date = $_POST['paid_date'];
 		$transaction_id = $_POST['transaction_id'];
 		$payment_mode = $_POST['payment_mode']; 
 
 		$payment_received_by = $_SESSION["user_id"];
+		$pay_date1 = $paid_date.' '.date('H:i:s'); // Add current time to paid date
 			 
-		$sql2 = "INSERT INTO bill_payment_details (bill_id, client_id, paid_amount, payment_mode, transaction_id, payment_received_by) VALUES ('".$bill_id."', '".$user_id."', '".$paid_amount."', '".$payment_mode."', '".$transaction_id."', '".$payment_received_by."')";
+		$sql2 = "INSERT INTO bill_payment_details (bill_id, client_id, paid_amount, pay_date, payment_mode, transaction_id, payment_received_by) VALUES ('".$bill_id."', '".$user_id."', '".$paid_amount."', '".$pay_date1."', '".$payment_mode."', '".$transaction_id."', '".$payment_received_by."')";
 		$result2 = $con->query($sql2); 
 
 		# Get Payments  

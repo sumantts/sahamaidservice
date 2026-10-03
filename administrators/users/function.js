@@ -1597,6 +1597,7 @@ $('#receivePayment').on('click', function(){
     $bill_id = $('#bill_id').val();
     $bill_total = $('#bill_total').val();
     $paid_amount = $('#paid_amount').val(); 
+    $paid_date = $('#paid_date').val();
     $transaction_id = $('#transaction_id').val();
     $payment_mode = ''; //1=Cash 2=UPI
     if($("#payment_mode").is(":checked")){
@@ -1613,12 +1614,13 @@ $('#receivePayment').on('click', function(){
                     type: "POST",
                     url: "users/function.php",
                     dataType: "json",
-                    data: { fn: "savePaymentData", user_id: $user_id, bill_id: $bill_id, inv_month: $inv_month, paid_amount: $paid_amount, transaction_id: $transaction_id, payment_mode: $payment_mode}
+                    data: { fn: "savePaymentData", user_id: $user_id, bill_id: $bill_id, inv_month: $inv_month, paid_amount: $paid_amount, transaction_id: $transaction_id, payment_mode: $payment_mode, paid_date: $paid_date  }
                 })
                 .done(function( res ) {
                     //console.log(JSON.stringify(res)) 
                     if(res.status == true){    
-                        $('#paid_amount').val(''); 
+                        $('#paid_amount').val('');    
+                        $('#paid_date').val(''); 
                         $('#transaction_id').val('');
                         $payments = res.payments;
                         $bill_total_p = res.bill_total_p; 

@@ -32,6 +32,9 @@
 	}
 	session_start();
 	
+	// Set the default timezone to Asia/Kolkata
+	date_default_timezone_set('Asia/Kolkata');
+	
 	/*echo "connected...";
 	
 	try {
