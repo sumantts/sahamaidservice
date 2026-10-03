@@ -649,7 +649,10 @@ if($sess_user_type > 3){
                                             <div class="col-md-5"><strong>Days</strong></div>  
                                             <div class="col-md-5"><strong>Lapses</strong></div> 
                                         </div>
+                                        <hr>
+                                        <div id="schedule_lapses"></div>
 
+                                        <!-- 
                                         <div class="form-row mb-2">
                                             <div class="col-md-2">
                                                 <input type="checkbox" id="monday_status" name="monday_status" value="" >
@@ -685,7 +688,7 @@ if($sess_user_type > 3){
                                                 </div>  
 
                                             </div> 
-                                        </div> <!-- End form Monday row -->
+                                        </div> 
 
                                         <hr>    
                                         <div class="form-row mb-2">
@@ -723,7 +726,7 @@ if($sess_user_type > 3){
                                                 </div>  
 
                                             </div> 
-                                        </div> <!-- End form Tuesday row -->
+                                        </div> 
 
                                         <hr>    
                                         <div class="form-row mb-2">
@@ -761,7 +764,7 @@ if($sess_user_type > 3){
                                                 </div>  
 
                                             </div> 
-                                        </div> <!-- End form Wednesday row -->
+                                        </div> 
 
                                         <hr>    
                                         <div class="form-row mb-2">
@@ -799,7 +802,7 @@ if($sess_user_type > 3){
                                                 </div>  
 
                                             </div> 
-                                        </div> <!-- End form Thursday row -->
+                                        </div> 
 
                                         <hr>    
                                         <div class="form-row mb-2">
@@ -837,7 +840,7 @@ if($sess_user_type > 3){
                                                 </div>  
 
                                             </div> 
-                                        </div> <!-- End form Friday row -->
+                                        </div> 
 
                                         <hr>    
                                         <div class="form-row mb-2">
@@ -875,7 +878,7 @@ if($sess_user_type > 3){
                                                 </div>  
 
                                             </div> 
-                                        </div> <!-- End form Saturday row -->
+                                        </div> 
 
                                         <hr>    
                                         <div class="form-row mb-2">
@@ -913,8 +916,8 @@ if($sess_user_type > 3){
                                                 </div>  
 
                                             </div> 
-                                        </div> <!-- End form Sunday row -->
-                
+                                        </div> -->
+                                        
                                     </div> 
                                 </div> 
                                 <a href="javascript: void(0);" id="partNineSwitch" class="float-right">Section 10 &#8645;</a>

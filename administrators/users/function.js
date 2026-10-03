@@ -783,7 +783,6 @@ buttons.forEach(button => {
                 $('#partSevenBoard2').addClass('d-block');  
                 $('#partSevenBoard3').removeClass('d-none');
                 $('#partSevenBoard3').addClass('d-block');
-                  
             }else{
                 // Section 4                    
                 $('#partFourSwitch').removeClass('d-block');
@@ -1646,12 +1645,127 @@ $('#receivePayment').on('click', function(){
 });
 
 
+function populateScheduleLapse(){
+    console.log('populateScheduleLapse called');
+
+    $('#schedule_lapses').html('');
+    $html_body = '';
+    if($week_days.length > 0){
+        for(var i = 0; i < $week_days.length; i++){
+            $day = $week_days[i];
+            
+            $html_body += '<div class="form-row mb-2">';
+                $html_body += '<div class="col-md-2">';
+                    $html_body += '<input type="checkbox" id="' + $day + '_status" name="' + $day + '_status" value="" >';
+                $html_body += '</div>';  
+                $html_body += '<div class="col-md-4">' + $day.charAt(0).toUpperCase() + $day.slice(1) + '</div>';  
+                $html_body += '<div class="col-md-6">';
+                    $html_body += '<div class="row">';
+                        $html_body += '<div class="col-md-4">';
+                            $html_body += '<input type="time" class="form-control form-control-sm" name="' + $day + '_from_add" id="' + $day + '_from_add" value="">';
+                        $html_body += '</div>';
+                        $html_body += '<div class="col-md-2 text-center">to</div>';
+                        $html_body += '<div class="col-md-4">';
+                            $html_body += '<input type="time" class="form-control form-control-sm" name="' + $day + '_to_add" id="' + $day + '_to_add" value="">';
+                        $html_body += '</div>';
+                        $html_body += '<div class="col-md-2 text-center">';
+                            $html_body += '<a href="javascript: void(0);" id="' + $day + '_lapses_add"><i class="fas fa-plus"></i></a>';
+                        $html_body += '</div>';
+                    $html_body += '</div>';  
+
+                    $html_body += '<div id="' + $day + '_lapses_list">';
+                        /*$html_body += '<div class="row mt-2" >';
+                            $html_body += '<div class="col-md-4">';
+                                $html_body += '<input type="time" class="form-control form-control-sm" name="' + $day + '_from[]" id="' + $day + '_from" value="12:00">';
+                            $html_body += '</div>';
+                            $html_body += '<div class="col-md-2 text-center">to</div>';
+                            $html_body += '<div class="col-md-4">';
+                                $html_body += '<input type="time" class="form-control form-control-sm" name="' + $day + '_to[]" id="' + $day + '_to" value="23:59">';
+                            $html_body += '</div>';
+                            $html_body += '<div class="col-md-2 text-center">';
+                                $html_body += '<a href="javascript: void(0);" id="' + $day + '_lapses_remove"><i class="fas fa-trash"></i></a>';
+                            $html_body += '</div>';
+                        $html_body += '</div>';*/  
+                    $html_body += '</div>';  
+                $html_body += '</div>'; 
+            $html_body += '</div>'; 
+            $html_body += '<hr>';
+        }//end for
+    }//end main if
+
+        $('#schedule_lapses').html($html_body);
+}//end if
+
+// Add Lapses
+function addScheduleLapse(day) {
+    var from = $('#' + day + '_from_add').val();
+    var to = $('#' + day + '_to_add').val();
+
+    if (!from || !to) {
+        alert('Please enter both lapse times.');
+        return;
+    }
+
+    if (to <= from) {
+        alert('The end time must be greater than the start time.');
+        return;
+    }
+
+    var $row = $('<div>', { class: 'row mt-2' });
+    var $fromInput = $('<input>', {
+        type: 'time',
+        class: 'form-control form-control-sm',
+        name: day + '_from[]',
+        value: from,
+        readonly: true
+    });
+    var $toInput = $('<input>', {
+        type: 'time',
+        class: 'form-control form-control-sm',
+        name: day + '_to[]',
+        value: to,
+        readonly: true
+    });
+    var $removeLink = $('<a>', {
+        href: 'javascript: void(0);',
+        class: 'schedule-lapse-remove'
+    }).append($('<i>', { class: 'fas fa-trash' }));
+
+    $row.append($('<div>', { class: 'col-md-4' }).append($fromInput));
+    $row.append($('<div>', { class: 'col-md-2 text-center' }).text('to'));
+    $row.append($('<div>', { class: 'col-md-4' }).append($toInput));
+    $row.append($('<div>', { class: 'col-md-2 text-center' }).append($removeLink));
+    $('#' + day + '_lapses_list').append($row);
+
+    $('#' + day + '_from_add, #' + day + '_to_add').val('');
+}
+
+
+
 // Quick Action Part
 $(document).ready(function () {
     function toggleQuickServiceDetails() {
         $('#quick_service_details').toggle($('#quick_service').is(':checked'));
+        if ($('#quick_service').is(':checked')) {
+            populateScheduleLapse();
+        }
     }
 
     $('#quick_service').on('change', toggleQuickServiceDetails);
     toggleQuickServiceDetails();
+
+    $week_days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+    $(document).on('click', '[id$="_lapses_add"]', function (event) {
+        event.preventDefault();
+        var day = this.id.replace('_lapses_add', '');
+        if ($week_days.indexOf(day) !== -1) {
+            addScheduleLapse(day);
+        }
+    });
+
+    $(document).on('click', '.schedule-lapse-remove', function (event) {
+        event.preventDefault();
+        $(this).closest('.row').remove();
+    });
 });
