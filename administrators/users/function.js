@@ -791,6 +791,7 @@ $(document).ready(function () {
 
         $availableAreas = [];
         $availableSchedule = [];
+        populateScheduleLapse();
 
     },300);
 });
@@ -1861,7 +1862,7 @@ function addScheduleLapse(day) {
 
     $('#' + day + '_from_add, #' + day + '_to_add').val('');
 
-    
+
 }
 
 
@@ -1870,9 +1871,9 @@ function addScheduleLapse(day) {
 $(document).ready(function () {
     function toggleQuickServiceDetails() {
         $('#quick_service_details').toggle($('#quick_service').is(':checked'));
-        if ($('#quick_service').is(':checked')) {
+        /*if ($('#quick_service').is(':checked')) {
             populateScheduleLapse();
-        }
+        }*/
     }
 
     $('#quick_service').on('change', toggleQuickServiceDetails);
@@ -1927,6 +1928,9 @@ $('#sa_id_child').on('change', function () {
 $('#submitForm').on('click', function () {
     event.preventDefault();
 
+    $quick_service = $('#quick_service').is(':checked');
+    $serial_number = $('#serial_number').val();
+
     $availableSchedule = [];
     for (var dayIndex = 0; dayIndex < $week_days.length; dayIndex++) {
         var day = $week_days[dayIndex];
@@ -1959,5 +1963,21 @@ $('#submitForm').on('click', function () {
     };
 
     console.log('scheduleLapses:', JSON.stringify($scheduleLapses));
+
+    // Send the data to the server     
+    $.ajax({
+        type: "POST",
+        url: "users/function.php",
+        dataType: "json",
+        data: { fn: "savescheduleLapses", user_id: $serial_number, scheduleLapses: $scheduleLapses, quick_service: $quick_service }
+    })
+    .done(function( res ) {
+        //console.log(JSON.stringify(res))
+        if(res.status == true){  
+            alert('Data updated successfully');
+        }else{
+            alert('Error: ' + res.error_message);
+        }        
+    });//end ajax
 
 });//end save function

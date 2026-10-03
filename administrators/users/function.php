@@ -1309,6 +1309,30 @@
 		echo json_encode($return_result);
 	}//Save function end
 
+	# savescheduleLapses 
+	if($fn == 'savescheduleLapses'){
+		$return_result = array();
+		$status = true;
+		$sess_user_id = $_SESSION["user_id"];
+
+		$user_id = $_POST['user_id'];
+		$scheduleLapses = $_POST['scheduleLapses'];
+		if($_POST['quick_service'] == true){
+			$quick_service = 1;
+		}else{
+			$quick_service = 0;
+		}
+
+		if($user_id > 0){ 
+			$sql1 = "UPDATE user_details SET quick_service = '" .$quick_service. "', schedule_lapses = '" .json_encode($scheduleLapses). "' WHERE user_id = '" .$user_id. "' ";
+			$result1 = $con->query($sql1);
+		}
+		
+		$return_result['status'] = $status;
+		
+		echo json_encode($return_result);
+	}//Save function end
+
 	# savePaymentData 
 	if($fn == 'savePaymentData'){
 		$return_result = array();
