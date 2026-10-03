@@ -58,6 +58,7 @@ $('#addNewBtn').on('click', function(){
     $("#partSevenBoard").hide();
     $("#partEightBoard").hide();
     $("#partNineBoard").hide();
+    $("#partTenBoard").hide();
 });
 
 $("#partTwoSwitch").click(function(){
@@ -90,6 +91,10 @@ $("#partEightSwitch").click(function(){
 
 $("#partNineSwitch").click(function(){
     $("#partNineBoard").toggle('slow');
+});
+
+$("#partTenSwitch").click(function(){
+    $("#partTenBoard").toggle('slow');
 });
 
 function populateDataTable(){
@@ -712,6 +717,9 @@ buttons.forEach(button => {
                 $('#partFourTitl').removeClass('d-none');
                 $('#partFourTitl').addClass('d-block'); 
 
+                $('#partTenSwitch').removeClass('d-none').addClass('d-block');
+                $('#partTenTitl').removeClass('d-none').addClass('d-block');
+
                 $('#sec_4_1').removeClass('d-none');
                 $('#sec_4_1').addClass('d-block');  
                 $('#sec_4_2').removeClass('d-none');
@@ -782,6 +790,9 @@ buttons.forEach(button => {
                 $('#partFourSwitch').addClass('d-none');                
                 $('#partFourTitl').removeClass('d-block');
                 $('#partFourTitl').addClass('d-none'); 
+
+                $('#partTenSwitch').removeClass('d-block').addClass('d-none');
+                $('#partTenTitl').removeClass('d-block').addClass('d-none');
 
                 $('#sec_4_1').removeClass('d-block');
                 $('#sec_4_1').addClass('d-none');                
@@ -1015,6 +1026,7 @@ function editTabledata(sl){
     $("#partSevenBoard").hide();
     $("#partEightBoard").hide();
     $("#partNineBoard").hide();
+    $("#partTenBoard").hide();
 
     $.ajax({
         method: "POST",
@@ -1629,4 +1641,15 @@ $('#receivePayment').on('click', function(){
     }else{
         alert('Please Create your bill first');
     }
+});
+
+
+// Quick Action Part
+$(document).ready(function () {
+    function toggleQuickServiceDetails() {
+        $('#quick_service_details').toggle($('#quick_service').is(':checked'));
+    }
+
+    $('#quick_service').on('change', toggleQuickServiceDetails);
+    toggleQuickServiceDetails();
 });
