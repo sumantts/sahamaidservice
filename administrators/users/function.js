@@ -1158,21 +1158,33 @@ function editTabledata(sl){
     .done(function( res ) {
         $res1 = JSON.parse(res); 
         if($res1.status == true){ 
+            $schedule_lapses = [];
+            $availableAreas = [];
+            $('#qs_id').val('').trigger('change');
+            $('#sa_id').val('').trigger('change');
+            populateScheduleLapses($availableSchedule);
+
             $schedule_lapses = $res1.schedule_lapses;
             $quick_service = $res1.quick_service;
+            $availableAreas = $schedule_lapses && Array.isArray($schedule_lapses.availableAreas)
+                ? $schedule_lapses.availableAreas
+                : [];
+            $availableSchedule = $schedule_lapses && Array.isArray($schedule_lapses.availableSchedule)
+                ? $schedule_lapses.availableSchedule
+                : [];
 
-            setTimeout(function(){ 
-                $availableAreas = $schedule_lapses.availableAreas;
-                $availableSchedule = $schedule_lapses.availableSchedule;
-                $('#qs_id').val($availableAreas[0].qs_id).trigger('change');
-                if($quick_service == '1'){
-                    $('#quick_service').prop('checked', true); 
-                    $('#quick_service_details').toggle($('#quick_service').is(':checked'));
-                }
-            },1500);
-            setTimeout(function(){ 
-                $('#sa_id').val($availableAreas[0].sa_id).trigger('change');
-            },2000);
+            $('#quick_service').prop('checked', $quick_service == '1');
+            $('#quick_service_details').toggle($('#quick_service').is(':checked'));
+
+            if ($availableAreas.length > 0) {
+                setTimeout(function(){
+                    $('#qs_id').val($availableAreas[0].qs_id).trigger('change');
+                },1500);
+                setTimeout(function(){
+                    $('#sa_id').val($availableAreas[0].sa_id).trigger('change');
+                    populateScheduleLapses($availableSchedule);
+                },2000);
+            }
             
             $('#serial_number').val($res1.user_id);
             
@@ -1847,6 +1859,11 @@ function addScheduleLapse(day) {
         return;
     }
 
+    appendScheduleLapse(day, from, to);
+    $('#' + day + '_from_add, #' + day + '_to_add').val('');
+}
+
+function appendScheduleLapse(day, from, to) {
     var $row = $('<div>', { class: 'row mt-2' });
     var $fromInput = $('<input>', {
         type: 'time',
@@ -1872,13 +1889,45 @@ function addScheduleLapse(day) {
     $row.append($('<div>', { class: 'col-md-4' }).append($toInput));
     $row.append($('<div>', { class: 'col-md-2 text-center' }).append($removeLink));
     $('#' + day + '_lapses_list').append($row);
-
-    $('#' + day + '_from_add, #' + day + '_to_add').val('');
-
-
 }
 
+function populateScheduleLapses(availableSchedule) {
+    console.log('populateScheduleLapses called with availableSchedule:', availableSchedule);
 
+    for (var dayIndex = 0; dayIndex < $week_days.length; dayIndex++) {
+        var day = $week_days[dayIndex];
+        $('#' + day + '_status').prop('checked', false);
+        $('#' + day + '_lapses_list').empty();
+    }
+
+    if (!Array.isArray(availableSchedule)) {
+        return;
+    }
+
+    for (var scheduleIndex = 0; scheduleIndex < availableSchedule.length; scheduleIndex++) {
+        var schedule = availableSchedule[scheduleIndex];
+        if (!schedule || $week_days.indexOf(schedule.day) === -1) {
+            continue;
+        }
+
+        $('#' + schedule.day + '_status').prop(
+            'checked',
+            schedule.status === true || schedule.status === 1 ||
+                schedule.status === '1' || schedule.status === 'true'
+        );
+
+        if (!Array.isArray(schedule.lapses)) {
+            continue;
+        }
+
+        for (var lapseIndex = 0; lapseIndex < schedule.lapses.length; lapseIndex++) {
+            var lapse = schedule.lapses[lapseIndex];
+            if (lapse && lapse.from_add && lapse.to_add) {
+                appendScheduleLapse(schedule.day, lapse.from_add, lapse.to_add);
+            }
+        }
+    }
+}
 
 // Quick Action Part
 $(document).ready(function () {
