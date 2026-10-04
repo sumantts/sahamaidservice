@@ -1162,7 +1162,6 @@ function editTabledata(sl){
             $availableAreas = [];
             $('#qs_id').val('').trigger('change');
             $('#sa_id').val('').trigger('change');
-            populateScheduleLapses($availableSchedule);
 
             $schedule_lapses = $res1.schedule_lapses;
             $quick_service = $res1.quick_service;
@@ -1172,6 +1171,7 @@ function editTabledata(sl){
             $availableSchedule = $schedule_lapses && Array.isArray($schedule_lapses.availableSchedule)
                 ? $schedule_lapses.availableSchedule
                 : [];
+            populateScheduleLapses($availableSchedule);
 
             $('#quick_service').prop('checked', $quick_service == '1');
             $('#quick_service_details').toggle($('#quick_service').is(':checked'));
@@ -1182,7 +1182,6 @@ function editTabledata(sl){
                 },1500);
                 setTimeout(function(){
                     $('#sa_id').val($availableAreas[0].sa_id).trigger('change');
-                    populateScheduleLapses($availableSchedule);
                 },2000);
             }
             
