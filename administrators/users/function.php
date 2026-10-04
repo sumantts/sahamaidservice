@@ -420,7 +420,12 @@
 			$return_array['updated_by'] = $row['updated_by']; 
 			$return_array['insert_date'] = $row['insert_date']; 
 			$return_array['update_date'] = $row['update_date'];	 
-			$return_array['lc_id'] = $row['lc_id'];			
+			$return_array['lc_id'] = $row['lc_id'];		 
+			$return_array['quick_service'] = $row['quick_service'];							
+			$return_array['schedule_lapses'] = '';		
+			if($row['schedule_lapses'] != ''){				
+				$return_array['schedule_lapses'] = json_decode($row['schedule_lapses']);
+			}				
 			 
 			$return_array['wh_id'] = $row['wh_id'];			 
 			$return_array['religion'] = $row['religion'];			 

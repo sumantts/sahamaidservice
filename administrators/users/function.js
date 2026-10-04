@@ -1158,8 +1158,21 @@ function editTabledata(sl){
     .done(function( res ) {
         $res1 = JSON.parse(res); 
         if($res1.status == true){ 
-            setTimeout(function(){
-            },3000);
+            $schedule_lapses = $res1.schedule_lapses;
+            $quick_service = $res1.quick_service;
+
+            setTimeout(function(){ 
+                $availableAreas = $schedule_lapses.availableAreas;
+                $availableSchedule = $schedule_lapses.availableSchedule;
+                $('#qs_id').val($availableAreas[0].qs_id).trigger('change');
+                if($quick_service == '1'){
+                    $('#quick_service').prop('checked', true); 
+                    $('#quick_service_details').toggle($('#quick_service').is(':checked'));
+                }
+            },1500);
+            setTimeout(function(){ 
+                $('#sa_id').val($availableAreas[0].sa_id).trigger('change');
+            },2000);
             
             $('#serial_number').val($res1.user_id);
             
@@ -1871,9 +1884,6 @@ function addScheduleLapse(day) {
 $(document).ready(function () {
     function toggleQuickServiceDetails() {
         $('#quick_service_details').toggle($('#quick_service').is(':checked'));
-        /*if ($('#quick_service').is(':checked')) {
-            populateScheduleLapse();
-        }*/
     }
 
     $('#quick_service').on('change', toggleQuickServiceDetails);
@@ -1927,57 +1937,64 @@ $('#sa_id_child').on('change', function () {
 
 $('#submitForm').on('click', function () {
     event.preventDefault();
+    let activeTab = document.querySelector('.tab-pane.active');
+    if (activeTab) {            
+        $current_tab = activeTab.id;
+        $serial_number = $('#serial_number').val();
+        if($current_tab == 'worker'){
 
-    $quick_service = $('#quick_service').is(':checked');
-    $serial_number = $('#serial_number').val();
+            $quick_service = $('#quick_service').is(':checked');
 
-    $availableSchedule = [];
-    for (var dayIndex = 0; dayIndex < $week_days.length; dayIndex++) {
-        var day = $week_days[dayIndex];
-        var lapses = [];
-        var $fromInputs = $('#' + day + '_lapses_list input[name="' + day + '_from[]"]');
-        var $toInputs = $('#' + day + '_lapses_list input[name="' + day + '_to[]"]');
+            $availableSchedule = [];
+            for (var dayIndex = 0; dayIndex < $week_days.length; dayIndex++) {
+                var day = $week_days[dayIndex];
+                var lapses = [];
+                var $fromInputs = $('#' + day + '_lapses_list input[name="' + day + '_from[]"]');
+                var $toInputs = $('#' + day + '_lapses_list input[name="' + day + '_to[]"]');
 
-        $fromInputs.each(function (lapseIndex) {
-            var from = $(this).val();
-            var to = $toInputs.eq(lapseIndex).val();
-            if (from && to) {
-                lapses.push({
-                    from_add: from,
-                    to_add: to
+                $fromInputs.each(function (lapseIndex) {
+                    var from = $(this).val();
+                    var to = $toInputs.eq(lapseIndex).val();
+                    if (from && to) {
+                        lapses.push({
+                            from_add: from,
+                            to_add: to
+                        });
+                    }
+                });
+
+                $availableSchedule.push({
+                    status: $('#' + day + '_status').is(':checked'),
+                    day: day,
+                    lapses: lapses
                 });
             }
-        });
 
-        $availableSchedule.push({
-            status: $('#' + day + '_status').is(':checked'),
-            day: day,
-            lapses: lapses
-        });
+            $scheduleLapses = {
+                quick_service: $('#quick_service').is(':checked'),
+                availableAreas: $availableAreas,
+                availableSchedule: $availableSchedule
+            };
+
+            console.log('scheduleLapses:', JSON.stringify($scheduleLapses));
+
+            // Send the data to the server     
+            $.ajax({
+                type: "POST",
+                url: "users/function.php",
+                dataType: "json",
+                data: { fn: "savescheduleLapses", user_id: $serial_number, scheduleLapses: $scheduleLapses, quick_service: $quick_service }
+            })
+            .done(function( res ) {
+                //console.log(JSON.stringify(res))
+                if(res.status == true){  
+                    alert('Data updated successfully');
+                }else{
+                    alert('Error: ' + res.error_message);
+                }        
+            });//end ajax
+        }else{ 
+            alert('Data updated successfully');        
+        }//end if
     }
-
-    $scheduleLapses = {
-        quick_service: $('#quick_service').is(':checked'),
-        availableAreas: $availableAreas,
-        availableSchedule: $availableSchedule
-    };
-
-    console.log('scheduleLapses:', JSON.stringify($scheduleLapses));
-
-    // Send the data to the server     
-    $.ajax({
-        type: "POST",
-        url: "users/function.php",
-        dataType: "json",
-        data: { fn: "savescheduleLapses", user_id: $serial_number, scheduleLapses: $scheduleLapses, quick_service: $quick_service }
-    })
-    .done(function( res ) {
-        //console.log(JSON.stringify(res))
-        if(res.status == true){  
-            alert('Data updated successfully');
-        }else{
-            alert('Error: ' + res.error_message);
-        }        
-    });//end ajax
-
 });//end save function
