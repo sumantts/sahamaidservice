@@ -63,37 +63,45 @@ $sess_user_type = $_SESSION["user_type"];
 							<strong>Success!</strong> Maid Assigned successfully.
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
-                        <button type="button" class="btn btn-primary mb-2 float-right" id="onMyModal">New Assign</button>
+                        <button type="button" class="btn btn-primary mb-2 float-right" id="onMyModal">New Log</button>
                         
                         <div class="table-responsive">
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Sl.No.</th>
-                                        <th>Inv. ID</th>
-                                        <th>Client</th>
-                                        <th>Receivable Amount</th>
-                                        <th>Worker</th>
-                                        <th>Worker Salary</th>
-                                        <th>From Date</th>
-                                        <th>To Date</th>
+                                        <th>Client Name</th>
+                                        <th>Client Phone</th>
+                                        <th>Area / Location</th>
+                                        <th>Building Name</th>
+                                        <th>Service Name</th>
+                                        <th>Booking Date</th>
                                         <th>From Time - To Time</th>
-                                        <th>Bill Status</th>
+                                        <th>Worker Name</th>
+                                        <th>Worker Phone</th>
+                                        <th>Bill Amount</th>
+                                        <th>Paid Amount</th>
+                                        <th>Due Amount</th>
+                                        <th>Service Status</th> 
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Sl.No.</th>
-                                        <th>Inv. ID</th>
-                                        <th>Client</th>
-                                        <th>Receivable Amount</th>
-                                        <th>Worker</th>
-                                        <th>Worker Salary</th>
-                                        <th>From Date</th>
-                                        <th>To Date</th>
+                                        <th>Client Name</th>
+                                        <th>Client Phone</th>
+                                        <th>Area / Location</th>
+                                        <th>Building Name</th>
+                                        <th>Service Name</th>
+                                        <th>Booking Date</th>
                                         <th>From Time - To Time</th>
-                                        <th>Bill Status</th>
+                                        <th>Worker Name</th>
+                                        <th>Worker Phone</th>
+                                        <th>Bill Amount</th>
+                                        <th>Paid Amount</th>
+                                        <th>Due Amount</th>
+                                        <th>Service Status</th> 
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -116,35 +124,40 @@ $sess_user_type = $_SESSION["user_type"];
                             <form class="needs-validation" novalidate id="myForm" name="myForm">
                                 <div class="form-row"> 
                                     <div class="col-md-3 mb-2">
-                                        <label for="client_id" class="text-danger">Client*</label>
+                                        <label for="rcvabl_amount" class="text-danger">Client Phone*</label>
+                                        <input type="text" class="form-control" name="rcvabl_amount" id="rcvabl_amount"> 
+                                    </div> 
+                                    <div class="col-md-3 mb-2">
+                                        <label for="rcvabl_amount" class="text-danger">Client Name*</label>
+                                        <input type="text" class="form-control" name="rcvabl_amount" id="rcvabl_amount"> 
+                                    </div> 
+
+                                    <div class="col-md-3 mb-2">
+                                        <label for="client_id" class="text-danger">Area / Location*</label>
                                         <select class="form-control" id="client_id" name="client_id">
                                             <option value="0">Select</option> 
                                         </select>
                                     </div> 
-                                    <div class="col-md-3 mb-2">
-                                        <label for="rcvabl_amount" class="text-danger">Receivable Amount*</label>
-                                        <input type="text" class="form-control" name="rcvabl_amount" id="rcvabl_amount"> 
-                                    </div> 
                                     
                                     <div class="col-md-3 mb-2">
-                                        <label for="worker_id" class="text-danger">Worker*</label>
+                                        <label for="worker_id" class="text-danger">Building Name*</label>
                                         <select class="form-control" id="worker_id" name="worker_id">
                                             <option value="0">Select</option> 
                                         </select>
-                                    </div>                                    
+                                    </div> 
+                                    
                                     <div class="col-md-3 mb-2">
-                                        <label for="exp_salary" class="text-danger">Worker Salary*</label>
-                                        <input type="text" class="form-control" name="exp_salary" id="exp_salary" readonly> 
-                                    </div>
+                                        <label for="worker_id" class="text-danger">Service Name*</label>
+                                        <select class="form-control" id="worker_id" name="worker_id">
+                                            <option value="0">Select</option> 
+                                        </select>
+                                    </div>  
+                                    
                                 </div>
-                                <div class="form-row">                                                                  
+                                <div  class="form-row">                                                                  
                                     <div class="col-md-3 mb-2">
-                                        <label for="from_date" class="text-danger">From Date*</label>
+                                        <label for="from_date" class="text-danger">Booking Date*</label>
                                         <input type="date" class="form-control" name="from_date" id="from_date"> 
-                                    </div>                                   
-                                    <div class="col-md-3 mb-2">
-                                        <label for="to_date" class="text-danger">To Date*</label>
-                                        <input type="date" class="form-control" name="to_date" id="to_date"> 
                                     </div>                                   
                                     <div class="col-md-3 mb-2">
                                         <label for="from_time" class="text-danger">From Time*</label>
@@ -153,89 +166,78 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3 mb-2">
                                         <label for="to_time" class="text-danger">To Time*</label>
                                         <input type="time" class="form-control" name="to_time" id="to_time"> 
-                                    </div> 
+                                    </div>  
                                     <div class="col-md-3 mb-2">
-                                        <label for="bill_status" class="text-danger">Bill Status*</label>
+                                        <label for="worker_id" class="text-danger">Worker*</label>
+                                        <select class="form-control" id="worker_id" name="worker_id">
+                                            <option value="0">Select</option> 
+                                        </select>
+                                    </div>  
+                                    <div class="col-md-3 mb-2">
+                                        <label for="bill_status" class="text-danger">Service Status*</label>
                                         <select class="form-control" id="bill_status" name="bill_status">
                                             <option value="0">Select</option> 
                                         </select>
-                                    </div>  
-                                    <div class="col-md-3 mb-2">
-                                        <label for="hsn_code">HSN Code</label>
-                                        <input type="text" class="form-control" name="hsn_code" id="hsn_code"> 
-                                    </div>  
-                                    <div class="col-md-3 mb-2">
-                                        <label for="wt_id">Work Type</label>
-                                        <select class="form-control" name="wt_id" id="wt_id">
-                                            <option value="0">Select</option> 
-                                        </select>
-                                    </div>
-                                    <!-- <div class="col-md-2 mb-2">
-                                        <label class="form-label">&nbsp;</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="two_days_leave" name="two_days_leave">
-                                            <label class="form-check-label" for="two_days_leave">Default 2 days leave</label>
-                                        </div>
-                                    </div> -->  
-                                    <div class="col-md-3 mb-2">
-                                        <label for="holiday_count">Holiday Count</label>
-                                        <input type="text" class="form-control" name="holiday_count" id="holiday_count"> 
                                     </div> 
+                                    
                                     <div class="col-md-3 mb-2">
-                                        <label for="cal_ty_id">Calculation Type</label>
-                                        <select class="form-control" name="cal_ty_id" id="cal_ty_id">
-                                            <option value="0">Select</option> 
+                                        <label for="bill_type">Bill Type</label>
+                                        <select class="form-control" name="bill_type" id="bill_type">
+                                            <option value="0">Select (GST/NonGST)</option> 
                                         </select>
                                     </div>
-
-                                    <!-- Others parameters -->
-                                     <div class="col-md-3 mb-2">
-                                        <label for="otcc">One Time Consultantany charge</label>
+                                    
+                                    <div class="col-md-3 mb-2">
+                                        <label for="otcc">CGST</label>
                                         <input type="text" class="form-control" name="otcc" id="otcc"> 
                                     </div> 
                                      <div class="col-md-3 mb-2">
-                                        <label for="ticket_fare">Ticket fare</label>
+                                        <label for="ticket_fare">SGST</label>
                                         <input type="text" class="form-control" name="ticket_fare" id="ticket_fare"> 
-                                    </div> 
-                                     <div class="col-md-3 mb-2">
-                                        <label for="food_cost">Food Cost</label>
-                                        <input type="text" class="form-control" name="food_cost" id="food_cost"> 
-                                    </div> 
-                                     <div class="col-md-3 mb-2">
-                                        <label for="tr_jc">Traveling and joining charge</label>
-                                        <input type="text" class="form-control" name="tr_jc" id="tr_jc"> 
-                                    </div> 
-                                    <!-- // Others parameters -->
-                                    
-                                    
+                                    </div>                                    
+                                    <div class="col-md-3 mb-2">
+                                        <label for="to_time" class="text-danger">Service Charge*</label>
+                                        <input type="text" class="form-control" name="to_time" id="to_time"> 
+                                    </div>
                                 </div>
-                                 
-                                <!-- <div class="form-row">  
-                                    <div class="col-md-3 mb-2 d-none" id="div_paid_amount">
+                                
+
+                                <!-- Start payment receive section -->
+                                <a href="javascript: void(0);" id="paymentSwitch" class="float-right d-block">Payment &#8645;</a>
+                                <br>
+                                <hr> 
+                                <div class="form-row " id="paymentBoard">  
+                                    <div class="col-md-2 mb-2" id="div_paid_amount1">
                                         <label for="paid_amount" class="text-danger">Amount*</label>
-                                        <input type="text" class="form-control" name="paid_amount" id="paid_amount"> 
+                                        <input type="text" class="form-control form-control-sm" name="paid_amount" id="paid_amount"> 
+                                    </div>   
+                                    <div class="col-md-2 mb-2" id="div_paid_date">
+                                        <label for="paid_date" class="text-danger">Date*</label>
+                                        <input type="date" class="form-control form-control-sm" name="paid_date" id="paid_date"> 
                                     </div>  
-                                    <div class="col-md-2 mb-2 d-none" id="div_payment_mode">       
+                                    <div class="col-md-2 mb-2" id="div_payment_mode1">       
                                         <label for="payment_mode">Payment Mode</label>                                 
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" id="payment_mode">
                                             <label class="custom-control-label" for="payment_mode">Cash/UPI</label>
                                         </div>
                                     </div> 
-                                    <div class="col-md-3 mb-2 d-none" id="div_transaction_id">
+                                    <div class="col-md-4 mb-2" id="div_transaction_id1">
                                         <label for="transaction_id">Transaction ID</label>
-                                        <input type="text" class="form-control" name="transaction_id" id="transaction_id"> 
+                                        <input type="text" class="form-control form-control-sm" name="transaction_id" id="transaction_id"> 
                                     </div>
-                                    <div class="col-md-3 mt-4 d-none" id="div_rcv_btn">
+                                    <div class="col-md-2 mt-4" id="div_rcv_btn1">
                                         <label for="rcv_btn">&nbsp;</label>
-                                        <button type="button" class="btn btn-primary btn-sm">Received</button> 
+                                        <button type="button" class="btn btn-primary btn-sm" id="receivePayment">Received</button> 
                                     </div>
                                 </div>
-                                <div class="form-row d-none" id="div_p_history">
+                                <div class="form-row " id="div_p_history1">
                                     <h5>Payment Receive History</h5>
-                                    <div class="col-md-12"> Amount: Rs. 1500/- Received by Cash on 02-Apr-2026 </div>
-                                    <div class="col-md-12"> Amount: Rs. 500/- Received by UPI on 03-Apr-2026 </div>
-                                </div> -->
+                                    <div class="col-md-12">Please choose Month - Year first then payment histry will be available here.</div>
+                                    <!-- <div class="col-md-12"> Amount: Rs. 1500/- Received by Cash on 02-Apr-2026 </div>
+                                    <div class="col-md-12"> Amount: Rs. 500/- Received by UPI on 03-Apr-2026 </div> -->
+                                </div>
+                                <!-- End payment section -->
                                 
                             </form>
                         </div>
@@ -265,17 +267,7 @@ $sess_user_type = $_SESSION["user_type"];
                         </div>
                         <div class="modal-body">
                             <div class="form-row" id="attendance_ui">
-                                <!-- <div class="col-md-3 mb-2">
-                                    <input class="form-control form-control-sm" type="date" id="atten_date_1" name="atten_date_1">
-                                </div>
-                                <div class="col-md-3 mb-2"> 
-                                    <select class="form-control form-control-sm" id="pre_abs_lev_1" name="pre_abs_lev_1">
-                                        <option value="">Present/Absent/Leave</option> 
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                    <input class="form-control form-control-sm" placeholder="Note" type="text" id="atten_note_1" name="atten_note_1">
-                                </div> -->
+                                
                             </div>
                         </div>
                         <div class="modal-footer">

@@ -124,7 +124,11 @@
 				$data[7] = date('d-F Y', strtotime($to_date));
 				$data[8] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));
 				$data[9] = $bill_status_name;
-				$data[10] = "<a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-pencil' aria-hidden='true' onclick='editTableData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-calendar' aria-hidden='true' onclick='viewAttendanceData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$assign_id.")'></i></a>"; 
+				$data[10] = '';
+				$data[11] = '';
+				$data[12] = '';
+				$data[13] = '';
+				$data[14] = "<a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-pencil' aria-hidden='true' onclick='editTableData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-calendar' aria-hidden='true' onclick='viewAttendanceData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$assign_id.")'></i></a>"; 
 				array_push($mainData, $data);
 				$slno++;
 			}

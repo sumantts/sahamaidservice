@@ -1,4 +1,6 @@
 <?php 
+include('common/head.php');
+
 if (empty($_SESSION["user_id"])) {
     header("Location: ?p=signin");
     //exit;
@@ -192,7 +194,7 @@ for($i = 0; $i < 12; $i++){
 //echo json_encode($bill_sent_array);
 
 
-include('common/head.php'); ?>
+ ?>
 
 <body class="">
 	<!-- [ Pre-loader ] start -->

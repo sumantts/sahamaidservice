@@ -533,6 +533,11 @@ function configureCalculationTypeeDd(){
     });//end ajax
 }//end 
 
+$("#paymentSwitch").click(function(){
+    $("#paymentBoard").toggle('slow');
+    $("#div_p_history1").toggle('slow');
+});
+
 $(document).ready(function () {
     populateDataTable(); 
     configureClientUsersDd();  
@@ -540,4 +545,42 @@ $(document).ready(function () {
     configureBillStatusDd();
     configureWorkTypeDd();
     configureCalculationTypeeDd();
+
+    $schedule_log = {
+        client_id: '',
+        client_name: '',
+        client_mobile: '',
+        area_location_id: '',
+        area_location_name: '',
+        building_id: '',
+        building_name: '',
+        service_id: '',
+        service_name: '',
+        service_rate_per_hour: '',
+        booking_date: '',
+        from_time: '',
+        to_time: '',
+        total_hours: '',
+        total_amount: '',
+        cgst_percent: '',
+        cgst_amount: '',
+        sgst_percent: '',
+        sgst_amount: '',
+        total_amount_with_tax: '',
+        amount_paid: '',
+        amount_due: '',
+        worker_id: '',
+        worker_name: '',
+        worker_mobile: '',
+        order_status: '',
+        order_status_name: '',
+        order_placed_date: '',
+        order_placed_time: '',
+        order_placed_by: '',
+        order_placed_by_name: '',
+        order_channel_name: 'Web',
+        payment_history: [],
+        order_status_history: [],
+
+    };
 });
