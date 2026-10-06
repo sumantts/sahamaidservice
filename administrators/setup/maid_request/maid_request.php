@@ -1,4 +1,9 @@
-<?php include('common/head.php'); ?>
+<?php 
+if(!isset($_SESSION["user_id"]) || $_SESSION["user_id"] == ''){
+    header("location:?p=signin");
+}
+
+include('common/head.php'); ?>
 <script type="text/javascript">   
 
 </script>

@@ -52,3 +52,4 @@
 	<!-- //Spinner Loader -->
 	 
 </head>
+<?php ob_start(); ?>

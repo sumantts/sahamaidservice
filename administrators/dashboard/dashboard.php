@@ -1,11 +1,9 @@
 <?php 
+if(!isset($_SESSION["user_id"]) || $_SESSION["user_id"] == ''){
+    header("location:?p=signin");
+}
 include('common/head.php');
 
-if (empty($_SESSION["user_id"])) {
-    header("Location: ?p=signin");
-    //exit;
-}
-//include('../assets/php/sql_conn.php');
 
 $current_date = date('Y-m-d');
 
