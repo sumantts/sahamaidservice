@@ -474,4 +474,67 @@
     	echo json_encode($return_array);
 	}//function end
 
+	// Get building name based on area/location
+	if($fn == 'configureBuildingDd'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		$area_location_id = $_POST['area_location_id'];
+		
+		$sql = "SELECT * FROM service_area WHERE parent_sa_id = '" . $area_location_id . "'";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->sa_id_child = $row['sa_id'];
+				$data_obj->name = $row['building_name']; 
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+		echo json_encode($return_array);
+	}//function end
+
+	// Get service name based on building
+	if($fn == 'configureServiceDd'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		$area_location_id = $_POST['area_location_id'];
+		$building_id = $_POST['building_id'];
+		
+		$sql = "SELECT service_rate_chart.src_id, service_rate_chart.qs_id, service_rate_chart.qs_id, service_rate_chart.sa_id, service_rate_chart.sa_id_child, service_rate_chart.rate_first, service_rate_chart.rate_normal, quick_services.service_name, quick_services.svc_included, quick_services.svc_not_included FROM service_rate_chart JOIN quick_services ON service_rate_chart.qs_id = quick_services.qs_id WHERE service_rate_chart.sa_id = '" . $area_location_id . "' AND service_rate_chart.sa_id_child = '" . $building_id . "'";
+
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->src_id = $row['src_id'];
+				$data_obj->qs_id = $row['qs_id'];
+				$data_obj->rate_first = $row['rate_first']; 
+				$data_obj->rate_normal = $row['rate_normal']; 
+				$data_obj->service_name = $row['service_name']; 
+				$data_obj->svc_included = json_decode($row['svc_included']); 
+				$data_obj->svc_not_included = json_decode($row['svc_not_included']);
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+		echo json_encode($return_array);
+	}//function end
+
 ?>

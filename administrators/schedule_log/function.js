@@ -538,6 +538,145 @@ $("#paymentSwitch").click(function(){
     $("#div_p_history1").toggle('slow');
 });
 
+
+// service area 
+function configureServiceAreaDd(){
+    $.ajax({
+        method: "POST",
+        url: "service_rate_chart/function.php",
+        data: { fn: "configureServiceAreaDd" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#area_location_id').html('');
+                $html = "<option value=''>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){ 
+                    $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";   
+                                    
+                }//end for                
+                $('#area_location_id').html($html);
+            }else{
+                $('#area_location_id').html('');
+                $html = "<option value=''>Select</option>";
+                $('#area_location_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end 
+
+$('#area_location_id').on('change', function(){    
+    
+    $('#building_id').html('');
+    $html = "<option value=''>Select</option>";
+    $('#building_id').html($html);
+
+    $area_location_id = $('#area_location_id').val();
+    if($area_location_id > 0){
+        $.ajax({
+            method: "POST",
+            url: "schedule_log/function.php",
+            data: { fn: "configureBuildingDd", area_location_id: $area_location_id }
+        })
+        .done(function( res ) {
+            $res1 = JSON.parse(res); 
+            if($res1.status == true){
+                $rows = $res1.data;
+
+                if($rows.length > 0){
+                    $('#building_id').html('');
+                    $html = "<option value=''>Select</option>";
+                    for($i = 0; $i < $rows.length; $i++){ 
+                        $html += "<option value='"+$rows[$i].sa_id_child+"'>"+$rows[$i].name+"</option>";   
+                                        
+                    }//end for                
+                    $('#building_id').html($html);
+                }else{
+                    $('#building_id').html('');
+                    $html = "<option value=''>Select</option>";
+                    $('#building_id').html($html);
+                }//end if
+            }else{
+                $('#building_id').html('');
+                $html = "<option value=''>Select</option>";
+                $('#building_id').html($html);
+            }//end if        
+        });//end ajax
+    }
+});//end 
+
+// Get available services an rates based on selected area and building
+$('#building_id').on('change', function(){
+    $area_location_id = $('#area_location_id').val();
+    $building_id = $('#building_id').val();
+
+    if($area_location_id > 0 && $building_id > 0){
+        $.ajax({
+            method: "POST",
+            url: "schedule_log/function.php",
+            data: { fn: "configureServiceDd", area_location_id: $area_location_id, building_id: $building_id }
+        })
+        .done(function( res ) {
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                $rows = $res1.data;
+
+                if($rows.length > 0){
+                    $('#service_id').html('');
+                    $html = "<option value=''>Select</option>";
+                    for($i = 0; $i < $rows.length; $i++){
+                        $html += "<option value='"+$rows[$i].qs_id+"' data-rate_first='"+$rows[$i].rate_first+"' data-rate_normal='"+$rows[$i].rate_normal+"'>"+$rows[$i].service_name+"</option>";   
+                    }//end for
+                    $('#service_id').html($html);
+                }else{
+                    $('#service_id').html('');
+                    $html = "<option value=''>Select</option>";
+                    $('#service_id').html($html);
+                }
+            }else{
+                $('#service_id').html('');
+                $html = "<option value=''>Select</option>";
+                $('#service_id').html($html);
+            }    
+        });//end ajax
+    }
+});//end
+
+// Get service rate per hour based on selected service
+$('#service_id').on('change', function(){
+    $service_id = $('#service_id').val();
+    if($service_id > 0){
+        $service_rate_per_hour = $('#service_id option:selected').data('rate_normal');
+        $('#service_rate_per_hour').val($service_rate_per_hour);
+    }
+});
+
+// After blur of to_time, calculate total hours and total amount
+$('#from_time, #to_time').on('blur', function(){
+    $from_time = $('#from_time').val();
+    $to_time = $('#to_time').val();
+    $service_rate_per_hour = $('#service_rate_per_hour').val();
+
+    if($from_time && $to_time && $service_rate_per_hour){
+        // Calculate total hours
+        $from_time_parts = $from_time.split(':');
+        $to_time_parts = $to_time.split(':');
+        $from_hours = parseInt($from_time_parts[0]);
+        $from_minutes = parseInt($from_time_parts[1]);
+        $to_hours = parseInt($to_time_parts[0]);
+        $to_minutes = parseInt($to_time_parts[1]);
+
+        $total_minutes = ($to_hours * 60 + $to_minutes) - ($from_hours * 60 + $from_minutes);
+        $total_hours = $total_minutes / 60;
+
+        $('#total_hours').val($total_hours.toFixed(2));
+    }
+});
+
+
 $(document).ready(function () {
     populateDataTable(); 
     configureClientUsersDd();  
@@ -545,6 +684,7 @@ $(document).ready(function () {
     configureBillStatusDd();
     configureWorkTypeDd();
     configureCalculationTypeeDd();
+    configureServiceAreaDd();
 
     $schedule_log = {
         client_id: '',
@@ -571,9 +711,7 @@ $(document).ready(function () {
         amount_due: '',
         worker_id: '',
         worker_name: '',
-        worker_mobile: '',
-        order_status: '',
-        order_status_name: '',
+        worker_mobile: '', 
         order_placed_date: '',
         order_placed_time: '',
         order_placed_by: '',

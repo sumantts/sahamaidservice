@@ -123,41 +123,46 @@ $sess_user_type = $_SESSION["user_type"];
                         <div class="modal-body">
                             <form class="needs-validation" novalidate id="myForm" name="myForm">
                                 <div class="form-row"> 
-                                    <div class="col-md-3 mb-2">
-                                        <label for="rcvabl_amount" class="text-danger">Client Phone*</label>
-                                        <input type="text" class="form-control" name="rcvabl_amount" id="rcvabl_amount"> 
+                                    <div class="col-md-4 mb-2">
+                                        <label for="client_mobile" class="text-danger">Client Phone*</label>
+                                        <input type="text" class="form-control" name="client_mobile" id="client_mobile"> 
                                     </div> 
-                                    <div class="col-md-3 mb-2">
-                                        <label for="rcvabl_amount" class="text-danger">Client Name*</label>
-                                        <input type="text" class="form-control" name="rcvabl_amount" id="rcvabl_amount"> 
+                                    <div class="col-md-4 mb-2">
+                                        <label for="client_name" class="text-danger">Client Name*</label>
+                                        <input type="hidden" class="form-control" name="client_id" id="client_id">
+                                        <input type="text" class="form-control" name="client_name" id="client_name"> 
                                     </div> 
+                                </div> 
 
-                                    <div class="col-md-3 mb-2">
-                                        <label for="client_id" class="text-danger">Area / Location*</label>
-                                        <select class="form-control" id="client_id" name="client_id">
+                                <div class="form-row"> 
+                                    <div class="col-md-4 mb-2">
+                                        <label for="area_location_id" class="text-danger">Area / Location*</label>
+                                        <select class="form-control" id="area_location_id" name="area_location_id">
                                             <option value="0">Select</option> 
                                         </select>
                                     </div> 
                                     
-                                    <div class="col-md-3 mb-2">
-                                        <label for="worker_id" class="text-danger">Building Name*</label>
-                                        <select class="form-control" id="worker_id" name="worker_id">
+                                    <div class="col-md-4 mb-2">
+                                        <label for="building_id" class="text-danger">Building Name*</label>
+                                        <select class="form-control" id="building_id" name="building_id">
                                             <option value="0">Select</option> 
                                         </select>
                                     </div> 
                                     
-                                    <div class="col-md-3 mb-2">
-                                        <label for="worker_id" class="text-danger">Service Name*</label>
-                                        <select class="form-control" id="worker_id" name="worker_id">
+                                    <div class="col-md-4 mb-2">
+                                        <label for="service_id" class="text-danger">Service Name*</label>
+                                        <select class="form-control" id="service_id" name="service_id">
                                             <option value="0">Select</option> 
                                         </select>
+
+                                        <input type="hidden" class="form-control" name="service_rate_per_hour" id="service_rate_per_hour">
                                     </div>  
                                     
                                 </div>
-                                <div  class="form-row">                                                                  
+                                <div  class="form-row">        
                                     <div class="col-md-3 mb-2">
-                                        <label for="from_date" class="text-danger">Booking Date*</label>
-                                        <input type="date" class="form-control" name="from_date" id="from_date"> 
+                                        <label for="booking_date" class="text-danger">Booking Date*</label>
+                                        <input type="date" class="form-control" name="booking_date" id="booking_date"> 
                                     </div>                                   
                                     <div class="col-md-3 mb-2">
                                         <label for="from_time" class="text-danger">From Time*</label>
@@ -166,39 +171,49 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3 mb-2">
                                         <label for="to_time" class="text-danger">To Time*</label>
                                         <input type="time" class="form-control" name="to_time" id="to_time"> 
-                                    </div>  
+                                    </div>                                 
                                     <div class="col-md-3 mb-2">
+                                        <label for="total_hours">Total Time(Hours)</label>
+                                        <input type="text" class="form-control" name="total_hours" id="total_hours" readonly> 
+                                    </div> 
+                                </div>
+
+                                <div class="form-row">    
+                                    <div class="col-md-4 mb-2">
                                         <label for="worker_id" class="text-danger">Worker*</label>
                                         <select class="form-control" id="worker_id" name="worker_id">
                                             <option value="0">Select</option> 
                                         </select>
-                                    </div>  
-                                    <div class="col-md-3 mb-2">
-                                        <label for="bill_status" class="text-danger">Service Status*</label>
-                                        <select class="form-control" id="bill_status" name="bill_status">
-                                            <option value="0">Select</option> 
-                                        </select>
                                     </div> 
                                     
-                                    <div class="col-md-3 mb-2">
+                                    <div class="col-md-4 mb-2">
                                         <label for="bill_type">Bill Type</label>
                                         <select class="form-control" name="bill_type" id="bill_type">
                                             <option value="0">Select (GST/NonGST)</option> 
                                         </select>
                                     </div>
                                     
-                                    <div class="col-md-3 mb-2">
-                                        <label for="otcc">CGST</label>
+                                    <div class="col-md-2 mb-2">
+                                        <label for="otcc">CGST %</label>
                                         <input type="text" class="form-control" name="otcc" id="otcc"> 
                                     </div> 
-                                     <div class="col-md-3 mb-2">
-                                        <label for="ticket_fare">SGST</label>
+                                     <div class="col-md-2 mb-2">
+                                        <label for="ticket_fare">SGST %</label>
                                         <input type="text" class="form-control" name="ticket_fare" id="ticket_fare"> 
-                                    </div>                                    
-                                    <div class="col-md-3 mb-2">
+                                    </div>      
+                                </div>
+                                
+                                <div class="form-row">                                 
+                                    <div class="col-md-4 mb-2">
                                         <label for="to_time" class="text-danger">Service Charge*</label>
                                         <input type="text" class="form-control" name="to_time" id="to_time"> 
-                                    </div>
+                                    </div> 
+                                    <div class="col-md-4 mb-2">
+                                        <label for="bill_status" class="text-danger">Service Status*</label>
+                                        <select class="form-control" id="bill_status" name="bill_status">
+                                            <option value="0">Select</option> 
+                                        </select>
+                                    </div> 
                                 </div>
                                 
 
