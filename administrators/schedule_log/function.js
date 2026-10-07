@@ -649,31 +649,41 @@ $('#building_id').on('change', function(){
 $('#service_id').on('change', function(){
     $service_id = $('#service_id').val();
     if($service_id > 0){
-        $service_rate_per_hour = $('#service_id option:selected').data('rate_normal');
+        $service_rate_per_hour = 0;
+
+        $rate_first = $('#service_id option:selected').data('rate_first');
+        $rate_normal = $('#service_id option:selected').data('rate_normal');
+
+
         $('#service_rate_per_hour').val($service_rate_per_hour);
+
+        $('#rate_first').val($rate_first);
+        $('#rate_normal').val($rate_normal);
     }
 });
 
-// After blur of to_time, calculate total hours and total amount
-$('#from_time, #to_time').on('blur', function(){
-    $from_time = $('#from_time').val();
-    $to_time = $('#to_time').val();
-    $service_rate_per_hour = $('#service_rate_per_hour').val();
+// Calculate total hours from the selected start and end date-times
+$('#booking_date_f, #from_time, #booking_date_t, #to_time').on('blur', function(){
+    const fromDate = $('#booking_date_f').val();
+    const fromTime = $('#from_time').val();
+    const toDate = $('#booking_date_t').val();
+    const toTime = $('#to_time').val();
 
-    if($from_time && $to_time && $service_rate_per_hour){
-        // Calculate total hours
-        $from_time_parts = $from_time.split(':');
-        $to_time_parts = $to_time.split(':');
-        $from_hours = parseInt($from_time_parts[0]);
-        $from_minutes = parseInt($from_time_parts[1]);
-        $to_hours = parseInt($to_time_parts[0]);
-        $to_minutes = parseInt($to_time_parts[1]);
-
-        $total_minutes = ($to_hours * 60 + $to_minutes) - ($from_hours * 60 + $from_minutes);
-        $total_hours = $total_minutes / 60;
-
-        $('#total_hours').val($total_hours.toFixed(2));
+    if(!fromDate || !fromTime || !toDate || !toTime){
+        $('#total_hours').val('');
+        return;
     }
+
+    const fromDateTime = new Date(fromDate + 'T' + fromTime);
+    const toDateTime = new Date(toDate + 'T' + toTime);
+
+    if(Number.isNaN(fromDateTime.getTime()) || Number.isNaN(toDateTime.getTime()) || toDateTime < fromDateTime){
+        $('#total_hours').val('');
+        return;
+    }
+
+    const totalHours = (toDateTime.getTime() - fromDateTime.getTime()) / (60 * 60 * 1000);
+    $('#total_hours').val(totalHours.toFixed(2));
 });
 
 
@@ -722,3 +732,6 @@ $(document).ready(function () {
 
     };
 });
+
+
+//quick_service_status

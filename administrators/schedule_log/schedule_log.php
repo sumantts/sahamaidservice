@@ -161,13 +161,17 @@ $sess_user_type = $_SESSION["user_type"];
                                 </div>
                                 <div  class="form-row">        
                                     <div class="col-md-3 mb-2">
-                                        <label for="booking_date" class="text-danger">Booking Date*</label>
-                                        <input type="date" class="form-control" name="booking_date" id="booking_date"> 
+                                        <label for="booking_date_f" class="text-danger">From Date*</label>
+                                        <input type="date" class="form-control" name="booking_date_f" id="booking_date_f"> 
                                     </div>                                   
                                     <div class="col-md-3 mb-2">
                                         <label for="from_time" class="text-danger">From Time*</label>
                                         <input type="time" class="form-control" name="from_time" id="from_time"> 
-                                    </div>                                   
+                                    </div>              
+                                    <div class="col-md-3 mb-2">
+                                        <label for="booking_date_t" class="text-danger">To Date*</label>
+                                        <input type="date" class="form-control" name="booking_date_t" id="booking_date_t"> 
+                                    </div>                                
                                     <div class="col-md-3 mb-2">
                                         <label for="to_time" class="text-danger">To Time*</label>
                                         <input type="time" class="form-control" name="to_time" id="to_time"> 
@@ -175,6 +179,14 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3 mb-2">
                                         <label for="total_hours">Total Time(Hours)</label>
                                         <input type="text" class="form-control" name="total_hours" id="total_hours" readonly> 
+                                    </div>                                
+                                    <div class="col-md-3 mb-2">
+                                        <label for="rate_first">First Time Rate</label>
+                                        <input type="text" class="form-control" name="rate_first" id="rate_first" readonly> 
+                                    </div>                                
+                                    <div class="col-md-3 mb-2">
+                                        <label for="rate_normal">Normal Rate</label>
+                                        <input type="text" class="form-control" name="rate_normal" id="rate_normal" readonly> 
                                     </div> 
                                 </div>
 

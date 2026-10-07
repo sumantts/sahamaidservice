@@ -510,7 +510,7 @@
 		$area_location_id = $_POST['area_location_id'];
 		$building_id = $_POST['building_id'];
 		
-		$sql = "SELECT service_rate_chart.src_id, service_rate_chart.qs_id, service_rate_chart.qs_id, service_rate_chart.sa_id, service_rate_chart.sa_id_child, service_rate_chart.rate_first, service_rate_chart.rate_normal, quick_services.service_name, quick_services.svc_included, quick_services.svc_not_included FROM service_rate_chart JOIN quick_services ON service_rate_chart.qs_id = quick_services.qs_id WHERE service_rate_chart.sa_id = '" . $area_location_id . "' AND service_rate_chart.sa_id_child = '" . $building_id . "'";
+		$sql = "SELECT service_rate_chart.src_id, service_rate_chart.qs_id, service_rate_chart.qs_id, service_rate_chart.sa_id, service_rate_chart.sa_id_child, service_rate_chart.rate_first, service_rate_chart.rate_normal, quick_services.service_name, quick_services.svc_included, quick_services.svc_not_included FROM service_rate_chart JOIN quick_services ON service_rate_chart.qs_id = quick_services.qs_id WHERE service_rate_chart.sa_id = '" . $area_location_id . "' AND service_rate_chart.sa_id_child = '" . $building_id . "' AND quick_services.svc_status = '1' ";
 
 		$result = $con->query($sql);
 
@@ -537,4 +537,7 @@
 		echo json_encode($return_array);
 	}//function end
 
+	# Exporting rows from "quick_service_status" table
+
+	
 ?>
