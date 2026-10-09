@@ -102,14 +102,7 @@
 			$where_condition = " AND assign_maid.assign_by = '" .$sess_user_id. "' ";
 		}
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.holiday_count, 
-		user_details.full_name,
-		bill_status_master.bill_status_name
-		FROM assign_maid 
-		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
-		LEFT OUTER JOIN bill_status_master ON assign_maid.bill_status = bill_status_master.bs_id 
-		$where_condition
-		ORDER BY assign_maid.assign_id DESC";
+		$sql = "SELECT * FROM schedule_log ORDER BY log_id DESC";
 
 		$result = $con->query($sql);
 
@@ -117,51 +110,65 @@
 			$status = true;
 			$slno = 1;
 			while($row = $result->fetch_array()){
-				$assign_id = $row['assign_id'];					
-		 
-				$full_name = $row['full_name'];
-				$client_id = $row['client_id'];
-				$rcvabl_amount = $row['rcvabl_amount']; 
-				$worker_id = $row['worker_id'];
-				$exp_salary = $row['exp_salary'];
-
-				$from_date = $row['from_date'];
-				$to_date = $row['to_date'];
-				$from_time = $row['from_time']; 
-				$to_time = $row['to_time'];	
-				$bill_status_name = $row['bill_status_name']; 
-				$hsn_code = $row['hsn_code']; 
-				$wt_id = $row['wt_id'];
-				$holiday_count = $row['holiday_count'];
-
-				// Worker Name
-				$worker_name = '';
-				if($worker_id != ''){
-					$sql3 = "SELECT * FROM user_details WHERE user_id = '" .$worker_id. "' ";
-					$result3 = $con->query($sql3);
-
-					if ($result3->num_rows > 0) { 
-						$row3 = $result3->fetch_array();
-						$worker_name = $row3['full_name'];	
-					}
-				}//end if
+				
+			$log_id = $row['log_id'];
+			$client_id = $row['client_id'];
+			$client_name = $row['client_name'];
+			$client_mobile = $row['client_mobile'];
+			$area_location_id = $row['area_location_id'];
+			$area_location_name = $row['area_location_name'];
+			$building_id = $row['building_id'];
+			$building_name = $row['building_name'];
+			$service_id = $row['service_id'];
+			$service_name = $row['service_name'];
+			$service_rate_per_hour = $row['service_rate_per_hour'];
+			$booking_date_f = $row['booking_date_f'];
+			$booking_date_t = $row['booking_date_t'];
+			$from_time = $row['from_time'];
+			$to_time = $row['to_time'];
+			$total_hours = $row['total_hours'];
+			$total_amount = $row['total_amount'];
+			$bill_type = $row['bill_type'];
+			//$bill_type_name = $row['bill_type_name'];
+			$cgst_percent = $row['cgst_percent'];
+			$cgst_amount = $row['cgst_amount'];
+			$sgst_percent = $row['sgst_percent'];
+			$sgst_amount = $row['sgst_amount'];
+			$total_amount_with_tax = $row['total_amount_with_tax'];
+			$amount_paid = $row['amount_paid'];
+			$amount_due = $row['amount_due'];
+			$worker_id = $row['worker_id'];
+			$worker_name = $row['worker_name'];
+			$worker_mobile = $row['worker_mobile'];
+			$bill_status = $row['bill_status'];
+			$order_placed_date = $row['order_placed_date'];
+			$order_placed_time = $row['order_placed_time'];
+			$order_placed_by = $row['order_placed_by'];
+			$order_placed_by_name = $row['order_placed_by_name'];
+			$order_channel_name = $row['order_channel_name'];
+			if($row['payment_history'] != ''){
+				$payment_history = json_decode($row['payment_history']);  
+			}
+			if($row['order_status_history'] != ''){  
+				$order_status_history = json_decode($row['order_status_history']);
+			}
 
 
 				$data[0] = $slno;
-				$data[1] = 'INV_'.str_pad($assign_id, 4, "0", STR_PAD_LEFT);
-				$data[2] = $full_name;
-				$data[3] = $rcvabl_amount;
-				$data[4] = $worker_name;
-				$data[5] = $exp_salary;
-				$data[6] = date('d-F Y', strtotime($from_date));
-				$data[7] = date('d-F Y', strtotime($to_date));
-				$data[8] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));
-				$data[9] = $bill_status_name;
+				$data[1] = 'INV_'.str_pad($log_id, 4, "0", STR_PAD_LEFT);
+				$data[2] = $client_name;
+				$data[3] = $total_amount;
+				$data[4] = $client_mobile;
+				$data[5] = $area_location_name;
+				$data[6] = $building_name;
+				$data[7] = $service_name;
+				$data[8] = date('d-F Y', strtotime($booking_date_f)).' To '.date('d-F Y', strtotime($booking_date_t));
+				$data[9] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));;
 				$data[10] = '';
 				$data[11] = '';
 				$data[12] = '';
 				$data[13] = '';
-				$data[14] = "<a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-pencil' aria-hidden='true' onclick='editTableData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-calendar' aria-hidden='true' onclick='viewAttendanceData(".$assign_id.")'></i></a>  <a href='javascript: void(0)' data-assign_id='.$assign_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$assign_id.")'></i></a>"; 
+				//$data[14] = "<a href='javascript: void(0)' data-log_id='.$log_id.'><i class='fa fa-pencil' aria-hidden='true' onclick='editTableData(".$log_id.")'></i></a>  <a href='javascript: void(0)' data-log_id='.$log_id.'><i class='fa fa-calendar' aria-hidden='true' onclick='viewAttendanceData(".$log_id.")'></i></a>  <a href='javascript: void(0)' data-log_id='.$log_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$log_id.")'></i></a>"; 
 				array_push($mainData, $data);
 				$slno++;
 			}

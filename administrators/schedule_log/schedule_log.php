@@ -83,7 +83,7 @@ $sess_user_type = $_SESSION["user_type"];
                                         <th>Paid Amount</th>
                                         <th>Due Amount</th>
                                         <th>Service Status</th> 
-                                        <th>Action</th>
+                                        <!-- <th>Action</th> -->
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -102,7 +102,7 @@ $sess_user_type = $_SESSION["user_type"];
                                         <th>Paid Amount</th>
                                         <th>Due Amount</th>
                                         <th>Service Status</th> 
-                                        <th>Action</th>
+                                        <!-- <th>Action</th> -->
                                     </tr>
                                 </tfoot>
                             </table>
