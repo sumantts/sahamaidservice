@@ -128,6 +128,7 @@ $('#submitForm').click(function(){
                 $('#myForm')[0].reset();
                 $('#exampleModalLong').modal('hide');
                 populateDataTable();
+                alert('Log Saved Successfully.');
             }
                             
             $('#submitForm_spinner').hide();
