@@ -60,7 +60,7 @@ $sess_user_type = $_SESSION["user_type"];
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
                         <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert1">
-							<strong>Success!</strong> Maid Assigned successfully.
+							<strong>Success!</strong> Log Saved Successfully.
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
                         <button type="button" class="btn btn-primary mb-2 float-right" id="onMyModal">New Log</button>
@@ -157,9 +157,7 @@ $sess_user_type = $_SESSION["user_type"];
                                         <label for="service_id" class="text-danger">Service Name*</label>
                                         <select class="form-control" id="service_id" name="service_id">
                                             <option value="0">Select</option> 
-                                        </select>
-
-                                        <input type="hidden" class="form-control" name="service_rate_per_hour" id="service_rate_per_hour">
+                                        </select> 
                                     </div>  
                                     
                                 </div>
@@ -191,6 +189,10 @@ $sess_user_type = $_SESSION["user_type"];
                                     <div class="col-md-3 mb-2">
                                         <label for="rate_normal">Normal Rate</label>
                                         <input type="text" class="form-control" name="rate_normal" id="rate_normal" readonly> 
+                                    </div>                               
+                                    <div class="col-md-3 mb-2">
+                                        <label for="rate_normal">Effective Rate</label>
+                                        <input type="text" class="form-control" name="service_rate_per_hour" id="service_rate_per_hour" readonly> 
                                     </div> 
                                 </div>
 

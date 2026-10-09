@@ -13,37 +13,70 @@
 		$return_result = array();
 		$status = true;
 		 
-		$assign_id = $_POST['assign_id'];
+		$log_id = $_POST['log_id'];
 		$client_id = $_POST['client_id'];
-		$rcvabl_amount = $_POST['rcvabl_amount']; 
+		$client_name = $_POST['client_name'];
+		$client_mobile = $_POST['client_mobile'];
+		$area_location_id = $_POST['area_location_id'];
+		$area_location_name = $_POST['area_location_name'];
+		$building_id = $_POST['building_id'];
+		$building_name = $_POST['building_name'];
+		$service_id = $_POST['service_id'];
+		$service_name = $_POST['service_name'];
+		$service_rate_per_hour = $_POST['service_rate_per_hour'];
+		$booking_date_f = $_POST['booking_date_f'];
+		$booking_date_t = $_POST['booking_date_t'];
+		$from_time = $_POST['from_time'];
+		$to_time = $_POST['to_time'];
+		$total_hours = $_POST['total_hours'];
+		$total_amount = $_POST['total_amount'];
+		$bill_type = $_POST['bill_type'];
+		$bill_type_name = $_POST['bill_type_name'];
+		$cgst_percent = $_POST['cgst_percent'];
+		$cgst_amount = $_POST['cgst_amount'];
+		$sgst_percent = $_POST['sgst_percent'];
+		$sgst_amount = $_POST['sgst_amount'];
+		$total_amount_with_tax = $_POST['total_amount_with_tax'];
+		$amount_paid = $_POST['amount_paid'];
+		$amount_due = $_POST['amount_due'];
 		$worker_id = $_POST['worker_id'];
-		$exp_salary = $_POST['exp_salary'];
+		$worker_name = $_POST['worker_name'];
+		$worker_mobile = $_POST['worker_mobile'];
+		$order_status = $_POST['order_status'];
+		$order_placed_date = $_POST['order_placed_date'];
+		$order_placed_time = $_POST['order_placed_time'];
+		$order_placed_by = $_POST['order_placed_by'];
+		$order_placed_by_name = $_POST['order_placed_by_name'];
+		$order_channel_name = $_POST['order_channel_name'];
+		if($_POST['payment_history'] != ''){
+			$payment_history = json_encode($_POST['payment_history']);  
+		}
+		if($_POST['order_status_history'] != ''){  
+			$order_status_history = json_encode($_POST['order_status_history']);
+		}
 
-		$from_date = $_POST['from_date'];
-		$to_date = $_POST['to_date'];
-		$from_time = $_POST['from_time']; 
-		$to_time = $_POST['to_time']; 
-		$hsn_code = $_POST['hsn_code']; 
-		$wt_id = $_POST['wt_id'];
-		//$two_days_leave = $_POST['two_days_leave'];
-		$holiday_count = $_POST['holiday_count'];
-		$cal_ty_id = $_POST['cal_ty_id'];
-
-		$otcc = $_POST['otcc'];
-		$ticket_fare = $_POST['ticket_fare'];
-		$food_cost = $_POST['food_cost'];
-		$tr_jc = $_POST['tr_jc'];
+		
 
 		$sess_user_id = $_SESSION["user_id"];
+		$order_placed_by = $sess_user_id;
+		$order_placed_by_name = $_SESSION["full_name"];
+
+		if($client_id == ''){
+			$user_type = '4';
+			$sql = "INSERT INTO user_details (user_type, added_by, full_name, phone_number) VALUES('" .$user_type. "', '" .$sess_user_id. "', '" .$client_name. "', '" .$client_mobile. "')";
+			$result = $con->query($sql);
+			$insert_id = $con->insert_id; 
+			$client_id = $insert_id;
+		}
 
 		try {
-			if($assign_id > 0){
+			if($log_id > 0){
 				$status = true;
 				$sql = "UPDATE assign_maid SET holiday_count = '" .$holiday_count. "', rcvabl_amount = '" .$rcvabl_amount. "', cal_ty_id = '" .$cal_ty_id. "', otcc = '" .$otcc. "', ticket_fare = '" .$ticket_fare. "', food_cost = '" .$food_cost. "', tr_jc = '" .$tr_jc. "' WHERE assign_id = '" .$assign_id. "' ";
 				$result = $con->query($sql);
 			}else{				
 				$status = true;
-				$sql = "INSERT INTO assign_maid (client_id, rcvabl_amount, worker_id, exp_salary, from_date, to_date, from_time, to_time, assign_by, hsn_code, wt_id, holiday_count, cal_ty_id, otcc, ticket_fare, food_cost, tr_jc) VALUES ('".$client_id."', '".$rcvabl_amount."', '".$worker_id."', '".$exp_salary."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$sess_user_id."', '".$hsn_code."', '".$wt_id."', '".$holiday_count."', '".$cal_ty_id."', '".$otcc."', '".$ticket_fare."', '".$food_cost."', '".$tr_jc."') ";
+				$sql = "INSERT INTO schedule_log (client_id, client_name, client_mobile, area_location_id, area_location_name, building_id, building_name, service_id, service_name, service_rate_per_hour, booking_date_f, booking_date_t, from_time, to_time, total_hours, total_amount, bill_type, cgst_percent, cgst_amount, sgst_percent, sgst_amount, total_amount_with_tax, amount_paid, amount_due, worker_id, worker_name, worker_mobile, bill_status, order_placed_date, order_placed_time, order_placed_by, order_placed_by_name, order_channel_name) VALUES ('" .$client_id. "', '" .$client_name."', '" .$client_mobile."', '" .$area_location_id."', '" .$area_location_name."', '" .$building_id."', '" .$building_name."', '" .$service_id."', '" .$service_name."', '" .$service_rate_per_hour."', '" .$booking_date_f."', '" .$booking_date_t."', '" .$from_time."', '" .$to_time."', '" .$total_hours."', '" .$total_amount."', '" .$bill_type."', '" .$cgst_percent."', '" .$cgst_amount."', '" .$sgst_percent."', '" .$sgst_amount."', '" .$total_amount_with_tax."', '" .$amount_paid."', '" .$amount_due."', '" .$worker_id."', '" .$worker_name."', '" .$worker_mobile."', '" .$order_status."', '" .$order_placed_date."', '" .$order_placed_time."', '" .$order_placed_by."', '" .$order_placed_by_name."', '" .$order_channel_name."') ";
 				$result = $con->query($sql);
 			}
 				
@@ -542,7 +575,7 @@
 		$return_array = array();
 		$status = true;
 		$mainData = array();
-		$area_location_id = $_POST['area_location_id'];
+		// $area_location_id = $_POST['area_location_id'];
 		
 		$sql = "SELECT * FROM quick_service_status ORDER BY status_name ASC";
 		$result = $con->query($sql);

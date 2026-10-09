@@ -30,11 +30,11 @@ $('#submitForm').click(function(){
     $client_mobile = $('#client_mobile').val(); 
 
     $area_location_id = $('#area_location_id').val(); 
-    $area_location_name = $('#area_location_name option:selected').text(); 
+    $area_location_name = $('#area_location_id option:selected').text(); 
     $building_id = $('#building_id').val(); 
-    $building_name = $('#building_name option:selected').text(); 
+    $building_name = $('#building_id option:selected').text(); 
     $service_id = $('#service_id').val(); 
-    $service_name = $('#service_name option:selected').text(); 
+    $service_name = $('#service_id option:selected').text(); 
 
     $service_rate_per_hour = $('#service_rate_per_hour').val(); 
     $booking_date_f = $('#booking_date_f').val(); 
@@ -69,7 +69,7 @@ $('#submitForm').click(function(){
     $payment_history = [];//$('#payment_history').val(); 
     $order_status_history = [];//$('#order_status_history').val();
 
-    if($client_id <= 0 || $area_location_id <= 0 || $building_id <= 0 || $service_id <= 0 || $booking_date_f == '' || $booking_date_t == '' || $from_time == '' || $to_time == ''){
+    if($client_mobile == ''){
         alert('All fields are mandatory, please enter properly');
     }else{
         $('#submitForm_spinner').show();
@@ -116,8 +116,8 @@ $('#submitForm').click(function(){
                 order_placed_by: $order_placed_by,
                 order_placed_by_name: $order_placed_by_name,
                 order_channel_name: $order_channel_name,
-                payment_history: $payment_history,
-                order_status_history: $order_status_history
+                payment_history: JSON.stringify($payment_history),
+                order_status_history: JSON.stringify($order_status_history)
             }
         })
         .done(function( res ) {
