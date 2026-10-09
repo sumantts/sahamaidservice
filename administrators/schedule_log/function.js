@@ -686,6 +686,38 @@ $('#booking_date_f, #from_time, #booking_date_t, #to_time').on('blur', function(
     $('#total_hours').val(totalHours.toFixed(2));
 });
 
+// Get status list for quick service
+function configureQuickServiceStatusDd(){
+    $.ajax({
+        method: "POST",
+        url: "schedule_log/function.php",
+        data: { fn: "configureQuickServiceStatusDd" }
+    }).done(function(res){
+        //$('#quick_service_status').html(data);
+        $res1 = JSON.parse(res);
+            if($res1.status == true){
+                $rows = $res1.data;
+
+                if($rows.length > 0){
+                    $('#bill_status').html('');
+                    $html = "<option value=''>Select</option>";
+                    for($i = 0; $i < $rows.length; $i++){
+                        $html += "<option value='"+$rows[$i].id+"'>"+$rows[$i].name+"</option>";   
+                    }//end for
+                    $('#bill_status').html($html);
+                }else{
+                    $('#bill_status').html('');
+                    $html = "<option value=''>Select</option>";
+                    $('#bill_status').html($html);
+                }
+            }else{
+                $('#bill_status').html('');
+                $html = "<option value=''>Select</option>";
+                $('#bill_status').html($html);
+            }  
+    });
+}
+
 
 $(document).ready(function () {
     populateDataTable(); 
@@ -695,6 +727,7 @@ $(document).ready(function () {
     configureWorkTypeDd();
     configureCalculationTypeeDd();
     configureServiceAreaDd();
+    configureQuickServiceStatusDd();
 
     $schedule_log = {
         client_id: '',

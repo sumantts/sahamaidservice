@@ -538,6 +538,31 @@
 	}//function end
 
 	# Exporting rows from "quick_service_status" table
+	if($fn == 'configureQuickServiceStatusDd'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		$area_location_id = $_POST['area_location_id'];
+		
+		$sql = "SELECT * FROM quick_service_status ORDER BY status_name ASC";
+		$result = $con->query($sql);
 
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->id = $row['qss_id'];
+				$data_obj->name = $row['status_name']; 
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+		echo json_encode($return_array);
+	}//function end
 	
 ?>

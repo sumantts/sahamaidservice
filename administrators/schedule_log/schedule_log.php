@@ -202,6 +202,8 @@ $sess_user_type = $_SESSION["user_type"];
                                         <label for="bill_type">Bill Type</label>
                                         <select class="form-control" name="bill_type" id="bill_type">
                                             <option value="0">Select (GST/NonGST)</option> 
+                                            <option value="1">GST</option> 
+                                            <option value="2">NonGST</option> 
                                         </select>
                                     </div>
                                     

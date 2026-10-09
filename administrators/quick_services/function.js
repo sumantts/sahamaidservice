@@ -86,6 +86,7 @@ $('#submitForm').click(function(){
 })
 
 function editService($qs_id){
+    initObjects();
     $('#exampleModalLong').modal('show');
     $.ajax({
         method: "POST",
@@ -262,19 +263,26 @@ function initObjects(){
 function renderIncludedTableData(){
     const $tbody = $('#includedServicesTable tbody').empty();
 
-    $scv_inc_arr.forEach(function(service, index){
+    if($scv_inc_arr.length === 0){
         const $row = $('<tr>');
-        $('<th>', { scope: 'row' }).text(index + 1).appendTo($row);
-        $('<td>').text(service.name).appendTo($row);
-        const $removeButton = $('<button>', {
-            type: 'button',
-            class: 'btn btn-sm remove-included-service',
-            'aria-label': 'Remove included service',
-        }).attr('data-obj-id', service.obj_id);
-        $('<i>', { class: 'fas fa-trash', 'aria-hidden': 'true' }).appendTo($removeButton);
-        $('<td>').append($removeButton).appendTo($row);
+        $('<td>', { colspan: 3, class: 'text-center' }).text('No included services added.').appendTo($row);
         $tbody.append($row);
-    });
+        return;
+    }else{
+        $scv_inc_arr.forEach(function(service, index){
+            const $row = $('<tr>');
+            $('<th>', { scope: 'row' }).text(index + 1).appendTo($row);
+            $('<td>').text(service.name).appendTo($row);
+            const $removeButton = $('<button>', {
+                type: 'button',
+                class: 'btn btn-sm remove-included-service',
+                'aria-label': 'Remove included service',
+            }).attr('data-obj-id', service.obj_id);
+            $('<i>', { class: 'fas fa-trash', 'aria-hidden': 'true' }).appendTo($removeButton);
+            $('<td>').append($removeButton).appendTo($row);
+            $tbody.append($row);
+        });
+    }
 }
 
 $('#includedServicesTable').on('click', '.remove-included-service', function(){
@@ -296,19 +304,27 @@ $('#includedServicesTable').on('click', '.remove-included-service', function(){
 function renderNotIncludedTableData(){
     const $tbody = $('#notIncludedServicesTable tbody').empty();
 
-    $scv_notinc_arr.forEach(function(service, index){
+    if($scv_notinc_arr.length === 0){
         const $row = $('<tr>');
-        $('<th>', { scope: 'row' }).text(index + 1).appendTo($row);
-        $('<td>').text(service.name).appendTo($row);
-        const $removeButton = $('<button>', {
-            type: 'button',
-            class: 'btn btn-sm remove-not-included-service',
-            'aria-label': 'Remove not-included service',
-        }).attr('data-obj-id', service.obj_id);
-        $('<i>', { class: 'fas fa-trash', 'aria-hidden': 'true' }).appendTo($removeButton);
-        $('<td>').append($removeButton).appendTo($row);
+        $('<td>', { colspan: 3, class: 'text-center' }).text('No not-included services added.').appendTo($row);
         $tbody.append($row);
-    });
+        return;
+    }else{
+        $scv_notinc_arr.forEach(function(service, index){
+            const $row = $('<tr>');
+            $('<th>', { scope: 'row' }).text(index + 1).appendTo($row);
+            $('<td>').text(service.name).appendTo($row);
+            const $removeButton = $('<button>', {
+                type: 'button',
+                class: 'btn btn-sm remove-not-included-service',
+                'aria-label': 'Remove not-included service',
+            }).attr('data-obj-id', service.obj_id);
+            $('<i>', { class: 'fas fa-trash', 'aria-hidden': 'true' }).appendTo($removeButton);
+            $('<td>').append($removeButton).appendTo($row);
+            $tbody.append($row);
+        });
+    }
+
 }
 
 $('#notIncludedServicesTable').on('click', '.remove-not-included-service', function(){

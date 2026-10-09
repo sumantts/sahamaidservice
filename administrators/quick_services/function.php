@@ -130,10 +130,12 @@
 			$service_name = $row['service_name'];		
 			$svc_status = $row['svc_status'];
 
-			if($row['svc_included'] != ''){
+			if($row['svc_included'] != null){
 				$svc_included = json_decode($row['svc_included'], true);
 			}
-			if($row['svc_not_included'] != ''){
+			//echo $row['svc_not_included'];
+
+			if($row['svc_not_included'] != null){
 				$svc_not_included = json_decode($row['svc_not_included'], true);
 			}
 		} else {
