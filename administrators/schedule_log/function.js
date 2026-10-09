@@ -24,28 +24,52 @@ $('#onMyModal').on('click', function(){
 
 
 $('#submitForm').click(function(){ 
-    $assign_id = $('#assign_id').val();
-    $client_id = $('#client_id').val();
-    $rcvabl_amount = $('#rcvabl_amount').val(); 
-    $worker_id = $('#worker_id').val();
-    $exp_salary = $('#exp_salary').val();
+    $log_id = $('#log_id').val();
+    $client_id = $('#client_id').val(); 
+    $client_name = $('#client_name').val(); 
+    $client_mobile = $('#client_mobile').val(); 
 
-    $from_date = $('#from_date').val();
-    $to_date = $('#to_date').val();
+    $area_location_id = $('#area_location_id').val(); 
+    $area_location_name = $('#area_location_name option:selected').text(); 
+    $building_id = $('#building_id').val(); 
+    $building_name = $('#building_name option:selected').text(); 
+    $service_id = $('#service_id').val(); 
+    $service_name = $('#service_name option:selected').text(); 
+
+    $service_rate_per_hour = $('#service_rate_per_hour').val(); 
+    $booking_date_f = $('#booking_date_f').val(); 
+    $booking_date_t = $('#booking_date_t').val(); 
     $from_time = $('#from_time').val(); 
-    $to_time = $('#to_time').val();    
-    $hsn_code = $('#hsn_code').val(); 
-    $wt_id = $('#wt_id').val();
-    // $two_days_leave = $('#two_days_leave').is(':checked') ? '1' : '0';
-    $holiday_count = $('#holiday_count').val();
-    $cal_ty_id = $('#cal_ty_id').val();
+    $to_time = $('#to_time').val(); 
+    $total_hours = $('#total_hours').val(); 
+    
+    $total_amount = $schedule_log.total_amount; 
+    $bill_type = $('#bill_type').val(); 
+    $bill_type_name = $('#bill_type option:selected').text(); 
+    $cgst_percent = $('#cgst_percent').val(); 
+    $cgst_amount = $schedule_log.cgst_amount; 
+    $sgst_percent = $('#sgst_percent').val(); 
+    $sgst_amount = $schedule_log.sgst_amount; 
+    $total_amount_with_tax = $schedule_log.total_amount_with_tax; 
 
-    $otcc = $('#otcc').val();
-    $ticket_fare = $('#ticket_fare').val();
-    $food_cost = $('#food_cost').val();
-    $tr_jc = $('#tr_jc').val();
+    $amount_paid = 0; 
+    $amount_due = 0; 
 
-    if($client_id <= 0 || $rcvabl_amount == '' || $worker_id == '' || $exp_salary <= 0 || $from_date == '' || $to_date == '' || $from_time == '' || $to_time == ''){
+    $worker_id = $('#worker_id').val(); 
+    $worker_name = $('#worker_name option:selected').text(); 
+    $worker_mobile = $schedule_log.worker_mobile; 
+    $order_status = $('#bill_status').val(); 
+
+    $order_placed_date = $('#order_placed_date').val(); 
+    $current_time = new Date();
+    $order_placed_time = String($current_time.getHours()).padStart(2, '0') + ':' + String($current_time.getMinutes()).padStart(2, '0');
+    $order_placed_by = '';// $('#order_placed_by').val(); 
+    $order_placed_by_name = '';// $('#order_placed_by_name').val(); 
+    $order_channel_name = 'web';//$('#order_channel_name').val(); 
+    $payment_history = [];//$('#payment_history').val(); 
+    $order_status_history = [];//$('#order_status_history').val();
+
+    if($client_id <= 0 || $area_location_id <= 0 || $building_id <= 0 || $service_id <= 0 || $booking_date_f == '' || $booking_date_t == '' || $from_time == '' || $to_time == ''){
         alert('All fields are mandatory, please enter properly');
     }else{
         $('#submitForm_spinner').show();
@@ -55,7 +79,7 @@ $('#submitForm').click(function(){
         $.ajax({
             method: "POST",
             url: "schedule_log/function.php",
-            data: { fn: "saveFormData", assign_id: $assign_id, client_id: $client_id, rcvabl_amount: $rcvabl_amount, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code, wt_id: $wt_id, holiday_count: $holiday_count, cal_ty_id: $cal_ty_id, otcc: $otcc, ticket_fare: $ticket_fare, food_cost: $food_cost, tr_jc: $tr_jc }
+            data: { fn: "saveFormData", log_id: $log_id, client_id: $client_id, client_name: $client_name, client_mobile: $client_mobile, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code, wt_id: $wt_id, holiday_count: $holiday_count, cal_ty_id: $cal_ty_id, otcc: $otcc, ticket_fare: $ticket_fare, food_cost: $food_cost, tr_jc: $tr_jc }
         })
         .done(function( res ) {
             //console.log(res);
@@ -387,6 +411,7 @@ function configureBillStatusDd(){
     });//end ajax 
 }//end 
 
+/*****
 function configureWorkerUsersDd(){
     $user_type = '5';
     if(parseInt($user_type) > 0){
@@ -416,10 +441,10 @@ function configureWorkerUsersDd(){
         });//end ajax
     }//end if
 }//end 
+*****/
 
 $('#worker_id').on('change', function(){
-    $expSalary = $('#worker_id option:selected').data('exp_salary');
-    $('#exp_salary').val($expSalary);
+    $schedule_log.worker_mobile = $('#worker_id option:selected').data('phone_number'); 
 })
 
 $('#div_rcv_btn').on('click', function(){
@@ -648,14 +673,17 @@ $('#building_id').on('change', function(){
 // Get service rate per hour based on selected service
 $('#service_id').on('change', function(){
     $service_id = $('#service_id').val();
-    if($service_id > 0){
-        $service_rate_per_hour = 0;
+    $client_id = $('#client_id').val();
 
+    if($service_id > 0){
         $rate_first = $('#service_id option:selected').data('rate_first');
         $rate_normal = $('#service_id option:selected').data('rate_normal');
 
-
-        $('#service_rate_per_hour').val($service_rate_per_hour);
+        if($client_id > 0){
+            $('#service_rate_per_hour').val($rate_normal);
+        }else{
+            $('#service_rate_per_hour').val($rate_first);
+        }
 
         $('#rate_first').val($rate_first);
         $('#rate_normal').val($rate_normal);
@@ -684,6 +712,37 @@ $('#booking_date_f, #from_time, #booking_date_t, #to_time').on('blur', function(
 
     const totalHours = (toDateTime.getTime() - fromDateTime.getTime()) / (60 * 60 * 1000);
     $('#total_hours').val(totalHours.toFixed(2));
+
+    // Get available user list based on selected date and time
+    $.ajax({
+        method: "POST",
+        url: "schedule_log/function.php",
+        data: { fn: "getAvailableWorkerForQuickService", from_date: fromDate, from_time: fromTime, to_date: toDate, to_time: toTime }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res);
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#worker_id').html('');
+                $html = "<option value=''>Select</option>";
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].user_id+"' data-phone_number='"+$rows[$i].phone_number+"'>"+$rows[$i].full_name+"</option>";   
+                }//end for
+                $('#worker_id').html($html);
+            }else{
+                $('#worker_id').html('');
+                $html = "<option value=''>Select</option>";
+                $('#worker_id').html($html);
+            }
+        }else{
+            $('#worker_id').html('');
+            $html = "<option value=''>Select</option>";
+            $('#worker_id').html($html);
+        }    
+    });
+
 });
 
 // Get status list for quick service
@@ -718,11 +777,70 @@ function configureQuickServiceStatusDd(){
     });
 }
 
+// Get customer name and mobile number based on selected client
+$('#client_mobile').on('blur', function(){
+    $client_mobile = $('#client_mobile').val();
+    if($client_mobile){
+        $.ajax({
+            method: "POST",
+            url: "schedule_log/function.php",
+            data: { fn: "getClientNameByMobile", mobile_no: $client_mobile }
+        }).done(function(res){
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                $('#client_name').val($res1.data[0].full_name);
+                $('#client_id').val($res1.data[0].user_id);
+            }else{
+                $('#client_name').val('');
+                $('#client_id').val(''); 
+            }
+        });
+    }
+});
+
+// Calculate total amount based on total hours and service rate per hour
+$('#total_hours, #total_amount_with_tax, #bill_type, #cgst_percent, #sgst_percent').on('blur', function(){
+    console.log('Calculating total amount...');
+    $total_hours = parseFloat($('#total_hours').val());
+    $service_rate_per_hour = parseFloat($('#service_rate_per_hour').val()); 
+
+    $client_id = $('#client_id').val();
+    $cgst_percent = parseFloat($('#cgst_percent').val());
+    $sgst_percent = parseFloat($('#sgst_percent').val());
+    $bill_type = $('#bill_type').val();
+
+    $cgst_amount = 0;
+    $sgst_amount = 0;
+
+    if($client_id > 0){
+        $service_rate_per_hour = parseFloat($('#rate_normal').val());      
+    }else{
+        $service_rate_per_hour = parseFloat($('#rate_first').val());
+    }
+
+    if($bill_type == '1'){
+        $cgst_amount = ($total_hours * $service_rate_per_hour) * ($cgst_percent / 100);
+        $sgst_amount = ($total_hours * $service_rate_per_hour) * ($sgst_percent / 100);
+        $schedule_log.cgst_amount = $cgst_amount;
+        $schedule_log.sgst_amount = $sgst_amount;
+    }
+
+    $schedule_log.total_amount = ($total_hours * $service_rate_per_hour);
+    $total_amount = ($total_hours * $service_rate_per_hour) + $cgst_amount + $sgst_amount;
+
+    if(!isNaN($total_amount)){
+        $('#total_amount_with_tax').val($total_amount.toFixed(2));
+        $schedule_log.total_amount_with_tax = $total_amount;
+    }
+    console.log('Total amount calculated: ' + $total_amount.toFixed(2));
+});
+
+
 
 $(document).ready(function () {
     populateDataTable(); 
     configureClientUsersDd();  
-    configureWorkerUsersDd(); 
+    //configureWorkerUsersDd(); 
     configureBillStatusDd();
     configureWorkTypeDd();
     configureCalculationTypeeDd();

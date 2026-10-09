@@ -131,6 +131,10 @@ $sess_user_type = $_SESSION["user_type"];
                                         <label for="client_name" class="text-danger">Client Name*</label>
                                         <input type="hidden" class="form-control" name="client_id" id="client_id">
                                         <input type="text" class="form-control" name="client_name" id="client_name"> 
+                                    </div>  
+                                    <div class="col-md-4 mb-2">
+                                        <label for="order_placed_date" class="text-danger">Order Placed on*</label> 
+                                        <input type="date" class="form-control" name="order_placed_date" id="order_placed_date" value="<?=date('Y-m-d')?>"> 
                                     </div> 
                                 </div> 
 
@@ -208,19 +212,19 @@ $sess_user_type = $_SESSION["user_type"];
                                     </div>
                                     
                                     <div class="col-md-2 mb-2">
-                                        <label for="otcc">CGST %</label>
-                                        <input type="text" class="form-control" name="otcc" id="otcc"> 
+                                        <label for="cgst_percent">CGST %</label>
+                                        <input type="text" class="form-control" name="cgst_percent" id="cgst_percent"> 
                                     </div> 
                                      <div class="col-md-2 mb-2">
-                                        <label for="ticket_fare">SGST %</label>
-                                        <input type="text" class="form-control" name="ticket_fare" id="ticket_fare"> 
+                                        <label for="sgst_percent">SGST %</label>
+                                        <input type="text" class="form-control" name="sgst_percent" id="sgst_percent"> 
                                     </div>      
                                 </div>
                                 
                                 <div class="form-row">                                 
                                     <div class="col-md-4 mb-2">
-                                        <label for="to_time" class="text-danger">Service Charge*</label>
-                                        <input type="text" class="form-control" name="to_time" id="to_time"> 
+                                        <label for="total_amount_with_tax" class="text-danger">Service Charge*</label>
+                                        <input type="text" class="form-control" name="total_amount_with_tax" id="total_amount_with_tax" readonly> 
                                     </div> 
                                     <div class="col-md-4 mb-2">
                                         <label for="bill_status" class="text-danger">Service Status*</label>
@@ -271,7 +275,7 @@ $sess_user_type = $_SESSION["user_type"];
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <input type="hidden" name="assign_id" id="assign_id" value="0">
+                            <input type="hidden" name="log_id" id="log_id" value="0">
                             
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#exampleModalLong').modal('hide')">Close</button>
                             <!-- <button type="button" class="btn btn-primary">Save changes</button> -->

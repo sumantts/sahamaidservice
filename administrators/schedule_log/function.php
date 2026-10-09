@@ -564,5 +564,71 @@
 		$return_array['data'] = $mainData;
 		echo json_encode($return_array);
 	}//function end
+
+	// Get client name based on mobile number
+	if($fn == 'getClientNameByMobile'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		$mobile_no = $_POST['mobile_no'];
+		
+		$sql = "SELECT * FROM user_details WHERE phone_number = '" . $mobile_no . "' AND user_type = '4' ";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true; 
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->user_id = $row['user_id'];
+				$data_obj->full_name = $row['full_name']; 
+				
+				array_push($mainData, $data_obj);
+			}
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+		echo json_encode($return_array);
+	}//function end
+
+	// Get availabel worker for Quick service based on date & time
+	if($fn == 'getAvailableWorkerForQuickService'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		$from_date = $_POST['from_date'];
+		$to_date = $_POST['to_date'];
+		$from_time = $_POST['from_time'];
+		$to_time = $_POST['to_time'];
+		
+		$sql = "SELECT * FROM user_details WHERE user_type = '5' AND quick_service = '1' ";
+		$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_array()){
+				$data_obj = new stdClass();
+				$data_obj->user_id = $row['user_id'];
+				$data_obj->full_name = $row['full_name']; 
+				$data_obj->phone_number = $row['phone_number']; 
+				
+				array_push($mainData, $data_obj);
+			}
+			if(sizeof($mainData) > 0){
+				$status = true; 
+			}else{
+				$status = false;			
+			}
+			
+		}else{
+			$status = false;			
+		}
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+		echo json_encode($return_array);
+	}//function end
+
 	
 ?>
