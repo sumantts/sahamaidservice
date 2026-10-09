@@ -79,7 +79,46 @@ $('#submitForm').click(function(){
         $.ajax({
             method: "POST",
             url: "schedule_log/function.php",
-            data: { fn: "saveFormData", log_id: $log_id, client_id: $client_id, client_name: $client_name, client_mobile: $client_mobile, worker_id: $worker_id, exp_salary: $exp_salary, from_date: $from_date, to_date: $to_date, from_time: $from_time, to_time: $to_time, hsn_code: $hsn_code, wt_id: $wt_id, holiday_count: $holiday_count, cal_ty_id: $cal_ty_id, otcc: $otcc, ticket_fare: $ticket_fare, food_cost: $food_cost, tr_jc: $tr_jc }
+            data: {
+                fn: "saveFormData",
+                log_id: $log_id,
+                client_id: $client_id,
+                client_name: $client_name,
+                client_mobile: $client_mobile,
+                area_location_id: $area_location_id,
+                area_location_name: $area_location_name,
+                building_id: $building_id,
+                building_name: $building_name,
+                service_id: $service_id,
+                service_name: $service_name,
+                service_rate_per_hour: $service_rate_per_hour,
+                booking_date_f: $booking_date_f,
+                booking_date_t: $booking_date_t,
+                from_time: $from_time,
+                to_time: $to_time,
+                total_hours: $total_hours,
+                total_amount: $total_amount,
+                bill_type: $bill_type,
+                bill_type_name: $bill_type_name,
+                cgst_percent: $cgst_percent,
+                cgst_amount: $cgst_amount,
+                sgst_percent: $sgst_percent,
+                sgst_amount: $sgst_amount,
+                total_amount_with_tax: $total_amount_with_tax,
+                amount_paid: $amount_paid,
+                amount_due: $amount_due,
+                worker_id: $worker_id,
+                worker_name: $worker_name,
+                worker_mobile: $worker_mobile,
+                order_status: $order_status,
+                order_placed_date: $order_placed_date,
+                order_placed_time: $order_placed_time,
+                order_placed_by: $order_placed_by,
+                order_placed_by_name: $order_placed_by_name,
+                order_channel_name: $order_channel_name,
+                payment_history: $payment_history,
+                order_status_history: $order_status_history
+            }
         })
         .done(function( res ) {
             //console.log(res);
