@@ -59,6 +59,7 @@ $('#submitForm').click(function(){
     $worker_name = $('#worker_name option:selected').text(); 
     $worker_mobile = $schedule_log.worker_mobile; 
     $order_status = $('#bill_status').val(); 
+    $bill_status_name = $('#bill_status option:selected').text();
 
     $order_placed_date = $('#order_placed_date').val(); 
     $current_time = new Date();
@@ -111,6 +112,7 @@ $('#submitForm').click(function(){
                 worker_name: $worker_name,
                 worker_mobile: $worker_mobile,
                 order_status: $order_status,
+                bill_status_name: $bill_status_name,
                 order_placed_date: $order_placed_date,
                 order_placed_time: $order_placed_time,
                 order_placed_by: $order_placed_by,
@@ -138,7 +140,7 @@ $('#submitForm').click(function(){
     }  
 })
 
-function editTableData($assign_id){
+function editTableData($log_id){
     $('#myForm')[0].reset(); 
     //$('#submitForm').removeClass('d-block');
     //$('#submitForm').addClass('d-none');
@@ -163,17 +165,58 @@ function editTableData($assign_id){
     $.ajax({
         method: "POST",
         url: "schedule_log/function.php",
-        data: { fn: "getFormEditData", assign_id: $assign_id }
+        data: { fn: "getFormEditData", log_id: $log_id }
     })
     .done(function( res ) {
         //console.log(res);
         $res1 = JSON.parse(res);
         if($res1.status == true){  
-            $client_id = $res1.client_id;
+            $('#log_id').val($res1.log_id);
+            $('#client_mobile').val($res1.client_mobile);
+            $('#client_name').val($res1.client_name);
+            $('#client_id').val($res1.client_id);
+            $('#order_placed_date').val($res1.order_placed_date);
+
+            $area_location_id = $res1.area_location_id;
+            $building_id = $res1.building_id;
+            $service_id = $res1.service_id;
+            $bill_type = $res1.bill_type;
+            $bill_status = $res1.bill_status;
+            
+            
+            setTimeout(function(){
+                $('#bill_status').val($bill_status).trigger('change');
+            },300);           
+            setTimeout(function(){
+                $('#area_location_id').val($area_location_id).trigger('change');
+            },300);            
+            setTimeout(function(){
+                $('#building_id').val($building_id).trigger('change');
+            },500);            
+            setTimeout(function(){
+                $('#service_id').val($service_id).trigger('change');
+            },700);
+
+            $('#booking_date_f').val($res1.booking_date_f);
+            $('#from_time').val($res1.from_time);
+            $('#booking_date_t').val($res1.booking_date_t);
+            $('#to_time').val($res1.to_time);
+            $('#total_hours').val($res1.total_hours);
+            $('#service_rate_per_hour').val($res1.service_rate_per_hour);
+
+            
+            $('#bill_type').val($bill_type).trigger('change');
+            $('#cgst_percent').val($res1.cgst_percent);
+            $('#sgst_percent').val($res1.sgst_percent);
+            $('#total_amount_with_tax').val($res1.total_amount_with_tax);
+            
+
+            /*$client_id = $res1.client_id;
             $worker_id = $res1.worker_id;
             $bill_status = $res1.bill_status;
+            $bill_status_name = $res1.bill_status_name;
 
-            $('#assign_id').val($res1.assign_id); 
+            $('#log_id').val($res1.log_id); 
             $('#rcvabl_amount').val($res1.rcvabl_amount);  
             $('#exp_salary').val($res1.exp_salary);
 
@@ -183,12 +226,7 @@ function editTableData($assign_id){
             $('#to_time').val($res1.to_time); 
             $('#hsn_code').val($res1.hsn_code); 
             $('#wt_id').val($res1.wt_id); 
-            /*$two_days_leave = $res1.two_days_leave;
-            if($two_days_leave == '1'){
-                $('#two_days_leave').prop('checked', true);
-            }else{
-                $('#two_days_leave').prop('checked', false);
-            }*/
+            
             $holiday_count = $res1.holiday_count;
             $('#holiday_count').val($holiday_count);
             $cal_ty_id = $res1.cal_ty_id;
@@ -205,7 +243,7 @@ function editTableData($assign_id){
             $('#otcc').val($res1.otcc); 
             $('#ticket_fare').val($res1.ticket_fare); 
             $('#food_cost').val($res1.food_cost); 
-            $('#tr_jc').val($res1.tr_jc); 
+            $('#tr_jc').val($res1.tr_jc); */
 
             $('#exampleModalLong').modal('show');
         }
@@ -304,12 +342,12 @@ function updateAttendance(slno){
 }//end if
 
 //Delete function	
-function deleteTableData($assign_id){
+function deleteTableData($log_id){
     if (confirm('Are you sure to delete the data?')) {
         $.ajax({
             method: "POST",
             url: "schedule_log/function.php",
-            data: { fn: "deleteTableData", assign_id: $assign_id }
+            data: { fn: "deleteTableData", log_id: $log_id }
         })
         .done(function( res ) {
             //console.log(res);

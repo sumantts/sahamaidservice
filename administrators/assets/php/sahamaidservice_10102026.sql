@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2026 at 11:11 PM
+-- Generation Time: Oct 10, 2026 at 05:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1732,6 +1732,7 @@ CREATE TABLE `schedule_log` (
   `worker_name` varchar(255) NOT NULL,
   `worker_mobile` varchar(10) NOT NULL,
   `bill_status` tinyint(1) NOT NULL,
+  `bill_status_name` varchar(255) NOT NULL,
   `order_placed_date` date NOT NULL,
   `order_placed_time` time NOT NULL,
   `order_placed_by` int(11) NOT NULL,
@@ -1740,13 +1741,6 @@ CREATE TABLE `schedule_log` (
   `payment_history` text NOT NULL,
   `order_status_history` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `schedule_log`
---
-
-INSERT INTO `schedule_log` (`log_id`, `client_id`, `client_name`, `client_mobile`, `area_location_id`, `area_location_name`, `building_id`, `building_name`, `service_id`, `service_name`, `service_rate_per_hour`, `booking_date_f`, `booking_date_t`, `from_time`, `to_time`, `total_hours`, `total_amount`, `bill_type`, `cgst_percent`, `cgst_amount`, `sgst_percent`, `sgst_amount`, `total_amount_with_tax`, `amount_paid`, `amount_due`, `worker_id`, `worker_name`, `worker_mobile`, `bill_status`, `order_placed_date`, `order_placed_time`, `order_placed_by`, `order_placed_by_name`, `order_channel_name`, `payment_history`, `order_status_history`) VALUES
-(1, 1664, 'Tanu', '8420359853', 17, 'DP Block', 19, 'Godrej Waterside - Tower 2, Kolkata', 6, 'DUSTING & WIPING (25)', 100.00, '2026-10-10', '2026-10-10', '02:27', '03:27', 1, 100.00, 0, 9, 0.00, 9, 0.00, 100.00, 0.00, 0.00, 316, '', '8479830417', 1, '2026-10-10', '02:28:00', 1, 'Kundan Saha', 'web', '', '');
 
 -- --------------------------------------------------------
 
@@ -3974,7 +3968,7 @@ ALTER TABLE `quote_request`
 -- AUTO_INCREMENT for table `schedule_log`
 --
 ALTER TABLE `schedule_log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `service_area`

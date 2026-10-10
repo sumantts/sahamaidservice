@@ -246,7 +246,7 @@
 
 
 <script>
-$(document).ready(function () {
+/*$(document).ready(function () {
 
     Highcharts.chart('productionChart', {
 
@@ -368,7 +368,7 @@ $(document).ready(function () {
 
     });
 
-});
+});*/
 </script>
 <?php ob_end_flush();?>
 </body>

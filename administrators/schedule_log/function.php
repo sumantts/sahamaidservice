@@ -43,6 +43,7 @@
 		$worker_name = $_POST['worker_name'];
 		$worker_mobile = $_POST['worker_mobile'];
 		$order_status = $_POST['order_status'];
+		$bill_status_name = $_POST['bill_status_name'];
 		$order_placed_date = $_POST['order_placed_date'];
 		$order_placed_time = $_POST['order_placed_time'];
 		$order_placed_by = $_POST['order_placed_by'];
@@ -72,11 +73,11 @@
 		try {
 			if($log_id > 0){
 				$status = true;
-				$sql = "UPDATE assign_maid SET holiday_count = '" .$holiday_count. "', rcvabl_amount = '" .$rcvabl_amount. "', cal_ty_id = '" .$cal_ty_id. "', otcc = '" .$otcc. "', ticket_fare = '" .$ticket_fare. "', food_cost = '" .$food_cost. "', tr_jc = '" .$tr_jc. "' WHERE assign_id = '" .$assign_id. "' ";
+				$sql = "UPDATE schedule_log SET bill_status = '" .$order_status. "', bill_status_name = '" .$bill_status_name. "' WHERE log_id = '" .$log_id. "' ";
 				$result = $con->query($sql);
 			}else{				
 				$status = true;
-				$sql = "INSERT INTO schedule_log (client_id, client_name, client_mobile, area_location_id, area_location_name, building_id, building_name, service_id, service_name, service_rate_per_hour, booking_date_f, booking_date_t, from_time, to_time, total_hours, total_amount, bill_type, cgst_percent, cgst_amount, sgst_percent, sgst_amount, total_amount_with_tax, amount_paid, amount_due, worker_id, worker_name, worker_mobile, bill_status, order_placed_date, order_placed_time, order_placed_by, order_placed_by_name, order_channel_name) VALUES ('" .$client_id. "', '" .$client_name."', '" .$client_mobile."', '" .$area_location_id."', '" .$area_location_name."', '" .$building_id."', '" .$building_name."', '" .$service_id."', '" .$service_name."', '" .$service_rate_per_hour."', '" .$booking_date_f."', '" .$booking_date_t."', '" .$from_time."', '" .$to_time."', '" .$total_hours."', '" .$total_amount."', '" .$bill_type."', '" .$cgst_percent."', '" .$cgst_amount."', '" .$sgst_percent."', '" .$sgst_amount."', '" .$total_amount_with_tax."', '" .$amount_paid."', '" .$amount_due."', '" .$worker_id."', '" .$worker_name."', '" .$worker_mobile."', '" .$order_status."', '" .$order_placed_date."', '" .$order_placed_time."', '" .$order_placed_by."', '" .$order_placed_by_name."', '" .$order_channel_name."') ";
+				$sql = "INSERT INTO schedule_log (client_id, client_name, client_mobile, area_location_id, area_location_name, building_id, building_name, service_id, service_name, service_rate_per_hour, booking_date_f, booking_date_t, from_time, to_time, total_hours, total_amount, bill_type, cgst_percent, cgst_amount, sgst_percent, sgst_amount, total_amount_with_tax, amount_paid, amount_due, worker_id, worker_name, worker_mobile, bill_status, bill_status_name, order_placed_date, order_placed_time, order_placed_by, order_placed_by_name, order_channel_name) VALUES ('" .$client_id. "', '" .$client_name."', '" .$client_mobile."', '" .$area_location_id."', '" .$area_location_name."', '" .$building_id."', '" .$building_name."', '" .$service_id."', '" .$service_name."', '" .$service_rate_per_hour."', '" .$booking_date_f."', '" .$booking_date_t."', '" .$from_time."', '" .$to_time."', '" .$total_hours."', '" .$total_amount."', '" .$bill_type."', '" .$cgst_percent."', '" .$cgst_amount."', '" .$sgst_percent."', '" .$sgst_amount."', '" .$total_amount_with_tax."', '" .$amount_paid."', '" .$amount_due."', '" .$worker_id."', '" .$worker_name."', '" .$worker_mobile."', '" .$order_status."', '" .$bill_status_name."', '" .$order_placed_date."', '" .$order_placed_time. "', '" .$order_placed_by. "', '" .$order_placed_by_name. "', '" .$order_channel_name. "')";
 				$result = $con->query($sql);
 			}
 				
@@ -97,10 +98,10 @@
 		$sess_user_type = $_SESSION["user_type"];
 		$sess_user_id = $_SESSION["user_id"];
 
-		$where_condition = "WHERE assign_maid.assign_id > '0' ";
+		/*$where_condition = "WHERE assign_maid.assign_id > '0' ";
 		if($sess_user_type > 3){
 			$where_condition = " AND assign_maid.assign_by = '" .$sess_user_id. "' ";
-		}
+		}*/
 
 		$sql = "SELECT * FROM schedule_log ORDER BY log_id DESC";
 
@@ -141,6 +142,7 @@
 			$worker_name = $row['worker_name'];
 			$worker_mobile = $row['worker_mobile'];
 			$bill_status = $row['bill_status'];
+			$bill_status_name = $row['bill_status_name'];
 			$order_placed_date = $row['order_placed_date'];
 			$order_placed_time = $row['order_placed_time'];
 			$order_placed_by = $row['order_placed_by'];
@@ -163,12 +165,12 @@
 				$data[6] = $building_name;
 				$data[7] = $service_name;
 				$data[8] = date('d-F Y', strtotime($booking_date_f)).' To '.date('d-F Y', strtotime($booking_date_t));
-				$data[9] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));;
-				$data[10] = '';
-				$data[11] = '';
-				$data[12] = '';
-				$data[13] = '';
-				//$data[14] = "<a href='javascript: void(0)' data-log_id='.$log_id.'><i class='fa fa-pencil' aria-hidden='true' onclick='editTableData(".$log_id.")'></i></a>  <a href='javascript: void(0)' data-log_id='.$log_id.'><i class='fa fa-calendar' aria-hidden='true' onclick='viewAttendanceData(".$log_id.")'></i></a>  <a href='javascript: void(0)' data-log_id='.$log_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$log_id.")'></i></a>"; 
+				$data[9] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));
+				$data[10] = number_format($total_amount_with_tax, 2);
+				$data[11] = number_format($amount_paid, 2);
+				$data[12] = number_format($amount_due, 2);
+				$data[13] = $bill_status_name;
+				$data[14] = "<a href='javascript: void(0)' data-log_id=".$log_id."><i class='fa fa-pencil' aria-hidden='true' onclick='editTableData(".$log_id.")'></i></a> <a href='javascript: void(0)' data-log_id='.$log_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$log_id.")'></i></a>"; 
 				array_push($mainData, $data);
 				$slno++;
 			}
@@ -186,43 +188,60 @@
 		$return_array = array();
 		$status = true;
 		$mainData = array();
-		$assign_id = $_POST['assign_id'];
+		$log_id = $_POST['log_id'];
 
-		$sql = "SELECT assign_maid.assign_id, assign_maid.client_id, assign_maid.rcvabl_amount, assign_maid.worker_id, assign_maid.exp_salary, assign_maid.from_date, assign_maid.to_date, assign_maid.from_time, assign_maid.to_time, assign_maid.payment_history, assign_maid.assign_by, assign_maid.asssign_time, assign_maid.bill_status, assign_maid.hsn_code, assign_maid.wt_id, assign_maid.holiday_count, assign_maid.cal_ty_id, assign_maid.otcc, assign_maid.ticket_fare, assign_maid.food_cost, assign_maid.tr_jc,
-		user_details.full_name
-		FROM assign_maid 
-		LEFT OUTER JOIN user_details ON assign_maid.client_id = user_details.user_id 
-		WHERE assign_maid.assign_id = '" .$assign_id. "' "; 
-		//echo $sql;
+		$sql = "SELECT * FROM schedule_log WHERE log_id = $log_id";
+
 		$result = $con->query($sql);
 
 		if ($result->num_rows > 0) {
-			$status = true;	
+			$status = true;
+			$slno = 1;
 			$row = $result->fetch_array();
-			
-			$return_array['assign_id'] = $row['assign_id'];
-			$return_array['assign_id'] = $row['assign_id'];					
-		
-			$return_array['full_name'] = $row['full_name'];
+				
+			$return_array['log_id'] = $row['log_id'];
 			$return_array['client_id'] = $row['client_id'];
-			$return_array['rcvabl_amount'] = $row['rcvabl_amount']; 
+			$return_array['client_name'] = $row['client_name'];
+			$return_array['client_mobile'] = $row['client_mobile'];
+			$return_array['area_location_id'] = $row['area_location_id'];
+			$return_array['area_location_name'] = $row['area_location_name'];
+			$return_array['building_id'] = $row['building_id'];
+			$return_array['building_name'] = $row['building_name'];
+			$return_array['service_id'] = $row['service_id'];
+			$return_array['service_name'] = $row['service_name'];
+			$return_array['service_rate_per_hour'] = $row['service_rate_per_hour'];
+			$return_array['booking_date_f'] = $row['booking_date_f'];
+			$return_array['booking_date_t'] = $row['booking_date_t'];
+			$return_array['from_time'] = $row['from_time'];
+			$return_array['to_time'] = $row['to_time'];
+			$return_array['total_hours'] = $row['total_hours'];
+			$return_array['total_amount'] = $row['total_amount'];
+			$return_array['bill_type'] = $row['bill_type'];
+			//$bill_type_name = $row['bill_type_name'];
+			$return_array['cgst_percent'] = $row['cgst_percent'];
+			$return_array['cgst_amount'] = $row['cgst_amount'];
+			$return_array['sgst_percent'] = $row['sgst_percent'];
+			$return_array['sgst_amount'] = $row['sgst_amount'];
+			$return_array['total_amount_with_tax'] = $row['total_amount_with_tax'];
+			$return_array['amount_paid'] = $row['amount_paid'];
+			$return_array['amount_due'] = $row['amount_due'];
 			$return_array['worker_id'] = $row['worker_id'];
-			$return_array['exp_salary'] = $row['exp_salary'];
-
-			$return_array['from_date'] = $row['from_date'];
-			$return_array['to_date'] = $row['to_date'];
-			$return_array['from_time'] = $row['from_time']; 
-			$return_array['to_time'] = $row['to_time'];	
+			$return_array['worker_name'] = $row['worker_name'];
+			$return_array['worker_mobile'] = $row['worker_mobile'];
 			$return_array['bill_status'] = $row['bill_status'];
-			$return_array['hsn_code'] = $row['hsn_code'];
-			$return_array['wt_id'] = $row['wt_id'];
-			$return_array['holiday_count'] = $row['holiday_count'];
-			$return_array['cal_ty_id'] = $row['cal_ty_id'];
-
-			$return_array['otcc'] = $row['otcc'];
-			$return_array['ticket_fare'] = $row['ticket_fare'];
-			$return_array['food_cost'] = $row['food_cost'];
-			$return_array['tr_jc'] = $row['tr_jc'];
+			$return_array['bill_status_name'] = $row['bill_status_name'];
+			$return_array['order_placed_date'] = $row['order_placed_date'];
+			$return_array['order_placed_time'] = $row['order_placed_time'];
+			$return_array['order_placed_by'] = $row['order_placed_by'];
+			$return_array['order_placed_by_name'] = $row['order_placed_by_name'];
+			$return_array['order_channel_name'] = $row['order_channel_name'];
+			if($row['payment_history'] != ''){
+				$return_array['payment_history'] = json_decode($row['payment_history']);  
+			}
+			if($row['order_status_history'] != ''){  
+				$return_array['order_status_history'] = json_decode($row['order_status_history']);
+			}		
+			
 		} else {
 			$status = false;
 		}
@@ -235,10 +254,10 @@
 	//Delete function
 	if($fn == 'deleteTableData'){
 		$return_result = array();
-		$assign_id = $_POST["assign_id"];
+		$log_id = $_POST["log_id"];
 		$status = true;	
 
-		$sql = "DELETE FROM assign_maid WHERE assign_id = '".$assign_id."'";
+		$sql = "DELETE FROM schedule_log WHERE log_id = '".$log_id."'";
 		$result = $con->query($sql);
 		$return_result['status'] = $status; 
 		echo json_encode($return_result);
