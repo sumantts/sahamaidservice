@@ -243,8 +243,8 @@ $sess_user_type = $_SESSION["user_type"];
                                 <hr> 
                                 <div class="form-row " id="paymentBoard">  
                                     <div class="col-md-2 mb-2" id="div_paid_amount1">
-                                        <label for="paid_amount" class="text-danger">Amount*</label>
-                                        <input type="text" class="form-control form-control-sm" name="paid_amount" id="paid_amount"> 
+                                        <label for="amount_paid" class="text-danger">Amount*</label>
+                                        <input type="text" class="form-control form-control-sm" name="amount_paid" id="amount_paid"> 
                                     </div>   
                                     <div class="col-md-2 mb-2" id="div_paid_date">
                                         <label for="paid_date" class="text-danger">Date*</label>
@@ -261,18 +261,18 @@ $sess_user_type = $_SESSION["user_type"];
                                         <label for="transaction_id">Transaction ID</label>
                                         <input type="text" class="form-control form-control-sm" name="transaction_id" id="transaction_id"> 
                                     </div>
-                                    <div class="col-md-2 mt-4" id="div_rcv_btn1">
+                                    <!-- <div class="col-md-2 mt-4" id="div_rcv_btn1">
                                         <label for="rcv_btn">&nbsp;</label>
                                         <button type="button" class="btn btn-primary btn-sm" id="receivePayment">Received</button> 
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <div class="form-row " id="div_p_history1">
+                                <!-- <div class="form-row " id="div_p_history1">
                                     <h5>Payment Receive History</h5>
                                     <div class="col-md-12">Please choose Month - Year first then payment histry will be available here.</div>
-                                    <!-- <div class="col-md-12"> Amount: Rs. 1500/- Received by Cash on 02-Apr-2026 </div>
-                                    <div class="col-md-12"> Amount: Rs. 500/- Received by UPI on 03-Apr-2026 </div> -->
-                                </div>
-                                <!-- End payment section -->
+                                    <div class="col-md-12"> Amount: Rs. 1500/- Received by Cash on 02-Apr-2026 </div>
+                                    <div class="col-md-12"> Amount: Rs. 500/- Received by UPI on 03-Apr-2026 </div> 
+                                </div> -->
+                               <!-- End payment section -->
                                 
                             </form>
                         </div>

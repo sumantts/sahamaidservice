@@ -55,8 +55,9 @@
 		if($_POST['order_status_history'] != ''){  
 			$order_status_history = json_encode($_POST['order_status_history']);
 		}
-
-		
+		$paid_date = $_POST['paid_date'];
+		$payment_mode = $_POST['payment_mode'];
+		$transaction_id = $_POST['transaction_id'];		
 
 		$sess_user_id = $_SESSION["user_id"];
 		$order_placed_by = $sess_user_id;
@@ -73,11 +74,11 @@
 		try {
 			if($log_id > 0){
 				$status = true;
-				$sql = "UPDATE schedule_log SET bill_status = '" .$order_status. "', bill_status_name = '" .$bill_status_name. "' WHERE log_id = '" .$log_id. "' ";
+				$sql = "UPDATE schedule_log SET bill_status = '" .$order_status. "', bill_status_name = '" .$bill_status_name. "', paid_date = '" .$paid_date. "', payment_mode = '" .$payment_mode. "', transaction_id = '" .$transaction_id. "' WHERE log_id = '" .$log_id. "' ";
 				$result = $con->query($sql);
 			}else{				
 				$status = true;
-				$sql = "INSERT INTO schedule_log (client_id, client_name, client_mobile, area_location_id, area_location_name, building_id, building_name, service_id, service_name, service_rate_per_hour, booking_date_f, booking_date_t, from_time, to_time, total_hours, total_amount, bill_type, cgst_percent, cgst_amount, sgst_percent, sgst_amount, total_amount_with_tax, amount_paid, amount_due, worker_id, worker_name, worker_mobile, bill_status, bill_status_name, order_placed_date, order_placed_time, order_placed_by, order_placed_by_name, order_channel_name) VALUES ('" .$client_id. "', '" .$client_name."', '" .$client_mobile."', '" .$area_location_id."', '" .$area_location_name."', '" .$building_id."', '" .$building_name."', '" .$service_id."', '" .$service_name."', '" .$service_rate_per_hour."', '" .$booking_date_f."', '" .$booking_date_t."', '" .$from_time."', '" .$to_time."', '" .$total_hours."', '" .$total_amount."', '" .$bill_type."', '" .$cgst_percent."', '" .$cgst_amount."', '" .$sgst_percent."', '" .$sgst_amount."', '" .$total_amount_with_tax."', '" .$amount_paid."', '" .$amount_due."', '" .$worker_id."', '" .$worker_name."', '" .$worker_mobile."', '" .$order_status."', '" .$bill_status_name."', '" .$order_placed_date."', '" .$order_placed_time. "', '" .$order_placed_by. "', '" .$order_placed_by_name. "', '" .$order_channel_name. "')";
+				$sql = "INSERT INTO schedule_log (client_id, client_name, client_mobile, area_location_id, area_location_name, building_id, building_name, service_id, service_name, service_rate_per_hour, booking_date_f, booking_date_t, from_time, to_time, total_hours, total_amount, bill_type, cgst_percent, cgst_amount, sgst_percent, sgst_amount, total_amount_with_tax, amount_paid, amount_due, worker_id, worker_name, worker_mobile, bill_status, bill_status_name, order_placed_date, order_placed_time, order_placed_by, order_placed_by_name, order_channel_name, paid_date, payment_mode, transaction_id) VALUES ('" .$client_id. "', '" .$client_name."', '" .$client_mobile."', '" .$area_location_id."', '" .$area_location_name."', '" .$building_id."', '" .$building_name."', '" .$service_id."', '" .$service_name."', '" .$service_rate_per_hour."', '" .$booking_date_f."', '" .$booking_date_t."', '" .$from_time."', '" .$to_time."', '" .$total_hours."', '" .$total_amount."', '" .$bill_type."', '" .$cgst_percent."', '" .$cgst_amount."', '" .$sgst_percent."', '" .$sgst_amount."', '" .$total_amount_with_tax."', '" .$amount_paid."', '" .$amount_due."', '" .$worker_id."', '" .$worker_name."', '" .$worker_mobile."', '" .$order_status."', '" .$bill_status_name."', '" .$order_placed_date."', '" .$order_placed_time. "', '" .$order_placed_by. "', '" .$order_placed_by_name. "', '" .$order_channel_name. "', '" .$paid_date. "', '" .$payment_mode. "', '" .$transaction_id. "')";
 				$result = $con->query($sql);
 			}
 				
@@ -240,7 +241,10 @@
 			}
 			if($row['order_status_history'] != ''){  
 				$return_array['order_status_history'] = json_decode($row['order_status_history']);
-			}		
+			}	
+			$return_array['paid_date'] = $row['paid_date'];
+			$return_array['payment_mode'] = $row['payment_mode'];
+			$return_array['transaction_id'] = $row['transaction_id'];
 			
 		} else {
 			$status = false;

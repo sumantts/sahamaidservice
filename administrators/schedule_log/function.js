@@ -70,6 +70,16 @@ $('#submitForm').click(function(){
     $payment_history = [];//$('#payment_history').val(); 
     $order_status_history = [];//$('#order_status_history').val();
 
+    $amount_paid = $('#amount_paid').val();
+    $paid_date = $('#paid_date').val();
+    $payment_mode = '';
+    if ($('#payment_mode').is(':checked')) {
+        $payment_mode = '1';        
+    }else{
+        $payment_mode = '0';
+    }
+    $transaction_id = $('#transaction_id').val();
+
     if($client_mobile == ''){
         alert('All fields are mandatory, please enter properly');
     }else{
@@ -119,7 +129,10 @@ $('#submitForm').click(function(){
                 order_placed_by_name: $order_placed_by_name,
                 order_channel_name: $order_channel_name,
                 payment_history: JSON.stringify($payment_history),
-                order_status_history: JSON.stringify($order_status_history)
+                order_status_history: JSON.stringify($order_status_history),
+                paid_date: $paid_date,
+                payment_mode: $payment_mode,
+                transaction_id: $transaction_id,
             }
         })
         .done(function( res ) {
@@ -209,7 +222,10 @@ function editTableData($log_id){
             $('#cgst_percent').val($res1.cgst_percent);
             $('#sgst_percent').val($res1.sgst_percent);
             $('#total_amount_with_tax').val($res1.total_amount_with_tax);
-            
+            $('#amount_paid').val($res1.amount_paid);
+            $('#paid_date').val($res1.paid_date);
+            $('#payment_mode').val($res1.payment_mode);
+            $('#transaction_id').val($res1.transaction_id);
 
             /*$client_id = $res1.client_id;
             $worker_id = $res1.worker_id;
