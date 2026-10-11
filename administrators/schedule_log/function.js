@@ -74,9 +74,9 @@ $('#submitForm').click(function(){
     $paid_date = $('#paid_date').val();
     $payment_mode = '';
     if ($('#payment_mode').is(':checked')) {
-        $payment_mode = '1';        
+        $payment_mode = '2';        
     }else{
-        $payment_mode = '0';
+        $payment_mode = '1';
     }
     $transaction_id = $('#transaction_id').val();
 
@@ -224,7 +224,7 @@ function editTableData($log_id){
             $('#total_amount_with_tax').val($res1.total_amount_with_tax);
             $('#amount_paid').val($res1.amount_paid);
             $('#paid_date').val($res1.paid_date);
-            $('#payment_mode').val($res1.payment_mode);
+            $('#payment_mode').prop('checked', $res1.payment_mode == 2);
             $('#transaction_id').val($res1.transaction_id);
 
             /*$client_id = $res1.client_id;

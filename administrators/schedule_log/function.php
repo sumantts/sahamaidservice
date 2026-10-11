@@ -56,7 +56,7 @@
 			$order_status_history = json_encode($_POST['order_status_history']);
 		}
 		$paid_date = $_POST['paid_date'];
-		$payment_mode = $_POST['payment_mode'];
+		$payment_mode = (int) $_POST['payment_mode'];
 		$transaction_id = $_POST['transaction_id'];		
 
 		$sess_user_id = $_SESSION["user_id"];
