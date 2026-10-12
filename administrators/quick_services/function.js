@@ -193,7 +193,8 @@ function populateDataTable(){
 }//end fun
 
 $('#scv_inc_btn').on('click', function(){
-    $scv_inc = $('#scv_inc').val().replace(/^\s+|\s+$/gm,'');
+    $scv_inc = $('#scv_inc').val().replace(/^\s+|\s+$/gm, '').replace(/["']/g, '');
+    
     if($scv_inc == ''){
         alert('Please enter Service Included');
     }else{
@@ -219,7 +220,7 @@ $('#scv_inc_btn').on('click', function(){
 
 
 $('#svc_notinc_btn').on('click', function(){
-    $svc_notinc = $('#svc_notinc').val().replace(/^\s+|\s+$/gm,'');
+    $svc_notinc = $('#svc_notinc').val().replace(/^\s+|\s+$/gm, '').replace(/["']/g, '');
     if($svc_notinc == ''){
         alert('Please enter Service Not Included');
     }else{
