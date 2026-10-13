@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2026 at 05:23 AM
+-- Generation Time: Oct 13, 2026 at 06:02 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1388,6 +1388,31 @@ INSERT INTO `cstomer_review` (`cr_id`, `review_detail`, `created_at`, `published
 (2, '{\"name\":\"Ankit Sahani\",\"email\":\"ankit@mail.com\",\"address\":\"Kolkata\",\"message\":\"Happy from the services good and reliable maid provided by the owner\"}', '0000-00-00 00:00:00', 1),
 (3, '{\"name\":\"Aman Choudhary\",\"email\":\"aman@gmail.com\",\"address\":\"Kolkata\",\"message\":\"Happy from the services good and reliable maid provided by the owner\"}', '0000-00-00 00:00:00', 1),
 (6, '{\"name\":\"NAVEEN DAS\",\"email\":\"naveendas086@gmail.com\",\"address\":\"mumbai\",\"message\":\"test\"}', '2023-07-06 15:18:36', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_support`
+--
+
+CREATE TABLE `customer_support` (
+  `cs_id` int(100) NOT NULL,
+  `ticket_number` varchar(10) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(10) NOT NULL,
+  `address` text NOT NULL,
+  `message` text NOT NULL,
+  `ticket_log_date` datetime NOT NULL,
+  `read_unread` enum('0','1') NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customer_support`
+--
+
+INSERT INTO `customer_support` (`cs_id`, `ticket_number`, `name`, `phone`, `address`, `message`, `ticket_log_date`, `read_unread`) VALUES
+(1, 'SE_0001', 'Suman Jana', '9733935161', 'Bhuarah', 'I need a bike wash service', '2026-10-13 05:36:43', '1'),
+(2, 'SE_0002', 'Trishaan Jana', '8420359853', 'Bagnan', 'I need dusting service', '2026-10-13 05:36:43', '1');
 
 -- --------------------------------------------------------
 
@@ -3667,6 +3692,12 @@ ALTER TABLE `cstomer_review`
   ADD PRIMARY KEY (`cr_id`);
 
 --
+-- Indexes for table `customer_support`
+--
+ALTER TABLE `customer_support`
+  ADD PRIMARY KEY (`cs_id`);
+
+--
 -- Indexes for table `gender_master`
 --
 ALTER TABLE `gender_master`
@@ -3891,6 +3922,12 @@ ALTER TABLE `crime_history`
 --
 ALTER TABLE `cstomer_review`
   MODIFY `cr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `customer_support`
+--
+ALTER TABLE `customer_support`
+  MODIFY `cs_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `gender_master`

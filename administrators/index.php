@@ -98,6 +98,11 @@
 			$title = "Schedule Log";
 			include('schedule_log/schedule_log.php');		
 		break;
+		
+		case 'customer-support':
+			$title = "Customer Support";
+			include('customer_support/customer_support.php');		
+		break;
 						
 		default:
 		if(isset($_SESSION["user_id"]) && $_SESSION["user_id"] != ''){
