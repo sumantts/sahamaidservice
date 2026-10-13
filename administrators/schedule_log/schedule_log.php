@@ -7,6 +7,23 @@ include('common/head.php');
 $sess_user_type = $_SESSION["user_type"];
 ?>
 
+<style>
+    .star {
+        font-size: 20px;
+        color: #ccc;
+    }
+    .star.active {
+        color: #ffcc00;
+    }
+
+    .rating-stars {
+        display: flex;
+        gap: 5px;
+        font-size: 28px;
+        line-height: 1;
+    } 
+</style>
+
 <body class="">
 	<!-- [ Pre-loader ] start -->
 	<div class="loader-bg">
@@ -83,6 +100,8 @@ $sess_user_type = $_SESSION["user_type"];
                                         <th>Paid Amount</th>
                                         <th>Due Amount</th>
                                         <th>Service Status</th> 
+                                        <th>Rating</th>
+                                        <th>Review</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -102,6 +121,8 @@ $sess_user_type = $_SESSION["user_type"];
                                         <th>Paid Amount</th>
                                         <th>Due Amount</th>
                                         <th>Service Status</th> 
+                                        <th>Rating</th>
+                                        <th>Review</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -266,6 +287,30 @@ $sess_user_type = $_SESSION["user_type"];
                                         <button type="button" class="btn btn-primary btn-sm" id="receivePayment">Received</button> 
                                     </div> -->
                                 </div>
+
+                                <!-- Review & Ratings -->
+                                <div class="form-row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="rating_number">Rating</label>
+                                        <div class="rating-stars" id="rating_number_display">
+                                            <?php
+                                            $rating_number = 0;//isset($rating_number) ? (int)$rating_number : 0;
+                                            for ($i = 1; $i <= 5; $i++) {
+                                                $active = ($i <= $rating_number) ? 'active' : '';
+                                                echo '<span class="star ' . $active . '">★</span>';
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="review_comment">Review Comment</label>
+                                        <textarea class="form-control" name="review_comment" id="review_comment" rows="3"></textarea>
+                                    </div>
+                                    
+                                </div>
+                                <!-- // Review & Ratings -->
+
                                 <!-- <div class="form-row " id="div_p_history1">
                                     <h5>Payment Receive History</h5>
                                     <div class="col-md-12">Please choose Month - Year first then payment histry will be available here.</div>

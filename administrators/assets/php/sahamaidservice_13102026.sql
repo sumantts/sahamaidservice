@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2026 at 05:12 AM
+-- Generation Time: Oct 13, 2026 at 05:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1637,18 +1637,11 @@ CREATE TABLE `quick_services` (
 --
 
 INSERT INTO `quick_services` (`qs_id`, `service_name`, `svc_included`, `svc_not_included`, `svc_status`) VALUES
-(1, 'BATHROOM CLANING (25)', '[{\"obj_id\":\"muhuue9so7y1hs\",\"name\":\"Cleaning of toilet bowl (inside and rim)\"},{\"obj_id\":\"muhuulrdp96z23\",\"name\":\"Cleaning of washbasin and faucet\"},{\"obj_id\":\"muhuustcvxtz3v\",\"name\":\"Wiping of bathroom tiles and visible surfaces\"},{\"obj_id\":\"muhvtux9ttu79m\",\"name\":\"Cleaning of taps and fixtures\"},{\"obj_id\":\"muhvu4dp0cq1e9\",\"name\":\"Sweeping and mopping of bathroom floor\"},{\"obj_id\":\"muhvua7x5ee4ng\",\"name\":\"Final wipe-down and deodorizing of the bathroom\"}]', '[{\"obj_id\":\"muhuv18o3m4lcz\",\"name\":\"Specialist tile grout scrubbing\"},{\"obj_id\":\"muhuv6sg9kjj53\",\"name\":\"Removal of heavy mold or hard water stains\"},{\"obj_id\":\"muhuvc8gx3t3w2\",\"name\":\"Use of acid-based or strong descaling chemicals\"},{\"obj_id\":\"muhvumb95cba3b\",\"name\":\"Cleaning of mirrors or storage interiors\"},{\"obj_id\":\"muhvurzhi19bdc\",\"name\":\"Cleaning of shower curtains or drains\"},{\"obj_id\":\"muhvv00dfws9dy\",\"name\":\"Shifting or relocating heavy items in bathroom\"}]', 2),
-(2, 'FRIDGE CLEANING (149)', '', '', 1),
 (3, 'UTENSILS (25)', '', '', 1),
-(4, 'PACKING OR UNPACKING (25)', '', '', 1),
-(5, 'KITCHEN PREP(25)', '', '', 1),
-(6, 'DUSTING & WIPING (25)', '', '', 1),
 (7, 'SWEEPING & MOPPING (25)', '', '', 1),
-(8, 'PRE-PARTY EXPRESS CLEAN', '', '', 1),
-(9, 'AFTER-PARTY EXPRESS CLEAN', '', '', 1),
-(10, 'COMPLETE WARDROBE CLENING (147)', '', '', 1),
+(8, 'PRE-PARTY EXPRESS CLEAN', '[{\"obj_id\":\"mv2nqmd3zjrdtq\",\"name\":\"wert\"},{\"obj_id\":\"mv5l2wgew2t13s\",\"name\":\"WhatsApp\"}]', '[{\"obj_id\":\"mv2nqqe0cu2555\",\"name\":\"fgtgt\"}]', 1),
 (11, 'WINDOW CLEANING (25)', '', '', 1),
-(12, 'LAUNDRY (25)', '', '', 1);
+(14, 'Tour Service', '[{\"obj_id\":\"mv2nrsps6e383b\",\"name\":\"qwe1\"}]', '[{\"obj_id\":\"mv2nrv4807kraa\",\"name\":\"sdr\"}]', 1);
 
 -- --------------------------------------------------------
 
@@ -1671,7 +1664,9 @@ INSERT INTO `quick_service_status` (`qss_id`, `status_name`) VALUES
 (3, 'Order Canceled by Admin'),
 (4, 'Order Canceled by Customer'),
 (5, 'Service is Delivered'),
-(6, 'Incomplete Service');
+(6, 'Incomplete Service'),
+(7, 'Payment Received'),
+(8, 'Payment Refunded');
 
 -- --------------------------------------------------------
 
@@ -1739,8 +1734,20 @@ CREATE TABLE `schedule_log` (
   `order_placed_by_name` varchar(255) NOT NULL,
   `order_channel_name` varchar(10) NOT NULL,
   `payment_history` text NOT NULL,
-  `order_status_history` text NOT NULL
+  `order_status_history` text NOT NULL,
+  `paid_date` date NOT NULL,
+  `payment_mode` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=cash 2=UPI',
+  `transaction_id` varchar(255) NOT NULL,
+  `review_comment` text NOT NULL,
+  `rating_number` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `schedule_log`
+--
+
+INSERT INTO `schedule_log` (`log_id`, `client_id`, `client_name`, `client_mobile`, `area_location_id`, `area_location_name`, `building_id`, `building_name`, `service_id`, `service_name`, `service_rate_per_hour`, `booking_date_f`, `booking_date_t`, `from_time`, `to_time`, `total_hours`, `total_amount`, `bill_type`, `cgst_percent`, `cgst_amount`, `sgst_percent`, `sgst_amount`, `total_amount_with_tax`, `amount_paid`, `amount_due`, `worker_id`, `worker_name`, `worker_mobile`, `bill_status`, `bill_status_name`, `order_placed_date`, `order_placed_time`, `order_placed_by`, `order_placed_by_name`, `order_channel_name`, `payment_history`, `order_status_history`, `paid_date`, `payment_mode`, `transaction_id`, `review_comment`, `rating_number`) VALUES
+(1, 1664, 'Tanu', '8420359853', 22, 'BP Block', 24, 'Martin Burn Business Park', 7, 'SWEEPING & MOPPING (25)', 100.00, '2026-10-13', '2026-10-13', '08:10', '10:10', 2, 200.00, 1, 9, 18.00, 9, 18.00, 236.00, 118.00, 0.00, 316, '', '8479830417', 1, 'Pending', '2026-10-13', '08:12:00', 1, 'Kundan Saha', 'web', '', '', '0000-00-00', 1, '', 'Excellent Service, I\'m very happy with your service. Thank You Saha Enterprise', 4);
 
 -- --------------------------------------------------------
 
@@ -1841,7 +1848,12 @@ INSERT INTO `service_rate_chart` (`src_id`, `qs_id`, `sa_id`, `sa_id_child`, `ra
 (9, 6, 22, 25, 100.00, 100.00),
 (10, 6, 22, 26, 100.00, 100.00),
 (11, 6, 22, 24, 100.00, 100.00),
-(12, 6, 22, 23, 100.00, 100.00);
+(12, 6, 22, 23, 100.00, 100.00),
+(13, 8, 27, 28, 100.00, 100.00),
+(14, 7, 22, 25, 100.00, 100.00),
+(15, 7, 22, 26, 100.00, 100.00),
+(16, 7, 22, 24, 100.00, 100.00),
+(17, 7, 22, 23, 100.00, 100.00);
 
 -- --------------------------------------------------------
 
@@ -3950,13 +3962,13 @@ ALTER TABLE `property_master`
 -- AUTO_INCREMENT for table `quick_services`
 --
 ALTER TABLE `quick_services`
-  MODIFY `qs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `qs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `quick_service_status`
 --
 ALTER TABLE `quick_service_status`
-  MODIFY `qss_id` tinyint(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `qss_id` tinyint(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `quote_request`
@@ -3968,7 +3980,7 @@ ALTER TABLE `quote_request`
 -- AUTO_INCREMENT for table `schedule_log`
 --
 ALTER TABLE `schedule_log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `service_area`
@@ -3986,7 +3998,7 @@ ALTER TABLE `service_manager`
 -- AUTO_INCREMENT for table `service_rate_chart`
 --
 ALTER TABLE `service_rate_chart`
-  MODIFY `src_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `src_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `skills_master`

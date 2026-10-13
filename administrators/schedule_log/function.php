@@ -155,7 +155,18 @@
 			if($row['order_status_history'] != ''){  
 				$order_status_history = json_decode($row['order_status_history']);
 			}
+			$review_comment = $row['review_comment'];
+			$rating_number = $row['rating_number'];
 
+			$stars = '';
+			for ($i = 1; $i <= 5; $i++) {
+				if ($i <= $rating_number) {
+					$stars .= '<span class="star active">★</span>';
+				} else {
+					$stars .= '<span class="star">★</span>';
+				}
+			}
+				
 
 				$data[0] = $slno;
 				$data[1] = 'INV_'.str_pad($log_id, 4, "0", STR_PAD_LEFT);
@@ -171,7 +182,11 @@
 				$data[11] = number_format($amount_paid, 2);
 				$data[12] = number_format($amount_due, 2);
 				$data[13] = $bill_status_name;
-				$data[14] = "<a href='javascript: void(0)' data-log_id=".$log_id."><i class='fa fa-pencil' aria-hidden='true' onclick='editTableData(".$log_id.")'></i></a> <a href='javascript: void(0)' data-log_id='.$log_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$log_id.")'></i></a>"; 
+				$data[13] = $bill_status_name;
+				$data[13] = $bill_status_name;
+				$data[14] = $stars;
+				$data[15] = implode(' ', array_slice(explode(' ', $review_comment), 0, 5)) .'...';
+				$data[16] = "<a href='javascript: void(0)' data-log_id=".$log_id."><i class='fa fa-pencil' aria-hidden='true' onclick='editTableData(".$log_id.")'></i></a> <a href='javascript: void(0)' data-log_id='.$log_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$log_id.")'></i></a>"; 
 				array_push($mainData, $data);
 				$slno++;
 			}
@@ -245,6 +260,8 @@
 			$return_array['paid_date'] = $row['paid_date'];
 			$return_array['payment_mode'] = $row['payment_mode'];
 			$return_array['transaction_id'] = $row['transaction_id'];
+			$return_array['review_comment'] = $row['review_comment'];
+			$return_array['rating_number'] = $row['rating_number'];
 			
 		} else {
 			$status = false;

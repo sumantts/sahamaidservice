@@ -227,39 +227,15 @@ function editTableData($log_id){
             $('#payment_mode').prop('checked', $res1.payment_mode == 2);
             $('#transaction_id').val($res1.transaction_id);
 
-            /*$client_id = $res1.client_id;
-            $worker_id = $res1.worker_id;
-            $bill_status = $res1.bill_status;
-            $bill_status_name = $res1.bill_status_name;
+            $review_comment = $res1.review_comment;
+            $rating_number = $res1.rating_number;
 
-            $('#log_id').val($res1.log_id); 
-            $('#rcvabl_amount').val($res1.rcvabl_amount);  
-            $('#exp_salary').val($res1.exp_salary);
-
-            $('#from_date').val($res1.from_date);
-            $('#to_date').val($res1.to_date);
-            $('#from_time').val($res1.from_time); 
-            $('#to_time').val($res1.to_time); 
-            $('#hsn_code').val($res1.hsn_code); 
-            $('#wt_id').val($res1.wt_id); 
-            
-            $holiday_count = $res1.holiday_count;
-            $('#holiday_count').val($holiday_count);
-            $cal_ty_id = $res1.cal_ty_id;
-            setTimeout(function(){
-                $('#cal_ty_id').val($cal_ty_id).trigger('change');
-            },300);
-
-            setTimeout(function(){
-                $('#client_id').val($client_id).trigger('change');
-                $('#worker_id').val($worker_id).trigger('change');
-                $('#bill_status').val($bill_status).trigger('change'); 
-            },300);
-            
-            $('#otcc').val($res1.otcc); 
-            $('#ticket_fare').val($res1.ticket_fare); 
-            $('#food_cost').val($res1.food_cost); 
-            $('#tr_jc').val($res1.tr_jc); */
+            $('#review_comment').val($review_comment);
+            $('#rating_number_display').html('');
+            for ($i = 1; $i <= 5; $i++) {
+                $active = ($i <= $rating_number) ? 'active' : '';
+                $('#rating_number_display').append('<span class="star ' + $active + '">★</span>');
+            }
 
             $('#exampleModalLong').modal('show');
         }
