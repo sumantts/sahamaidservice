@@ -1,10 +1,13 @@
 <?php
-    include('sql_conn.php');
+    # Include Database Connection
+    require_once __DIR__ . '/sql_conn.php';
     
+
     // 2. RECEIVING INBOUND MESSAGES (Executed whenever a user messages your number)
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message_text = '';
         $response_msg = '';
+        $call_api = false;
 
         // Read the raw JSON payload from the incoming request
         $raw_input = file_get_contents('php://input');
@@ -36,7 +39,7 @@
 
             # check the number is exists or not
             $find_sql2 = "SELECT * FROM whatsapp_context WHERE phone_number = '" . $from_number . "'";
-            $result2 = mysqli_query($conn, $find_sql2);
+            $result2 = mysqli_query($con, $find_sql2);
 
             if(mysqli_num_rows($result2) > 0){
                 // Number exists, update context
@@ -52,7 +55,7 @@
 
             
             $find_sql = "SELECT * FROM user_details WHERE phone_number = '" . $from_number . "'";
-            $result = mysqli_query($conn, $find_sql);
+            $result = mysqli_query($con, $find_sql);
 
             if(mysqli_num_rows($result) > 0){
                 // Number exists, update context
@@ -111,16 +114,51 @@
             # Receive Form Input
             $booking_date_invalid = false;
             $from_time_invalid = false;
+            $to_time_invalid = false;
             if($context_data->first_message == ''){
-                $context_data->first_message = $message_text;
+                if(strtolower($message_text) == 'exit'){
+                    $response_msg .= 'Your session has been terminated. Thank you for using our service.';
+                    $context_data = new stdClass(); // Reset context data
+                }else{
+                    $context_data->first_message = $message_text;
+                    if($context_data->full_name == ''){
+                        $response_msg .= 'Hi, Welcome to our Saha Enterprise - Quick Service Booking. Please enter your name. Enter \'Exit\' to terminate this session.';
+                    }else{
+                        $response_msg .= 'Hi, '.$context_data->full_name.', Welcome to our Saha Enterprise - Quick Service Booking. Enter \'Exit\' to terminate this session.';
+                    }
+                }
             }else if($context_data->full_name == ''){
                 $context_data->full_name = $message_text;
+
+                # If new then insert the user details in the database
+                if($user_id == 0){
+                    $full_name = $context_data->full_name;
+                    $username = str_replace(' ', '', strtolower($context_data->full_name));
+                    $password = bin2hex(random_bytes(4)); // Generate a random password
+                    $email_id = $username . '@sahaenterprise.in'; // Create a dummy email
+                    $user_type = '4'; // Set user type as customer
+                    $phone_number = substr((string)$context_data->phone_number, 2);
+
+                    $insert_sql = "INSERT INTO user_details (user_type, full_name, email_id, phone_number) VALUES ('" . $user_type . "', '" . $full_name . "', '" . $email_id . "', '" . $phone_number . "')";
+                    mysqli_query($con, $insert_sql);
+                    $user_id = mysqli_insert_id($con);
+                    $context_data->user_id = $user_id;
+
+                    
+                    $update_sql = "UPDATE whatsapp_context SET user_id = '" . $user_id . "',  full_name = '" . $full_name . "' WHERE id = '" . $id . "'";
+                    mysqli_query($con, $update_sql);
+
+                    $response_msg .= 'Thank you, ' . $context_data->full_name . '. Your details have been saved.';
+                }
             }else if($context_data->area_location_id == ''){
                 $context_data->area_location_id = $message_text;
+                $response_msg .= 'Area location has been set.';
             }else if($context_data->building_id == ''){
                 $context_data->building_id = $message_text;
+                $response_msg .= 'Building name has been set.';
             }else if($context_data->service_id == ''){
                 $context_data->service_id = $message_text;
+                $response_msg .= 'Service name has been set.';
             }else if($context_data->booking_date_f == ''){
                 $booking_date_input = trim($message_text);
                 if(preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $booking_date_input) === 1){
@@ -162,6 +200,7 @@
             }else if($context_data->confirm_time == ''){
                 if($message_text == '1'){
                     $context_data->confirm_time = '1';
+                    $call_api = true;
                 }else if($message_text == '0'){
                     $context_data->booking_date_f = '';
                     $context_data->from_time = '';
@@ -206,12 +245,24 @@
                     $response_msg .= 'Please enter the end time in 24 Hrs time format. Example: If you want to get the service until 07:30 AM then enter the end time as 07:30 or if you want to get the service until 07:30 PM then enter 19:30. Enter \'Exit\' to terminate this session.';
                 }
             }else if($context_data->confirm_time == ''){
-                $response_msg .= 'Your Service start and date time is as followes: From '.date('d/m/Y', strtotime($context_data->booking_date_f)).' '.date('h:m A', strtotime($context_data->from_time)).' to '.date('d/m/Y', strtotime($context_data->booking_date_t)).' '.date('h:m A', strtotime($context_data->to_time)).'. Please enter 1 to proceed to next step. Enter 0 to re enter the start date time and end date time. Enter \'Exit\' to terminate this session.';
+                $response_msg .= $context_data->booking_date_f.' Your Service start and date time is as followes: From '.$context_data->booking_date_f.' '.date('h:m A', strtotime($context_data->from_time)).' to '.$context_data->booking_date_t.' '.date('h:m A', strtotime($context_data->to_time)).'. Please enter 1 to proceed to next step. Enter 0 to re enter the start date time and end date time. Enter \'Exit\' to terminate this session.';
             }else{}
 
 
             ### Call API as per needs
+            if($context_data->confirm_time == '1' && $call_api == true){
+            
+            }//end call api
 
+            #### Update the context data in the database
+            $context_data_json = json_encode($context_data);
+            if($id == 0){
+                $insert_sql = "INSERT INTO whatsapp_context (user_id, full_name, phone_number, context_data) VALUES ('" . $user_id . "', '" . $full_name . "', '" . $from_number . "', '" . $context_data_json . "')";
+                mysqli_query($con, $insert_sql);
+            }else{
+                $update_sql = "UPDATE whatsapp_context SET context_data = '" . $context_data_json . "' WHERE id = '" . $id . "'";
+                mysqli_query($con, $update_sql);
+            }
             
         }//end message object check
     
