@@ -87,6 +87,7 @@ $sess_user_type = $_SESSION["user_type"];
                                 <thead>
                                     <tr>
                                         <th>Sl.No.</th>
+                                        <th>Booking No.</th>
                                         <th>Client Name</th>
                                         <th>Client Phone</th>
                                         <th>Area / Location</th>
@@ -108,6 +109,7 @@ $sess_user_type = $_SESSION["user_type"];
                                 <tfoot>
                                     <tr>
                                         <th>Sl.No.</th>
+                                        <th>Booking No.</th>
                                         <th>Client Name</th>
                                         <th>Client Phone</th>
                                         <th>Area / Location</th>

@@ -189,8 +189,14 @@
 		$sa_id = $_POST["sa_id"];
 		$status = true;	
 
-		$sql = "DELETE FROM service_area WHERE sa_id = '".$sa_id."'";
+		# Remove child first
+		$sql = "DELETE FROM service_area WHERE parent_sa_id = '".$sa_id."'";
 		$result = $mysqli->query($sql);
+
+		# Remove parent
+		$sql2 = "DELETE FROM service_area WHERE sa_id = '".$sa_id."'";
+		$result2 = $mysqli->query($sql2);
+
 		$return_result['status'] = $status;
 		
 		echo json_encode($return_result);

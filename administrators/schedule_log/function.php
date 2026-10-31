@@ -169,24 +169,23 @@
 				
 
 				$data[0] = $slno;
-				$data[1] = 'INV_'.str_pad($log_id, 4, "0", STR_PAD_LEFT);
+				$data[1] = $order_channel_name.'_'.str_pad($log_id, 4, "0", STR_PAD_LEFT);
 				$data[2] = $client_name;
-				$data[3] = $total_amount;
-				$data[4] = $client_mobile;
-				$data[5] = $area_location_name;
-				$data[6] = $building_name;
-				$data[7] = $service_name;
-				$data[8] = date('d-F Y', strtotime($booking_date_f)).' To '.date('d-F Y', strtotime($booking_date_t));
-				$data[9] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));
-				$data[10] = number_format($total_amount_with_tax, 2);
-				$data[11] = number_format($amount_paid, 2);
-				$data[12] = number_format($amount_due, 2);
-				$data[13] = $bill_status_name;
-				$data[13] = $bill_status_name;
-				$data[13] = $bill_status_name;
-				$data[14] = $stars;
-				$data[15] = implode(' ', array_slice(explode(' ', $review_comment), 0, 5)) .'...';
-				$data[16] = "<a href='javascript: void(0)' data-log_id=".$log_id."><i class='fa fa-pencil' aria-hidden='true' onclick='editTableData(".$log_id.")'></i></a> <a href='javascript: void(0)' data-log_id='.$log_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$log_id.")'></i></a>"; 
+				$data[3] = $client_mobile;
+				$data[4] = $area_location_name;
+				$data[5] = $building_name;
+				$data[6] = $service_name;
+				$data[7] = date('d-F Y', strtotime($booking_date_f)).' To '.date('d-F Y', strtotime($booking_date_t));
+				$data[8] = date('h:i A', strtotime($from_time)).' To '.date('h:i A', strtotime($to_time));
+				$data[9] = $worker_name;
+				$data[10] = $worker_mobile;
+				$data[11] = number_format($total_amount_with_tax, 2);
+				$data[12] = number_format($amount_paid, 2);
+				$data[13] = number_format($amount_due, 2);
+				$data[14] = $bill_status_name;
+				$data[15] = $stars;
+				$data[16] = implode(' ', array_slice(explode(' ', $review_comment), 0, 5)) .'...';
+				$data[17] = "<a href='javascript: void(0)' data-log_id=".$log_id."><i class='fa fa-pencil' aria-hidden='true' onclick='editTableData(".$log_id.")'></i></a> <a href='javascript: void(0)' data-log_id='.$log_id.'><i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$log_id.")'></i></a>"; 
 				array_push($mainData, $data);
 				$slno++;
 			}

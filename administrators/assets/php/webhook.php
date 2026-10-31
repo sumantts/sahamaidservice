@@ -2,11 +2,77 @@
     # Include Database Connection
     require_once __DIR__ . '/sql_conn.php';
     
+    function sendWhatsAppMessage($to, $template_name, $parameters){
+        $api_username = '1350182688181368';
+        $apikey = '20fb1863-c6e8-11f1-afb3-02c8a5e042bd';
+
+        $params = array();
+        if(sizeof($parameters) > 0){
+            for($i = 0; $i < sizeof($parameters); $i++){
+                $text = (string) $parameters[$i];
+                //echo 'text: '. $text;
+
+                $param_obj = new stdClass();
+                $param_obj->type = 'text';
+                $param_obj->text = $text;
+
+                array_push($params, $param_obj);
+            }
+        }//end if
+        $params_en = json_encode($params);
+
+        $post_fields = '{
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": "'.$to.'",
+            "type": "template",
+            "template": {
+                "language": {
+                    "code": "en"
+                },
+                "name": "'.$template_name.'",
+                "components": [
+                    {
+                        "type": "body",
+                        "parameters": '.$params_en.'
+                    }
+                ]
+            }
+        }';
+
+        //echo 'post_fields: '.$post_fields;
+
+
+        $curl = curl_init();
+    
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://partnersv1.pinbot.ai/v3/'.$api_username.'/messages',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $post_fields,
+        CURLOPT_HTTPHEADER => array(
+            'apikey: '.$apikey,
+            'Content-Type: application/json'
+        ),
+        ));
+        
+        $response = curl_exec($curl);
+        
+        curl_close($curl);
+        return $response;
+    }//end if
 
     // 2. RECEIVING INBOUND MESSAGES (Executed whenever a user messages your number)
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message_text = '';
         $response_msg = '';
+        $whatsapp_response = '';
+        $parameters = array(); // For WhatsApp
         $call_api = false;
 
         // Read the raw JSON payload from the incoming request
@@ -14,13 +80,15 @@
         $data = json_decode($raw_input, true);
     
         // Optional: Log the payload for debugging/inspection
-        file_put_contents('webhook_log.txt', $raw_input . PHP_EOL, FILE_APPEND);
+        //file_put_contents('webhook_log.txt', $raw_input . PHP_EOL, FILE_APPEND);
     
         // Extract message data safely from Meta's payload structure
         if (isset($data['entry'][0]['changes'][0]['value']['messages'][0])) {
             $message_obj = $data['entry'][0]['changes'][0]['value']['messages'][0];
             
             $from_number = $message_obj['from']; // User's WhatsApp ID/Phone Number
+            $to = '+'.$from_number;
+            $phone_number = substr((string) $from_number, 2);
             $message_id = $message_obj['id'];   // Unique message ID (use for Idempotency checking)
             $timestamp = $message_obj['timestamp'];
             $type = $message_obj['type'];        // text, image, document, etc.
@@ -54,7 +122,7 @@
             }
 
             
-            $find_sql = "SELECT * FROM user_details WHERE phone_number = '" . $from_number . "'";
+            $find_sql = "SELECT * FROM user_details WHERE phone_number = '" . $phone_number . "'";
             $result = mysqli_query($con, $find_sql);
 
             if(mysqli_num_rows($result) > 0){
@@ -69,18 +137,21 @@
                 # Create context data for new user
                 $context_data->user_id = $user_id;
                 $context_data->full_name = $full_name;
-                $context_data->phone_number = $from_number;
+                $context_data->phone_number = $phone_number;
                 $context_data->email_id = $email_id;
                 $context_data->first_message = '';
                 $context_data->area_location_id = ''; // Location ID
                 $context_data->area_location_name = '';
                 $context_data->area_location_page_no = '';
+                $context_data->area_location_slno = '';
                 $context_data->building_id = ''; //Building ID
                 $context_data->building_name = '';
                 $context_data->building_name_page_no = '';
+                $context_data->building_slno = ''; 
                 $context_data->service_id = ''; //Service ID
                 $context_data->service_name = '';
-                $context_data->service_name_page_no = '';
+                $context_data->service_name_page_no = ''; 
+                $context_data->service_slno = '';
                 $context_data->service_rate_per_hour = '';
                 $context_data->booking_date_f = ''; //Booking Date
                 $context_data->booking_date_t = '';
@@ -89,10 +160,10 @@
                 $context_data->confirm_time = '';
                 $context_data->total_hours = '';
                 $context_data->total_amount = '';
-                $context_data->bill_type = ''; // 1=gst 2=nonGST
-                $context_data->cgst_percent = '';
+                $context_data->bill_type = '1'; // 1=gst 2=nonGST
+                $context_data->cgst_percent = '9';
                 $context_data->cgst_amount = '';
-                $context_data->sgst_percent = '';
+                $context_data->sgst_percent = '9';
                 $context_data->sgst_amount = '';
                 $context_data->total_amount_with_tax = '';
                 $context_data->amount_paid = '';
@@ -103,172 +174,499 @@
                 $context_data->bill_status_name = '';
                 $context_data->order_placed_date = '';
                 $context_data->order_placed_time = '';
-                $context_data->order_channel_name = '';
+                $context_data->order_channel_name = 'whatsapp';
                 $context_data->paid_date = '';
-                $context_data->payment_mode = '';
+                $context_data->payment_mode = 'whatsapp payment';
                 $context_data->transaction_id = '';
                 $context_data->review_comment = '';
                 $context_data->rating_number = '';
+                $context_data->area_locations = array();
+                $context_data->buildings = array();
+                $context_data->services = array();
+                $context_data->available_workers = array();
+                $context_data->proceed_to_pay = '';
+                $context_data->booking_id = '';
             }//end context if
-            
-            # Receive Form Input
-            $booking_date_invalid = false;
-            $from_time_invalid = false;
-            $to_time_invalid = false;
-            if($context_data->first_message == ''){
-                if(strtolower($message_text) == 'exit'){
-                    $response_msg .= 'Your session has been terminated. Thank you for using our service.';
-                    $context_data = new stdClass(); // Reset context data
-                }else{
-                    $context_data->first_message = $message_text;
-                    if($context_data->full_name == ''){
-                        $response_msg .= 'Hi, Welcome to our Saha Enterprise - Quick Service Booking. Please enter your name. Enter \'Exit\' to terminate this session.';
-                    }else{
-                        $response_msg .= 'Hi, '.$context_data->full_name.', Welcome to our Saha Enterprise - Quick Service Booking. Enter \'Exit\' to terminate this session.';
-                    }
-                }
-            }else if($context_data->full_name == ''){
-                $context_data->full_name = $message_text;
 
-                # If new then insert the user details in the database
-                if($user_id == 0){
-                    $full_name = $context_data->full_name;
-                    $username = str_replace(' ', '', strtolower($context_data->full_name));
-                    $password = bin2hex(random_bytes(4)); // Generate a random password
-                    $email_id = $username . '@sahaenterprise.in'; // Create a dummy email
-                    $user_type = '4'; // Set user type as customer
-                    $phone_number = substr((string)$context_data->phone_number, 2);
-
-                    $insert_sql = "INSERT INTO user_details (user_type, full_name, email_id, phone_number) VALUES ('" . $user_type . "', '" . $full_name . "', '" . $email_id . "', '" . $phone_number . "')";
-                    mysqli_query($con, $insert_sql);
-                    $user_id = mysqli_insert_id($con);
-                    $context_data->user_id = $user_id;
-
-                    
-                    $update_sql = "UPDATE whatsapp_context SET user_id = '" . $user_id . "',  full_name = '" . $full_name . "' WHERE id = '" . $id . "'";
-                    mysqli_query($con, $update_sql);
-
-                    $response_msg .= 'Thank you, ' . $context_data->full_name . '. Your details have been saved.';
-                }
-            }else if($context_data->area_location_id == ''){
-                $context_data->area_location_id = $message_text;
-                $response_msg .= 'Area location has been set.';
-            }else if($context_data->building_id == ''){
-                $context_data->building_id = $message_text;
-                $response_msg .= 'Building name has been set.';
-            }else if($context_data->service_id == ''){
-                $context_data->service_id = $message_text;
-                $response_msg .= 'Service name has been set.';
-            }else if($context_data->booking_date_f == ''){
-                $booking_date_input = trim($message_text);
-                if(preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $booking_date_input) === 1){
-                    $date_parts = explode('/', $booking_date_input);
-                    if(checkdate((int)$date_parts[1], (int)$date_parts[0], (int)$date_parts[2])){
-                        $context_data->booking_date_f = $booking_date_input;
-                    }else{
-                        $booking_date_invalid = true;
-                    }
-                }else{
-                    $booking_date_invalid = $booking_date_input != '';
-                }
-            }else if($context_data->from_time == ''){
-                $from_time_input = trim($message_text);
-                if(preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $from_time_input) === 1){
-                    $context_data->from_time = $from_time_input;
-                }else{
-                    $from_time_invalid = $from_time_input != '';
-                }
-            }else if($context_data->booking_date_t == ''){
-                $booking_date_input = trim($message_text);
-                if(preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $booking_date_input) === 1){
-                    $date_parts = explode('/', $booking_date_input);
-                    if(checkdate((int)$date_parts[1], (int)$date_parts[0], (int)$date_parts[2])){
-                        $context_data->booking_date_t = $booking_date_input;
-                    }else{
-                        $booking_date_invalid = true;
-                    }
-                }else{
-                    $booking_date_invalid = $booking_date_input != '';
-                }
-            }else if($context_data->to_time == ''){
-                $to_time_input = trim($message_text);
-                if(preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $to_time_input) === 1){
-                    $context_data->to_time = $to_time_input;
-                }else{
-                    $to_time_invalid = $to_time_input != '';
-                }
-            }else if($context_data->confirm_time == ''){
-                if($message_text == '1'){
-                    $context_data->confirm_time = '1';
-                    $call_api = true;
-                }else if($message_text == '0'){
-                    $context_data->booking_date_f = '';
-                    $context_data->from_time = '';
-                    $context_data->booking_date_t = '';
-                    $context_data->to_time = '';
-                }else{
-                    $response_msg .= 'Invalid input. Please enter 1 to proceed or 0 to re-enter the start and end date/time.';
-                }
-            }else{}
-
-            ## Check Form Validation and show message
-            if($context_data->full_name == ''){
-                $response_msg .= 'Please enter your name';
-            }else if($context_data->area_location_id == ''){
-                $response_msg .= 'Please enter your area location';
-            }else if($context_data->building_id == ''){
-                $response_msg .= 'Please enter your building name';
-            }else if($context_data->service_id == ''){
-                $response_msg .= 'Please enter your service name';
-            }else if($context_data->booking_date_f == ''){
-                if($booking_date_invalid){
-                    $response_msg .= 'Invalid date. Please enter a valid date in DD/MM/YYYY format.';
-                }else{
-                    $response_msg .= 'Please enter Start Date you want to get this  quick service. Please enter the date in DD/MM/YYYY format. Enter \'Exit\' to terminate this session.';
-                }
-            }else if($context_data->from_time == ''){
-                if($from_time_invalid){
-                    $response_msg .= 'Invalid time. Please enter the start time in 24-hour HH:MM format, from 00:00 to 23:59.';
-                }else{
-                    $response_msg .= 'Please enter the start time in 24 Hrs time format. Example: If you want to get the service from 07:30 AM then enter the start time as 07:30 or if you want to get the service at 07:30 PM then enter 19:30. Enter \'Exit\' to terminate this session.';
-                }
-            }else if($context_data->booking_date_t == ''){
-                if($booking_date_invalid){
-                    $response_msg .= 'Invalid date. Please enter a valid date in DD/MM/YYYY format.';
-                }else{
-                    $response_msg .= 'Please enter the End Date of this Quick Service. Please enter the date in DD/MM/YYYY format. Enter \'Exit\' to terminate this session.';
-                }
-            }else if($context_data->to_time == ''){
-                if($to_time_invalid){
-                    $response_msg .= 'Invalid time. Please enter the end time in 24-hour HH:MM format, from 00:00 to 23:59.';
-                }else{
-                    $response_msg .= 'Please enter the end time in 24 Hrs time format. Example: If you want to get the service until 07:30 AM then enter the end time as 07:30 or if you want to get the service until 07:30 PM then enter 19:30. Enter \'Exit\' to terminate this session.';
-                }
-            }else if($context_data->confirm_time == ''){
-                $response_msg .= $context_data->booking_date_f.' Your Service start and date time is as followes: From '.$context_data->booking_date_f.' '.date('h:m A', strtotime($context_data->from_time)).' to '.$context_data->booking_date_t.' '.date('h:m A', strtotime($context_data->to_time)).'. Please enter 1 to proceed to next step. Enter 0 to re enter the start date time and end date time. Enter \'Exit\' to terminate this session.';
-            }else{}
-
-
-            ### Call API as per needs
-            if($context_data->confirm_time == '1' && $call_api == true){
-            
-            }//end call api
-
-            #### Update the context data in the database
-            $context_data_json = json_encode($context_data);
-            if($id == 0){
-                $insert_sql = "INSERT INTO whatsapp_context (user_id, full_name, phone_number, context_data) VALUES ('" . $user_id . "', '" . $full_name . "', '" . $from_number . "', '" . $context_data_json . "')";
-                mysqli_query($con, $insert_sql);
-            }else{
-                $update_sql = "UPDATE whatsapp_context SET context_data = '" . $context_data_json . "' WHERE id = '" . $id . "'";
+            # Exit Comment
+            $do_exit = false;
+            if(strtolower($message_text) == 'exit'){
+                $do_exit = true;
+                $response_msg .= 'Your session has been terminated. Thank you for using our service.';
+                $context_data = new stdClass(); // Reset context data 
+                
+                $update_sql = "DELETE FROM whatsapp_context WHERE phone_number = '" . $from_number . "'";
                 mysqli_query($con, $update_sql);
-            }
+
+                # WhatsApp
+                $template_name = 'exit_message';
+                $parameters = array();
+                $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+            }//end if
             
+            if($do_exit == false){
+                # Receive Form Input
+                $booking_date_invalid = false;
+                $from_time_invalid = false;
+                $to_time_invalid = false;
+
+                if($context_data->first_message == ''){
+                    if(strtolower($message_text) == 'exit'){
+                        $response_msg .= 'Your session has been terminated. Thank you for using our service.';
+                        $context_data = new stdClass(); // Reset context data
+                        $update_sql = "DELETE FROM whatsapp_context WHERE phone_number = '" . $from_number . "'";
+                        mysqli_query($con, $update_sql);
+
+                        # WhatsApp
+                        $template_name = 'exit_message';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+                    }else{
+                        $context_data->first_message = $message_text;
+                        if($context_data->full_name == ''){
+                            $response_msg .= 'Hi, Welcome to our Saha Enterprise - Quick Service Booking. Please enter your name. Enter \'Exit\' to terminate this session.'. "\n";
+                            
+                            # WhatsApp
+                            $template_name = 'welcome_without_name';
+                            $parameters = array();
+                            $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+                        }else{
+                            $response_msg .= 'Hi, '.$context_data->full_name.', Welcome to our Saha Enterprise - Quick Service Booking. Enter \'Exit\' to terminate this session.'."\n";
+
+                            # WhatsApp
+                            $template_name = 'welcome_with_name';
+                            $parameters = array();
+                            array_push($parameters, $context_data->full_name);
+                            $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+                        }
+                    }
+                }else if($context_data->full_name == ''){
+                    $context_data->full_name = $message_text;
+
+                    # If new then insert the user details in the database
+                    if($user_id == 0){
+                        $full_name = $context_data->full_name;
+                        $username = str_replace(' ', '', strtolower($context_data->full_name));
+                        $password = bin2hex(random_bytes(4)); // Generate a random password
+                        $email_id = $username . '@sahaenterprise.in'; // Create a dummy email
+                        $user_type = '4'; // Set user type as customer
+                        $phone_number = substr((string)$context_data->phone_number, 2);
+
+                        $insert_sql = "INSERT INTO user_details (user_type, full_name, email_id, phone_number) VALUES ('" . $user_type . "', '" . $full_name . "', '" . $email_id . "', '" . $phone_number . "')";
+                        mysqli_query($con, $insert_sql);
+                        $user_id = mysqli_insert_id($con);
+                        $context_data->user_id = $user_id;
+
+                        $context_data->available_workers = array();
+                        $update_sql = "UPDATE whatsapp_context SET user_id = '" . $user_id . "',  full_name = '" . $full_name . "' WHERE id = '" . $id . "'";
+                        mysqli_query($con, $update_sql);
+
+                        $response_msg .= 'Thank you, ' . $context_data->full_name . '. Your details have been saved.';
+                    }
+                }else if($context_data->area_location_id == ''){
+                    if(!is_numeric($message_text)){
+                        $response_msg .= 'Invalid input. Please enter a valid serial number for your area location.';
+                    }else{
+                        $area_locations = $context_data->area_locations;
+                        $area_location_index = (int)$message_text - 1; // Convert to zero-based index
+                        if($area_location_index >= 0 && $area_location_index < count($area_locations)){
+                            $selected_area = $area_locations[$area_location_index];
+                            $context_data->area_location_slno = $area_location_index + 1; // Store the serial number (1-based index)
+                            $context_data->area_location_id = $selected_area->sa_id;
+                            $context_data->area_location_name = $selected_area->area_location;
+                            $response_msg .= 'Area location has been set to: ' . $selected_area->area_location . '.';
+                        }else{
+                            $response_msg .= 'Invalid input. Please enter a valid serial number for your area location.';
+                        }
+                    }
+                }else if($context_data->building_id == ''){
+                    if(!is_numeric($message_text)){
+                        $response_msg .= 'Invalid input. Please enter a valid serial number for your building.';
+                    }else{
+                        $buildings = $context_data->buildings;
+                        $building_index = (int)$message_text - 1; // Convert to zero-based index
+                        if($building_index >= 0 && $building_index < count($buildings)){
+                            $selected_building = $buildings[$building_index];
+                            $context_data->building_id = $selected_building->sa_id;
+                            $context_data->building_name = $selected_building->building_name;
+                            $context_data->building_slno = $building_index + 1; // Store the serial number (1-based index)
+                            $response_msg .= 'Building has been set to: ' . $selected_building->building_name . '.';
+                        }else{
+                            $response_msg .= 'Invalid input. Please enter a valid serial number for your building.';
+                        }
+                    }
+                }else if($context_data->service_id == ''){
+                    $services = $context_data->services;
+                    $service_index = (int)$message_text - 1; // Convert to zero-based index
+                    if($service_index >= 0 && $service_index < count($services)){
+                        #check first time or not
+                        $first_order = true;
+                        $select_sql = "SELECT * FROM schedule_log WHERE client_mobile = '" .$phone_number. "' ";
+                        $result2 = mysqli_query($con, $select_sql);
+                        if(mysqli_num_rows($result2) > 0){ 
+                            $first_order = false;
+                        }
+
+                        $selected_service = $services[$service_index];
+                        $context_data->service_id = $selected_service->src_id;
+                        $context_data->service_name = $selected_service->service_name;
+                        $context_data->service_slno = $service_index + 1; // Store the serial number (1-based index)
+
+                        if($first_order == true){
+                            $context_data->service_rate_per_hour = $selected_service->rate_first;
+                        }else{
+                            $context_data->service_rate_per_hour = $selected_service->rate_normal;
+                        }
+                        $response_msg .= 'Service has been set to: ' . $selected_service->service_name . '.';
+                    }else{
+                        $response_msg .= 'Invalid input. Please enter a valid serial number for your service.';
+                    }
+                }else if($context_data->booking_date_f == ''){
+                    $booking_date_input = trim($message_text);
+                    if(preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $booking_date_input) === 1){
+                        $date_parts = explode('/', $booking_date_input);
+                        if(checkdate((int)$date_parts[1], (int)$date_parts[0], (int)$date_parts[2])){
+                            $context_data->booking_date_f = $booking_date_input;
+                        }else{
+                            $booking_date_invalid = true;
+                        }
+                    }else{
+                        $booking_date_invalid = $booking_date_input != '';
+                    }
+                }else if($context_data->from_time == ''){
+                    $from_time_input = trim($message_text);
+                    if(preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $from_time_input) === 1){
+                        $context_data->from_time = $from_time_input;
+                    }else{
+                        $from_time_invalid = $from_time_input != '';
+                    }
+                }else if($context_data->booking_date_t == ''){
+                    $booking_date_input = trim($message_text);
+                    if(preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $booking_date_input) === 1){
+                        $date_parts = explode('/', $booking_date_input);
+                        if(checkdate((int)$date_parts[1], (int)$date_parts[0], (int)$date_parts[2])){
+                            $context_data->booking_date_t = $booking_date_input;
+                        }else{
+                            $booking_date_invalid = true;
+                        }
+                    }else{
+                        $booking_date_invalid = $booking_date_input != '';
+                    }
+                }else if($context_data->to_time == ''){
+                    $to_time_input = trim($message_text);
+                    if(preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $to_time_input) === 1){
+                        $context_data->to_time = $to_time_input;
+                    }else{
+                        $to_time_invalid = $to_time_input != '';
+                    }
+                }else if($context_data->confirm_time == ''){
+                    if($message_text == '1'){  
+                        $context_data->confirm_time = $message_text;
+                        $from_date = date('Y-m-d', strtotime(str_replace('/', '-', $context_data->booking_date_f)));
+                        $to_date = date('Y-m-d', strtotime(str_replace('/', '-', $context_data->booking_date_t)));
+                        $from_time = $context_data->from_time;
+                        $to_time = $context_data->to_time;
+
+                        $available_workers = array();
+                        $sql = "SELECT * FROM user_details WHERE user_type = '5' AND quick_service = '1' ";
+                        $result = $con->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while($row = $result->fetch_array()){
+                                $data_obj = new stdClass();
+                                $data_obj->user_id = $row['user_id'];
+                                $data_obj->full_name = $row['full_name']; 
+                                $data_obj->phone_number = $row['phone_number']; 
+                                
+                                array_push($available_workers, $data_obj);
+                            }//end while
+
+                            if(sizeof($available_workers) > 0){
+                                $context_data->available_workers = $available_workers;
+                                $worker = $available_workers[0];
+                                $context_data->worker_id = $worker->user_id;
+                                $context_data->worker_name = $worker->full_name;
+                                $context_data->worker_mobile = $worker->phone_number;
+                                $response_msg .= 'Worker assigned: ' . $worker->full_name . '. Mobile: ' . $worker->phone_number. "\n";
+                            }else{
+                                $context_data->available_workers = array();
+                                $response_msg .= 'No available workers for the selected time slot. Please try a different time.';                            		
+                            }                        
+                        }//end if 
+
+                        ## Calculate total hour
+                        $from_datetime = strtotime($from_date . ' ' . $from_time);
+                        $to_datetime = strtotime($to_date . ' ' . $to_time);
+                        $total_hours = round(($to_datetime - $from_datetime) / 3600, 2);
+                        $context_data->total_hours = $total_hours;
+
+                        ## Tax Calculation GST mandatory
+                        $bill_type = $context_data->bill_type;
+                        $cgst_percent = $context_data->cgst_percent;
+                        $sgst_percent = $context_data->sgst_percent;
+                        $cgst_amount = 0;
+                        $sgst_amount = 0;
+                        $service_rate_per_hour = $context_data->service_rate_per_hour;
+
+                        # GST Calculation
+                        $cgst_amount = ($total_hours * $service_rate_per_hour) * ($cgst_percent / 100);
+                        $sgst_amount = ($total_hours * $service_rate_per_hour) * ($sgst_percent / 100);
+                        $context_data->cgst_amount = $cgst_amount;
+                        $context_data->sgst_amount = $sgst_amount;
+
+                        $total_amount = ($total_hours * $service_rate_per_hour);
+                        $total_amount_with_tax = $total_amount + $cgst_amount + $sgst_amount;
+
+                        $context_data->total_amount = $total_amount;
+                        $context_data->total_amount_with_tax = $total_amount_with_tax;
+
+                    }else if($message_text == '0'){
+                        $context_data->booking_date_f = '';
+                        $context_data->from_time = '';
+                        $context_data->booking_date_t = '';
+                        $context_data->to_time = '';
+                    }else{
+                        $response_msg .= 'Invalid input. Please enter 1 to proceed or 0 to re-enter the start and end date/time.';
+                    }
+                }else if($context_data->proceed_to_pay == ''){
+                    if($message_text == '1'){
+                        $context_data->proceed_to_pay = $message_text;
+
+                        $client_id = $context_data->user_id;
+                        $client_name = $context_data->full_name;
+                        $client_mobile = $context_data->phone_number;
+                        $area_location_id = $context_data->area_location_id;
+                        $area_location_name = $context_data->area_location_name;
+                        $building_id = $context_data->building_id;
+                        $building_name = $context_data->building_name;
+                        $service_id = $context_data->service_id;
+                        $service_name = $context_data->service_name;
+                        $service_rate_per_hour = $context_data->service_rate_per_hour;
+                        $booking_date_f = $context_data->booking_date_f;
+                        $booking_date_t = $context_data->booking_date_t;
+                        $from_time = $context_data->from_time;
+                        $to_time = $context_data->to_time;
+                        $total_hours = $context_data->total_hours;
+                        $total_amount = $context_data->total_amount;
+                        $bill_type = $context_data->bill_type;
+                        $cgst_percent = $context_data->cgst_percent;
+                        $cgst_amount = $context_data->cgst_amount;
+                        $sgst_percent = $context_data->sgst_percent;
+                        $sgst_amount = $context_data->sgst_amount;
+                        $total_amount_with_tax = $context_data->total_amount_with_tax;
+                        $amount_paid = $context_data->amount_paid;
+                        $amount_due = 0;
+                        $worker_id = $context_data->worker_id;
+                        $worker_name = $context_data->worker_name;
+                        $worker_mobile = $context_data->worker_mobile;
+                        $order_status = '1';
+                        $bill_status_name = 'Pending';
+                        $order_placed_date = date('Y-m-d');
+                        $order_placed_time = date('H:i:s');
+                        $order_placed_by = $context_data->user_id;
+                        $order_placed_by_name = $context_data->full_name;
+                        $order_channel_name = $context_data->order_channel_name;
+                        $paid_date = date('Y-m-d');
+                        $payment_mode = $context_data->payment_mode;
+                        $transaction_id = $context_data->transaction_id;
+
+                        
+
+
+                        $sql = "INSERT INTO schedule_log (client_id, client_name, client_mobile, area_location_id, area_location_name, building_id, building_name, service_id, service_name, service_rate_per_hour, booking_date_f, booking_date_t, from_time, to_time, total_hours, total_amount, bill_type, cgst_percent, cgst_amount, sgst_percent, sgst_amount, total_amount_with_tax, amount_paid, amount_due, worker_id, worker_name, worker_mobile, bill_status, bill_status_name, order_placed_date, order_placed_time, order_placed_by, order_placed_by_name, order_channel_name, paid_date, payment_mode, transaction_id) VALUES ('" .$client_id. "', '" .$client_name."', '" .$client_mobile."', '" .$area_location_id."', '" .$area_location_name."', '" .$building_id."', '" .$building_name."', '" .$service_id."', '" .$service_name."', '" .$service_rate_per_hour."', '" .$booking_date_f."', '" .$booking_date_t."', '" .$from_time."', '" .$to_time."', '" .$total_hours."', '" .$total_amount."', '" .$bill_type."', '" .$cgst_percent."', '" .$cgst_amount."', '" .$sgst_percent."', '" .$sgst_amount."', '" .$total_amount_with_tax."', '" .$amount_paid."', '" .$amount_due."', '" .$worker_id."', '" .$worker_name."', '" .$worker_mobile."', '" .$order_status."', '" .$bill_status_name."', '" .$order_placed_date."', '" .$order_placed_time. "', '" .$order_placed_by. "', '" .$order_placed_by_name. "', '" .$order_channel_name. "', '" .$paid_date. "', '" .$payment_mode. "', '" .$transaction_id. "')";
+                        $result = $con->query($sql);
+                        $booking_insert_id = mysqli_insert_id($con);
+                        $booking_id = str_pad($booking_insert_id, 4, '0', STR_PAD_LEFT);
+                        $context_data->booking_id = $booking_id;
+
+                        $response_msg .= 'Your booking has been confirmed successfully! Your Booking ID is: '.$booking_id.'. Thank you for booking with us!';
+
+                    }
+                }else{}
+
+                ## Check Form Validation and show message
+                if($context_data->full_name == ''){
+                    $response_msg .= 'Please enter your name';
+                }else if($context_data->area_location_id == ''){
+                    # Fetch area location name from database
+                    $area_locations = array();
+                    $area_locations = $context_data->area_locations;
+
+                    if(sizeof($area_locations) == 0){
+                        $sql_area = "SELECT * FROM service_area WHERE parent_sa_id = '0' AND sa_status = '1'";
+                        $result_area = mysqli_query($con, $sql_area);
+                        if(mysqli_num_rows($result_area) > 0){
+                            while($row_area = mysqli_fetch_array($result_area)){
+                                $sa_id = $row_area['sa_id'];
+                                $area_location = $row_area['area_location'];
+                                $pincode = $row_area['pincode'];
+                                $street_name = $row_area['street_name'];
+                                $landmark = $row_area['landmark'];
+
+                                $area_location_obj = new stdClass();
+                                $area_location_obj->sa_id = $sa_id;
+                                $area_location_obj->area_location = $area_location;
+                                $area_location_obj->pincode = $pincode; 
+                                $area_location_obj->street_name = $street_name;
+                                $area_location_obj->landmark = $landmark;
+
+                                array_push($area_locations, $area_location_obj);
+                            }
+                        }
+                        $context_data->area_locations = $area_locations;
+                    }//end if
+
+                    if(sizeof($area_locations) > 0){
+                        $response_msg .= 'Our service is available in the following areas: '. "\n";
+                        $sl = 1;
+                        foreach($area_locations as $area){
+                            $response_msg .= $sl . '. ' . $area->area_location . '(Pin: ' . $area->pincode . ')'. "\n";
+                            $sl++;
+                        }
+                        // Remove the trailing comma and space
+                        $response_msg = rtrim($response_msg, ', ');
+                    }
+                    $response_msg .= 'Please enter serial number of your area location from the above list.';
+
+                }else if($context_data->building_id == ''){
+                    # Fetch Building name from database based on location
+                    $area_location_id = $context_data->area_location_id;
+                    $buildings = array();
+                    $buildings = $context_data->buildings;
+
+                    if(sizeof($buildings) == 0){
+                        $sql_area = "SELECT * FROM service_area WHERE parent_sa_id = '" . $area_location_id . "' AND sa_status = '1'";
+                        $result_area = mysqli_query($con, $sql_area);
+                        if(mysqli_num_rows($result_area) > 0){
+                            while($row_area = mysqli_fetch_array($result_area)){
+                                $sa_id = $row_area['sa_id'];
+                                $area_location = $row_area['area_location'];
+                                $pincode = $row_area['pincode'];
+                                $street_name = $row_area['street_name'];
+                                $landmark = $row_area['landmark'];
+                                $building_name = $row_area['building_name'];
+
+                                $building_obj = new stdClass();
+                                $building_obj->sa_id = $sa_id;
+                                $building_obj->area_location = $area_location;
+                                $building_obj->pincode = $pincode;
+                                $building_obj->street_name = $street_name;
+                                $building_obj->landmark = $landmark;
+                                $building_obj->building_name = $building_name;
+                                $building_obj->street_name = $street_name;
+                                $building_obj->landmark = $landmark;
+
+                                array_push($buildings, $building_obj);
+                            }
+                        }
+                        $context_data->buildings = $buildings;
+                    }//end if
+
+                    if(sizeof($buildings) > 0){
+                        $response_msg .= 'Our service is available in the following buildings: '. "\n";
+                        $sl = 1;
+                        foreach($buildings as $building){
+                            $response_msg .= $sl . '. ' . $building->building_name . ''. "\n";
+                            $sl++;
+                        }
+                        // Remove the trailing comma and space
+                        $response_msg = rtrim($response_msg, ', ');
+                    }
+
+                    $response_msg .= 'Please enter serial number of your building from the above list.';
+                }else if($context_data->service_id == ''){
+                    # fetch Service name from database based on location and building
+                    $area_location_id = $context_data->area_location_id;
+                    $building_id = $context_data->building_id;
+                    $services = $context_data->services;
+                    
+                    if(sizeof($services) == 0){
+                        $sql = "SELECT service_rate_chart.src_id, service_rate_chart.qs_id, service_rate_chart.qs_id, service_rate_chart.sa_id, service_rate_chart.sa_id_child, service_rate_chart.rate_first, service_rate_chart.rate_normal, quick_services.service_name, quick_services.svc_included, quick_services.svc_not_included FROM service_rate_chart JOIN quick_services ON service_rate_chart.qs_id = quick_services.qs_id WHERE service_rate_chart.sa_id = '" . $area_location_id . "' AND service_rate_chart.sa_id_child = '" . $building_id . "' AND quick_services.svc_status = '1' ";
+                        $result = $con->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            $status = true; 
+                            while($row = $result->fetch_array()){
+                                $service = new stdClass();
+                                $service->src_id = $row['src_id'];
+                                $service->qs_id = $row['qs_id'];
+                                $service->rate_first = $row['rate_first']; 
+                                $service->rate_normal = $row['rate_normal']; 
+                                $service->service_name = $row['service_name']; 
+                                $service->svc_included = json_decode($row['svc_included']); 
+                                $service->svc_not_included = json_decode($row['svc_not_included']);
+                                
+                                array_push($services, $service);
+                            }
+                        }
+                    }//end if              
+                    
+                    if(sizeof($services) > 0){
+                        $context_data->services = $services;
+                        $response_msg .= 'Available services are: '. "\n";
+                        $sl = 1;
+                        foreach($services as $service){
+                            $response_msg .= $sl . '. ' . $service->service_name . ''. "\n";
+                            $sl++;
+                        }
+
+                        $response_msg .= 'Please select a service from the list above.';
+                    }else{
+                        $response_msg .= 'No services available.';
+                    }
+                }else if($context_data->booking_date_f == ''){
+                    if($booking_date_invalid){
+                        $response_msg .= 'Invalid date. Please enter a valid date in DD/MM/YYYY format.';
+                    }else{
+                        $response_msg .= 'Please enter Start Date you want to get this  quick service. Please enter the date in DD/MM/YYYY format. Enter \'Exit\' to terminate this session.';
+                    }
+                }else if($context_data->from_time == ''){
+                    if($from_time_invalid){
+                        $response_msg .= 'Invalid time. Please enter the start time in 24-hour HH:MM format, from 00:00 to 23:59.';
+                    }else{
+                        $response_msg .= 'Please enter the start time in 24 Hrs time format. Example: If you want to get the service from 07:30 AM then enter the start time as 07:30 or if you want to get the service at 07:30 PM then enter 19:30. Enter \'Exit\' to terminate this session.';
+                    }
+                }else if($context_data->booking_date_t == ''){
+                    if($booking_date_invalid){
+                        $response_msg .= 'Invalid date. Please enter a valid date in DD/MM/YYYY format.';
+                    }else{
+                        $response_msg .= 'Please enter the End Date of this Quick Service. Please enter the date in DD/MM/YYYY format. Enter \'Exit\' to terminate this session.';
+                    }
+                }else if($context_data->to_time == ''){
+                    if($to_time_invalid){
+                        $response_msg .= 'Invalid time. Please enter the end time in 24-hour HH:MM format, from 00:00 to 23:59.';
+                    }else{
+                        $response_msg .= 'Please enter the end time in 24 Hrs time format. Example: If you want to get the service until 07:30 AM then enter the end time as 07:30 or if you want to get the service until 07:30 PM then enter 19:30. Enter \'Exit\' to terminate this session.';
+                    }
+                }else if($context_data->confirm_time == ''){
+                    $response_msg .= 'Your Service start and date time is as followes: From '.$context_data->booking_date_f.' '.date('h:m A', strtotime($context_data->from_time)).' to '.$context_data->booking_date_t.' '.date('h:m A', strtotime($context_data->to_time)).'. Please enter 1 to proceed to next step. Enter \'Exit\' to terminate this session.';
+                }else if($context_data->proceed_to_pay == ''){
+                    $response_msg .= 'Payment is required. Enter 1 to pay or type \'Exit\' to cancel the booking.';
+                }else{}
+
+
+                ### Call API as per needs
+                if($context_data->confirm_time == '1' && $call_api == true){ 
+                    
+
+                }//end call api
+
+                #### Update the context data in the database
+                $context_data_json = json_encode($context_data);
+                if($id == 0){
+                    $insert_sql = "INSERT INTO whatsapp_context (user_id, full_name, phone_number, context_data) VALUES ('" . $user_id . "', '" . $full_name . "', '" . $from_number . "', '" . $context_data_json . "')";
+                    mysqli_query($con, $insert_sql);
+                }else{
+                    $update_sql = "UPDATE whatsapp_context SET context_data = '" . $context_data_json . "' WHERE id = '" . $id . "'";
+                    mysqli_query($con, $update_sql);
+                }
+            }//emnd do_exit check
         }//end message object check
     
         // Always reply with a 200 OK status immediately to acknowledge receipt to Meta
         http_response_code(200);
         echo $response_msg;
+        echo $whatsapp_response;
         
     }
 
