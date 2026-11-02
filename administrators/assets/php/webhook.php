@@ -313,9 +313,22 @@
                             $context_data->building_id = $selected_building->sa_id;
                             $context_data->building_name = $selected_building->building_name;
                             $context_data->building_slno = $building_index + 1; // Store the serial number (1-based index)
-                            $response_msg .= 'Building has been set to: ' . $selected_building->building_name . '.';
+                            $response_msg .= 'Your selected building has been successfully set to: ' . $selected_building->building_name . '.';
+
+                            # WhatsApp
+                            $template_name = 'valid_building_id';
+                            $parameters = array();
+                            $param1 = $selected_building->building_name;
+                            array_push($parameters, $param1);
+                            $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+
                         }else{
                             $response_msg .= 'Invalid input. Please enter a valid serial number for your building.';
+                        
+                            # WhatsApp
+                            $template_name = 'invalid_building_id';
+                            $parameters = array();
+                            $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                         }
                     }
                 }else if($context_data->service_id == ''){
@@ -341,8 +354,21 @@
                             $context_data->service_rate_per_hour = $selected_service->rate_normal;
                         }
                         $response_msg .= 'Service has been set to: ' . $selected_service->service_name . '.';
+
+                        # WhatsApp
+                        $template_name = 'valid_service_id';
+                        $parameters = array();
+                        $param1 = $selected_service->service_name;
+                        array_push($parameters, $param1);
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+
                     }else{
                         $response_msg .= 'Invalid input. Please enter a valid serial number for your service.';
+                        
+                        # WhatsApp
+                        $template_name = 'invalid_service_id';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                     }
                 }else if($context_data->booking_date_f == ''){
                     $booking_date_input = trim($message_text);
@@ -411,9 +437,30 @@
                                 $context_data->worker_name = $worker->full_name;
                                 $context_data->worker_mobile = $worker->phone_number;
                                 $response_msg .= 'Worker assigned: ' . $worker->full_name . '. Mobile: ' . $worker->phone_number. "\n";
+
+                                # WhatsApp
+                                $template_name = 'available_worker_name';
+                                $parameters = array();
+                                $param1 = $worker->full_name;
+                                $param2 = $worker->phone_number;
+                                array_push($parameters, $param1);
+                                array_push($parameters, $param2);
+                                $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+
                             }else{
+                                $context_data->confirm_time = '';
+                                $context_data->booking_date_f = '';
+                                $context_data->booking_date_t = '';
+                                $context_data->from_time = '';
+                                $context_data->to_time = '';
+
                                 $context_data->available_workers = array();
-                                $response_msg .= 'No available workers for the selected time slot. Please try a different time.';                            		
+                                $response_msg .= 'No available workers for the selected time slot. Please try a different time.'; 
+                        
+                                # WhatsApp
+                                $template_name = 'no_available_workers';
+                                $parameters = array();
+                                $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);                           		
                             }                        
                         }//end if 
 
