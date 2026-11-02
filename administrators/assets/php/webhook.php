@@ -265,7 +265,12 @@
                     }
                 }else if($context_data->area_location_id == ''){
                     if(!is_numeric($message_text)){
-                        $response_msg .= 'Invalid input. Please enter a valid serial number for your area location.';
+                        $response_msg .= 'Invalid input. Please enter a valid serial number corresponding to your preferred area location.';
+
+                        # WhatsApp
+                        $template_name = 'invalid_area_location_id';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                     }else{
                         $area_locations = $context_data->area_locations;
                         $area_location_index = (int)$message_text - 1; // Convert to zero-based index
@@ -274,14 +279,32 @@
                             $context_data->area_location_slno = $area_location_index + 1; // Store the serial number (1-based index)
                             $context_data->area_location_id = $selected_area->sa_id;
                             $context_data->area_location_name = $selected_area->area_location;
-                            $response_msg .= 'Area location has been set to: ' . $selected_area->area_location . '.';
+                            $response_msg .= 'Your selected area location has been successfully set to: ' . $selected_area->area_location . '.';
+
+                            # WhatsApp
+                            $template_name = 'valid_area_location_id';
+                            $parameters = array();
+                            $param1 = $selected_area->area_location;
+                            array_push($parameters, $param1);
+                            $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+
                         }else{
-                            $response_msg .= 'Invalid input. Please enter a valid serial number for your area location.';
+                            $response_msg .= 'Invalid input. Please enter a valid serial number corresponding to your preferred area location.';
+
+                            # WhatsApp
+                            $template_name = 'invalid_area_location_id';
+                            $parameters = array();
+                            $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                         }
                     }
                 }else if($context_data->building_id == ''){
                     if(!is_numeric($message_text)){
                         $response_msg .= 'Invalid input. Please enter a valid serial number for your building.';
+                        
+                        # WhatsApp
+                        $template_name = 'invalid_building_id';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                     }else{
                         $buildings = $context_data->buildings;
                         $building_index = (int)$message_text - 1; // Convert to zero-based index
@@ -487,6 +510,11 @@
                 ## Check Form Validation and show message
                 if($context_data->full_name == ''){
                     $response_msg .= 'Please enter your name';
+
+                    # WhatsApp
+                    $template_name = 'enter_name';
+                    $parameters = array();
+                    $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                 }else if($context_data->area_location_id == ''){
                     # Fetch area location name from database
                     $area_locations = array();
@@ -516,17 +544,25 @@
                         $context_data->area_locations = $area_locations;
                     }//end if
 
+                    $service_area_list = '';
                     if(sizeof($area_locations) > 0){
                         $response_msg .= 'Our service is available in the following areas: '. "\n";
                         $sl = 1;
                         foreach($area_locations as $area){
                             $response_msg .= $sl . '. ' . $area->area_location . '(Pin: ' . $area->pincode . ')'. "\n";
+                            $service_area_list .= $sl . '. ' . $area->area_location . '(Pin: ' . $area->pincode . ') ';
                             $sl++;
                         }
                         // Remove the trailing comma and space
                         $response_msg = rtrim($response_msg, ', ');
                     }
                     $response_msg .= 'Please enter serial number of your area location from the above list.';
+
+                    # WhatsApp
+                    $template_name = 'service_area_location';
+                    $parameters = array();
+                    array_push($parameters, $service_area_list);
+                    $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
 
                 }else if($context_data->building_id == ''){
                     # Fetch Building name from database based on location
@@ -562,11 +598,13 @@
                         $context_data->buildings = $buildings;
                     }//end if
 
+                    $available_building = '';
                     if(sizeof($buildings) > 0){
                         $response_msg .= 'Our service is available in the following buildings: '. "\n";
                         $sl = 1;
                         foreach($buildings as $building){
                             $response_msg .= $sl . '. ' . $building->building_name . ''. "\n";
+                            $available_building .= $sl . '. ' . $building->building_name . ' ';
                             $sl++;
                         }
                         // Remove the trailing comma and space
@@ -574,6 +612,12 @@
                     }
 
                     $response_msg .= 'Please enter serial number of your building from the above list.';
+
+                    # WhatsApp
+                    $template_name = 'service_available_building';
+                    $parameters = array();
+                    array_push($parameters, $available_building);
+                    $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                 }else if($context_data->service_id == ''){
                     # fetch Service name from database based on location and building
                     $area_location_id = $context_data->area_location_id;
@@ -602,46 +646,114 @@
                     }//end if              
                     
                     if(sizeof($services) > 0){
+                        $available_services_list = '';
                         $context_data->services = $services;
                         $response_msg .= 'Available services are: '. "\n";
                         $sl = 1;
                         foreach($services as $service){
                             $response_msg .= $sl . '. ' . $service->service_name . ''. "\n";
+                            $available_services_list .= $sl . '. ' . $service->service_name . ' ';
                             $sl++;
                         }
 
                         $response_msg .= 'Please select a service from the list above.';
+
+                        # WhatsApp
+                        $template_name = 'available_services';
+                        $parameters = array();
+                        array_push($parameters, $available_services_list);
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+                        
                     }else{
                         $response_msg .= 'No services available.';
                     }
                 }else if($context_data->booking_date_f == ''){
                     if($booking_date_invalid){
-                        $response_msg .= 'Invalid date. Please enter a valid date in DD/MM/YYYY format.';
+                        $response_msg .= 'The date entered is invalid. Please provide a valid date in DD/MM/YYYY format to proceed.';
+
+                        # WhatsApp
+                        $template_name = 'invalid_date';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                     }else{
-                        $response_msg .= 'Please enter Start Date you want to get this  quick service. Please enter the date in DD/MM/YYYY format. Enter \'Exit\' to terminate this session.';
+                        $response_msg .= 'Please enter your preferred Start Date to proceed with this quick service. Kindly use the **DD/MM/YYYY** format. Type Exit to end this session.';
+
+                        # WhatsApp
+                        $template_name = 'enter_start_date';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                     }
                 }else if($context_data->from_time == ''){
                     if($from_time_invalid){
-                        $response_msg .= 'Invalid time. Please enter the start time in 24-hour HH:MM format, from 00:00 to 23:59.';
+                        $response_msg .= 'The time entered is invalid. Please provide a valid start time in 24-hour HH:MM format (00:00 to 23:59).';
+
+                        # WhatsApp
+                        $template_name = 'valid_start_time';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                     }else{
-                        $response_msg .= 'Please enter the start time in 24 Hrs time format. Example: If you want to get the service from 07:30 AM then enter the start time as 07:30 or if you want to get the service at 07:30 PM then enter 19:30. Enter \'Exit\' to terminate this session.';
+                        $response_msg .= 'Please enter your preferred Start Time in 24-hour (HH:MM) format. Examples: - 07:30 AM → Enter 07:30 - 07:30 PM → Enter 19:30. Type Exit to terminate this session.';
+                        
+                        # WhatsApp
+                        $template_name = 'valid_start_time_explaination';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                     }
                 }else if($context_data->booking_date_t == ''){
                     if($booking_date_invalid){
-                        $response_msg .= 'Invalid date. Please enter a valid date in DD/MM/YYYY format.';
+                        $response_msg .= 'The date entered is invalid. Please provide a valid date in DD/MM/YYYY format to proceed.';
+
+                        # WhatsApp
+                        $template_name = 'invalid_date';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                     }else{
-                        $response_msg .= 'Please enter the End Date of this Quick Service. Please enter the date in DD/MM/YYYY format. Enter \'Exit\' to terminate this session.';
+                        $response_msg .= 'Please provide the End Date for your requested quick service. Ensure the date is entered in DD/MM/YYYY format. Type Exit to terminate this session.';
+
+                        # WhatsApp
+                        $template_name = 'invalid_to_date_explanation';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                     }
                 }else if($context_data->to_time == ''){
                     if($to_time_invalid){
-                        $response_msg .= 'Invalid time. Please enter the end time in 24-hour HH:MM format, from 00:00 to 23:59.';
+                        $response_msg .= 'The end time entered is invalid. Please provide a valid end time in 24-hour (HH:MM) format, between 00:00 and 23:59';
+                        
+                        # WhatsApp
+                        $template_name = 'valid_end_time';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                     }else{
-                        $response_msg .= 'Please enter the end time in 24 Hrs time format. Example: If you want to get the service until 07:30 AM then enter the end time as 07:30 or if you want to get the service until 07:30 PM then enter 19:30. Enter \'Exit\' to terminate this session.';
+                        $response_msg .= 'Please enter your preferred **End Time** in 24-hour (HH:MM) format. Examples: - 07:30 AM → Enter 07:30 - 07:30 PM → Enter 19:30 Type Exit to terminate this session.';
+                        
+                        # WhatsApp
+                        $template_name = 'valid_end_time_explanation';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                     }
                 }else if($context_data->confirm_time == ''){
-                    $response_msg .= 'Your Service start and date time is as followes: From '.$context_data->booking_date_f.' '.date('h:m A', strtotime($context_data->from_time)).' to '.$context_data->booking_date_t.' '.date('h:m A', strtotime($context_data->to_time)).'. Please enter 1 to proceed to next step. Enter \'Exit\' to terminate this session.';
+                    $response_msg .= 'Your Service start and date time is as followes: From '.$context_data->booking_date_f.' '.date('h:m A', strtotime($context_data->from_time)).' to '.$context_data->booking_date_t.' '.date('h:m A', strtotime($context_data->to_time)).'. Please enter 1 to proceed to next step. Enter \'Exit\' to terminate this session.';                    
+
+                    # WhatsApp
+                    $template_name = 'confirm_date_time';
+                    $parameters = array();
+                    $param1 = $context_data->booking_date_f;
+                    $param2 = date('h:m A', strtotime($context_data->from_time));
+                    $param3 = $context_data->booking_date_t;
+                    $param4 = date('h:m A', strtotime($context_data->to_time));
+
+                    array_push($parameters, $param1);
+                    array_push($parameters, $param2);
+                    array_push($parameters, $param3);
+                    array_push($parameters, $param4);
+                    $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                 }else if($context_data->proceed_to_pay == ''){
-                    $response_msg .= 'Payment is required. Enter 1 to pay or type \'Exit\' to cancel the booking.';
+                    $response_msg .= 'Payment is required to confirm your booking. Enter 1 to proceed with the payment, or type **Exit** to cancel the booking.';
+                        
+                    # WhatsApp
+                    $template_name = 'proceed_to_pay';
+                    $parameters = array();
+                    $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                 }else{}
 
 
