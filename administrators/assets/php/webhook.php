@@ -67,6 +67,8 @@
         return $response;
     }//end if
 
+    $sl_array = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟", "1️⃣1️⃣", "1️⃣2️⃣", "1️⃣3️⃣", "1️⃣4️⃣", "1️⃣5️⃣", "1️⃣6️⃣", "1️⃣7️⃣", "1️⃣8️⃣", "1️⃣9️⃣", "2️⃣0️⃣", "2️⃣1️⃣", "2️⃣2️⃣", "2️⃣3️⃣", "2️⃣4️⃣", "2️⃣5️⃣", "2️⃣6️⃣", "2️⃣7️⃣", "2️⃣8️⃣", "2️⃣9️⃣", "3️⃣0️⃣"];
+
     // 2. RECEIVING INBOUND MESSAGES (Executed whenever a user messages your number)
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message_text = '';
@@ -282,11 +284,11 @@
                             $response_msg .= 'Your selected area location has been successfully set to: ' . $selected_area->area_location . '.';
 
                             # WhatsApp
-                            $template_name = 'valid_area_location_id';
+                            /*$template_name = 'valid_area_location_id';
                             $parameters = array();
                             $param1 = $selected_area->area_location;
                             array_push($parameters, $param1);
-                            $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+                            $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);*/
 
                         }else{
                             $response_msg .= 'Invalid input. Please enter a valid serial number corresponding to your preferred area location.';
@@ -316,11 +318,11 @@
                             $response_msg .= 'Your selected building has been successfully set to: ' . $selected_building->building_name . '.';
 
                             # WhatsApp
-                            $template_name = 'valid_building_id';
+                            /*$template_name = 'valid_building_id';
                             $parameters = array();
                             $param1 = $selected_building->building_name;
                             array_push($parameters, $param1);
-                            $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+                            $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);*/
 
                         }else{
                             $response_msg .= 'Invalid input. Please enter a valid serial number for your building.';
@@ -356,11 +358,11 @@
                         $response_msg .= 'Service has been set to: ' . $selected_service->service_name . '.';
 
                         # WhatsApp
-                        $template_name = 'valid_service_id';
+                        /*$template_name = 'valid_service_id';
                         $parameters = array();
                         $param1 = $selected_service->service_name;
                         array_push($parameters, $param1);
-                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);*/
 
                     }else{
                         $response_msg .= 'Invalid input. Please enter a valid serial number for your service.';
@@ -439,13 +441,13 @@
                                 $response_msg .= 'Worker assigned: ' . $worker->full_name . '. Mobile: ' . $worker->phone_number. "\n";
 
                                 # WhatsApp
-                                $template_name = 'available_worker_name';
+                                /*$template_name = 'available_worker_name';
                                 $parameters = array();
                                 $param1 = $worker->full_name;
                                 $param2 = $worker->phone_number;
                                 array_push($parameters, $param1);
                                 array_push($parameters, $param2);
-                                $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+                                $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);*/
 
                             }else{
                                 $context_data->confirm_time = '';
@@ -497,6 +499,11 @@
                         $context_data->to_time = '';
                     }else{
                         $response_msg .= 'Invalid input. Please enter 1 to proceed or 0 to re-enter the start and end date/time.';
+                        
+                        # WhatsApp
+                        $template_name = 'reenter_date_time';
+                        $parameters = array();
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);  
                     }
                 }else if($context_data->proceed_to_pay == ''){
                     if($message_text == '1'){
@@ -549,7 +556,14 @@
                         $booking_id = str_pad($booking_insert_id, 4, '0', STR_PAD_LEFT);
                         $context_data->booking_id = $booking_id;
 
-                        $response_msg .= 'Your booking has been confirmed successfully! Your Booking ID is: '.$booking_id.'. Thank you for booking with us!';
+                        $response_msg .= 'Your booking has been confirmed successfully! Your Booking ID is: #'.$booking_id.'. Thank you for booking with us!';
+
+                        # WhatsApp
+                        $template_name = 'booking_confirmed_successfully';
+                        $parameters = array();
+                        $param1 = $booking_id; 
+                        array_push($parameters, $param1); 
+                        $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
 
                     }
                 }else{}
@@ -596,8 +610,8 @@
                         $response_msg .= 'Our service is available in the following areas: '. "\n";
                         $sl = 1;
                         foreach($area_locations as $area){
-                            $response_msg .= $sl . '. ' . $area->area_location . '(Pin: ' . $area->pincode . ')'. "\n";
-                            $service_area_list .= $sl . '. ' . $area->area_location . '(Pin: ' . $area->pincode . ') ';
+                            $response_msg .= $sl_array[$sl] . ' ' . $area->area_location . '(Pin: ' . $area->pincode . ')'. "\n";
+                            $service_area_list .= $sl_array[$sl] . ' ' . $area->area_location . '(Pin: ' . $area->pincode . ') ';
                             $sl++;
                         }
                         // Remove the trailing comma and space
@@ -650,8 +664,8 @@
                         $response_msg .= 'Our service is available in the following buildings: '. "\n";
                         $sl = 1;
                         foreach($buildings as $building){
-                            $response_msg .= $sl . '. ' . $building->building_name . ''. "\n";
-                            $available_building .= $sl . '. ' . $building->building_name . ' ';
+                            $response_msg .= $sl_array[$sl] . ' ' . $building->building_name . ''. "\n";
+                            $available_building .= $sl_array[$sl] . ' ' . $building->building_name . ' ';
                             $sl++;
                         }
                         // Remove the trailing comma and space
@@ -698,8 +712,8 @@
                         $response_msg .= 'Available services are: '. "\n";
                         $sl = 1;
                         foreach($services as $service){
-                            $response_msg .= $sl . '. ' . $service->service_name . ''. "\n";
-                            $available_services_list .= $sl . '. ' . $service->service_name . ' ';
+                            $response_msg .= $sl_array[$sl] . ' ' . $service->service_name . ''. "\n";
+                            $available_services_list .= $sl_array[$sl] . ' ' . $service->service_name . ' ';
                             $sl++;
                         }
 
@@ -785,9 +799,9 @@
                     $template_name = 'confirm_date_time';
                     $parameters = array();
                     $param1 = $context_data->booking_date_f;
-                    $param2 = date('h:m A', strtotime($context_data->from_time));
+                    $param2 = $context_data->from_time; //date('h:m A', strtotime($context_data->from_time));
                     $param3 = $context_data->booking_date_t;
-                    $param4 = date('h:m A', strtotime($context_data->to_time));
+                    $param4 = $context_data->to_time; //date('h:m A', strtotime($context_data->to_time));
 
                     array_push($parameters, $param1);
                     array_push($parameters, $param2);
@@ -800,6 +814,28 @@
                     # WhatsApp
                     $template_name = 'proceed_to_pay';
                     $parameters = array();
+                    $param1 = $context_data->area_location_name; // Service Location
+                    $param2 = $context_data->building_name; // Building Name
+                    $param3 = $context_data->service_name; // Service Name
+                    $param4 = (string) $context_data->total_hours; // Total Hours
+                    $param5 = (string) $context_data->total_amount; // Service Charge
+                    $param6 = (string) $context_data->cgst_amount; // CGST
+                    $param7 = (string) $context_data->sgst_amount; //SGST 
+                    $param8 = (string) $context_data->total_amount_with_tax; // Total Payable Amount
+                    $param9 = $context_data->worker_name; // Worker Name
+                    $param10 = (string) $context_data->worker_mobile; // Worker Mobile
+
+                    array_push($parameters, $param1);
+                    array_push($parameters, $param2);
+                    array_push($parameters, $param3);
+                    array_push($parameters, $param4);
+                    array_push($parameters, $param5);
+                    array_push($parameters, $param6);
+                    array_push($parameters, $param7);
+                    array_push($parameters, $param8);
+                    array_push($parameters, $param9);
+                    array_push($parameters, $param10);
+
                     $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
                 }else{}
 
