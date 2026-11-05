@@ -2,6 +2,7 @@
     # Include Database Connection
     require_once __DIR__ . '/sql_conn.php';
     
+    # Send Text Message
     function sendWhatsAppMessage($to, $template_name, $parameters){
         $api_username = '1350182688181368';
         $apikey = '20fb1863-c6e8-11f1-afb3-02c8a5e042bd';
@@ -41,8 +42,6 @@
         }';
 
         //echo 'post_fields: '.$post_fields;
-
-
         $curl = curl_init();
     
         curl_setopt_array($curl, array(
@@ -65,6 +64,84 @@
         
         curl_close($curl);
         return $response;
+        // return true; // For testing purposes, return true to indicate success
+    }//end if
+
+    # Send Image message via WhatsApp
+    function sendWhatsAppImageMessage($to, $template_name, $parameters){
+        $api_username = '1350182688181368';
+        $apikey = '20fb1863-c6e8-11f1-afb3-02c8a5e042bd';
+        $img_url = 'https://www.sahaservices.in/administrators/assets/php/souvice_biswas.jpeg';
+
+        $params = array();
+        if(sizeof($parameters) > 0){
+            for($i = 0; $i < sizeof($parameters); $i++){
+                $text = (string) $parameters[$i];
+                //echo 'text: '. $text;
+
+                $param_obj = new stdClass();
+                $param_obj->type = 'text';
+                $param_obj->text = $text;
+
+                array_push($params, $param_obj);
+            }
+        }//end if
+        $params_en = json_encode($params);
+
+        $post_fields = '{
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": "'.$to.'",
+            "type": "template",
+            "template": {
+                "language": {
+                    "code": "en"
+                },
+                "name": "'.$template_name.'",
+                "components": [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "image",
+                                "image": {
+                                    "link": "'.$img_url.'"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": '.$params_en.'
+                    }
+                ]
+            }
+        }';
+
+        //echo 'post_fields: '.$post_fields;
+        $curl = curl_init();
+    
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://partnersv1.pinbot.ai/v3/'.$api_username.'/messages',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $post_fields,
+        CURLOPT_HTTPHEADER => array(
+            'apikey: '.$apikey,
+            'Content-Type: application/json'
+        ),
+        ));
+        
+        $response = curl_exec($curl);
+        
+        curl_close($curl);
+        return $response;
+        //return true; // For testing purposes, return true to indicate success
     }//end if
 
     $sl_array = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟", "1️⃣1️⃣", "1️⃣2️⃣", "1️⃣3️⃣", "1️⃣4️⃣", "1️⃣5️⃣", "1️⃣6️⃣", "1️⃣7️⃣", "1️⃣8️⃣", "1️⃣9️⃣", "2️⃣0️⃣", "2️⃣1️⃣", "2️⃣2️⃣", "2️⃣3️⃣", "2️⃣4️⃣", "2️⃣5️⃣", "2️⃣6️⃣", "2️⃣7️⃣", "2️⃣8️⃣", "2️⃣9️⃣", "3️⃣0️⃣"];
@@ -82,7 +159,7 @@
         $data = json_decode($raw_input, true);
     
         // Optional: Log the payload for debugging/inspection
-        //file_put_contents('webhook_log.txt', $raw_input . PHP_EOL, FILE_APPEND);
+        file_put_contents('webhook_log.txt', $raw_input . PHP_EOL, FILE_APPEND);
     
         // Extract message data safely from Meta's payload structure
         if (isset($data['entry'][0]['changes'][0]['value']['messages'][0])) {
@@ -188,6 +265,7 @@
                 $context_data->available_workers = array();
                 $context_data->proceed_to_pay = '';
                 $context_data->booking_id = '';
+                $context_data->upi_payment = '';
             }//end context if
 
             # Exit Comment
@@ -508,6 +586,10 @@
                 }else if($context_data->proceed_to_pay == ''){
                     if($message_text == '1'){
                         $context_data->proceed_to_pay = $message_text;
+                    }
+                }else if($context_data->upi_payment == ''){
+                    if($message_text == '1'){
+                        $context_data->upi_payment = $message_text;
 
                         $client_id = $context_data->user_id;
                         $client_name = $context_data->full_name;
@@ -545,9 +627,7 @@
                         $order_channel_name = $context_data->order_channel_name;
                         $paid_date = date('Y-m-d');
                         $payment_mode = $context_data->payment_mode;
-                        $transaction_id = $context_data->transaction_id;
-
-                        
+                        $transaction_id = $context_data->transaction_id;                        
 
 
                         $sql = "INSERT INTO schedule_log (client_id, client_name, client_mobile, area_location_id, area_location_name, building_id, building_name, service_id, service_name, service_rate_per_hour, booking_date_f, booking_date_t, from_time, to_time, total_hours, total_amount, bill_type, cgst_percent, cgst_amount, sgst_percent, sgst_amount, total_amount_with_tax, amount_paid, amount_due, worker_id, worker_name, worker_mobile, bill_status, bill_status_name, order_placed_date, order_placed_time, order_placed_by, order_placed_by_name, order_channel_name, paid_date, payment_mode, transaction_id) VALUES ('" .$client_id. "', '" .$client_name."', '" .$client_mobile."', '" .$area_location_id."', '" .$area_location_name."', '" .$building_id."', '" .$building_name."', '" .$service_id."', '" .$service_name."', '" .$service_rate_per_hour."', '" .$booking_date_f."', '" .$booking_date_t."', '" .$from_time."', '" .$to_time."', '" .$total_hours."', '" .$total_amount."', '" .$bill_type."', '" .$cgst_percent."', '" .$cgst_amount."', '" .$sgst_percent."', '" .$sgst_amount."', '" .$total_amount_with_tax."', '" .$amount_paid."', '" .$amount_due."', '" .$worker_id."', '" .$worker_name."', '" .$worker_mobile."', '" .$order_status."', '" .$bill_status_name."', '" .$order_placed_date."', '" .$order_placed_time. "', '" .$order_placed_by. "', '" .$order_placed_by_name. "', '" .$order_channel_name. "', '" .$paid_date. "', '" .$payment_mode. "', '" .$transaction_id. "')";
@@ -837,6 +917,17 @@
                     array_push($parameters, $param10);
 
                     $whatsapp_response = sendWhatsAppMessage($to, $template_name, $parameters);
+                }else if($context_data->upi_payment == ''){ 
+                    $total_amount_with_tax = $context_data->total_amount_with_tax;
+
+                    $response_msg .= 'Please complete your payment of ₹' . $total_amount_with_tax . ' securely through WhatsApp by following the payment instructions provided below. Once the payment is successful, you will receive a payment confirmation. Thank you for choosing our service!';
+
+                    # WhatsApp
+                    $template_name = 'complete_your_payment_securely';
+                    $parameters = array();
+                    $param1 = (string) $total_amount_with_tax; 
+                    array_push($parameters, $param1); 
+                    $whatsapp_response = sendWhatsAppImageMessage($to, $template_name, $parameters);                    
                 }else{}
 
 
