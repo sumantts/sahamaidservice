@@ -119,7 +119,7 @@ for($i = 0; $i < 12; $i++){
 
     $first_day_of_month = date('Y-m-01', strtotime($inv_month_year . '-01')); // Get the first day of the month
     $first_day_of_month1 = $first_day_of_month . ' 00:00:00'; // Append time to the first day of the month
-    $last_day_of_month = date('Y-m-t', strtotime($inv_month_year . '-01')); // Get the last day of the month
+    $last_day_of_month = date('Y-m-t', strtotime($inv_month_year)); // Get the last day of the month
     $last_day_of_month1 = $last_day_of_month . ' 23:59:59'; // Append time to the last day of the month
 
     $sql2 = "SELECT SUM(paid_amount) AS total_paid FROM `bill_payment_details` WHERE `pay_date` BETWEEN '" . $first_day_of_month1 . "' AND '" . $last_day_of_month1 . "'";
@@ -130,8 +130,11 @@ for($i = 0; $i < 12; $i++){
 
 }
 
-//echo json_encode($bill_sent_array);
+ //echo json_encode($bill_sent_array);
+// [0,0,0,0,150880,64533,59555,364723,643299,708718,19167,0]
 
+//echo json_encode($bill_collection_array);
+// [0,0,0,0,0,0,42600,0,279433,504732,225866,0]
 
  ?>
 
