@@ -32,100 +32,41 @@ if ($result && $row = $result->fetch_assoc()) {
 
 // Query for clients with due amounts
 $clients = array();
-$client_dues = array();
-$sql = "SELECT 
-    user_id, full_name, phone_number 
-FROM user_details
-WHERE user_type = 4";
-
+$sql = "SELECT * FROM user_details WHERE user_type = 4";
 $result = $con->query($sql);
 if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        $user_id = $row['user_id'];
-        $full_name = $row['full_name'];
-        $phone_number = $row['phone_number'];
+    while ($row = $result->fetch_object()) {
+        $client_id = $row->user_id;
 
-        $client = new stdClass();
-        $client->user_id = $user_id;
-        $client->full_name = $full_name;
-        $client->phone_number = $phone_number;
+        // Calculate total bill amount for the client
+        $sql_bill = "SELECT SUM(bill_total) AS sub_tot_receivable FROM bill_details WHERE client_id = '$client_id'";
+        $result_bill = $con->query($sql_bill);
         $sub_tot_receivable = 0;
-        $sub_tot_received = 0;
-        $client->sub_tot_receivable = $sub_tot_receivable;
-        $client->sub_tot_received = $sub_tot_received;
-
-        $clients[] = $client;
-
-    } //end while
-} //end if
-
-
-if(sizeof($clients) > 0){
-    for($i = 0; $i < sizeof($clients); $i++){
-        $user_id = $clients[$i]->user_id;
-        $full_name = $clients[$i]->full_name;
-        $sub_tot_receivable = 0;
-        $sub_tot_received = 0; 
-
-        //echo "Processing client: $full_name (ID: $user_id)\n"; // Debugging line
-        
-        $sql = "SELECT * FROM bill_details WHERE client_id = '" .$user_id. "'";
-        $result = $con->query($sql);
-
-        $bill_id = 0;
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_array(); 
-            $bill_id = $row['bill_id'];
-            $normal_gst = $row['normal_gst'];
-            $gst_percentage = $row['gst_percentage'];
-            $terms_condi = $row['terms_condi'];
-            $bank_id = $row['bank_id'];
-            $bill_total = $row['bill_total']; 
-            $sub_tot_receivable = $sub_tot_receivable + $bill_total;
+        if ($result_bill && $bill_row = $result_bill->fetch_assoc()) {
+            $sub_tot_receivable = (float) $bill_row['sub_tot_receivable'];
         }
 
-        // if($sub_tot_receivable > 0){
-        //     echo 'sub_tot_receivable: ' . $sub_tot_receivable;
-        //     exit();
-        // }
+        // Calculate total paid amount for the client
+        $sql_paid = "SELECT SUM(paid_amount) AS sub_tot_received FROM bill_payment_details WHERE client_id = '$client_id'";
+        $result_paid = $con->query($sql_paid);
+        $sub_tot_received = 0;
+        if ($result_paid && $paid_row = $result_paid->fetch_assoc()) {
+            $sub_tot_received = (float) $paid_row['sub_tot_received'];
+        }
 
-        # Get Payments  
-        if($bill_id > 0){
-            $sql4 = "SELECT * FROM bill_payment_details WHERE bill_id = '" .$bill_id. "' ";
-            $result4 = $con->query($sql4);
+        // Add the calculated amounts to the client object
+        $row->sub_tot_receivable = $sub_tot_receivable;
+        $row->sub_tot_received = $sub_tot_received;
 
-            if ($result4->num_rows > 0) {
-                while($row4 = $result4->fetch_array()){
-                    $payment = new stdClass();
-                    $payment->paid_amount = $row4['paid_amount'];
-                    $payment->payment_mode = $row4['payment_mode'];
-                    $payment->transaction_id = $row4['transaction_id'];
-                    $payment->pay_date = date('d-F-Y h:i A', strtotime($row4['pay_date'])); 
-                    
-                    # Total amount paid for this Bill 
-                    $sub_tot_received = $sub_tot_received + $row4['paid_amount'];
-                    //array_push($payments, $payment);
-                }//end while
-            }//end if
-
-            # Total paid till date
-            /*$sql5 = "SELECT SUM(paid_amount) AS total_paid_till_date FROM bill_payment_details WHERE client_id = '" .$user_id. "' ";
-            $result5 = $con->query($sql5);
-
-            if ($result5->num_rows > 0) {
-                $row5 = $result5->fetch_array();
-                $total_paid_till_date = $row5['total_paid_till_date'];
-            }*/
-        }//end if
-
-        
-        $clients[$i]->sub_tot_received = $sub_tot_received;
-        $clients[$i]->sub_tot_receivable = $sub_tot_receivable;
-
-    }//end for
-}//end for
+        // Only include clients with due amounts
+        if ($sub_tot_receivable > $sub_tot_received) {
+            $clients[] = $row;
+        }
+    }
+}
 
 //echo json_encode($clients);
+//exit;
 
 // Query for upcoming maid assignments
 $upcoming_assignments = array();
@@ -312,19 +253,20 @@ for($i = 0; $i < 12; $i++){
                                         
                                         for($j = 0; $j < sizeof($clients); $j++){ 
                                             if($clients[$j]->sub_tot_receivable > $clients[$j]->sub_tot_received){
-                                            $due_amount = $clients[$j]->sub_tot_receivable - $clients[$j]->sub_tot_received;
-                                            $total_due_sum += $due_amount;
-                                            
-                                            $total_bill_sum += $clients[$j]->sub_tot_receivable;
-                                            $total_paid_sum += $clients[$j]->sub_tot_received;
-                                        ?>
-                                            <tr>
-                                                <td><?= htmlspecialchars($clients[$j]->full_name). ' ('. htmlspecialchars($clients[$j]->phone_number).')' ?></td>
-                                                <td>₹<?= number_format($clients[$j]->sub_tot_receivable, 2) ?></td>
-                                                <td>₹<?= number_format($clients[$j]->sub_tot_received, 2) ?></td>
-                                                <td>₹<?= number_format($due_amount, 2) ?></td>
-                                            </tr>
-                                        <?php 
+
+                                                $due_amount = $clients[$j]->sub_tot_receivable - $clients[$j]->sub_tot_received;
+                                                $total_due_sum += $due_amount;
+                                                
+                                                $total_bill_sum += $clients[$j]->sub_tot_receivable;
+                                                $total_paid_sum += $clients[$j]->sub_tot_received;
+                                            ?>
+                                                <tr>
+                                                    <td><?= htmlspecialchars($clients[$j]->full_name). ' ('. htmlspecialchars($clients[$j]->phone_number).')' ?></td>
+                                                    <td>₹<?= number_format($clients[$j]->sub_tot_receivable, 2) ?></td>
+                                                    <td>₹<?= number_format($clients[$j]->sub_tot_received, 2) ?></td>
+                                                    <td>₹<?= number_format($due_amount, 2) ?></td>
+                                                </tr>
+                                            <?php 
                                         }
                                         }
                                         ?>
